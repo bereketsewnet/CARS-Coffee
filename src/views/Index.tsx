@@ -11,7 +11,7 @@ import {
   BookOpen,
   ChevronDown,
 } from "lucide-react";
-import PartnersCarousel from "@/components/PartnersCarousel";
+import PartnersSection from "@/components/PartnersSection/PartnersSection";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ImpactMetric } from "../../generated/prisma/client";
 
@@ -495,32 +495,7 @@ export default function Index({
       </section>
 
       {/* Partners */}
-      <section className="py-16 border-t border-border bg-charcoal-mid">
-        <div className="container mx-auto">
-          <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mb-8 font-medium">
-            {t.home.partnersTitle}
-          </p>
-          {partners.length > 0 ? (
-            <PartnersCarousel partners={partners} />
-          ) : (
-            <div className="flex flex-wrap items-center justify-center gap-6">
-              {[
-                "AAU",
-                "University of Antwerp",
-                "VLIR-UOS",
-                "Belgian Development",
-              ].map((p) => (
-                <div
-                  key={p}
-                  className="glass-card px-6 py-3 rounded-xl text-sm font-semibold text-muted-foreground border border-border"
-                >
-                  {p}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      <PartnersSection />
     </div>
   );
 }

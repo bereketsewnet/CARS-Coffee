@@ -8,7 +8,7 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 export function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="border-t border-border bg-charcoal-mid mt-24">
+    <footer className="border-t border-border bg-charcoal-mid mt-0">
       <div className="container mx-auto py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}

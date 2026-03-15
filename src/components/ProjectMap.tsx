@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -111,6 +111,12 @@ function makeIcon(type: SiteType) {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function ProjectMap() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   useEffect(() => {
     // Fix default icon URLs broken by webpack
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -139,7 +145,7 @@ export default function ProjectMap() {
 
       {/* Map */}
       <div className="rounded-2xl overflow-hidden border border-border shadow-card" style={{ height: 480 }}>
-        <MapContainer
+        {mounted && <MapContainer
           center={[8.5, 38.5]}
           zoom={6}
           style={{ height: "100%", width: "100%" }}
@@ -162,7 +168,7 @@ export default function ProjectMap() {
               </Popup>
             </Marker>
           ))}
-        </MapContainer>
+        </MapContainer>}
       </div>
     </div>
   );

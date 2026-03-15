@@ -1,23 +1,31 @@
 import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 import * as bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
-const prisma = new PrismaClient({
-  accelerateUrl: process.env.DATABASE_URL,
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+  max: 5,
 });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log("🌱 Seeding database...");
 
   // ── Admin user ────────────────────────────────────────────────────────────
-  const passwordHash = await bcrypt.hash("admin123", 12);
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@circularcoffee.org";
+  const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
   const admin = await prisma.user.upsert({
-    where: { email: "admin@circularcoffee.org" },
+    where: { email: adminEmail },
     update: { passwordHash },
     create: {
-      email: "admin@circularcoffee.org",
+      email: adminEmail,
       name: "Admin",
       passwordHash,
       role: "ADMIN",

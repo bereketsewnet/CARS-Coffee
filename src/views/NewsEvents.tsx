@@ -15,7 +15,7 @@ type Category =
 type Timing = "all" | "upcoming" | "past";
 
 type PostItem = {
-  id: number | string;
+  id: string;
   title: string;
   date: string;
   category: Category;
@@ -39,69 +39,7 @@ function dbToPost(item: DbNewsEvent): PostItem {
   };
 }
 
-const staticPosts: PostItem[] = [
-  {
-    id: 1,
-    title: "Biochar Trials Show 34% Soil Fertility Improvement in Kaffa Zone",
-    date: "2024-11-15",
-    category: "Research",
-    excerpt:
-      "New data from our 18-month longitudinal trial demonstrates significant improvements in soil organic carbon and plant-available phosphorus following biochar application.",
-    upcoming: false,
-    image: null,
-  },
-  {
-    id: 2,
-    title: "Circular Coffee Team Presents at AAU International Symposium",
-    date: "2024-10-03",
-    category: "Event",
-    excerpt:
-      "Dr. Tadesse and Prof. Alemu presented the project's preliminary findings to an audience of 400+ researchers and development professionals in Addis Ababa.",
-    upcoming: false,
-    image: null,
-  },
-  {
-    id: 3,
-    title: "New Cooperative Partnership Signed with Yirgacheffe Farmers Union",
-    date: "2024-09-20",
-    category: "Partnership",
-    excerpt:
-      "A formal MOU was signed to implement circular processing practices across 12 washing stations covering 3,200 farmer members.",
-    upcoming: false,
-    image: null,
-  },
-  {
-    id: 4,
-    title: "Annual Project Review & Stakeholder Workshop — Addis Ababa",
-    date: "2025-02-14",
-    category: "Event",
-    excerpt:
-      "Year 2 review meeting bringing together all project partners, PhD candidates, and external stakeholders to assess progress and plan next milestones.",
-    upcoming: true,
-    image: null,
-  },
-  {
-    id: 5,
-    title:
-      "Policy Brief Launch: Circular Frameworks for Ethiopian Coffee Cooperatives",
-    date: "2024-08-01",
-    category: "Policy",
-    excerpt:
-      "The project's first policy brief, offering actionable recommendations for integrating circular economy practices into cooperative governance structures.",
-    upcoming: false,
-    image: null,
-  },
-  {
-    id: 6,
-    title: "Field School: Compost Training for Kaffa Zone Farmers",
-    date: "2025-03-10",
-    category: "Event",
-    excerpt:
-      "A 2-day practical training session for 60 smallholder farmers on husk composting techniques and application methods.",
-    upcoming: true,
-    image: null,
-  },
-];
+
 
 const categoryColors: Record<string, string> = {
   All: "",
@@ -117,8 +55,7 @@ export default function NewsEvents({
 }: {
   items?: DbNewsEvent[];
 }) {
-  const posts: PostItem[] =
-    dbItems && dbItems.length > 0 ? dbItems.map(dbToPost) : staticPosts;
+  const posts: PostItem[] = (dbItems ?? []).map(dbToPost);
 
   const categories: Category[] = [
     "All",
@@ -194,7 +131,7 @@ export default function NewsEvents({
             {paged.map((post) => (
               <Link
                 key={post.id}
-                href={`/news/${encodeURIComponent(String(post.id))}`}
+                href={`/news/${encodeURIComponent(post.id)}`}
                 className="flex flex-col"
               >
                 <article className="glass-card rounded-2xl border border-border overflow-hidden pillar-hover group cursor-pointer flex flex-col flex-1">
@@ -322,7 +259,13 @@ export default function NewsEvents({
             </div>
           )}
 
-          {filtered.length === 0 && (
+          {posts.length === 0 && (
+            <div className="text-center py-20 text-muted-foreground">
+              <p className="text-lg font-medium mb-2">No news published yet.</p>
+              <p className="text-sm">Check back soon for project updates and events.</p>
+            </div>
+          )}
+          {posts.length > 0 && filtered.length === 0 && (
             <div className="text-center py-20 text-muted-foreground">
               <p>No posts match your current filters.</p>
             </div>

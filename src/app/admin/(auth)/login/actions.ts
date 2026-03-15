@@ -14,11 +14,15 @@ export async function login(
     return "Please enter your email and password.";
   }
 
+  const callbackUrl = (formData.get("callbackUrl") as string | null) ?? "/admin/dashboard";
+  // Only allow internal /admin paths to prevent open-redirect
+  const redirectTo = callbackUrl.startsWith("/admin") ? callbackUrl : "/admin/dashboard";
+
   try {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/admin",
+      redirectTo,
     });
     return null;
   } catch (error) {

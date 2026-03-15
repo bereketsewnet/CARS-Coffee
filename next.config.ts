@@ -15,9 +15,9 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-inline/eval needed for Next.js dev + Turbopack
-      "style-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: blob: https:",
-      "font-src 'self' data:",
+      "font-src 'self' data: https://fonts.gstatic.com",
       "connect-src 'self' https:",
       "frame-ancestors 'self'",
       "base-uri 'self'",
@@ -27,8 +27,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  reactStrictMode: false,
   images: {
     unoptimized: true,
+  },
+  turbopack: {
+    // Force Turbopack to treat this directory as the workspace root
+    root: __dirname,
   },
   async headers() {
     return [

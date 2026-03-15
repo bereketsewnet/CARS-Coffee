@@ -1,18 +1,31 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
+const DB_DISABLED = process.env.DB_DISABLED === "true";
 import NewsEvents from "@/views/NewsEvents";
 
 export const metadata: Metadata = {
   title: "News & Events | Circular Coffee",
-  description: "Project milestones, field stories, upcoming events, and policy updates.",
+  description:
+    "Project milestones, field stories, upcoming events, and policy updates.",
 };
 
 export default async function NewsPage() {
-  const items = await prisma.newsEvent.findMany({
-    where: { status: { not: "DRAFT" } },
-    orderBy: { date: "desc" },
-  });
+  if (DB_DISABLED) {
+    return <NewsEvents items={[]} />;
+  }
+
+  let items: Awaited<ReturnType<typeof prisma.newsEvent.findMany>> = [];
+
+  try {
+    items = await prisma.newsEvent.findMany({
+      where: { status: { not: "DRAFT" } },
+      orderBy: { date: "desc" },
+    });
+  } catch (error) {
+    console.error("Failed to load news page data from database", error);
+  }
+
   return <NewsEvents items={items} />;
 }

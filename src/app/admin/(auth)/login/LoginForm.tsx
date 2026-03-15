@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
+import { useSearchParams, useRouter } from "next/navigation";
 import { login } from "./actions";
 import { Lock, Mail, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
@@ -22,6 +23,9 @@ function SubmitButton() {
 export function LoginForm() {
   const [error, formAction] = useActionState(login, null);
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/admin/dashboard";
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-16">
@@ -58,6 +62,7 @@ export function LoginForm() {
           </p>
 
           <form action={formAction} className="space-y-4">
+            <input type="hidden" name="callbackUrl" value={callbackUrl} />
             {/* Email */}
             <div>
               <label
@@ -127,6 +132,16 @@ export function LoginForm() {
             <SubmitButton />
           </form>
 
+          {/* Forgot password — outside form, uses router.push to guarantee navigation */}
+          <div className="mt-4 text-center">
+            <button
+              type="button"
+              onClick={() => router.push("/admin/forgot-password")}
+              className="text-xs text-leaf-bright hover:underline bg-transparent border-0 cursor-pointer p-0"
+            >
+              Forgot password?
+            </button>
+          </div>
 
         </div>
       </div>

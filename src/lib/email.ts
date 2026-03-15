@@ -4,9 +4,14 @@
  *
  * Requires RESEND_API_KEY in .env.local
  * Get a free key at https://resend.com (3,000 emails/month free)
+ *
+ * Gmail SMTP fallback:
+ * Set GMAIL_USER and GMAIL_APP_PASSWORD in .env.local
+ * Get an App Password: myaccount.google.com → Security → 2-Step Verification → App passwords
  */
 
 import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM = process.env.RESEND_FROM_EMAIL ?? "noreply@circularcoffee.org";
@@ -164,7 +169,66 @@ export async function sendNewsletterWelcome(opts: {
   });
 }
 
-// ─── 4. Send newsletter blast (quarterly update) ──────────────────────────────
+// ─── 4. Password reset email ──────────────────────────────────────────────────
+export async function sendPasswordResetEmail(opts: {
+  to: string;
+  name?: string;
+  resetUrl: string;
+}): Promise<void> {
+  const greeting = opts.name ? `Hello, ${opts.name}!` : "Hello!";
+
+  // ── Try Gmail SMTP first (GMAIL_USER + GMAIL_APP_PASSWORD) ────────────────
+  const gmailUser = process.env.GMAIL_USER ?? "";
+  const gmailPass = process.env.GMAIL_APP_PASSWORD ?? "";
+  if (gmailUser && gmailPass) {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: gmailUser, pass: gmailPass },
+    });
+    await transporter.sendMail({
+      from: `"Circular Coffee CARES" <${gmailUser}>`,
+      to: opts.to,
+      subject: "Reset your CARES admin password",
+      html: layout(
+        "Reset Your Password – Circular Coffee CARES",
+        `
+          <span class="pill">Password Reset</span>
+          <h1>${greeting}</h1>
+          <p>We received a request to reset the password for your CARES admin account. Click the button below to choose a new password. This link expires in <strong style="color:#c8e6c9">1 hour</strong>.</p>
+          <br/>
+          <a href="${opts.resetUrl}" class="btn">Reset My Password →</a>
+          <hr class="divider"/>
+          <p style="font-size:13px;color:#558b5a">If you did not request a password reset, you can safely ignore this email.</p>
+        `
+      ),
+    });
+    return;
+  }
+
+  // ── Fall back to Resend ───────────────────────────────────────────────────
+  if (!hasKey()) {
+    console.log("[email] No email provider configured – skipping password reset email");
+    return;
+  }
+  const body = `
+    <span class="pill">Password Reset</span>
+    <h1>${greeting}</h1>
+    <p>We received a request to reset the password for your CARES admin account. Click the button below to choose a new password. This link expires in <strong style="color:#c8e6c9">1 hour</strong>.</p>
+    <br/>
+    <a href="${opts.resetUrl}" class="btn">Reset My Password →</a>
+    <hr class="divider"/>
+    <p style="font-size:13px;color:#558b5a">If you did not request a password reset, you can safely ignore this email. Your password will not change.</p>
+    <p style="font-size:13px;color:#558b5a">For security, this link can only be used once and expires after 1 hour.</p>
+  `;
+  await resend.emails.send({
+    from: `Circular Coffee CARES <${FROM}>`,
+    to: opts.to,
+    subject: "Reset your CARES admin password",
+    html: layout("Reset Your Password – Circular Coffee CARES", body),
+  });
+}
+
+// ─── 5. Send newsletter blast (quarterly update) ──────────────────────────────
 export async function sendNewsletterBlast(opts: {
   subscribers: string[];
   subject: string;

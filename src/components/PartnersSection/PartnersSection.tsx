@@ -1,0 +1,412 @@
+import React, { useEffect, useRef, useState } from "react";
+import { FiGlobe, FiArrowUpRight } from "react-icons/fi";
+import "./PartnersSection.css";
+
+import AddisAbabaUniversity from "@/assets/ADDIS ABABA UNIVERSITY.jpg";
+import BelgiumDevelopment from "@/assets/BELGIUM DEVELOPMENT COOPERATION.jpg";
+import Ethiolab from "@/assets/Ethiolab.jpg";
+import Ethiomama from "@/assets/Ethiomama Coffee.jpg";
+import EthiopianCoffeeTea from "@/assets/Ethiopian Coffee and Tea Authority-ECTA.jpg";
+import EthiopianConformity from "@/assets/Ethiopian Conformity Assessment Enterprise-ECAE.jpg";
+import EthiopianSocietyChemEng from "@/assets/Ethiopian Society of Chemical Engineers.jpg";
+import Hafursa from "@/assets/Hafursa Cooperative.jpg";
+import LifeAgro from "@/assets/Life_Agro_Coffee_Quality_Control_Training_Institute_LIFE_AGRO.jpg";
+import NMWEO from "@/assets/New Millennium Women Empowerment Organization-NMWEO.jpg";
+import UniversityAntwerp from "@/assets/UNIVERSITY OF ANTWERP.jpg";
+import VLIRUOS from "@/assets/VLIRUOS.jpg";
+
+type PartnerRole = "university" | "research" | "ngo" | "farmer" | "lab" | "other";
+
+export interface Partner {
+  id: string;
+  name: string;
+  img: string;
+  isHorizontal: boolean;
+  context: string;
+  role?: PartnerRole;
+  website?: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  role: "user" | "ai";
+  text: string;
+  isLoading?: boolean;
+}
+
+interface CardState {
+  angle: number;
+  opacity: number;
+  blur: number;
+  zIndex: number;
+  pointerEvents: "auto" | "none";
+}
+
+const partners: Partner[] = [
+  {
+    id: "ethiolab",
+    name: "Ethiolab",
+    img: Ethiolab.src,
+    isHorizontal: true,
+    context:
+      "Provides laboratory testing, quality control, and scientific analysis for coffee byproducts.",
+    role: "lab",
+    website: "https://example.com/ethiolab",
+  },
+  {
+    id: "vliruos",
+    name: "VLIR-UOS",
+    img: VLIRUOS.src,
+    isHorizontal: true,
+    context:
+      "The Flemish interuniversity council funding the north-south research collaboration between Belgium and Ethiopia.",
+    role: "research",
+    website: "https://example.com/vliruos",
+  },
+  {
+    id: "life-agro",
+    name: "Life Agro",
+    img: LifeAgro.src,
+    isHorizontal: false,
+    context:
+      "A coffee training center focusing on capacity building, quality control, and sustainable agricultural practices.",
+    role: "research",
+    website: "https://example.com/life-agro",
+  },
+  {
+    id: "hafursa",
+    name: "Hafursa Cooperative",
+    img: Hafursa.src,
+    isHorizontal: false,
+    context:
+      "A local Ethiopian coffee cooperative in Yirgacheffe supplying raw materials and community insight.",
+    role: "farmer",
+    website: "https://example.com/hafursa",
+  },
+  {
+    id: "ethiomama",
+    name: "Ethiomama Coffee",
+    img: Ethiomama.src,
+    isHorizontal: false,
+    context:
+      "An Ethiopian coffee producer focusing on sustainable processing and female empowerment.",
+    role: "farmer",
+    website: "https://example.com/ethiomama",
+  },
+  {
+    id: "aau",
+    name: "Addis Ababa University",
+    img: AddisAbabaUniversity.src,
+    isHorizontal: false,
+    context:
+      "Leading the local academic research on transforming coffee waste into value.",
+    role: "university",
+    website: "https://example.com/aau",
+  },
+  {
+    id: "uantwerp",
+    name: "University of Antwerp",
+    img: UniversityAntwerp.src,
+    isHorizontal: true,
+    context:
+      "Providing international research expertise in circular economy and bio-engineering.",
+    role: "university",
+    website: "https://example.com/uantwerp",
+  },
+  {
+    id: "belgium-dev",
+    name: "Belgian Development Cooperation",
+    img: BelgiumDevelopment.src,
+    isHorizontal: true,
+    context:
+      "Supports sustainable development initiatives and international collaboration in Ethiopia.",
+    role: "ngo",
+    website: "https://example.com/belgium-dev",
+  },
+  {
+    id: "eca",
+    name: "Ethiopian Coffee and Tea Authority",
+    img: EthiopianCoffeeTea.src,
+    isHorizontal: true,
+    context:
+      "Provides policy guidance and sector leadership for Ethiopia's coffee and tea value chains.",
+    role: "other",
+    website: "https://example.com/ecta",
+  },
+  {
+    id: "ecae",
+    name: "Ethiopian Conformity Assessment Enterprise",
+    img: EthiopianConformity.src,
+    isHorizontal: true,
+    context:
+      "Ensures conformity assessment, certification, and quality standards for coffee products.",
+    role: "lab",
+    website: "https://example.com/ecae",
+  },
+  {
+    id: "esce",
+    name: "Ethiopian Society of Chemical Engineers",
+    img: EthiopianSocietyChemEng.src,
+    isHorizontal: true,
+    context:
+      "Brings chemical engineering expertise to valorize coffee waste into new materials and products.",
+    role: "research",
+    website: "https://example.com/esce",
+  },
+  {
+    id: "nmweo",
+    name: "New Millennium Women Empowerment Organization",
+    img: NMWEO.src,
+    isHorizontal: true,
+    context:
+      "Partners on gender-inclusive value chains and community impact in the circular coffee economy.",
+    role: "ngo",
+    website: "https://example.com/nmweo",
+  },
+];
+
+const GOOGLE_MODEL_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
+
+async function askGeminiAPI(question: string, partner: Partner): Promise<string> {
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY ?? "";
+  if (!apiKey) {
+    return "Gemini API key is not configured. Please set NEXT_PUBLIC_GEMINI_API_KEY.";
+  }
+
+  const url = `${GOOGLE_MODEL_URL}?key=${apiKey}`;
+
+  const systemPrompt = `You are a helpful, inspiring AI ambassador for the CARES (Circular Coffee Economy Research) project in Ethiopia.
+Our mission is transforming coffee waste (husks, pulp, wastewater) into value for farmers and the environment.
+You are currently representing our partner: ${partner.name}.
+Context about this partner: ${partner.context}.
+Answer the user's question concisely in 2-3 sentences. Keep the tone professional, optimistic, and focused on sustainability, research, and circular economy.`;
+
+  const payload = {
+    contents: [{ parts: [{ text: question }] }],
+    systemInstruction: { parts: [{ text: systemPrompt }] },
+  };
+
+  try {
+    let response: Response | null = null;
+    let retries = 0;
+    const delays = [1000, 2000, 4000, 8000, 16000];
+
+    while (retries < 5) {
+      try {
+        response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+        break;
+      } catch (err) {
+        retries += 1;
+        if (retries >= 5) throw err;
+        await new Promise((res) => setTimeout(res, delays[retries - 1]));
+      }
+    }
+
+    const data = await response!.json();
+    return (
+      data.candidates?.[0]?.content?.parts?.[0]?.text ??
+      "I'm sorry, I couldn't generate a response at this moment."
+    );
+  } catch {
+    return "Connection error. Please try asking again later.";
+  }
+}
+
+export const PartnersSection: React.FC = () => {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [cardStates, setCardStates] = useState<CardState[]>(
+    () =>
+      partners.map(() => ({
+        angle: 0,
+        opacity: 1,
+        blur: 0,
+        zIndex: 0,
+        pointerEvents: "auto",
+      })) as CardState[]
+  );
+  const isHoveredRef = useRef(false);
+  const isModalOpenRef = useRef(false);
+  const currentAngleRef = useRef(0);
+  const radiusRef = useRef(
+    typeof window !== "undefined" && window.innerWidth < 768 ? 320 : 520
+  );
+
+  const animationFrameRef = useRef<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartRef = useRef<{ x: number; y: number } | null>(null);
+  const tiltRef = useRef(-8); // initial rotateX
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activePartner, setActivePartner] = useState<Partner | null>(null);
+
+  useEffect(() => {
+    function onResize() {
+      radiusRef.current =
+        window.innerWidth < 768 ? 320 : 520;
+    }
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    function render() {
+      if (!isHoveredRef.current && !isModalOpenRef.current) {
+        currentAngleRef.current -= 0.1;
+      }
+
+      const totalCards = partners.length;
+      const nextStates: CardState[] = partners.map((_, i) => {
+        const angleStep = 360 / totalCards;
+        const cardAngle = i * angleStep + currentAngleRef.current;
+        const normalizedAngle = ((cardAngle % 360) + 360) % 360;
+        const radians = (normalizedAngle * Math.PI) / 180;
+        const cosVal = Math.cos(radians);
+        const opacity = Math.max(0.15, (cosVal + 1) / 2);
+        const blur = 0; // keep images sharp
+        const pointerEvents = opacity < 0.5 ? "none" : "auto";
+        let zIndex = Math.round(cosVal * 100);
+
+        return { angle: cardAngle, opacity, blur, zIndex, pointerEvents };
+      });
+
+      setCardStates(nextStates);
+      animationFrameRef.current = window.requestAnimationFrame(render);
+    }
+
+    animationFrameRef.current = window.requestAnimationFrame(render);
+    return () => {
+      if (animationFrameRef.current != null) {
+        window.cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  const openModal = (partner: Partner) => {
+    // Modal and AI chat disabled per new UX; no-op for now
+    return;
+  };
+
+  const closeModal = () => {
+    isModalOpenRef.current = false;
+    setIsModalOpen(false);
+    setActivePartner(null);
+  };
+
+  return (
+    <section className="partners-section">
+      <div className="header-container">
+        <h2>
+          Our <span>Partners</span>
+        </h2>
+        <p className="subtitle">
+          Bringing together researchers, farmers, and innovators to close the
+          loop in Ethiopia&apos;s coffee economy.
+        </p>
+      </div>
+
+      <div className="scene">
+        <div
+          className={`carousel-container${isDragging ? " is-dragging" : ""}`}
+          ref={carouselRef}
+          style={{ transform: `rotateX(${tiltRef.current}deg)` }}
+          onWheel={(e) => {
+            // Mouse wheel: rotate ring forwards/backwards
+            currentAngleRef.current += e.deltaY * 0.1;
+          }}
+          onMouseDown={(e) => {
+            setIsDragging(true);
+            dragStartRef.current = { x: e.clientX, y: e.clientY };
+          }}
+          onMouseMove={(e) => {
+            if (!isDragging || !dragStartRef.current) return;
+            const dx = e.clientX - dragStartRef.current.x;
+            const dy = e.clientY - dragStartRef.current.y;
+            currentAngleRef.current += dx * 0.3;
+            // vertical drag tilts the ring up/down
+            const nextTilt = Math.max(
+              -35,
+              Math.min(10, tiltRef.current + dy * 0.1),
+            );
+            tiltRef.current = nextTilt;
+          }}
+          onMouseUp={() => {
+            setIsDragging(false);
+            dragStartRef.current = null;
+          }}
+          onMouseLeave={() => {
+            setIsDragging(false);
+            dragStartRef.current = null;
+          }}
+        >
+          <div className="core-glow" />
+          {partners.map((partner, index) => {
+            const state = cardStates[index];
+            const isHovered = hoveredIndex === index;
+            const baseTranslateZ = radiusRef.current + (isHovered ? 40 : 0);
+            const baseTransform = `rotateY(${state?.angle ?? 0}deg) translateZ(${baseTranslateZ}px)`;
+
+            const transform = `${baseTransform} ${
+              isHovered ? "scale(1.05)" : ""
+            }`;
+
+            return (
+              <div
+                key={partner.id}
+                className="partner-card group"
+                style={{
+                  transform,
+                  opacity: state?.opacity ?? 1,
+                  filter: `blur(${state?.blur ?? 0}px)`,
+                  zIndex: state?.zIndex ?? 0,
+                  pointerEvents: state?.pointerEvents ?? "auto",
+                }}
+                onMouseEnter={() => {
+                  isHoveredRef.current = true;
+                  setHoveredIndex(index);
+                }}
+                onMouseLeave={() => {
+                  isHoveredRef.current = false;
+                  setHoveredIndex(null);
+                }}
+                onClick={() => openModal(partner)}
+              >
+                <div
+                  className="logo-wrapper"
+                  style={
+                    partner.isHorizontal
+                      ? { borderRadius: "0.75rem" }
+                      : {
+                          borderRadius: "50%",
+                          width: "120px",
+                          height: "120px",
+                          margin: "0 auto",
+                        }
+                  }
+                >
+                  <img
+                    src={partner.img}
+                    alt={`${partner.name} Logo`}
+                    className="partner-logo"
+                    draggable={false}
+                    onDragStart={(e) => e.preventDefault()}
+                  />
+                </div>
+
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default PartnersSection;
+

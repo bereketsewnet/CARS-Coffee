@@ -23,7 +23,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 const navItems = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Research", href: "/admin/research", icon: Beaker },
   { label: "Team", href: "/admin/team", icon: Users },
   { label: "News & Events", href: "/admin/news", icon: Newspaper },
@@ -86,8 +86,8 @@ export function AdminSidebar({
         <nav className="flex-1 py-4 space-y-0.5 px-2">
           {navItems.map((item) => {
             const isActive =
-              item.href === "/admin"
-                ? pathname === "/admin"
+              item.href === "/admin/dashboard"
+                ? pathname === "/admin/dashboard" || pathname === "/admin"
                 : pathname.startsWith(item.href);
             return (
               <Link
