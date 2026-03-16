@@ -1,4 +1,4 @@
-"use client";
+`"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -207,23 +207,6 @@ export default function Index() {
             </p>
             <div className="section-divider" />
           </div>
-
-          {/* Partner logos */}
-          <div className="flex flex-wrap items-center justify-center gap-8 mt-12">
-            {[
-              "AAU",
-              "University of Antwerp",
-              "VLIR-UOS",
-              "Belgian Development",
-            ].map((p) => (
-              <div
-                key={p}
-                className="glass-card px-6 py-3 rounded-xl text-sm font-semibold text-muted-foreground border border-border"
-              >
-                {p}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -353,6 +336,30 @@ export default function Index() {
             >
               All news <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Partners */}
+      <section className="py-16 bg-charcoal-mid border-t border-border">
+        <div className="container mx-auto">
+          <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mb-8 font-medium">
+            Our Partners
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8">
+            {[
+              "AAU",
+              "University of Antwerp",
+              "VLIR-UOS",
+              "Belgian Development",
+            ].map((p) => (
+              <div
+                key={p}
+                className="glass-card px-6 py-3 rounded-xl text-sm font-semibold text-muted-foreground border border-border"
+              >
+                {p}
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -457,6 +457,9 @@ export default function Index({
         </div>
       </section>
 
+      {/* Partners */}
+      <PartnersSection />
+
       {/* CTA */}
       <section className="py-24">
         <div className="container mx-auto">
@@ -493,9 +496,6 @@ export default function Index({
           </div>
         </div>
       </section>
-
-      {/* Partners */}
-      <PartnersSection />
     </div>
   );
 }
