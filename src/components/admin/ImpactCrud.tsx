@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import { Plus, Pencil, Trash2, BarChart3, TrendingUp, Users, Leaf, TreePine } from "lucide-react";
-import type { ImpactMetric } from "../../../generated/prisma/client";
+import type { ImpactMetric } from "../../../generated/prisma-client";
 import type { LucideIcon } from "lucide-react";
 import {
   createImpactMetric,

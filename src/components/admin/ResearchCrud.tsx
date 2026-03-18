@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import type { ResearchProject } from "../../../generated/prisma/client";
+import type { ResearchProject } from "../../../generated/prisma-client";
 import {
   createResearchProject,
   updateResearchProject,

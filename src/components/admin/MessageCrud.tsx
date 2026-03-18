@@ -12,7 +12,7 @@ import {
   Building2,
   X,
 } from "lucide-react";
-import type { ContactMessage } from "../../../generated/prisma/client";
+import type { ContactMessage } from "../../../generated/prisma-client";
 import {
   markMessageRead,
   archiveMessage,

@@ -14,7 +14,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import type { NewsletterSubscriber } from "../../../generated/prisma/client";
+import type { NewsletterSubscriber } from "../../../generated/prisma-client";
 import {
   unsubscribeEmail,
   deleteSubscriber,

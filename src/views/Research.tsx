@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Leaf, Recycle, Users, ChevronDown, ChevronUp, BookOpen } from "lucide-react";
-import type { ResearchProject, Publication } from "../../generated/prisma/client";
+import type { ResearchProject, Publication } from "../../generated/prisma-client";
 
 // ── Static fallback data ─────────────────────────────────────────────────────
 

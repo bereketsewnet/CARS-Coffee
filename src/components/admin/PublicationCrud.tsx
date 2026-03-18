@@ -9,7 +9,7 @@ import {
   Loader2,
   Download,
 } from "lucide-react";
-import type { Publication } from "../../../generated/prisma/client";
+import type { Publication } from "../../../generated/prisma-client";
 import {
   createPublication,
   updatePublication,

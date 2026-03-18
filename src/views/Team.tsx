@@ -1,5 +1,5 @@
 import { Linkedin, Globe } from "lucide-react";
-import type { TeamMember as DbMember } from "../../generated/prisma/client";
+import type { TeamMember as DbMember } from "../../generated/prisma-client";
 
 interface TeamMember {
   name: string;

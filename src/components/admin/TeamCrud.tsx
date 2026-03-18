@@ -9,7 +9,7 @@ import {
   X,
   Loader2,
 } from "lucide-react";
-import type { TeamMember } from "../../../generated/prisma/client";
+import type { TeamMember } from "../../../generated/prisma-client";
 import {
   createTeamMember,
   updateTeamMember,

@@ -9,7 +9,7 @@ import {
   X,
   Loader2,
 } from "lucide-react";
-import type { NewsEvent } from "../../../generated/prisma/client";
+import type { NewsEvent } from "../../../generated/prisma-client";
 import {
   createNewsEvent,
   updateNewsEvent,
