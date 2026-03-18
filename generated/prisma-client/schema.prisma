@@ -162,7 +162,7 @@ model NewsletterSubscriber {
   id        String   @id @default(cuid())
   email     String   @unique @db.VarChar(191)
   name      String?
-  source    String?  // "contact_form" | "sidebar_widget" | "homepage"
+  source    String? // "contact_form" | "sidebar_widget" | "homepage"
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

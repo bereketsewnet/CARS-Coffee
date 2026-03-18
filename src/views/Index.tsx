@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import PartnersSection from "@/components/PartnersSection/PartnersSection";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import type { ImpactMetric } from "../../generated/prisma/client";
+import type { ImpactMetric } from "../../generated/prisma-client";
 
 // Parse a value string like "1,200+", "34%", "8" into { target, suffix }
 function parseMetricValue(v: string): { target: number; suffix: string } {

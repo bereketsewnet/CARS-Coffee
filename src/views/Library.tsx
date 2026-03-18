@@ -12,7 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import type { Publication as DbPub } from "../../generated/prisma/client";
+import type { Publication as DbPub } from "../../generated/prisma-client";
 
 type PubType =
   | "All"

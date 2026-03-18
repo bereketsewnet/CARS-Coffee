@@ -1,7 +1,7 @@
 "use client";
 
 import { Quote } from "lucide-react";
-import type { ImpactMetric } from "../../generated/prisma/client";
+import type { ImpactMetric } from "../../generated/prisma-client";
 import dynamic from "next/dynamic";
 
 const ProjectMap = dynamic(() => import("@/components/ProjectMap"), {

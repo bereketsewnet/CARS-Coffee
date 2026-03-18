@@ -3,7 +3,7 @@ import { defineConfig } from "prisma/config";
 
 // Load from .env.local first (Next.js convention), then fall back to .env
 config({ path: ".env.local" });
-config({ path: ".env" }); // fallback: Vercel / CI will already have DATABASE_URL in process.env
+config({ path: ".env" });
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -11,7 +11,9 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    // DIRECT_URL bypasses pgbouncer for migrate commands; falls back to DATABASE_URL
-    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
+    // Prisma 7: URL must be in prisma.config.ts, NOT in schema.prisma
+    // Local XAMPP: mysql://root@localhost:3306/care_coffee
+    // cPanel production: mysql://db_user:db_password@localhost:3306/db_name
+    url: process.env["DATABASE_URL"]!,
   },
 });

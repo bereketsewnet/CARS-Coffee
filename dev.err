@@ -1,0 +1,30 @@
+STDOUT:
+🚀 Starting migration from Supabase → MySQL...
+
+📦 Migrating Users...
+
+STDERR:
+
+❌ Migration failed: error: Tenant or user not found
+    at C:\Users\berek\Documents\projects\Centeral\CARE coffee\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async fetchAll (C:\Users\berek\Documents\projects\Centeral\CARE coffee\prisma\migrate-from-supabase.ts:42:20)
+    at async main (C:\Users\berek\Documents\projects\Centeral\CARE coffee\prisma\migrate-from-supabase.ts:51:17) {
+  length: 52,
+  severity: 'FATAL',
+  code: 'XX000',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: undefined,
+  line: undefined,
+  routine: undefined
+}

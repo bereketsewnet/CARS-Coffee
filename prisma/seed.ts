@@ -1,17 +1,12 @@
-import { PrismaClient } from "../generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
+import { PrismaClient } from "../generated/prisma-client";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+
 import * as bcrypt from "bcryptjs";
 import * as dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-  max: 5,
-});
-const adapter = new PrismaPg(pool);
+const adapter = new PrismaMariaDb(process.env.DATABASE_URL!);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
@@ -118,14 +113,19 @@ async function main() {
   console.log(`✅ Impact metrics: ${metrics.length}`);
 
   // ── Contact messages ──────────────────────────────────────────────────────
-  await prisma.contactMessage.createMany({
-    skipDuplicates: true,
-    data: [
-      { id: "msg-1", name: "Amara Girma", email: "amara.girma@gmail.com", subject: "Collaboration inquiry", body: "I am a PhD student interested in joining the Circular Coffee project...", read: false },
-      { id: "msg-2", name: "Sophie Claes", email: "s.claes@ugent.be", subject: "Request for composting data sets", body: "I would like to access the composting trial data for a comparative study...", read: false },
-      { id: "msg-3", name: "Yusuf Abdi", email: "yusuf.abdi@agri.gov.et", subject: "Policy brief distribution", body: "We would like to distribute your latest policy brief to regional offices...", read: true },
-    ],
-  });
+  // MySQL Prisma does not support skipDuplicates, so we upsert individually
+  const contactMsgs = [
+    { id: "msg-1", name: "Amara Girma", email: "amara.girma@gmail.com", subject: "Collaboration inquiry", body: "I am a PhD student interested in joining the Circular Coffee project...", read: false },
+    { id: "msg-2", name: "Sophie Claes", email: "s.claes@ugent.be", subject: "Request for composting data sets", body: "I would like to access the composting trial data for a comparative study...", read: false },
+    { id: "msg-3", name: "Yusuf Abdi", email: "yusuf.abdi@agri.gov.et", subject: "Policy brief distribution", body: "We would like to distribute your latest policy brief to regional offices...", read: true },
+  ];
+  for (const msg of contactMsgs) {
+    await prisma.contactMessage.upsert({
+      where: { id: msg.id },
+      update: msg,
+      create: msg,
+    });
+  }
   console.log("✅ Contact messages: 3");
 
   console.log("\n🎉 Seeding complete!");

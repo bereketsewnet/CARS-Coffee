@@ -25,14 +25,6 @@ export default async function HomePage() {
         where: { status: { not: "DRAFT" } },
         orderBy: { date: "desc" },
         take: 3,
-        select: {
-          id: true,
-          title: true,
-          date: true,
-          type: true,
-          imageUrl: true,
-          excerpt: true,
-        },
       }),
       prisma.impactMetric.findMany({
         orderBy: { createdAt: "asc" },

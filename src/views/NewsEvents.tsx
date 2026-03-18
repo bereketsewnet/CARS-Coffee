@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Calendar, Tag, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import type { NewsEvent as DbNewsEvent } from "../../generated/prisma/client";
+import type { NewsEvent as DbNewsEvent } from "../../generated/prisma-client";
 
 type Category =
   | "All"
