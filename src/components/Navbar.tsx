@@ -25,8 +25,12 @@ export function Navbar() {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      // Hero section is 240vh tall — keep navbar transparent until it's fully past
+      const heroHeight = window.innerHeight * 2.4;
+      setScrolled(window.scrollY > heroHeight);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 

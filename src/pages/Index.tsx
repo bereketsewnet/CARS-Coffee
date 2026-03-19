@@ -12,7 +12,126 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-const heroImage = "/assets/hero-coffee.jpg";
+// ── Constants ────────────────────────────────────────────────────────────────
+const TOTAL_FRAMES = 105;
+const FPS = 24;
+const FRAME_INTERVAL_MS = 1000 / FPS;
+
+/** Zero-pad a number to 3 digits, e.g. 1 → "001" */
+function pad3(n: number): string {
+  return String(n).padStart(3, "0");
+}
+
+/** Build the path for frame index 0-based */
+function frameSrc(index: number): string {
+  return `/hero3D/ezgif-frame-${pad3(index + 1)}.webp`;
+}
+
+// ── Canvas Hero component ────────────────────────────────────────────────────
+function CanvasHero() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const frameRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(0);
+  const rafRef = useRef<number>(0);
+  const loadedRef = useRef<number>(0);
+  const readyRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // ── Responsive canvas sizing ──────────────────────────────────────────
+    function fitCanvas() {
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      // Re-draw current frame immediately after resize
+      if (readyRef.current) {
+        drawFrame(ctx!, canvas, imagesRef.current[frameRef.current]);
+      }
+    }
+
+    const ro = new ResizeObserver(fitCanvas);
+    ro.observe(canvas);
+    fitCanvas();
+
+    // ── Cover-fill draw helper ────────────────────────────────────────────
+    function drawFrame(
+      c: CanvasRenderingContext2D,
+      cv: HTMLCanvasElement,
+      img: HTMLImageElement
+    ) {
+      if (!img?.naturalWidth) return;
+      const scale = Math.max(
+        cv.width / img.naturalWidth,
+        cv.height / img.naturalHeight
+      );
+      const w = img.naturalWidth * scale;
+      const h = img.naturalHeight * scale;
+      const x = (cv.width - w) / 2;
+      const y = (cv.height - h) / 2;
+      c.clearRect(0, 0, cv.width, cv.height);
+      c.drawImage(img, x, y, w, h);
+    }
+
+    // ── Animation loop ────────────────────────────────────────────────────
+    function loop(timestamp: number) {
+      rafRef.current = requestAnimationFrame(loop);
+      if (timestamp - lastTimeRef.current < FRAME_INTERVAL_MS) return;
+      lastTimeRef.current = timestamp;
+
+      if (!readyRef.current) return;
+      const img = imagesRef.current[frameRef.current];
+      drawFrame(ctx!, canvas!, img);
+      frameRef.current = (frameRef.current + 1) % TOTAL_FRAMES;
+    }
+
+    rafRef.current = requestAnimationFrame(loop);
+
+    // ── Preload all frames ────────────────────────────────────────────────
+    const images: HTMLImageElement[] = new Array(TOTAL_FRAMES);
+    imagesRef.current = images;
+
+    for (let i = 0; i < TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = frameSrc(i);
+      img.onload = () => {
+        loadedRef.current += 1;
+        // Draw first frame as soon as it's ready so the hero is never blank
+        if (i === 0) {
+          readyRef.current = true;
+          drawFrame(ctx!, canvas!, img);
+        }
+      };
+      images[i] = img;
+    }
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      ro.disconnect();
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+        display: "block",
+      }}
+      aria-hidden="true"
+    />
+  );
+}
+
+// ── Static section data ───────────────────────────────────────────────────────
 const soilImg = "/assets/soil-research.jpg";
 const wasteImg = "/assets/waste-research.jpg";
 const socioImg = "/assets/socio-economic.jpg";
@@ -35,7 +154,7 @@ function CounterStat({
       ([entry]) => {
         if (entry.isIntersecting && !started) setStarted(true);
       },
-      { threshold: 0.5 },
+      { threshold: 0.5 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -119,32 +238,40 @@ const news = [
   },
 ];
 
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function Index() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
+      {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/70 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/60 to-transparent" />
+        {/* 3D canvas background */}
+        <CanvasHero />
 
-        {/* Circular ring decoration */}
-        <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] hidden xl:block">
+        {/* Dark gradient overlays — keep above canvas, below content */}
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-background"
+          style={{ zIndex: 1 }}
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-charcoal/60 to-transparent"
+          style={{ zIndex: 1 }}
+        />
+
+        {/* Spinning ring decoration */}
+        <div
+          className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] hidden xl:block"
+          style={{ zIndex: 2 }}
+        >
           <div className="w-full h-full rounded-full border border-leaf-bright/10 animate-spin-slow" />
           <div
             className="absolute inset-8 rounded-full border border-coffee/20"
-            style={{
-              animationDuration: "30s",
-              animation: "spin-slow 30s linear infinite reverse",
-            }}
+            style={{ animation: "spin-slow 30s linear infinite reverse" }}
           />
           <div className="absolute inset-20 rounded-full border border-leaf-bright/15" />
         </div>
 
-        <div className="container mx-auto relative z-10 pt-24">
+        {/* Foreground content */}
+        <div className="container mx-auto relative pt-24" style={{ zIndex: 3 }}>
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 mb-6 animate-fade-in-up">
               <span className="tag-pill">VLIR-UOS Cooperation</span>
@@ -157,8 +284,8 @@ export default function Index() {
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl animate-fade-in-up-delay-2">
               A north–south research partnership transforming Ethiopia's coffee
-              by-products into soil health, economic opportunity, and
-              sustainable livelihoods.
+              by-products into soil health, economic opportunity, and sustainable
+              livelihoods.
             </p>
             <div className="flex flex-wrap gap-4 animate-fade-in-up-delay-2">
               <Link
@@ -177,15 +304,17 @@ export default function Index() {
           </div>
         </div>
 
+        {/* Scroll cue */}
         <a
           href="#mission"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-muted-foreground hover:text-leaf-bright transition-colors animate-bounce"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-leaf-bright transition-colors animate-bounce"
+          style={{ zIndex: 3 }}
         >
           <ChevronDown className="w-6 h-6" />
         </a>
       </section>
 
-      {/* Mission */}
+      {/* ── Mission ───────────────────────────────────────────────────────── */}
       <section id="mission" className="py-24">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
@@ -194,10 +323,10 @@ export default function Index() {
               Waste → <span className="text-gradient-green">Value</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Ethiopia is the birthplace of coffee — yet the processing
-              generates enormous quantities of husks, pulp, and wastewater that
-              pollute rivers and degrade soils. The Circular Coffee project
-              brings together researchers from{" "}
+              Ethiopia is the birthplace of coffee — yet the processing generates
+              enormous quantities of husks, pulp, and wastewater that pollute
+              rivers and degrade soils. The Circular Coffee project brings
+              together researchers from{" "}
               <strong className="text-foreground">
                 AAU (Addis Ababa University)
               </strong>{" "}
@@ -210,13 +339,11 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Pillars */}
+      {/* ── Pillars ───────────────────────────────────────────────────────── */}
       <section className="py-24 bg-charcoal-mid">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <span className="tag-pill mb-4 inline-block">
-              Research Framework
-            </span>
+            <span className="tag-pill mb-4 inline-block">Research Framework</span>
             <h2 className="font-serif text-4xl md:text-5xl font-bold">
               Three Research Pillars
             </h2>
@@ -263,16 +390,12 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Impact Stats */}
+      {/* ── Impact Stats ──────────────────────────────────────────────────── */}
       <section className="py-24">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <span className="tag-pill mb-4 inline-block">
-              Measurable Change
-            </span>
-            <h2 className="font-serif text-4xl font-bold">
-              Impact at a Glance
-            </h2>
+            <span className="tag-pill mb-4 inline-block">Measurable Change</span>
+            <h2 className="font-serif text-4xl font-bold">Impact at a Glance</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             <CounterStat target={1200} suffix="+" label="Farmers Reached" />
@@ -291,7 +414,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Latest News */}
+      {/* ── Latest News ───────────────────────────────────────────────────── */}
       <section className="py-24 bg-charcoal-mid">
         <div className="container mx-auto">
           <div className="flex items-end justify-between mb-12">
@@ -340,31 +463,28 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Partners */}
+      {/* ── Partners ──────────────────────────────────────────────────────── */}
       <section className="py-16 bg-charcoal-mid border-t border-border">
         <div className="container mx-auto">
           <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mb-8 font-medium">
             Our Partners
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8">
-            {[
-              "AAU",
-              "University of Antwerp",
-              "VLIR-UOS",
-              "Belgian Development",
-            ].map((p) => (
-              <div
-                key={p}
-                className="glass-card px-6 py-3 rounded-xl text-sm font-semibold text-muted-foreground border border-border"
-              >
-                {p}
-              </div>
-            ))}
+            {["AAU", "University of Antwerp", "VLIR-UOS", "Belgian Development"].map(
+              (p) => (
+                <div
+                  key={p}
+                  className="glass-card px-6 py-3 rounded-xl text-sm font-semibold text-muted-foreground border border-border"
+                >
+                  {p}
+                </div>
+              )
+            )}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ── CTA ───────────────────────────────────────────────────────────── */}
       <section className="py-24">
         <div className="container mx-auto">
           <div
@@ -378,8 +498,8 @@ export default function Index() {
                 Join the Circular Economy
               </h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
-                Whether you're a researcher, farmer, policy maker, or
-                development professional — there's a role for you in this story.
+                Whether you're a researcher, farmer, policy maker, or development
+                professional — there's a role for you in this story.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link

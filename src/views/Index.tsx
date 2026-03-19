@@ -11,6 +11,8 @@ import {
   BookOpen,
   ChevronDown,
 } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PartnersSection from "@/components/PartnersSection/PartnersSection";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ImpactMetric } from "../../generated/prisma-client";
@@ -39,7 +41,285 @@ type Partner = {
   active: boolean;
 };
 
-const heroImage = "/assets/hero-coffee.jpg";
+// ── Canvas constants ─────────────────────────────────────────────────────────────
+const TOTAL_FRAMES = 105;
+
+function pad3(n: number): string {
+  return String(n).padStart(3, "0");
+}
+function frameSrc(i: number): string {
+  return `/hero3D/ezgif-frame-${pad3(i + 1)}.webp`;
+}
+
+// ── Scroll-Driven Hero Section ───────────────────────────────────────────────────
+function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
+  // Refs for GSAP targets
+  const sectionRef = useRef<HTMLDivElement>(null);   // outer 300vh scroll track
+  const stickyRef = useRef<HTMLDivElement>(null);    // sticky 100vh viewport
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const text1Ref = useRef<HTMLDivElement>(null);     // State 1 container (stays put)
+  const text2Ref = useRef<HTMLDivElement>(null);     // State 2 container
+  const h1Ref = useRef<HTMLHeadingElement>(null);    // only the h1 fades out
+  const sub1Ref = useRef<HTMLParagraphElement>(null); // subtitle fades out with h1
+  const h2Ref = useRef<HTMLHeadingElement>(null);    // only the h2 fades in
+  const sub2Ref = useRef<HTMLParagraphElement>(null); // State 2 subtitle fades in with h2
+
+  // Preloaded frame images
+  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const readyRef = useRef<boolean>(false);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+
+  // ── Draw helper (cover-fill) ──────────────────────────────────────────
+  function drawFrameAt(index: number) {
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
+    const img = imagesRef.current[index];
+    if (!canvas || !ctx || !img?.naturalWidth) return;
+    const scale = Math.max(
+      canvas.width / img.naturalWidth,
+      canvas.height / img.naturalHeight
+    );
+    const w = img.naturalWidth * scale;
+    const h = img.naturalHeight * scale;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
+  }
+
+  useEffect(() => {
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctxRef.current = ctx;
+
+    // ── CRITICAL: hide State 2 elements immediately before any ScrollTrigger
+    //    is created, to prevent the 1-second overlap flash on initial load
+    gsap.set([h2Ref.current, sub2Ref.current], { opacity: 0, y: 120 });
+
+    // Fit canvas to container
+    function fitCanvas() {
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      if (readyRef.current) drawFrameAt(0);
+    }
+    const ro = new ResizeObserver(() => {
+      fitCanvas();
+      ScrollTrigger.refresh();
+    });
+    ro.observe(canvas);
+    fitCanvas();
+
+    // ── Preload all frames ────────────────────────────────────────────
+    const imgs: HTMLImageElement[] = new Array(TOTAL_FRAMES);
+    imagesRef.current = imgs;
+    for (let i = 0; i < TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = frameSrc(i);
+      img.onload = () => {
+        if (i === 0) {
+          readyRef.current = true;
+          fitCanvas();
+          drawFrameAt(0);
+        }
+      };
+      imgs[i] = img;
+    }
+
+    // ── GSAP ScrollTrigger timeline ─────────────────────────────────────
+    // Timeline normalized from 0.0 to 1.0
+    //   Canvas frames : 0.0 → 1.0
+    //   State 1 out   : 0.0 → 0.35 (first 35% of scroll)
+    //   State 2 in    : 0.65 → 1.0 (last 35% of scroll)
+    const frameProxy = { frame: 0 };
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true, // instantly locked to scroll position with zero delay/lag
+      },
+    });
+
+    // Canvas: smooth crawl across the full timeline (duration: 1)
+    tl.to(
+      frameProxy,
+      {
+        duration: 1,
+        frame: TOTAL_FRAMES - 1,
+        snap: "frame",
+        ease: "none",
+        onUpdate: () => drawFrameAt(Math.round(frameProxy.frame)),
+      },
+      0
+    );
+
+    // H1 + subtitle: slow, smooth fade-out (ease: "none" ties it directly to scroll wheel)
+    // Runs from 0.0 to 0.45 of the scrub timeline
+    tl.to(
+      [h1Ref.current, sub1Ref.current],
+      { duration: 0.45, opacity: 0, y: -120, ease: "none", stagger: 0.05 },
+      0
+    );
+
+    // H2 + subtitle: slow, smooth fade-in from bottom to center
+    // Runs from 0.45 to 0.90 of the scrub timeline (immediately picks up after State 1)
+    tl.fromTo(
+      [h2Ref.current, sub2Ref.current],
+      { opacity: 0, y: 120 },
+      { duration: 0.45, opacity: 1, y: 0, ease: "none", stagger: 0.05 },
+      0.45
+    );
+
+    return () => {
+      tl.kill();
+      ro.disconnect();
+      ScrollTrigger.getAll().forEach((st) => st.kill());
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    // Outer section: tall scroll track (240vh = the absolute sweet spot for moderate scroll speeds)
+    <div ref={sectionRef} style={{ height: "340vh" }}>
+      {/* Sticky viewport: stays fixed while user scrolls through the 300vh */}
+      <div
+        ref={stickyRef}
+        style={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflow: "hidden",
+        }}
+      >
+        {/* Canvas background — z 0 */}
+        <canvas
+          ref={canvasRef}
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 0,
+            display: "block",
+          }}
+        />
+
+        {/* Gradient overlays — z 1 */}
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-background"
+          style={{ zIndex: 1 }}
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-charcoal/60 to-transparent"
+          style={{ zIndex: 1 }}
+        />
+
+        {/* Spinning ring decoration — z 2 */}
+        <div
+          className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] hidden xl:block"
+          style={{ zIndex: 2 }}
+        >
+          <div className="w-full h-full rounded-full border border-leaf-bright/10 animate-spin-slow" />
+          <div
+            className="absolute inset-8 rounded-full border border-coffee/20"
+            style={{ animation: "spin-slow 30s linear infinite reverse" }}
+          />
+          <div className="absolute inset-20 rounded-full border border-leaf-bright/15" />
+        </div>
+
+        {/* ── STATE 1: Initial text block (visible on load, fades out on scroll) ── */}
+        <div
+          ref={text1Ref}
+          className="container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 pt-24"
+          style={{ zIndex: 3 }}
+        >
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 mb-6">
+              <span className="tag-pill">VLIR-UOS Cooperation</span>
+              <span className="tag-pill tag-coffee">Ethiopia × Belgium</span>
+            </div>
+            <h1
+              ref={h1Ref}
+              className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
+            >
+              {t.home.heroTitle1} {t.home.heroTitle2}
+              <br />
+              <span className="text-gradient-green">CARES</span>
+            </h1>
+            <p
+              ref={sub1Ref}
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl"
+            >
+              {t.home.heroSubtitle}
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                href="/project"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-200 shadow-glow"
+              >
+                {t.home.ctaExplore} <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/research"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-border text-foreground hover:border-leaf-bright/50 transition-all duration-200"
+              >
+                {t.home.ctaResearch} <BookOpen className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ── STATE 2: Replacement text (enters from below as scroll progresses) ── */}
+        <div
+          ref={text2Ref}
+          className="container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 pt-24"
+          style={{ zIndex: 3 }}
+        >
+          <div className="max-w-3xl">
+            <h2
+              ref={h2Ref}
+              className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
+              style={{ opacity: 0, transform: "translateY(120px)" }}
+            >
+              From{" "}
+              <span className="text-gradient-green">Waste</span>
+              <br />
+              to Circular Value
+            </h2>
+            <p
+              ref={sub2Ref}
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl"
+              style={{ opacity: 0, transform: "translateY(120px)" }}
+            >
+              Ethiopian coffee holds the birthplace of arabica — yet its processing
+              leaves behind husks, pulp, and wastewater. CARES converts these
+              by-products into biochar, compost, and biorefinery products that
+              restore soils and uplift farming communities across the Kaffa and
+              Yirgacheffe regions.
+            </p>
+          </div>
+        </div>
+
+        {/* Scroll cue — z 3 */}
+        <a
+          href="#mission"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-leaf-bright transition-colors animate-bounce"
+          style={{ zIndex: 3 }}
+        >
+          <ChevronDown className="w-6 h-6" />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ── Static assets ─────────────────────────────────────────────────────────────
 const soilImg = "/assets/soil-research.jpg";
 const wasteImg = "/assets/waste-research.jpg";
 const socioImg = "/assets/socio-economic.jpg";
@@ -209,66 +489,8 @@ export default function Index({
       : STATIC_NEWS;
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/70 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/60 to-transparent" />
-
-        {/* Circular ring decoration */}
-        <div className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] hidden xl:block">
-          <div className="w-full h-full rounded-full border border-leaf-bright/10 animate-spin-slow" />
-          <div
-            className="absolute inset-8 rounded-full border border-coffee/20"
-            style={{
-              animationDuration: "30s",
-              animation: "spin-slow 30s linear infinite reverse",
-            }}
-          />
-          <div className="absolute inset-20 rounded-full border border-leaf-bright/15" />
-        </div>
-
-        <div className="container mx-auto relative z-10 pt-24">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 mb-6 animate-fade-in-up">
-              <span className="tag-pill">VLIR-UOS Cooperation</span>
-              <span className="tag-pill tag-coffee">Ethiopia × Belgium</span>
-            </div>
-            <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6 animate-fade-in-up-delay">
-              {t.home.heroTitle1} {t.home.heroTitle2}
-              <br />
-              <span className="text-gradient-green">CARES</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl animate-fade-in-up-delay-2">
-              {t.home.heroSubtitle}
-            </p>
-            <div className="flex flex-wrap gap-4 animate-fade-in-up-delay-2">
-              <Link
-                href="/project"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-200 shadow-glow"
-              >
-                {t.home.ctaExplore} <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/research"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-border text-foreground hover:border-leaf-bright/50 transition-all duration-200"
-              >
-                {t.home.ctaResearch} <BookOpen className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <a
-          href="#mission"
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 text-muted-foreground hover:text-leaf-bright transition-colors animate-bounce"
-        >
-          <ChevronDown className="w-6 h-6" />
-        </a>
-      </section>
+      {/* Hero — scroll-scrubbed 3D canvas + two-state text */}
+      <HeroSection t={t as unknown as Record<string, Record<string, string>>} />
 
       {/* Mission */}
       <section id="mission" className="py-24">
