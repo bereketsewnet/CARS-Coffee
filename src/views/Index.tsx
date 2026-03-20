@@ -62,7 +62,9 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
   const h1Ref = useRef<HTMLHeadingElement>(null);    // only the h1 fades out
   const sub1Ref = useRef<HTMLParagraphElement>(null); // subtitle fades out with h1
   const h2Ref = useRef<HTMLHeadingElement>(null);    // only the h2 fades in
-  const sub2Ref = useRef<HTMLParagraphElement>(null); // State 2 subtitle fades in with h2
+  const sub2Ref = useRef<HTMLDivElement>(null);      // State 2 subtitle (now a grid div) fades in with h2
+  const tagsRef = useRef<HTMLDivElement>(null);      // initial tags for entrance animation
+  const btnsRef = useRef<HTMLDivElement>(null);      // initial buttons for entrance animation
 
   // Preloaded frame images
   const imagesRef = useRef<HTMLImageElement[]>([]);
@@ -98,6 +100,21 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
     // ── CRITICAL: hide State 2 elements immediately before any ScrollTrigger
     //    is created, to prevent the 1-second overlap flash on initial load
     gsap.set([h2Ref.current, sub2Ref.current], { opacity: 0, y: 120 });
+
+    // ── INITIAL LOAD ENTRANCE ANIMATION ──────────────────────────────
+    // Hide State 1 elements immediately so they can animate in smoothly
+    const initialElements = [tagsRef.current, h1Ref.current, sub1Ref.current, btnsRef.current];
+    gsap.set(initialElements, { opacity: 0, y: 30 });
+
+    // Trigger the staggered fade/slide-up
+    gsap.to(initialElements, {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      stagger: 0.15,
+      ease: "power3.out",
+      delay: 0.2, // slight delay allows the page to settle and first frame to paint
+    });
 
     // Fit canvas to container
     function fitCanvas() {
@@ -240,25 +257,29 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           style={{ zIndex: 3 }}
         >
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 mb-6">
+            <div ref={tagsRef} className="inline-flex items-center gap-2 mb-6" style={{ opacity: 0, transform: "translateY(30px)" }}>
               <span className="tag-pill">VLIR-UOS Cooperation</span>
               <span className="tag-pill tag-coffee">Ethiopia × Belgium</span>
             </div>
-            <h1
-              ref={h1Ref}
-              className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
-            >
-              {t.home.heroTitle1} {t.home.heroTitle2}
-              <br />
-              <span className="text-gradient-green">CARES</span>
-            </h1>
+            <div className="animate-float">
+              <h1
+                ref={h1Ref}
+                className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
+                style={{ opacity: 0, transform: "translateY(30px)" }}
+              >
+                {t.home.heroTitle1} {t.home.heroTitle2}
+                <br />
+                <span className="text-gradient-green">CARES</span>
+              </h1>
+            </div>
             <p
               ref={sub1Ref}
               className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl"
+              style={{ opacity: 0, transform: "translateY(30px)" }}
             >
               {t.home.heroSubtitle}
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div ref={btnsRef} className="flex flex-wrap gap-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
               <Link
                 href="/project"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-200 shadow-glow"
@@ -275,34 +296,38 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           </div>
         </div>
 
-        {/* ── STATE 2: Replacement text (enters from below as scroll progresses) ── */}
+        {/* ── STATE 2: Replacement (enters from below as scroll progresses) ── */}
         <div
           ref={text2Ref}
           className="container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 pt-24"
           style={{ zIndex: 3 }}
         >
-          <div className="max-w-3xl">
-            <h2
-              ref={h2Ref}
-              className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
-              style={{ opacity: 0, transform: "translateY(120px)" }}
-            >
-              From{" "}
-              <span className="text-gradient-green">Waste</span>
-              <br />
-              to Circular Value
-            </h2>
-            <p
-              ref={sub2Ref}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl"
-              style={{ opacity: 0, transform: "translateY(120px)" }}
-            >
-              Ethiopian coffee holds the birthplace of arabica — yet its processing
-              leaves behind husks, pulp, and wastewater. CARES converts these
-              by-products into biochar, compost, and biorefinery products that
-              restore soils and uplift farming communities across the Kaffa and
-              Yirgacheffe regions.
-            </p>
+          <div className="max-w-4xl">
+            <div className="animate-float">
+              <h2
+                ref={h2Ref}
+                className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
+                style={{ opacity: 0, transform: "translateY(120px)" }}
+              >
+                Delivering<br />
+                <span className="text-gradient-green"> Circular Impact</span>
+              </h2>
+              <div
+                ref={sub2Ref}
+                className="flex gap-6 md:gap-10 items-center flex-wrap"
+                style={{ opacity: 0, transform: "translateY(120px)" }}
+              >
+                <div className="border-l border-border pl-6 first:border-0 first:pl-0">
+                  <HeroCounter target={3} suffix="" label="Research Pillars" />
+                </div>
+                <div className="border-l border-border pl-6">
+                  <HeroCounter target={2} suffix="" label="Partner Countries" />
+                </div>
+                <div className="border-l border-border pl-6">
+                  <HeroCounter target={5} suffix="+" label="Years Impact" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -323,6 +348,50 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
 const soilImg = "/assets/soil-research.jpg";
 const wasteImg = "/assets/waste-research.jpg";
 const socioImg = "/assets/socio-economic.jpg";
+
+function HeroCounter({ target, suffix, label }: { target: number; suffix: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) setStarted(true);
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [started]);
+
+  useEffect(() => {
+    if (!started) return;
+    const duration = 2000;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else setCount(Math.floor(current));
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [started, target]);
+
+  return (
+    <div ref={ref} className="flex flex-col">
+      <span className="text-4xl md:text-5xl font-bold text-leaf-bright mb-1 font-serif">
+        {count}{suffix}
+      </span>
+      <span className="text-muted-foreground text-xs md:text-sm uppercase tracking-wider font-semibold">
+        {label}
+      </span>
+    </div>
+  );
+}
 
 function CounterStat({
   target,
