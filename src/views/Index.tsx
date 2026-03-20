@@ -4,12 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
+  ArrowUpRight,
   Leaf,
   Recycle,
   Users,
-  TrendingUp,
   BookOpen,
   ChevronDown,
+  Calendar,
+  Microscope,
+  Handshake,
 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -632,6 +635,37 @@ export default function Index({
     latestNews && latestNews.length > 0
       ? latestNews.map(toNewsRow)
       : STATIC_NEWS;
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      // Single elements fade up smoothly when scrolling into view
+      gsap.utils.toArray<HTMLElement>('.fade-up').forEach((el) => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1, y: 0, duration: 1, ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 85%" }
+          }
+        );
+      });
+
+      // Grid containers cascade their children smoothly one by one
+      gsap.utils.toArray<HTMLElement>('.stagger-grid').forEach((grid) => {
+        const items = grid.querySelectorAll('.stagger-item');
+        gsap.fromTo(Array.from(items),
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1, y: 0, duration: 1, ease: "power3.out", stagger: 0.15,
+            scrollTrigger: { trigger: grid, start: "top 85%" }
+          }
+        );
+      });
+    });
+
+    return () => ctx.revert(); // Automatically cleans up triggers on unmount
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero — scroll-scrubbed 3D canvas + two-state text */}
@@ -665,7 +699,7 @@ export default function Index({
       {/* Pillars */}
       <section className="py-24 bg-charcoal-mid">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 fade-up">
             <span className="tag-pill mb-4 inline-block">
               Research Framework
             </span>
@@ -673,12 +707,12 @@ export default function Index({
               {t.home.pillarsTitle}
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 stagger-grid">
             {pillars.map((pillar) => (
               <Link
                 href={pillar.link}
                 key={pillar.title}
-                className="pillar-hover group"
+                className="pillar-hover group stagger-item"
               >
                 <div className="rounded-2xl overflow-hidden shadow-card border border-border bg-card h-full flex flex-col">
                   <div className="relative h-52 overflow-hidden">
@@ -743,82 +777,123 @@ export default function Index({
       </section>
 
       {/* Latest News */}
-      <section className="py-24 bg-charcoal-mid">
-        <div className="container mx-auto">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <span className="tag-pill mb-3 inline-block">Latest</span>
-              <h2 className="font-serif text-4xl font-bold">
+      <section className="py-24 md:py-32 relative bg-charcoal-mid overflow-hidden border-t border-border">
+        {/* Subtle premium background glow effects */}
+        <div className="absolute top-0 left-1/4 w-full max-w-[600px] h-[600px] bg-leaf-bright/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-full max-w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 fade-up">
+            <div className="max-w-xl">
+              <span className="text-leaf-bright text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
+                CARES Updates
+              </span>
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight">
                 {t.home.latestTitle}
               </h2>
             </div>
             <Link
               href="/news"
-              className="hidden md:flex items-center gap-1 text-leaf-bright hover:text-leaf-bright/80 font-medium transition-colors text-sm"
+              className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group"
             >
-              All news <ArrowRight className="w-4 h-4" />
+              All updates{" "}
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
 
-          {/* Card grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {news.map((item) => (
-              <Link
-                key={item.id}
-                href={`/news/${encodeURIComponent(item.id)}`}
-                className="glass-card rounded-2xl border border-border overflow-hidden pillar-hover group flex flex-col"
-              >
-                {/* Image / placeholder */}
-                <div className="h-44 bg-gradient-to-br from-charcoal-mid to-charcoal overflow-hidden flex-shrink-0">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <div className="w-14 h-14 rounded-full gradient-green flex items-center justify-center text-2xl shadow-glow">
-                        {item.tag === "Event"
-                          ? "📅"
-                          : item.tag === "Partnership"
-                            ? "🤝"
-                            : "🔬"}
-                      </div>
+          {/* Premium Inspired Card Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-grid">
+            {news.map((item) => {
+              // Dynamically assign themes based on the tag (Event vs News vs Partnership)
+              const isEvent = item.tag === "Event";
+              const isPartnership = item.tag === "Partnership";
+
+              const themeColor = isEvent
+                ? "text-amber-500"
+                : isPartnership
+                  ? "text-blue-400"
+                  : "text-leaf-bright";
+
+              const themeBg = isEvent
+                ? "bg-amber-500/10"
+                : isPartnership
+                  ? "bg-blue-400/10"
+                  : "bg-leaf-bright/10";
+
+              const themeHoverGlow = isEvent
+                ? "group-hover:bg-amber-500/5"
+                : isPartnership
+                  ? "group-hover:bg-blue-400/5"
+                  : "group-hover:bg-leaf-bright/5";
+
+              // Icon logic
+              const Icon = isEvent ? Calendar : isPartnership ? Handshake : Microscope;
+
+              return (
+                <Link
+                  key={item.id}
+                  href={`/news/${encodeURIComponent(item.id)}`}
+                  className="group stagger-item flex flex-col p-8 rounded-3xl bg-charcoal border border-border hover:border-border/80 shadow-sm transition-all duration-500 relative overflow-hidden"
+                >
+                  {/* Subtle top interior glow on hover */}
+                  <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${themeHoverGlow} to-transparent opacity-0 transition-opacity duration-500 pointer-events-none`} />
+
+                  {/* Optional faded background image if an image exists */}
+                  {item.image && (
+                    <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+                      <img src={item.image} alt="" className="w-full h-full object-cover grayscale mix-blend-overlay" />
                     </div>
                   )}
-                </div>
 
-                {/* Content */}
-                <div className="p-5 flex flex-col flex-1">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="tag-pill text-xs">{item.tag}</span>
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      {item.date}
-                    </span>
+                  <div className="relative z-10 flex flex-col h-full">
+                    {/* Header: Icon + Tag */}
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className={`w-12 h-12 rounded-full ${themeBg} flex items-center justify-center`}>
+                        <Icon className={`w-5 h-5 ${themeColor}`} strokeWidth={2.5} />
+                      </div>
+                      <div>
+                        <span className={`block text-sm font-bold tracking-wide ${themeColor}`}>
+                          {item.tag}
+                        </span>
+                        <span className="block text-xs text-muted-foreground uppercase tracking-wider mt-0.5">
+                          {item.date}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-serif font-semibold text-2xl leading-snug mb-4 text-foreground group-hover:text-leaf-bright transition-colors">
+                      {item.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    {item.excerpt && (
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-10 line-clamp-3 font-sans">
+                        {item.excerpt}
+                      </p>
+                    )}
+
+                    {/* Footer / Read More linked text */}
+                    <div className="mt-auto pt-6 border-t border-border">
+                      <div className={`flex items-center gap-2 text-sm font-bold tracking-wide ${themeColor}`}>
+                        {t.common.readMore}
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="font-serif font-semibold text-base leading-snug mb-2 group-hover:text-leaf-bright transition-colors flex-1">
-                    {item.title}
-                  </h3>
-                  {item.excerpt && (
-                    <p className="text-muted-foreground text-sm line-clamp-2 mb-3">
-                      {item.excerpt}
-                    </p>
-                  )}
-                  <div className="flex items-center gap-1 text-xs text-leaf-bright pt-2 border-t border-border mt-auto">
-                    {t.common.readMore} <ArrowRight className="w-3 h-3" />
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
 
-          <div className="mt-6 md:hidden text-center">
+          <div className="mt-10 md:hidden text-center">
             <Link
               href="/news"
-              className="inline-flex items-center gap-1 text-leaf-bright font-medium text-sm"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-white transition-colors group"
             >
-              All news <ArrowRight className="w-4 h-4" />
+              All updates{" "}
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
@@ -827,35 +902,38 @@ export default function Index({
       {/* Partners */}
       <PartnersSection />
 
-      {/* CTA */}
-      <section className="py-24">
+      {/* CTA Section */}
+      <section className="py-24 md:py-32 px-4 md:px-6">
         <div className="container mx-auto">
-          <div
-            className="relative rounded-3xl overflow-hidden p-12 md:p-20 text-center border-gradient shadow-elevated"
-            style={{ background: "var(--gradient-hero)" }}
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-leaf/10 blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-coffee/20 blur-3xl" />
-            <div className="relative z-10">
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+          <div className="relative rounded-[2.5rem] overflow-hidden p-12 md:p-24 text-center bg-[#0a0a0a] border border-border shadow-2xl fade-up">
+            {/* Cinematic background gradients */}
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-coffee/10 via-transparent to-leaf-bright/5 pointer-events-none" />
+            
+            {/* Soft isolated radial blurs */}
+            <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[70%] bg-coffee/20 blur-[130px] rounded-full pointer-events-none mix-blend-screen" />
+            <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[70%] bg-leaf-bright/15 blur-[130px] rounded-full pointer-events-none mix-blend-screen" />
+            
+            <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight tracking-tight">
                 Join the Circular Economy
               </h2>
-              <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
+              <p className="text-muted-foreground md:text-lg mb-12 max-w-xl leading-relaxed">
                 Whether you're a researcher, farmer, policy maker, or
                 development professional — there's a role for you in this story.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
+              
+              <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto justify-center">
                 <Link
                   href="/contact"
-                  className="px-8 py-3.5 rounded-full font-semibold bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all shadow-glow"
+                  className="w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 rounded-full font-bold text-sm md:text-base bg-[#2a8043] text-white hover:bg-[#349e53] transition-all duration-300 shadow-[0_0_40px_rgba(42,128,67,0.2)] hover:shadow-[0_0_50px_rgba(42,128,67,0.4)] hover:-translate-y-1"
                 >
                   Get Involved
                 </Link>
                 <Link
                   href="/library"
-                  className="px-8 py-3.5 rounded-full font-semibold border border-border text-foreground hover:border-leaf-bright/50 transition-all"
+                  className="group w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 rounded-full font-semibold text-sm md:text-base border border-border bg-[#141414] text-foreground hover:bg-[#1a1a1a] hover:border-leaf-bright/40 transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-1"
                 >
-                  <TrendingUp className="inline w-4 h-4 mr-2" />
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-leaf-bright transition-colors duration-300" />
                   Publications
                 </Link>
               </div>
