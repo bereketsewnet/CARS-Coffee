@@ -21,8 +21,14 @@ export default function TheProject() {
   return (
     <div className="min-h-screen pt-24">
       {/* Hero */}
-      <section className="py-20 bg-charcoal-mid">
-        <div className="container mx-auto">
+      <section className="py-20 bg-charcoal-mid relative overflow-hidden">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/assets/page-bg/the-project.webp')" }}
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
+        <div className="container mx-auto relative z-10">
           <div className="max-w-3xl">
             <span className="tag-pill mb-4 inline-block">About the Project</span>
             <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6">

@@ -84,11 +84,17 @@ export default function NewsEvents({
 
   return (
     <div className="min-h-screen pt-24">
-      <section className="py-20 bg-charcoal-mid">
-        <div className="container mx-auto">
+      <section className="py-20 bg-charcoal-mid relative overflow-hidden">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/assets/page-bg/news.webp')" }}
+        />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
+        <div className="container mx-auto relative z-10">
           <span className="tag-pill mb-4 inline-block">Stay Updated</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            News & <span className="text-gradient-green">Events</span>
+            News &amp; <span className="text-gradient-green">Events</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
             Project milestones, field stories, upcoming events, and policy
