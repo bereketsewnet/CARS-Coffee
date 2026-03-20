@@ -3,6 +3,7 @@
 import { Quote } from "lucide-react";
 import type { ImpactMetric } from "../../generated/prisma-client";
 import dynamic from "next/dynamic";
+import PartnersSection from "@/components/PartnersSection/PartnersSection";
 
 const ProjectMap = dynamic(() => import("@/components/ProjectMap"), {
   ssr: false,
@@ -14,12 +15,10 @@ const ProjectMap = dynamic(() => import("@/components/ProjectMap"), {
 type MetricDisplay = { value: string; label: string; sub: string };
 
 const staticMetrics: MetricDisplay[] = [
-  { value: "1,200+", label: "Farmers Reached", sub: "Across 3 zones" },
-  { value: "34%", label: "Soil Fertility Gain", sub: "Compost trials avg." },
-  { value: "42%", label: "Waste Reduction", sub: "Processing station level" },
-  { value: "18–26%", label: "Income Increase", sub: "Net farm income" },
-  { value: "8", label: "PhD Candidates", sub: "Currently enrolled" },
-  { value: "12", label: "Publications", sub: "Journals & reports" },
+  { value: "1,240", label: "Farmers Reached", sub: "Across 3 zones" },
+  { value: "340", label: "Tonnes Composted", sub: "Coffee husk & pulp" },
+  { value: "680", label: "Ha Under Circular Practice", sub: "Farm level adoption" },
+  { value: "22%", label: "Average Income Increase", sub: "Net farm income" },
 ];
 
 const testimonials = [
@@ -34,8 +33,6 @@ const testimonials = [
     role: "Cooperative Manager, Yirgacheffe",
   },
 ];
-
-const partners = ["Yirgacheffe Coffee Farmers Cooperative", "Kaffa Zone Agricultural Bureau", "Ethiopian Institute of Agricultural Research", "SNV Netherlands Development Organization", "IFPRI", "Ministry of Agriculture Ethiopia"];
 
 export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[] }) {
   const metrics: MetricDisplay[] =
@@ -68,7 +65,7 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
           <div className="text-center mb-14">
             <h2 className="font-serif text-4xl font-bold">Impact Metrics</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {metrics.map((m) => (
               <div key={m.label} className="glass-card rounded-2xl p-6 border border-border text-center pillar-hover">
                 <div className="font-serif text-3xl font-bold text-leaf-bright mb-1">{m.value}</div>
@@ -108,21 +105,7 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
       </section>
 
       {/* Partners */}
-      <section className="py-20">
-        <div className="container mx-auto">
-          <div className="text-center mb-14">
-            <span className="tag-pill mb-4 inline-block">Collaboration</span>
-            <h2 className="font-serif text-4xl font-bold">Our Partners</h2>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {partners.map((p) => (
-              <div key={p} className="glass-card rounded-xl px-6 py-3 border border-border text-sm text-muted-foreground hover:text-foreground hover:border-leaf-bright/40 transition-all cursor-pointer">
-                {p}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PartnersSection />
 
       {/* Interactive Map */}
       <section className="py-20 bg-charcoal-mid">

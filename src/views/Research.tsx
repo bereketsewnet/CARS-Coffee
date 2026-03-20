@@ -60,7 +60,7 @@ const PILLARS = [
     tag: "Pillar 1",
     title: "Soil Health",
     tagline: "Restoring Ethiopia's farmland through coffee waste valorization",
-    image: "/assets/soil-research.jpg",
+    image: "/assets/research-soil.webp",
     accentColor: "text-leaf-bright",
     tagClass: "",
   },
@@ -71,7 +71,7 @@ const PILLARS = [
     tag: "Pillar 2",
     title: "Waste Valorization",
     tagline: "Transforming processing by-products into high-value resources",
-    image: "/assets/waste-research.jpg",
+    image: "/assets/research-waste.webp",
     accentColor: "text-coffee-light",
     tagClass: "tag-coffee",
   },
@@ -82,7 +82,7 @@ const PILLARS = [
     tag: "Pillar 3",
     title: "Socio-Economic Impact",
     tagline: "People at the centre of circular transformation",
-    image: "/assets/socio-economic.jpg",
+    image: "/assets/research-socio.webp",
     accentColor: "text-leaf-bright",
     tagClass: "",
   },
@@ -141,8 +141,9 @@ function PillarCard({ pillar, topics, pubLines }: PillarCardProps) {
 
           {/* Right – image + publications */}
           <div>
-            <div className="rounded-2xl overflow-hidden shadow-elevated mb-6">
+            <div className="relative rounded-2xl overflow-hidden shadow-elevated mb-6">
               <img src={pillar.image} alt={pillar.title} className="w-full h-72 object-cover" />
+              <div className="absolute inset-0 bg-charcoal/40" />
             </div>
 
             {pubLines.length > 0 && (
