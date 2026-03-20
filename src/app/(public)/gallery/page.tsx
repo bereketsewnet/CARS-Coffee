@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import Image from "next/image";
 import { Folder, Calendar } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface GalleryImage {
   id: number;
@@ -61,6 +62,7 @@ const FilmstripGrid = memo(({
 FilmstripGrid.displayName = "FilmstripGrid";
 
 export default function GalleryPage() {
+  const { t, lang } = useLanguage();
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -96,15 +98,15 @@ export default function GalleryPage() {
           id: i,
           filename: f,
           url: "/cares-gallery/" + encodeURIComponent(f),
-          title: "Field Record: " + f.replace(/\.(webp|jpg|png|jpeg)$/i, "").replace(/[-_]/g, " ").toUpperCase(),
+          title: t.gallery.fieldRecord + " " + f.replace(/\.(webp|jpg|png|jpeg)$/i, "").replace(/[-_]/g, " ").toUpperCase(),
           category: "SURVEY DATA",
           date: "2026-ARCHIVE",
-          caption: "Captured field telemetry representing elements of the circular coffee supply chain framework."
+          caption: t.gallery.caption
         }));
         setImages(parsed);
       })
       .catch((err) => console.error("Failed to load gallery images", err));
-  }, []);
+  }, [t.gallery]);
 
   // 1. Native DOM class injection to avoid React layout thrashing on tick
   useEffect(() => {
@@ -183,7 +185,7 @@ export default function GalleryPage() {
   if (images.length === 0) {
     return (
       <div className="min-h-screen bg-background text-leaf-bright flex items-center justify-center font-mono text-lg pt-24 animate-pulse">
-        INITIALIZING ARCHIVE...
+        {t.gallery.init}
       </div>
     );
   }
@@ -208,12 +210,12 @@ export default function GalleryPage() {
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
-          <span className="tag-pill mb-4 inline-block">Field Archive</span>
+          <span className="tag-pill mb-4 inline-block">{t.gallery.pill}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 text-foreground">
-            CARES <span className="text-gradient-green">&amp;</span> Gallery
+            {t.gallery.title1} <span className="text-gradient-green">&amp;</span> {t.gallery.title2}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Visual documentation of field research, telemetry captures, and circular economy implementation across the Ethiopian coffee supply chain architecture.
+            {t.gallery.desc}
           </p>
         </div>
       </section>
@@ -268,11 +270,11 @@ export default function GalleryPage() {
           >
             <div className="flex justify-between items-end mb-3 px-2">
               <span className="text-xs font-mono text-muted-foreground tracking-widest leading-none">
-                <span className="text-foreground">{currentIndex + 1}</span> / {images.length} RECORDS
+                <span className="text-foreground">{currentIndex + 1}</span> / {images.length} {t.gallery.records}
               </span>
               <span className={`text-[10px] font-mono flex items-center gap-2 ${isFilmstripHovered || isMainHovered ? "text-muted-foreground" : "text-leaf-bright"} uppercase tracking-wider`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${isFilmstripHovered || isMainHovered ? "bg-muted-foreground" : "bg-leaf-bright animate-pulse"}`} />
-                {isFilmstripHovered || isMainHovered ? "SYNC PAUSED" : "AUTO-SYNC ACTIVE"}
+                {isFilmstripHovered || isMainHovered ? t.gallery.syncPaused : t.gallery.syncActive}
               </span>
             </div>
             
@@ -315,7 +317,7 @@ export default function GalleryPage() {
 
             <div className="mt-auto pt-8">
                <p className="text-xs text-muted-foreground italic">
-                 Explore the field records capturing crucial elements of the resilient circular supply chain matrix.
+                 {t.gallery.contextDesc}
                </p>
             </div>
           </div>
@@ -327,8 +329,8 @@ export default function GalleryPage() {
       {/* ADDITIONAL CREATIVE CONTENT SECION */}
       <section className="max-w-7xl mx-auto w-full mt-16 pb-16">
         <div className="mb-10 text-center lg:text-left">
-          <h3 className="font-serif text-3xl md:text-4xl text-foreground mb-3 tracking-tight">Archive Context Overview</h3>
-          <p className="text-muted-foreground max-w-2xl text-base">Key strategic pillars from our field telemetry operations in the Ethiopian landscape.</p>
+          <h3 className="font-serif text-3xl md:text-4xl text-foreground mb-3 tracking-tight">{t.gallery.overviewTitle}</h3>
+          <p className="text-muted-foreground max-w-2xl text-base">{t.gallery.overviewDesc}</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -336,9 +338,9 @@ export default function GalleryPage() {
             <div className="w-12 h-12 rounded-xl bg-leaf-bright/10 text-leaf-bright flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <h4 className="text-xl font-bold text-foreground mb-3">Valorization Scope</h4>
+            <h4 className="text-xl font-bold text-foreground mb-3">{t.gallery.valTitle}</h4>
             <p className="text-sm text-foreground/70 leading-relaxed font-light">
-              Transforming biological waste metrics actively analyzed in our latest research batch. Quantifying pulp conversions directly from raw farm origins.
+              {t.gallery.valDesc}
             </p>
           </div>
           
@@ -346,9 +348,9 @@ export default function GalleryPage() {
             <div className="w-12 h-12 rounded-xl bg-leaf-bright/10 text-leaf-bright flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
             </div>
-            <h4 className="text-xl font-bold text-foreground mb-3">Dataset Coverage</h4>
+            <h4 className="text-xl font-bold text-foreground mb-3">{t.gallery.dataTitle}</h4>
             <p className="text-sm text-foreground/70 leading-relaxed font-light">
-              Over {images.length} direct architectural telemetry captures forming our predictive circular grid model spanning 4 primary districts.
+              {lang === 'am' ? "" : "Over "} {images.length} {t.gallery.dataDesc}
             </p>
           </div>
           
@@ -356,9 +358,9 @@ export default function GalleryPage() {
             <div className="w-12 h-12 rounded-xl bg-leaf-bright/10 text-leaf-bright flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
             </div>
-            <h4 className="text-xl font-bold text-foreground mb-3">Network Synergy</h4>
+            <h4 className="text-xl font-bold text-foreground mb-3">{t.gallery.netTitle}</h4>
             <p className="text-sm text-foreground/70 leading-relaxed font-light">
-              Connecting localized agricultural outputs to high-value bio-conversion pipelines utilizing real-time sensor evaluations.
+              {t.gallery.netDesc}
             </p>
           </div>
         </div>

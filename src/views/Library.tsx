@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { Publication as DbPub } from "../../generated/prisma-client";
 
 type PubType =
@@ -178,10 +179,29 @@ export default function Library({
 }: {
   publications?: DbPub[];
 }) {
+  const { t } = useLanguage();
+
   const publications: PubRow[] =
     dbPublications && dbPublications.length > 0
       ? dbPublications.map(dbToPubRow)
       : staticPublications;
+
+  const typeLabels: Record<PubType, string> = {
+    All: t.library.types.all,
+    Journal: t.library.types.journal,
+    "Policy Brief": t.library.types.policy,
+    Manual: t.library.types.manual,
+    Poster: t.library.types.poster,
+    Conference: t.library.types.conference,
+    Report: t.library.types.report,
+  };
+
+  const pillarLabels: Record<Pillar, string> = {
+    All: t.library.pillars.all,
+    "Soil Health": t.library.pillars.soil,
+    "Waste Valorization": t.library.pillars.waste,
+    "Socio-Economic": t.library.pillars.socio,
+  };
 
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<PubType>("All");
@@ -241,13 +261,12 @@ export default function Library({
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">Publications</span>
+          <span className="tag-pill mb-4 inline-block">{t.library.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Research <span className="text-gradient-green">Library</span>
+            {t.library.heroTitle1} <span className="text-gradient-green">{t.library.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Browse, filter, and download all research outputs from the Circular
-            Coffee project.
+            {t.library.heroDesc}
           </p>
         </div>
       </section>
@@ -260,7 +279,7 @@ export default function Library({
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search by title or author..."
+                placeholder={t.library.searchPlaceholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-leaf/50"
@@ -272,13 +291,13 @@ export default function Library({
                   Type
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {types.map((t) => (
+                  {types.map((tKey) => (
                     <button
-                      key={t}
-                      onClick={() => setTypeFilter(t)}
-                      className={`text-xs px-3 py-1.5 rounded-full transition-colors ${typeFilter === t ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+                      key={tKey}
+                      onClick={() => setTypeFilter(tKey)}
+                      className={`text-xs px-3 py-1.5 rounded-full transition-colors ${typeFilter === tKey ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
                     >
-                      {t}
+                      {typeLabels[tKey]}
                     </button>
                   ))}
                 </div>
@@ -294,7 +313,7 @@ export default function Library({
                       onClick={() => setPillarFilter(p)}
                       className={`text-xs px-3 py-1.5 rounded-full transition-colors ${pillarFilter === p ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
                     >
-                      {p}
+                      {pillarLabels[p]}
                     </button>
                   ))}
                 </div>
@@ -339,9 +358,9 @@ export default function Library({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="tag-pill text-xs">{pub.pillar}</span>
+                        {pub.pillar && <span className="tag-pill text-xs">{pillarLabels[pub.pillar]}</span>}
                         <span className="tag-pill tag-coffee text-xs">
-                          {pub.type}
+                          {typeLabels[pub.type]}
                         </span>
                         <span className="text-xs text-muted-foreground">
                           {pub.year}
@@ -371,7 +390,7 @@ export default function Library({
                           target="_blank"
                           rel="noreferrer"
                           className="p-2 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-leaf-bright"
-                          title={pub.doi ? "Open DOI" : "Open URL"}
+                          title={t.library.viewDoc}
                         >
                           <ExternalLink className="w-4 h-4" />
                         </a>
@@ -383,7 +402,7 @@ export default function Library({
                           target="_blank"
                           rel="noreferrer"
                           className="p-2 rounded-lg hover:bg-leaf/20 transition-colors text-leaf-bright hover:text-leaf-bright"
-                          title="Download PDF"
+                          title={t.library.download}
                         >
                           <Download className="w-4 h-4" />
                         </a>

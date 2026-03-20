@@ -2,27 +2,12 @@
 
 import { useState } from "react";
 import { Leaf, Recycle, Users, ChevronDown, ChevronUp, BookOpen } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ResearchProject, Publication } from "../../generated/prisma-client";
 
 // ── Static fallback data ─────────────────────────────────────────────────────
 
-const STATIC_TOPICS: Record<string, { title: string; desc: string }[]> = {
-  SOIL_HEALTH: [
-    { title: "Composting Coffee Husk", desc: "Field trials demonstrate that husk compost increases organic matter by up to 28%, reducing dependency on chemical fertilizers." },
-    { title: "Biochar Research", desc: "Pyrolysis of coffee waste creates stable biochar that improves water retention and carbon sequestration in degraded soils." },
-    { title: "Soil Fertility Trials", desc: "Longitudinal trials in Kaffa and Sidama zones monitor nitrogen, phosphorus, and microbiome changes under compost treatments." },
-  ],
-  WASTE_VALORIZATION: [
-    { title: "Coffee Pulp Reuse", desc: "Anaerobic digestion of coffee pulp generates biogas for local energy use, with digestate as secondary fertilizer." },
-    { title: "Wastewater Treatment", desc: "Constructed wetlands and bio-filters reduce BOD/COD in coffee wastewater to safe discharge standards." },
-    { title: "Biorefinery Models", desc: "Integration of multiple valorization streams — cascading pulp → biogas → digestate → compost — maximizes resource efficiency." },
-  ],
-  SOCIO_ECONOMIC: [
-    { title: "Smallholder Income", desc: "Participatory value chain analysis shows circular methods can increase net farm income by 18–26%." },
-    { title: "Cooperative Integration", desc: "Working with Yirgacheffe and Kaffa cooperatives to institutionalize circular practices at processing station level." },
-    { title: "Gender & Youth Inclusion", desc: "Dedicated gender-sensitive extension programming ensuring women and youth capture benefits from new value streams." },
-  ],
-};
+// Replaced by inline definitions below.
 
 const STATIC_PUBS: Record<string, string[]> = {
   SOIL_HEALTH: [
@@ -39,11 +24,7 @@ const STATIC_PUBS: Record<string, string[]> = {
   ],
 };
 
-const LAYMAN: Record<string, string> = {
-  SOIL_HEALTH: "Coffee leftovers — husks and pulp — are turned into natural fertilizer and charcoal. Mixed into farm soil, they help retain water and grow better crops. Farmers who use this method report healthier harvests.",
-  WASTE_VALORIZATION: "After coffee beans are removed, huge amounts of fruit and water remain. Instead of dumping this into rivers, we use it to make cooking gas and clean the dirty water so it no longer harms fish or crops nearby.",
-  SOCIO_ECONOMIC: "Small coffee farmers often earn very little because they throw away most of the coffee cherry. We teach them how to sell or use these 'wastes' — which means more money for the family and less pollution in their villages.",
-};
+// Replaced by inline definitions inside components.
 
 function formatPub(p: Publication): string {
   const authorShort = p.authors.split(",")[0].trim() + (p.authors.includes(",") ? " et al." : "");
@@ -52,52 +33,47 @@ function formatPub(p: Publication): string {
 
 // ── Pillar config (decorative / structural) ──────────────────────────────────
 
-const PILLARS = [
+const BASE_PILLARS = [
   {
     key: "SOIL_HEALTH",
     id: "soil",
     icon: Leaf,
-    tag: "Pillar 1",
-    title: "Soil Health",
-    tagline: "Restoring Ethiopia's farmland through coffee waste valorization",
     image: "/assets/research-soil.webp",
     accentColor: "text-leaf-bright",
     tagClass: "",
+    title: "Soil Health",
   },
   {
     key: "WASTE_VALORIZATION",
     id: "waste",
     icon: Recycle,
-    tag: "Pillar 2",
-    title: "Waste Valorization",
-    tagline: "Transforming processing by-products into high-value resources",
     image: "/assets/research-waste.webp",
     accentColor: "text-coffee-light",
     tagClass: "tag-coffee",
+    title: "Waste Valorization",
   },
   {
     key: "SOCIO_ECONOMIC",
     id: "socio",
     icon: Users,
-    tag: "Pillar 3",
-    title: "Socio-Economic Impact",
-    tagline: "People at the centre of circular transformation",
     image: "/assets/research-socio.webp",
     accentColor: "text-leaf-bright",
     tagClass: "",
+    title: "Socio-Economic Impact",
   },
 ] as const;
 
 // ── PillarCard ────────────────────────────────────────────────────────────────
 
 interface PillarCardProps {
-  pillar: typeof PILLARS[number];
+  pillar: typeof BASE_PILLARS[number] & { tag: string; tagline: string; title: string };
   topics: { title: string; desc: string }[];
   pubLines: string[];
 }
 
-function PillarCard({ pillar, topics, pubLines }: PillarCardProps) {
+function PillarCard({ pillar, topics, pubLines, layman }: PillarCardProps & { layman: string }) {
   const [showLayman, setShowLayman] = useState(false);
+  const { t } = useLanguage();
   const Icon = pillar.icon;
 
   return (
@@ -129,12 +105,12 @@ function PillarCard({ pillar, topics, pubLines }: PillarCardProps) {
               className="mt-6 flex items-center gap-2 text-sm text-muted-foreground hover:text-leaf-bright transition-colors"
             >
               {showLayman ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              {showLayman ? "Hide" : "Show"} plain-language summary
+              {showLayman ? t.research.hide : t.research.show} {t.research.summary}
             </button>
 
             {showLayman && (
               <div className="mt-3 p-4 rounded-xl bg-accent/30 border border-border text-sm text-muted-foreground leading-relaxed animate-fade-in">
-                {LAYMAN[pillar.key]}
+                {layman}
               </div>
             )}
           </div>
@@ -151,7 +127,7 @@ function PillarCard({ pillar, topics, pubLines }: PillarCardProps) {
                 <h4 className="font-serif font-semibold text-sm uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
                   {pillar.title}
-                  <span className="opacity-60">— Related Publications</span>
+                  <span className="opacity-60">— {t.research.relatedPubs}</span>
                 </h4>
                 <ul className="space-y-2">
                   {pubLines.map((pub) => (
@@ -182,6 +158,50 @@ export default function Research({
   projects?: ResearchProject[];
   publications?: Publication[];
 }) {
+  const { t } = useLanguage();
+
+  const PILLARS = [
+    {
+      ...BASE_PILLARS[0],
+      tag: t.research.p1,
+      tagline: t.research.soilTag,
+    },
+    {
+      ...BASE_PILLARS[1],
+      tag: t.research.p2,
+      tagline: t.research.wasteTag,
+    },
+    {
+      ...BASE_PILLARS[2],
+      tag: t.research.p3,
+      tagline: t.research.socioTag,
+    },
+  ];
+
+  const STATIC_TOPICS: Record<string, { title: string; desc: string }[]> = {
+    SOIL_HEALTH: [
+      { title: t.research.t1, desc: t.research.d1 },
+      { title: t.research.t2, desc: t.research.d2 },
+      { title: t.research.t3, desc: t.research.d3 },
+    ],
+    WASTE_VALORIZATION: [
+      { title: t.research.t4, desc: t.research.d4 },
+      { title: t.research.t5, desc: t.research.d5 },
+      { title: t.research.t6, desc: t.research.d6 },
+    ],
+    SOCIO_ECONOMIC: [
+      { title: t.research.t7, desc: t.research.d7 },
+      { title: t.research.t8, desc: t.research.d8 },
+      { title: t.research.t9, desc: t.research.d9 },
+    ],
+  };
+
+  const LAYMAN: Record<string, string> = {
+    SOIL_HEALTH: t.research.laymanSoil,
+    WASTE_VALORIZATION: t.research.laymanWaste,
+    SOCIO_ECONOMIC: t.research.laymanSocio,
+  };
+
   return (
     <div className="min-h-screen pt-24">
       {/* Hero */}
@@ -193,12 +213,12 @@ export default function Research({
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">Academic Research</span>
+          <span className="tag-pill mb-4 inline-block">{t.research.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Research &amp; <span className="text-gradient-green">Pillars</span>
+            {t.research.heroTitle1} <span className="text-gradient-green">{t.research.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Three interconnected research areas forming the scientific backbone of the Circular Coffee project.
+            {t.research.heroDesc}
           </p>
           {/* Pillar nav anchors */}
           <div className="flex flex-wrap gap-3 mt-6">
@@ -233,6 +253,7 @@ export default function Research({
             pillar={pillar}
             topics={dbTopics}
             pubLines={dbPubs}
+            layman={LAYMAN[pillar.key]}
           />
         );
       })}

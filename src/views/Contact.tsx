@@ -1,11 +1,13 @@
-﻿"use client";
+"use client";
 
 import { useState, useTransition } from "react";
 import { Mail, MapPin, Send, CheckCircle, Loader2 } from "lucide-react";
 import { submitContactForm } from "@/lib/actions/contact";
 import { subscribeNewsletter } from "@/lib/actions/newsletter";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
@@ -71,12 +73,12 @@ export default function Contact() {
     <div className="min-h-screen pt-24">
       <section className="py-20 bg-charcoal-mid">
         <div className="container mx-auto">
-          <span className="tag-pill mb-4 inline-block">Get In Touch</span>
+          <span className="tag-pill mb-4 inline-block">{t.contact.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Contact <span className="text-gradient-green">Us</span>
+            {t.contact.heroTitle1} <span className="text-gradient-green">{t.contact.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Whether you're a researcher, farmer, funder, or curious mind — we'd love to hear from you.
+            {t.contact.heroDesc}
           </p>
         </div>
       </section>
@@ -106,16 +108,16 @@ export default function Contact() {
                   }}
                   className="mt-6 text-sm text-leaf-bright hover:underline"
                 >
-                  Send another message
+                  {t.contact.sendAnother}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {[
-                  { key: "name", label: "Full Name", type: "text", placeholder: "Dr. Jane Smith", required: false },
-                  { key: "email", label: "Email Address", type: "email", placeholder: "jane@university.edu", required: true },
-                  { key: "org", label: "Organisation (optional)", type: "text", placeholder: "University / NGO / Cooperative", required: false },
-                  { key: "subject", label: "Subject", type: "text", placeholder: "Research collaboration / Media / General", required: false },
+                  { key: "name", label: t.contact.formName, type: "text", placeholder: "Dr. Jane Smith", required: false },
+                  { key: "email", label: t.contact.formEmail, type: "email", placeholder: "jane@university.edu", required: true },
+                  { key: "org", label: t.contact.formOrg, type: "text", placeholder: "University / NGO / Cooperative", required: false },
+                  { key: "subject", label: t.contact.formSubj, type: "text", placeholder: "Research collaboration / Media / General", required: false },
                 ].map(({ key, label, type, placeholder, required }) => (
                   <div key={key}>
                     <label className="block text-sm font-medium text-foreground mb-1.5">{label}</label>
@@ -131,7 +133,7 @@ export default function Contact() {
                   </div>
                 ))}
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-1.5">Message</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">{t.contact.formMsg}</label>
                   <textarea
                     name="message"
                     rows={5}
@@ -154,7 +156,7 @@ export default function Contact() {
                     className="rounded border-border bg-muted w-4 h-4 accent-leaf shrink-0"
                   />
                   <label htmlFor="newsletter" className="text-sm text-muted-foreground cursor-pointer select-none">
-                    Subscribe me to the CARES quarterly newsletter — research updates, field stories & events.
+                    {t.contact.formNews}
                   </label>
                 </div>
 
@@ -168,7 +170,7 @@ export default function Contact() {
                   className="w-full py-3.5 rounded-xl font-semibold bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all shadow-glow flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                  {pending ? "Sending..." : "Send Message"}
+                  {pending ? t.contact.sending : t.contact.send}
                 </button>
               </form>
             )}
@@ -177,7 +179,7 @@ export default function Contact() {
           {/* â”€â”€ Info panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div className="space-y-6">
             <div className="glass-card rounded-2xl p-6 border border-border">
-              <h3 className="font-serif font-bold text-lg mb-4">Institutional Contacts</h3>
+              <h3 className="font-serif font-bold text-lg mb-4">{t.contact.instContacts}</h3>
               <div className="space-y-4">
                 {contacts.map((c) => (
                   <div key={c.label} className="flex items-start gap-3">
@@ -195,7 +197,7 @@ export default function Contact() {
 
             <div className="glass-card rounded-2xl p-6 border border-border">
               <h3 className="font-serif font-bold text-lg mb-4 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-leaf-bright" /> Locations
+                <MapPin className="w-4 h-4 text-leaf-bright" /> {t.contact.locs}
               </h3>
               <div className="space-y-4 text-sm text-muted-foreground">
                 <div>
@@ -212,20 +214,20 @@ export default function Contact() {
 
             {/* â”€â”€ Standalone newsletter widget â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className="glass-card rounded-2xl p-6 border border-border">
-              <h3 className="font-serif font-bold text-lg mb-2">Newsletter Signup</h3>
+              <h3 className="font-serif font-bold text-lg mb-2">{t.contact.nlTitle}</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Get quarterly research updates, field stories, and event announcements direct to your inbox.
+                {t.contact.nlDesc}
               </p>
 
               {nlState === "success" ? (
                 <div className="flex items-center gap-2 text-leaf-bright text-sm">
                   <CheckCircle className="w-4 h-4 shrink-0" />
-                  <span>Subscribed! Check your inbox for a welcome email.</span>
+                  <span>{t.contact.nlSubbed}</span>
                 </div>
               ) : nlState === "exists" ? (
                 <div className="flex items-center gap-2 text-amber-400 text-sm">
                   <CheckCircle className="w-4 h-4 shrink-0" />
-                  <span>You're already subscribed — thanks for your support!</span>
+                  <span>{t.contact.nlExists}</span>
                 </div>
               ) : (
                 <form onSubmit={handleNewsletterSignup} className="space-y-3">
@@ -234,7 +236,7 @@ export default function Contact() {
                       type="email"
                       value={nlEmail}
                       onChange={(e) => setNlEmail(e.target.value)}
-                      placeholder="your@email.com"
+                      placeholder={t.contact.nlEmail}
                       required
                       className="flex-1 px-3 py-2.5 rounded-lg bg-muted border border-border text-foreground placeholder:text-muted-foreground text-sm focus:outline-none focus:ring-2 focus:ring-leaf/50"
                     />
@@ -244,14 +246,14 @@ export default function Contact() {
                       className="px-4 py-2.5 rounded-lg bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-1.5"
                     >
                       {nlPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
-                      Subscribe
+                      {t.contact.nlBtn}
                     </button>
                   </div>
                   {nlError && (
                     <p className="text-xs text-rose-400">{nlError}</p>
                   )}
                   <p className="text-xs text-muted-foreground/60">
-                    No spam, ever. Unsubscribe at any time.
+                    {t.contact.nlSpam}
                   </p>
                 </form>
               )}

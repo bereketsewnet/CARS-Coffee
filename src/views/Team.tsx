@@ -1,4 +1,7 @@
+"use client";
+
 import { Linkedin, Globe } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { TeamMember as DbMember } from "../../generated/prisma-client";
 
 interface TeamMember {
@@ -119,12 +122,6 @@ const staticTeam: TeamMember[] = [
 ];
 
 const roleOrder = ["PI", "Co-Supervisor", "PhD", "Research Assistant"] as const;
-const roleLabels = {
-  PI: "Principal Investigators",
-  "Co-Supervisor": "Co-Supervisors",
-  PhD: "PhD Candidates",
-  "Research Assistant": "Research Assistants",
-};
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
@@ -174,6 +171,15 @@ function MemberCard({ member }: { member: TeamMember }) {
 }
 
 export default function Team({ members: dbMembers }: { members?: DbMember[] }) {
+  const { t } = useLanguage();
+
+  const roleLabels = {
+    PI: t.team.pi,
+    "Co-Supervisor": t.team.coSupervise,
+    PhD: t.team.phd,
+    "Research Assistant": t.team.ra,
+  };
+
   const team: TeamMember[] =
     dbMembers && dbMembers.length > 0 ? dbMembers.map(dbToMember) : staticTeam;
   return (
@@ -186,14 +192,12 @@ export default function Team({ members: dbMembers }: { members?: DbMember[] }) {
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">The People</span>
+          <span className="tag-pill mb-4 inline-block">{t.team.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Our <span className="text-gradient-green">Research Team</span>
+            {t.team.heroTitle1} <span className="text-gradient-green">{t.team.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            A multidisciplinary team spanning soil science, environmental
-            engineering, economics, and gender studies from Ethiopia and
-            Belgium.
+            {t.team.heroDesc}
           </p>
         </div>
       </section>

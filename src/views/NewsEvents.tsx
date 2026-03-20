@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Calendar, Tag, ArrowRight, ChevronLeft, ChevronRight, Microscope, Handshake, Newspaper } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { NewsEvent as DbNewsEvent } from "../../generated/prisma-client";
 
 type Category =
@@ -55,6 +56,8 @@ export default function NewsEvents({
 }: {
   items?: DbNewsEvent[];
 }) {
+  const { t } = useLanguage();
+
   const posts: PostItem[] = (dbItems ?? []).map(dbToPost);
 
   const categories: Category[] = [
@@ -92,13 +95,12 @@ export default function NewsEvents({
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">Stay Updated</span>
+          <span className="tag-pill mb-4 inline-block">{t.news.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            News &amp; <span className="text-gradient-green">Events</span>
+            {t.news.heroTitle1} <span className="text-gradient-green">{t.news.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Project milestones, field stories, upcoming events, and policy
-            updates.
+            {t.news.heroDesc}
           </p>
         </div>
       </section>
@@ -108,27 +110,35 @@ export default function NewsEvents({
           {/* Filters */}
           <div className="flex flex-wrap gap-4 items-center mb-10">
             <div className="flex gap-2">
-              {(["all", "upcoming", "past"] as Timing[]).map((t) => (
+              {(["all", "upcoming", "past"] as Timing[]).map((tim) => (
                 <button
-                  key={t}
-                  onClick={() => setTiming(t)}
-                  className={`text-sm px-4 py-2 rounded-full capitalize transition-colors ${timing === t ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+                  key={tim}
+                  onClick={() => setTiming(tim)}
+                  className={`text-sm px-4 py-2 rounded-full capitalize transition-colors ${timing === tim ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
                 >
-                  {t === "all" ? "All" : t.charAt(0).toUpperCase() + t.slice(1)}
+                  {tim === "all" ? t.news.all : tim === "upcoming" ? t.news.upcoming : t.news.past}
                 </button>
               ))}
             </div>
             <div className="h-5 w-px bg-border hidden sm:block" />
             <div className="flex flex-wrap gap-2">
-              {categories.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setCat(c)}
-                  className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full transition-colors ${cat === c ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
-                >
-                  <Tag className="w-3 h-3" /> {c}
-                </button>
-              ))}
+              {categories.map((c) => {
+                const label = c === "All" ? t.news.cat.all :
+                  c === "Research" ? t.news.cat.research :
+                  c === "Event" ? t.news.cat.event :
+                  c === "Partnership" ? t.news.cat.partnership :
+                  c === "Policy" ? t.news.cat.policy :
+                  t.news.cat.news;
+                return (
+                  <button
+                    key={c}
+                    onClick={() => setCat(c)}
+                    className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full transition-colors ${cat === c ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+                  >
+                    <Tag className="w-3 h-3" /> {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

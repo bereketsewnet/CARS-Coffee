@@ -23,7 +23,7 @@ export function Navbar() {
     { label: t.nav.impact, path: "/impact" },
     { label: t.nav.library, path: "/library" },
     { label: t.nav.news, path: "/news" },
-    { label: "Gallery", path: "/gallery" },
+    { label: t.nav.gallery, path: "/gallery" },
     { label: t.nav.contact, path: "/contact" },
   ];
 

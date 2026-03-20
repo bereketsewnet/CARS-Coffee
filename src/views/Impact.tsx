@@ -1,6 +1,7 @@
 "use client";
 
 import { Quote } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ImpactMetric } from "../../generated/prisma-client";
 import dynamic from "next/dynamic";
 import PartnersSection from "@/components/PartnersSection/PartnersSection";
@@ -14,27 +15,29 @@ const ProjectMap = dynamic(() => import("@/components/ProjectMap"), {
 
 type MetricDisplay = { value: string; label: string; sub: string };
 
-const staticMetrics: MetricDisplay[] = [
-  { value: "1,240", label: "Farmers Reached", sub: "Across 3 zones" },
-  { value: "340", label: "Tonnes Composted", sub: "Coffee husk & pulp" },
-  { value: "680", label: "Ha Under Circular Practice", sub: "Farm level adoption" },
-  { value: "22%", label: "Average Income Increase", sub: "Net farm income" },
-];
-
-const testimonials = [
-  {
-    quote: "Since using the compost from our processing station, my yield has grown. I no longer need to buy expensive chemical fertilizer.",
-    name: "Birtukan Lemma",
-    role: "Coffee Farmer, Kaffa Zone",
-  },
-  {
-    quote: "The biogas system has changed how we process coffee. We save money on firewood and the smell from the pulp pond is gone.",
-    name: "Girma Tesfaye",
-    role: "Cooperative Manager, Yirgacheffe",
-  },
-];
-
 export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[] }) {
+  const { t } = useLanguage();
+
+  const staticMetrics: MetricDisplay[] = [
+    { value: "1,240", label: t.impact.m1l, sub: t.impact.m1s },
+    { value: "340", label: t.impact.m2l, sub: t.impact.m2s },
+    { value: "680", label: t.impact.m3l, sub: t.impact.m3s },
+    { value: "22%", label: t.impact.m4l, sub: t.impact.m4s },
+  ];
+
+  const testimonials = [
+    {
+      quote: t.impact.t1q,
+      name: t.impact.t1n,
+      role: t.impact.t1r,
+    },
+    {
+      quote: t.impact.t2q,
+      name: t.impact.t2n,
+      role: t.impact.t2r,
+    },
+  ];
+
   const metrics: MetricDisplay[] =
     dbMetrics && dbMetrics.length > 0
       ? dbMetrics.map((m) => ({ value: m.value, label: m.label, sub: m.notes ?? "" }))
@@ -49,12 +52,12 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
         />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">Real-World Change</span>
+          <span className="tag-pill mb-4 inline-block">{t.impact.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Impact &amp; <span className="text-gradient-green">Stakeholders</span>
+            {t.impact.heroTitle1} <span className="text-gradient-green">{t.impact.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Measurable outcomes on soil, waste, and livelihoods — and the partners making it possible.
+            {t.impact.heroDesc}
           </p>
         </div>
       </section>
@@ -63,7 +66,7 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
       <section className="py-20">
         <div className="container mx-auto">
           <div className="text-center mb-14">
-            <h2 className="font-serif text-4xl font-bold">Impact Metrics</h2>
+            <h2 className="font-serif text-4xl font-bold">{t.impact.metricsTitle}</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {metrics.map((m) => (
@@ -81,8 +84,8 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
       <section className="py-20 bg-charcoal-mid">
         <div className="container mx-auto">
           <div className="text-center mb-14">
-            <span className="tag-pill mb-4 inline-block">Voices from the Field</span>
-            <h2 className="font-serif text-4xl font-bold">Testimonials</h2>
+            <span className="tag-pill mb-4 inline-block">{t.impact.voicesSub}</span>
+            <h2 className="font-serif text-4xl font-bold">{t.impact.voicesTitle}</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((t) => (
@@ -111,13 +114,12 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
       <section className="py-20 bg-charcoal-mid">
         <div className="container mx-auto">
           <div className="text-center mb-10">
-            <span className="tag-pill mb-4 inline-block">Field Presence</span>
+            <span className="tag-pill mb-4 inline-block">{t.impact.fieldSub}</span>
             <h2 className="font-serif text-4xl font-bold mb-3">
-              Project <span className="text-gradient-green">Locations</span>
+              {t.impact.fieldTitle1} <span className="text-gradient-green">{t.impact.fieldTitle2}</span>
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm">
-              From Ethiopian coffee farms and processing stations to partner universities in Belgium
-              — explore where CARES research happens.
+              {t.impact.fieldDesc}
             </p>
           </div>
           <ProjectMap />
