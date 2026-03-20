@@ -71,6 +71,9 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
   const readyRef = useRef<boolean>(false);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
+  // Loading overlay state — shown until first frame is painted
+  const [frameReady, setFrameReady] = useState(false);
+
   // ── Draw helper (cover-fill) ──────────────────────────────────────────
   function drawFrameAt(index: number) {
     const canvas = canvasRef.current;
@@ -88,6 +91,13 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
   }
 
   useEffect(() => {
+    // Fix 2: force scroll to top on every page load / refresh
+    // This prevents mid-scroll refreshes showing the wrong canvas frame
+    if (typeof window !== 'undefined') {
+      history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+    }
+
     // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
@@ -141,7 +151,14 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           readyRef.current = true;
           fitCanvas();
           drawFrameAt(0);
+          // Fix 1: Signal React that the first frame is ready so the
+          // loading overlay can fade out immediately
+          setFrameReady(true);
         }
+      };
+      // Fix 1: handle load failures gracefully — don't block the page
+      img.onerror = () => {
+        if (i === 0) setFrameReady(true);
       };
       imgs[i] = img;
     }
@@ -201,9 +218,68 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
   }, []);
 
   return (
-    // Outer section: tall scroll track (240vh = the absolute sweet spot for moderate scroll speeds)
+    // Outer section: tall scroll track (340vh)
     <div ref={sectionRef} style={{ height: "340vh" }}>
-      {/* Sticky viewport: stays fixed while user scrolls through the 300vh */}
+
+      {/* ── Fix 1: Full-page loading overlay — covers navbar + all content ── */}
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 9999,
+          background: "hsl(20 15% 8%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 24,
+          transition: "opacity 0.8s ease, visibility 0.8s ease",
+          opacity: frameReady ? 0 : 1,
+          visibility: frameReady ? "hidden" : "visible",
+        }}
+      >
+        {/* CARES wordmark */}
+        <div style={{ textAlign: "center", marginBottom: 8 }}>
+          <p style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: 36,
+            fontWeight: 700,
+            color: "hsl(40 20% 92%)",
+            letterSpacing: "0.08em",
+            lineHeight: 1,
+          }}>CARES</p>
+          <p style={{
+            fontSize: 11,
+            color: "hsl(122 50% 38%)",
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            marginTop: 4,
+          }}>Circular Coffee Economy</p>
+        </div>
+        {/* Animated coffee dots loader */}
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: i % 2 === 0 ? "hsl(122 50% 38%)" : "hsl(22 40% 40%)",
+                animation: `coffeeLoader 1.2s ease-in-out ${i * 0.15}s infinite`,
+              }}
+            />
+          ))}
+        </div>
+        <p style={{
+          color: "hsl(40 10% 55%)",
+          fontSize: 12,
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+        }}>Preparing Smooth experience…</p>
+      </div>
+
+      {/* Sticky viewport */}
       <div
         ref={stickyRef}
         style={{
@@ -250,82 +326,82 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           <div className="absolute inset-20 rounded-full border border-leaf-bright/15" />
         </div>
 
-        {/* ── STATE 1: Initial text block (visible on load, fades out on scroll) ── */}
+        {/* ── STATE 1: Initial text block ── */}
         <div
           ref={text1Ref}
-          className="container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 pt-24"
-          style={{ zIndex: 3 }}
+          className="pointer-events-none container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 md:px-6"
+          style={{ zIndex: 3, paddingTop: "clamp(56px, 10vh, 96px)" }}
         >
           <div className="max-w-3xl">
-            <div ref={tagsRef} className="inline-flex items-center gap-2 mb-6" style={{ opacity: 0, transform: "translateY(30px)" }}>
+            <div ref={tagsRef} className="inline-flex flex-wrap items-center gap-2 mb-4 md:mb-6" style={{ opacity: 0, transform: "translateY(30px)" }}>
               <span className="tag-pill">VLIR-UOS Cooperation</span>
               <span className="tag-pill tag-coffee">Ethiopia × Belgium</span>
             </div>
-            <div className="animate-float">
-              <h1
-                ref={h1Ref}
-                className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
-                style={{ opacity: 0, transform: "translateY(30px)" }}
-              >
-                {t.home.heroTitle1} {t.home.heroTitle2}
-                <br />
-                <span className="text-gradient-green">CARES</span>
-              </h1>
-            </div>
+            <h1
+              ref={h1Ref}
+              className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 md:mb-6"
+              style={{ opacity: 0, transform: "translateY(30px)" }}
+            >
+              {t.home.heroTitle1} {t.home.heroTitle2}
+              <br />
+              <span className="text-gradient-green">CARES</span>
+            </h1>
             <p
               ref={sub1Ref}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-xl"
+              className="text-base md:text-xl text-muted-foreground leading-relaxed mb-6 md:mb-10 max-w-xl"
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
               {t.home.heroSubtitle}
             </p>
-            <div ref={btnsRef} className="flex flex-wrap gap-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
+            {/* Fix 3: Buttons with arrow hover animation */}
+            <div ref={btnsRef} className="pointer-events-auto flex flex-wrap gap-3 md:gap-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
               <Link
                 href="/project"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-200 shadow-glow"
+                className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-300 shadow-glow"
               >
-                {t.home.ctaExplore} <ArrowRight className="w-4 h-4" />
+                {t.home.ctaExplore}
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/research"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold border border-border text-foreground hover:border-leaf-bright/50 transition-all duration-200"
+                className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base border border-border text-foreground hover:border-leaf-bright hover:text-leaf-bright transition-all duration-300"
               >
-                {t.home.ctaResearch} <BookOpen className="w-4 h-4" />
+                {t.home.ctaResearch}
+                <BookOpen className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
           </div>
         </div>
 
-        {/* ── STATE 2: Replacement (enters from below as scroll progresses) ── */}
+        {/* ── STATE 2: Stats (enters from below as scroll progresses) ── */}
         <div
           ref={text2Ref}
-          className="container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 pt-24"
-          style={{ zIndex: 3 }}
+          className="pointer-events-none container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 md:px-6"
+          style={{ zIndex: 3, paddingTop: "clamp(56px, 10vh, 96px)" }}
         >
           <div className="max-w-4xl">
-            <div className="animate-float">
-              <h2
-                ref={h2Ref}
-                className="font-serif text-5xl md:text-7xl font-bold leading-tight mb-6"
-                style={{ opacity: 0, transform: "translateY(120px)" }}
-              >
-                Delivering<br />
-                <span className="text-gradient-green"> Circular Impact</span>
-              </h2>
-              <div
-                ref={sub2Ref}
-                className="flex gap-6 md:gap-10 items-center flex-wrap"
-                style={{ opacity: 0, transform: "translateY(120px)" }}
-              >
-                <div className="border-l border-border pl-6 first:border-0 first:pl-0">
-                  <HeroCounter target={3} suffix="" label="Research Pillars" />
-                </div>
-                <div className="border-l border-border pl-6">
-                  <HeroCounter target={2} suffix="" label="Partner Countries" />
-                </div>
-                <div className="border-l border-border pl-6">
-                  <HeroCounter target={5} suffix="+" label="Years Impact" />
-                </div>
+            <h2
+              ref={h2Ref}
+              className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6 md:mb-8"
+              style={{ opacity: 0, transform: "translateY(120px)" }}
+            >
+              Delivering<br />
+              <span className="text-gradient-green"> Circular Impact</span>
+            </h2>
+            {/* Stats: tightly packed flex on desktop, grid on mobile */}
+            <div
+              ref={sub2Ref}
+              className="grid grid-cols-3 md:flex gap-4 md:gap-12 items-center"
+              style={{ opacity: 0, transform: "translateY(120px)" }}
+            >
+              <div>
+                <HeroCounter target={3} suffix="" label="Research Pillars" />
+              </div>
+              <div className="border-l border-border pl-4 md:pl-8">
+                <HeroCounter target={2} suffix="" label="Partner Countries" />
+              </div>
+              <div className="border-l border-border pl-4 md:pl-8">
+                <HeroCounter target={5} suffix="+" label="Years Impact" />
               </div>
             </div>
           </div>

@@ -238,13 +238,14 @@
     animation: pulse-ring 2s ease-out infinite;
     background: hsl(var(--leaf-green) / 0.3);
   }
+}
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-30px); }
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
+}
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
+@keyframes coffeeLoader {
+  0%, 100% { transform: translateY(0px); opacity: 0.4; }
+  50% { transform: translateY(-10px); opacity: 1; }
 }
