@@ -9,9 +9,11 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  // Default TRUE so non-home pages are always solid from first render
+  const [scrolled, setScrolled] = useState(true);
   const pathname = usePathname();
   const { t, lang, toggle } = useLanguage();
+  const isHome = pathname === "/";
 
   const navItems = [
     { label: t.nav.home, path: "/" },
@@ -21,18 +23,25 @@ export function Navbar() {
     { label: t.nav.impact, path: "/impact" },
     { label: t.nav.library, path: "/library" },
     { label: t.nav.news, path: "/news" },
+    { label: "Gallery", path: "/gallery" },
     { label: t.nav.contact, path: "/contact" },
   ];
 
   useEffect(() => {
-    const onScroll = () => {
-      // Hero section is 240vh tall — keep navbar transparent until it's fully past
-      const heroHeight = window.innerHeight * 2.4;
-      setScrolled(window.scrollY > heroHeight);
-    };
+    if (!isHome) {
+      // Non-home pages: transparent at top, solid after any scroll
+      const onScroll = () => setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 10);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+    // Home page: transparent until the 2.4× hero is fully scrolled past
+    const heroHeight = window.innerHeight * 2.4;
+    const onScroll = () => setScrolled(window.scrollY > heroHeight);
+    setScrolled(window.scrollY > heroHeight);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [isHome]);
 
   useEffect(() => setOpen(false), [pathname]);
 
