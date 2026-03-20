@@ -388,8 +388,8 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
               className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6 md:mb-8"
               style={{ opacity: 0, transform: "translateY(120px)" }}
             >
-              Delivering<br />
-              <span className="text-gradient-green"> Circular Impact</span>
+              {t.home.heroImpactTitle}<br />
+              <span className="text-gradient-green">{t.home.heroImpactTitleBold}</span>
             </h2>
             {/* Stats: tightly packed flex on desktop, grid on mobile */}
             <div
@@ -398,13 +398,13 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
               style={{ opacity: 0, transform: "translateY(120px)" }}
             >
               <div>
-                <HeroCounter target={3} suffix="" label="Research Pillars" />
+                <HeroCounter target={3} suffix="" label={t.home.statPillars} />
               </div>
               <div className="border-l border-border pl-4 md:pl-8">
-                <HeroCounter target={2} suffix="" label="Partner Countries" />
+                <HeroCounter target={2} suffix="" label={t.home.statCountries} />
               </div>
               <div className="border-l border-border pl-4 md:pl-8">
-                <HeroCounter target={5} suffix="+" label="Years Impact" />
+                <HeroCounter target={5} suffix="+" label={t.home.statYears} />
               </div>
             </div>
           </div>
@@ -675,22 +675,11 @@ export default function Index({
       <section id="mission" className="py-24">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
-            <span className="tag-pill mb-6 inline-block">Our Mission</span>
+            <span className="tag-pill mb-6 inline-block">{t.home.missionTitle}</span>
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
               Waste → <span className="text-gradient-green">Value</span>
             </h2>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-              Ethiopia is the birthplace of coffee — yet the processing
-              generates enormous quantities of husks, pulp, and wastewater that
-              pollute rivers and degrade soils. The Circular Coffee project
-              brings together researchers from{" "}
-              <strong className="text-foreground">
-                AAU (Addis Ababa University)
-              </strong>{" "}
-              and the{" "}
-              <strong className="text-foreground">University of Antwerp</strong>{" "}
-              to close this loop.
-            </p>
+            <p className="text-muted-foreground text-lg leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: t.home.missionBody }} />
             <div className="section-divider" />
           </div>
         </div>
@@ -752,12 +741,12 @@ export default function Index({
       {/* Impact Stats */}
       <section className="py-24">
         <div className="container mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 fade-up">
             <span className="tag-pill mb-4 inline-block">
-              Measurable Change
+              {t.home.impactSubtitle}
             </span>
             <h2 className="font-serif text-4xl font-bold">
-              Impact at a Glance
+              {t.home.impactTitle}
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
@@ -770,7 +759,7 @@ export default function Index({
               href="/impact"
               className="inline-flex items-center gap-2 text-leaf-bright hover:text-leaf-bright/80 font-medium transition-colors"
             >
-              View full impact report <ArrowRight className="w-4 h-4" />
+              {t.home.impactLink} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -787,7 +776,7 @@ export default function Index({
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 fade-up">
             <div className="max-w-xl">
               <span className="text-leaf-bright text-xs font-bold tracking-[0.2em] uppercase mb-4 block">
-                CARES Updates
+                {t.home.latestSubtitle}
               </span>
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight">
                 {t.home.latestTitle}
@@ -797,7 +786,7 @@ export default function Index({
               href="/news"
               className="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group"
             >
-              All updates{" "}
+              {t.home.allUpdates}{" "}
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
@@ -892,7 +881,7 @@ export default function Index({
               href="/news"
               className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-white transition-colors group"
             >
-              All updates{" "}
+              {t.home.allUpdates}{" "}
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
@@ -915,11 +904,10 @@ export default function Index({
             
             <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground leading-tight tracking-tight">
-                Join the Circular Economy
+                {t.home.ctaTitle}
               </h2>
               <p className="text-muted-foreground md:text-lg mb-12 max-w-xl leading-relaxed">
-                Whether you're a researcher, farmer, policy maker, or
-                development professional — there's a role for you in this story.
+                {t.home.ctaSubtitle}
               </p>
               
               <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto justify-center">
@@ -934,7 +922,7 @@ export default function Index({
                   className="group w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 rounded-full font-semibold text-sm md:text-base border border-border bg-[#141414] text-foreground hover:bg-[#1a1a1a] hover:border-leaf-bright/40 transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-1"
                 >
                   <ArrowUpRight className="w-4 h-4 text-muted-foreground group-hover:text-leaf-bright transition-colors duration-300" />
-                  Publications
+                  {t.home.ctaLibrary}
                 </Link>
               </div>
             </div>

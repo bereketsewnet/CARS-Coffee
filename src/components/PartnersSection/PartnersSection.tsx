@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FiGlobe, FiArrowUpRight } from "react-icons/fi";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import "./PartnersSection.css";
 
 import AddisAbabaUniversity from "@/assets/ADDIS ABABA UNIVERSITY.jpg";
@@ -219,6 +220,7 @@ Answer the user's question concisely in 2-3 sentences. Keep the tone professiona
 }
 
 export const PartnersSection: React.FC = () => {
+  const { t } = useLanguage();
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [cardStates, setCardStates] = useState<CardState[]>(
     () =>
@@ -243,16 +245,46 @@ export const PartnersSection: React.FC = () => {
   const dragStartRef = useRef<{ x: number; y: number } | null>(null);
   const tiltRef = useRef(-8); // initial rotateX
 
+  // Mobile 2D carousel specific
+  const mobileCarouselRef = useRef<HTMLDivElement | null>(null);
+  const isMobileSwipingRef = useRef(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePartner, setActivePartner] = useState<Partner | null>(null);
 
   useEffect(() => {
+    // Desktop resize handles
     function onResize() {
       radiusRef.current =
         window.innerWidth < 768 ? 320 : 520;
     }
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Mobile Auto-Scroll logic
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    
+    // Auto scroll exclusively handles mobile view (via interval)
+    interval = setInterval(() => {
+      const container = mobileCarouselRef.current;
+      if (!container || window.innerWidth > 768) return;
+      if (isMobileSwipingRef.current) return; // Don't interrupt user swiping
+
+      // Calculate how far we can scroll
+      const maxScrollLeft = container.scrollWidth - container.clientWidth - 10;
+      
+      // If we are at the end, snap back to the start gracefully, else step right
+      if (container.scrollLeft >= maxScrollLeft) {
+        container.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        const itemWidth = container.clientWidth * 0.6; // Scroll roughly by 1 card width (60%)
+        container.scrollBy({ left: itemWidth, behavior: "smooth" });
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -301,13 +333,10 @@ export const PartnersSection: React.FC = () => {
 
   return (
     <section className="partners-section">
-      <div className="header-container">
-        <h2>
-          Our <span>Partners</span>
-        </h2>
+      <div className="header-container fade-up">
+        <h2>{t.home.partnersTitle}</h2>
         <p className="subtitle">
-          Bringing together researchers, farmers, and innovators to close the
-          loop in Ethiopia&apos;s coffee economy.
+          {t.home.partnersSubtitle}
         </p>
       </div>
 
@@ -403,6 +432,25 @@ export const PartnersSection: React.FC = () => {
             );
           })}
         </div>
+      </div>
+      
+      {/* 2D Auto-scrolling Mobile Carousel */}
+      <div 
+        ref={mobileCarouselRef}
+        className="partners-mobile-carousel fade-up"
+        onTouchStart={() => (isMobileSwipingRef.current = true)}
+        onTouchEnd={() => {
+          // Add brief delay before auto-scrolling resumes
+          setTimeout(() => { isMobileSwipingRef.current = false; }, 2000);
+        }}
+      >
+        {partners.map((partner) => (
+          <div key={partner.id} className="pm-card" onClick={() => openModal(partner)}>
+            <div className="pm-logo-wrapper" style={!partner.isHorizontal ? { borderRadius: "50%" } : {}}>
+              <img src={partner.img} alt={partner.name} />
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

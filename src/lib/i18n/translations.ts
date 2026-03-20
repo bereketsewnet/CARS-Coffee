@@ -19,15 +19,28 @@ export interface Translations {
     heroTitle1: string;
     heroTitle2: string;
     heroSubtitle: string;
+    heroImpactTitle: string;
+    heroImpactTitleBold: string;
+    statPillars: string;
+    statCountries: string;
+    statYears: string;
     ctaExplore: string;
     ctaResearch: string;
     missionTitle: string;
     missionBody: string;
     pillarsTitle: string;
     pillarsSubtitle: string;
+    latestSubtitle: string;
     latestTitle: string;
+    allUpdates: string;
     partnersTitle: string;
     partnersSubtitle: string;
+    impactSubtitle: string;
+    impactTitle: string;
+    impactLink: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    ctaLibrary: string;
   };
   // Research pillars
   pillars: {
@@ -70,6 +83,11 @@ export const translations: Record<Lang, Translations> = {
       heroTitle2: "Economy",
       heroSubtitle:
         "Transforming coffee waste into value for Ethiopian farmers and the environment. A 4-year north–south research programme.",
+      heroImpactTitle: "Delivering",
+      heroImpactTitleBold: " Circular Impact",
+      statPillars: "Research Pillars",
+      statCountries: "Partner Countries",
+      statYears: "Years Impact",
       ctaExplore: "Explore the Project",
       ctaResearch: "View Research",
       missionTitle: "Our Mission",
@@ -78,9 +96,17 @@ export const translations: Record<Lang, Translations> = {
       pillarsTitle: "Research Pillars",
       pillarsSubtitle:
         "Three interconnected work areas forming the foundation of the circular coffee economy.",
+      latestSubtitle: "CARES Updates",
       latestTitle: "Latest Updates",
+      allUpdates: "All updates",
       partnersTitle: "Our Partners",
       partnersSubtitle: "Collaborating institutions driving sustainable change.",
+      impactSubtitle: "Measurable Change",
+      impactTitle: "Impact at a Glance",
+      impactLink: "View full impact report",
+      ctaTitle: "Join the Circular Economy",
+      ctaSubtitle: "Whether you're a researcher, farmer, policy maker, or development professional — there's a role for you in this story.",
+      ctaLibrary: "Publications",
     },
     pillars: {
       soilHealth: "Soil Health",
@@ -120,6 +146,11 @@ export const translations: Record<Lang, Translations> = {
       heroTitle2: "ኢኮኖሚ",
       heroSubtitle:
         "የቡና ቆሻሻን ለኢትዮጵያ ገበሬዎችና ለአካባቢ ጠቃሚ ምርት ማድረግ። የ4 ዓመት ሰሜን–ደቡብ የምርምር ፕሮግራም።",
+      heroImpactTitle: "የክብ",
+      heroImpactTitleBold: " ተጽዕኖ ማድረስ",
+      statPillars: "የምርምር ምሰሶዎች",
+      statCountries: "አጋር ሀገራት",
+      statYears: "ዓመታት ተጽዕኖ",
       ctaExplore: "ፕሮጀክቱን ያስሱ",
       ctaResearch: "ምርምር ይመልከቱ",
       missionTitle: "ተልዕኮአችን",
@@ -128,9 +159,17 @@ export const translations: Record<Lang, Translations> = {
       pillarsTitle: "የምርምር ምሰሶዎች",
       pillarsSubtitle:
         "የቡናን ክብ ኢኮኖሚ መሰረት የሚፈጥሩ ሦስት እርስ በርስ የተሳሰሩ የሥራ ዘርፎች።",
+      latestSubtitle: "የኬርስ (CARES) ዜናዎች",
       latestTitle: "የቅርብ ጊዜ ዜናዎች",
+      allUpdates: "ሁሉንም ዜናዎች",
       partnersTitle: "አጋሮቻችን",
       partnersSubtitle: "ዘላቂ ለውጥ የሚያስቀድሙ ተቋማት።",
+      impactSubtitle: "የሚታይ ለውጥ",
+      impactTitle: "ተጽዕኖ በጨረፍታ",
+      impactLink: "ሙሉ የተጽዕኖ ሪፖርት ይመልከቱ",
+      ctaTitle: "የክብ ኢኮኖሚውን ይቀላቀሉ",
+      ctaSubtitle: "ተመራማሪ፣ ገበሬ፣ የፖሊሲ አውጪ ወይም የልማት ባለሙያ ቢሆኑም — በዚህ ታሪክ ውስጥ ለእርስዎ የሚሆን ሚና አለ።",
+      ctaLibrary: "ህትመቶች",
     },
     pillars: {
       soilHealth: "የአፈር ጤና",
