@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Calendar, Tag, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Tag, ArrowRight, ChevronLeft, ChevronRight, Microscope, Handshake, Newspaper } from "lucide-react";
 import type { NewsEvent as DbNewsEvent } from "../../generated/prisma-client";
 
 type Category =
@@ -134,70 +134,100 @@ export default function NewsEvents({
 
           {/* Posts grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paged.map((post) => (
-              <Link
-                key={post.id}
-                href={`/news/${encodeURIComponent(post.id)}`}
-                className="flex flex-col"
-              >
-                <article className="glass-card rounded-2xl border border-border overflow-hidden pillar-hover group cursor-pointer flex flex-col flex-1">
-                  <div className="h-40 bg-gradient-to-br from-charcoal-mid to-charcoal flex items-center justify-center overflow-hidden">
-                    {post.image ? (
-                      <img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div
-                        className={`text-5xl ${post.upcoming ? "gradient-green" : "gradient-coffee"} w-16 h-16 rounded-full flex items-center justify-center text-2xl`}
-                      >
-                        {post.category === "Research"
-                          ? "🔬"
-                          : post.category === "Event"
-                            ? "📅"
-                            : post.category === "Partnership"
-                              ? "🤝"
-                              : "📋"}
+            {paged.map((post) => {
+              const isEvent = post.category === "Event";
+              const isPartnership = post.category === "Partnership";
+              const isResearch = post.category === "Research";
+
+              const themeColor = isEvent
+                ? "text-amber-500"
+                : isPartnership
+                  ? "text-blue-400"
+                  : isResearch
+                    ? "text-leaf-bright"
+                    : "text-purple-400"; // default for News/Policy
+
+              const themeBg = isEvent
+                ? "bg-amber-500/10"
+                : isPartnership
+                  ? "bg-blue-400/10"
+                  : isResearch
+                    ? "bg-leaf-bright/10"
+                    : "bg-purple-400/10";
+
+              const themeHoverGlow = isEvent
+                ? "group-hover:bg-amber-500/5"
+                : isPartnership
+                  ? "group-hover:bg-blue-400/5"
+                  : isResearch
+                    ? "group-hover:bg-leaf-bright/5"
+                    : "group-hover:bg-purple-400/5";
+
+              // Icon logic
+              const Icon = isEvent ? Calendar : isPartnership ? Handshake : isResearch ? Microscope : Newspaper;
+
+              return (
+                <Link
+                  key={post.id}
+                  href={`/news/${encodeURIComponent(post.id)}`}
+                  className="group flex flex-col p-8 rounded-3xl bg-charcoal border border-border hover:border-border/80 shadow-sm transition-all duration-500 relative overflow-hidden h-full"
+                >
+                  {/* Subtle top interior glow on hover */}
+                  <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${themeHoverGlow} to-transparent opacity-0 transition-opacity duration-500 pointer-events-none`} />
+
+                  {/* Optional faded background image if an image exists */}
+                  {post.image && (
+                    <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+                      <img src={post.image} alt="" className="w-full h-full object-cover grayscale mix-blend-overlay" />
+                    </div>
+                  )}
+
+                  <div className="relative z-10 flex flex-col h-full">
+                    {/* Header: Icon + Tag */}
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className={`w-12 h-12 rounded-full ${themeBg} flex items-center justify-center shrink-0`}>
+                        <Icon className={`w-5 h-5 ${themeColor}`} strokeWidth={2.5} />
                       </div>
-                    )}
-                  </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span
-                        className={`text-xs ${categoryColors[post.category] || "tag-pill"}`}
-                      >
-                        {post.category}
-                      </span>
-                      {post.upcoming && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-leaf/20 text-leaf-bright border border-leaf/30">
-                          Upcoming
+                      <div>
+                        <span className={`block text-sm font-bold tracking-wide ${themeColor}`}>
+                          {post.category}
                         </span>
-                      )}
-                    </div>
-                    <h2 className="font-serif font-semibold text-base leading-snug mb-3 group-hover:text-leaf-bright transition-colors flex-1">
-                      {post.title}
-                    </h2>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4 line-clamp-2">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between pt-3 border-t border-border">
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {new Date(post.date).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
+                        <div className="flex gap-2 items-center mt-0.5">
+                          <span className="block text-xs text-muted-foreground uppercase tracking-wider">
+                            {new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                          </span>
+                          {post.upcoming && (
+                            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-leaf/20 text-leaf-bright border border-leaf/30 uppercase tracking-widest font-bold">
+                              Upcoming
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <span className="text-xs text-leaf-bright flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Read more <ArrowRight className="w-3 h-3" />
-                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-serif font-semibold text-2xl leading-snug mb-4 text-foreground group-hover:text-leaf-bright transition-colors">
+                      {post.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    {post.excerpt && (
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-10 line-clamp-3 font-sans">
+                        {post.excerpt}
+                      </p>
+                    )}
+
+                    {/* Footer / Read More linked text */}
+                    <div className="mt-auto pt-6 border-t border-border">
+                      <div className={`flex items-center gap-2 text-sm font-bold tracking-wide ${themeColor}`}>
+                        Read More
+                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
                     </div>
                   </div>
-                </article>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Pagination */}
