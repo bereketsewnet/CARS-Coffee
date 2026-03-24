@@ -65,7 +65,7 @@ export function AdminSidebar({
                 CARES
               </span>
               <span className="text-xs text-leaf-bright tracking-widest uppercase">
-                Admin
+                {user?.name ?? "Admin"}
               </span>
             </div>
           )}
@@ -83,7 +83,7 @@ export function AdminSidebar({
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-4 space-y-0.5 px-2">
+        <nav className="flex-1 py-4 space-y-0.5 px-2 overflow-y-auto custom-scrollbar">
           {navItems.map((item) => {
             const isActive =
               item.href === "/admin/dashboard"
