@@ -19,7 +19,7 @@ import {
   UserCog,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const navItems = [
@@ -41,17 +41,43 @@ export function AdminSidebar({
 }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [isOpenMobile, setIsOpenMobile] = useState(false);
+
+  // Close mobile sidebar on navigation
+  useEffect(() => {
+    setIsOpenMobile(false);
+  }, [pathname]);
 
   return (
     <>
-      {/* Mobile overlay – hidden on desktop */}
+      {/* Mobile Hamburger Toggle */}
+      <div className="md:hidden fixed top-3 left-3 z-[60]">
+        <button
+          onClick={() => setIsOpenMobile((v) => !v)}
+          className="p-2 rounded-lg bg-card border border-border text-foreground shadow-lg hover:bg-muted transition-colors flex items-center justify-center"
+          aria-label="Toggle Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Mobile Backdrop */}
+      {isOpenMobile && (
+        <div
+          className="md:hidden fixed inset-0 z-[65] bg-background/80 backdrop-blur-sm"
+          onClick={() => setIsOpenMobile(false)}
+        />
+      )}
+
+      {/* Sidebar (Fixed on Mobile, Relative on Desktop) */}
       <aside
-        className={`flex flex-col bg-card border-r border-border transition-all duration-300 ${
-          collapsed ? "w-16" : "w-64"
-        }`}
+        className={`fixed md:relative top-0 left-0 z-[70] h-[100dvh] flex flex-col bg-card border-r border-border transition-all duration-300 transform 
+        ${isOpenMobile ? "translate-x-0 w-64" : "-translate-x-full md:translate-x-0"}
+        ${collapsed ? "md:w-16 w-64" : "w-64"}
+        `}
       >
         {/* Header */}
-        <div className="flex items-center gap-3 px-4 py-5 border-b border-border">
+        <div className="flex items-center gap-3 px-4 py-5 border-b border-border min-h-[72px]">
           <Image
             src="/assets/CARES LOGO.png"
             alt="CARES Logo"
@@ -69,9 +95,11 @@ export function AdminSidebar({
               </span>
             </div>
           )}
+          
+          {/* Desktop Collapse Toggle */}
           <button
             onClick={() => setCollapsed((c) => !c)}
-            className="ml-auto p-1 rounded text-muted-foreground hover:text-foreground transition-colors shrink-0"
+            className="hidden md:block ml-auto p-1 rounded text-muted-foreground hover:text-foreground transition-colors shrink-0"
             aria-label="Toggle sidebar"
           >
             {collapsed ? (

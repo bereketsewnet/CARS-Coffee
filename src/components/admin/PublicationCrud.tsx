@@ -185,103 +185,105 @@ export default function PublicationCrud({
 
       {/* Table */}
       <div className="glass-card rounded-xl border border-border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-border bg-muted/30">
-              <th className="text-left px-5 py-3 font-medium text-muted-foreground">
-                Title
-              </th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">
-                Type
-              </th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">
-                Pillar
-              </th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">
-                Year
-              </th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground">
-                Status
-              </th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((pub) => (
-              <tr
-                key={pub.id}
-                className="border-b border-border/50 hover:bg-muted/20 transition-colors"
-              >
-                <td className="px-5 py-4">
-                  <p className="font-medium text-foreground line-clamp-1">
-                    {pub.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {pub.authors}
-                  </p>
-                </td>
-                <td className="px-4 py-4 hidden md:table-cell text-muted-foreground">
-                  {TYPE_LABELS[pub.type] ?? pub.type}
-                </td>
-                <td className="px-4 py-4 hidden lg:table-cell">
-                  <span className="tag-pill text-xs">
-                    {pub.pillar
-                      ? (PILLAR_LABELS[pub.pillar] ?? pub.pillar)
-                      : "—"}
-                  </span>
-                </td>
-                <td className="px-4 py-4 hidden sm:table-cell text-muted-foreground">
-                  {pub.year}
-                </td>
-                <td className="px-4 py-4">
-                  <span
-                    className={`text-xs px-2 py-0.5 rounded-full border font-medium ${STATUS_COLORS[pub.status] ?? STATUS_COLORS.DRAFT}`}
-                  >
-                    {STATUS_LABELS[pub.status] ?? pub.status}
-                  </span>
-                </td>
-                <td className="px-4 py-4">
-                  <div className="flex items-center gap-2">
-                    {(pub as any).pdfUrl && (
-                      <a
-                        href={(pub as any).pdfUrl}
-                        download
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-leaf-bright hover:text-leaf-bright/80 transition-colors"
-                        title="Download PDF"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                    <button
-                      onClick={() => openEdit(pub)}
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      <Pencil className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => setDeleteTarget(pub)}
-                      className="text-muted-foreground hover:text-rose-400 transition-colors"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border bg-muted/30">
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">
+                  Title
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">
+                  Type
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">
+                  Pillar
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">
+                  Year
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">
+                  Status
+                </th>
+                <th className="px-4 py-3" />
               </tr>
-            ))}
-            {items.length === 0 && (
-              <tr>
-                <td
-                  colSpan={6}
-                  className="px-5 py-8 text-center text-muted-foreground text-sm"
+            </thead>
+            <tbody>
+              {items.map((pub) => (
+                <tr
+                  key={pub.id}
+                  className="border-b border-border/50 hover:bg-muted/20 transition-colors"
                 >
-                  No publications yet. Add one above.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                  <td className="px-5 py-4 min-w-[200px]">
+                    <p className="font-medium text-foreground line-clamp-1">
+                      {pub.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {pub.authors}
+                    </p>
+                  </td>
+                  <td className="px-4 py-4 hidden md:table-cell text-muted-foreground whitespace-nowrap">
+                    {TYPE_LABELS[pub.type] ?? pub.type}
+                  </td>
+                  <td className="px-4 py-4 hidden lg:table-cell whitespace-nowrap">
+                    <span className="tag-pill text-xs">
+                      {pub.pillar
+                        ? (PILLAR_LABELS[pub.pillar] ?? pub.pillar)
+                        : "—"}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4 hidden sm:table-cell text-muted-foreground">
+                    {pub.year}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap">
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded-full border font-medium ${STATUS_COLORS[pub.status] ?? STATUS_COLORS.DRAFT}`}
+                    >
+                      {STATUS_LABELS[pub.status] ?? pub.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4">
+                    <div className="flex items-center gap-2">
+                      {(pub as any).pdfUrl && (
+                        <a
+                          href={(pub as any).pdfUrl}
+                          download
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-leaf-bright hover:text-leaf-bright/80 transition-colors"
+                          title="Download PDF"
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      <button
+                        onClick={() => openEdit(pub)}
+                        className="text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Pencil className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => setDeleteTarget(pub)}
+                        className="text-muted-foreground hover:text-rose-400 transition-colors"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+              {items.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className="px-5 py-8 text-center text-muted-foreground text-sm"
+                  >
+                    No publications yet. Add one above.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         <div className="px-5 py-3 border-t border-border text-xs text-muted-foreground">
           {items.length} publication{items.length !== 1 ? "s" : ""}
         </div>

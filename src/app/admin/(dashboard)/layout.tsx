@@ -28,7 +28,7 @@ export default async function AdminDashboardLayout({
     <div className="h-screen bg-background flex overflow-hidden">
       <AdminSidebar user={dbUser || session.user} />
       <main className="flex-1 h-full overflow-y-auto">
-        <div className="p-6 md:p-8 max-w-7xl mx-auto">{children}</div>
+        <div className="p-4 pt-16 md:p-8 max-w-7xl mx-auto">{children}</div>
       </main>
     </div>
   );
