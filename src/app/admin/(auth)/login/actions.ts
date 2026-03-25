@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 export async function login(
   _prevState: string | null,
@@ -19,6 +20,8 @@ export async function login(
   const redirectTo = callbackUrl.startsWith("/admin") ? callbackUrl : "/admin/dashboard";
 
   try {
+    revalidatePath("/admin/dashboard", "layout");
+    
     await signIn("credentials", {
       email,
       password,

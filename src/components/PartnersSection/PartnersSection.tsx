@@ -52,7 +52,7 @@ const partners: Partner[] = [
     context:
       "Provides laboratory testing, quality control, and scientific analysis for coffee byproducts.",
     role: "lab",
-    website: "https://example.com/ethiolab",
+    website: "https://ethiolab.et/",
   },
   {
     id: "vliruos",
@@ -62,7 +62,7 @@ const partners: Partner[] = [
     context:
       "The Flemish interuniversity council funding the north-south research collaboration between Belgium and Ethiopia.",
     role: "research",
-    website: "https://example.com/vliruos",
+    website: "https://www.vliruos.be/",
   },
   {
     id: "life-agro",
@@ -72,7 +72,6 @@ const partners: Partner[] = [
     context:
       "A coffee training center focusing on capacity building, quality control, and sustainable agricultural practices.",
     role: "research",
-    website: "https://example.com/life-agro",
   },
   {
     id: "hafursa",
@@ -82,7 +81,6 @@ const partners: Partner[] = [
     context:
       "A local Ethiopian coffee cooperative in Yirgacheffe supplying raw materials and community insight.",
     role: "farmer",
-    website: "https://example.com/hafursa",
   },
   {
     id: "ethiomama",
@@ -92,7 +90,6 @@ const partners: Partner[] = [
     context:
       "An Ethiopian coffee producer focusing on sustainable processing and female empowerment.",
     role: "farmer",
-    website: "https://example.com/ethiomama",
   },
   {
     id: "aau",
@@ -102,7 +99,7 @@ const partners: Partner[] = [
     context:
       "Leading the local academic research on transforming coffee waste into value.",
     role: "university",
-    website: "https://example.com/aau",
+    website: "https://www.aau.edu.et/",
   },
   {
     id: "uantwerp",
@@ -112,7 +109,7 @@ const partners: Partner[] = [
     context:
       "Providing international research expertise in circular economy and bio-engineering.",
     role: "university",
-    website: "https://example.com/uantwerp",
+    website: "https://www.uantwerpen.be/en/",
   },
   {
     id: "belgium-dev",
@@ -122,7 +119,7 @@ const partners: Partner[] = [
     context:
       "Supports sustainable development initiatives and international collaboration in Ethiopia.",
     role: "ngo",
-    website: "https://example.com/belgium-dev",
+    website: "https://www.enabel.be/",
   },
   {
     id: "eca",
@@ -132,7 +129,7 @@ const partners: Partner[] = [
     context:
       "Provides policy guidance and sector leadership for Ethiopia's coffee and tea value chains.",
     role: "other",
-    website: "https://example.com/ecta",
+    website: "https://ethiocta.gov.et/",
   },
   {
     id: "ecae",
@@ -142,7 +139,7 @@ const partners: Partner[] = [
     context:
       "Ensures conformity assessment, certification, and quality standards for coffee products.",
     role: "lab",
-    website: "https://example.com/ecae",
+    website: "https://ecae.org.et/",
   },
   {
     id: "esce",
@@ -152,7 +149,7 @@ const partners: Partner[] = [
     context:
       "Brings chemical engineering expertise to valorize coffee waste into new materials and products.",
     role: "research",
-    website: "https://example.com/esce",
+    website: "https://www.eschenew.com/",
   },
   {
     id: "nmweo",
@@ -162,7 +159,7 @@ const partners: Partner[] = [
     context:
       "Partners on gender-inclusive value chains and community impact in the circular coffee economy.",
     role: "ngo",
-    website: "https://example.com/nmweo",
+    website: "https://nmweo.org/",
   },
 ];
 
@@ -404,7 +401,13 @@ export const PartnersSection: React.FC = () => {
                   isHoveredRef.current = false;
                   setHoveredIndex(null);
                 }}
-                onClick={() => openModal(partner)}
+                onClick={() => {
+                  if (partner.website) {
+                    window.open(partner.website, "_blank", "noopener,noreferrer");
+                  } else {
+                    openModal(partner);
+                  }
+                }}
               >
                 <div
                   className="logo-wrapper"
@@ -445,7 +448,13 @@ export const PartnersSection: React.FC = () => {
         }}
       >
         {partners.map((partner) => (
-          <div key={partner.id} className="pm-card" onClick={() => openModal(partner)}>
+          <div key={partner.id} className="pm-card" onClick={() => {
+            if (partner.website) {
+              window.open(partner.website, "_blank", "noopener,noreferrer");
+            } else {
+              openModal(partner);
+            }
+          }}>
             <div className="pm-logo-wrapper" style={!partner.isHorizontal ? { borderRadius: "50%" } : {}}>
               <img src={partner.img} alt={partner.name} />
             </div>
