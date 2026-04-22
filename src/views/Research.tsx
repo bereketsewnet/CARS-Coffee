@@ -177,17 +177,17 @@ export default function Research({
   const PILLARS = [
     {
       ...BASE_PILLARS[0],
-      tag: t.home.p1,
+      tag: t.research.p1,
       tagline: t.research.soilTag,
     },
     {
       ...BASE_PILLARS[1],
-      tag: t.home.p2,
+      tag: t.research.p2,
       tagline: t.research.wasteTag,
     },
     {
       ...BASE_PILLARS[2],
-      tag: t.home.p3,
+      tag: t.research.p3,
       tagline: t.research.socioTag,
     },
   ];

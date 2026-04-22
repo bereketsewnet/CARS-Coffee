@@ -8,11 +8,10 @@ import type { NewsEvent as DbNewsEvent } from "../../generated/prisma-client";
 
 type Category =
   | "All"
-  | "Research"
-  | "Event"
-  | "Partnership"
-  | "Policy"
-  | "News";
+  | "Academic and capacity building"
+  | "Fieldwork and societal uptake"
+  | "Governance and Partnership News"
+  | "Administrative and call updates";
 type Timing = "all" | "upcoming" | "past";
 
 type PostItem = {
@@ -33,7 +32,7 @@ function dbToPost(item: DbNewsEvent): PostItem {
       item.date instanceof Date
         ? item.date.toISOString().split("T")[0]
         : String(item.date),
-    category: item.type === "EVENT" ? "Event" : "News",
+    category: item.type === "EVENT" ? "Fieldwork and societal uptake" : "Academic and capacity building",
     excerpt: item.excerpt,
     upcoming: item.status === "UPCOMING",
     image: item.imageUrl ?? null,
@@ -62,7 +61,10 @@ export default function NewsEvents({
 
   const categories: Category[] = [
     "All",
-    ...(Array.from(new Set(posts.map((p) => p.category))) as Category[]),
+    "Academic and capacity building",
+    "Fieldwork and societal uptake",
+    "Governance and Partnership News",
+    "Administrative and call updates",
   ];
   const [cat, setCat] = useState<Category>("All");
   const [timing, setTiming] = useState<Timing>("all");
@@ -123,19 +125,13 @@ export default function NewsEvents({
             <div className="h-5 w-px bg-border hidden sm:block" />
             <div className="flex flex-wrap gap-2">
               {categories.map((c) => {
-                const label = c === "All" ? t.news.cat.all :
-                  c === "Research" ? t.news.cat.research :
-                  c === "Event" ? t.news.cat.event :
-                  c === "Partnership" ? t.news.cat.partnership :
-                  c === "Policy" ? t.news.cat.policy :
-                  t.news.cat.news;
                 return (
                   <button
                     key={c}
                     onClick={() => setCat(c)}
                     className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full transition-colors ${cat === c ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
                   >
-                    <Tag className="w-3 h-3" /> {label}
+                    <Tag className="w-3 h-3" /> {c}
                   </button>
                 );
               })}
@@ -145,9 +141,9 @@ export default function NewsEvents({
           {/* Posts grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {paged.map((post) => {
-              const isEvent = post.category === "Event";
-              const isPartnership = post.category === "Partnership";
-              const isResearch = post.category === "Research";
+              const isEvent = post.category === "Fieldwork and societal uptake";
+              const isPartnership = post.category === "Governance and Partnership News";
+              const isResearch = post.category === "Academic and capacity building";
 
               const themeColor = isEvent
                 ? "text-amber-500"

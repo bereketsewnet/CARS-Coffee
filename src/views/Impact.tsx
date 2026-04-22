@@ -1,6 +1,6 @@
 "use client";
 
-import { Quote } from "lucide-react";
+import { Quote, Users, Briefcase, TrendingUp, Handshake } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ImpactMetric } from "../../generated/prisma-client";
 import dynamic from "next/dynamic";
@@ -76,6 +76,65 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
                 <p className="text-xs text-muted-foreground mt-1">{m.sub}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Socioeconomic Impact */}
+      <section className="py-20 border-t border-border">
+        <div className="container mx-auto">
+          <div className="text-center mb-14">
+            <span className="tag-pill mb-4 inline-block">Socioeconomic Transformation</span>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold">Cultivating Community & Equitable Growth</h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
+              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
+                <Users className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl font-semibold mb-2">Women’s Economic Empowerment & Cooperatives</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Integrating women into leadership roles within local cooperatives and ensuring equitable access to new bio-product revenue streams.
+                </p>
+              </div>
+            </div>
+            
+            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
+              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
+                <Briefcase className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl font-semibold mb-2">Green Job Creation & Skill Diversification</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Training youth and farmers in biorefinery operations, composting, and advanced processing techniques to build a resilient workforce.
+                </p>
+              </div>
+            </div>
+
+            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
+              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
+                <TrendingUp className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl font-semibold mb-2">Maximizing Revenue Per Coffee Tree</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Transforming what was once considered waste into valuable secondary products, directly increasing net farm income.
+                </p>
+              </div>
+            </div>
+
+            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
+              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
+                <Handshake className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl font-semibold mb-2">Fostering Inclusive Stakeholder Partnerships</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Building strong collaborations between universities, local government, cooperatives, and commercial partners to sustain the circular model.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
