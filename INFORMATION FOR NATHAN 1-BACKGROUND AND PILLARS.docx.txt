@@ -1,0 +1,178 @@
+WEBSITE DESIGN & CONTENT BRIEF: THE CARES PROJECT
+
+Project Overview: A circular economy and biorefinery project based in Ethiopia's coffee regions (focusing on Sidama and Yirgacheffe). The project takes zero-waste coffee waste and converts it into specialty coffee products, biogas, organic compost, botanical pesticides, and high-value cosmetics.
+
+Thus the three pillars are:
+
+Section 1: Premium Valorization & Specialty Coffee
+
+Section 2: Circular Agro-Energy & Earth Care
+
+Section 3: Bio-Extracted Innovation
+
+
+
+PART 1: VISUALS & COLOR PALETTE
+
+Developer Note: Do not use pure black (#000000) or pure white (#FFFFFF) for the layout. We are using an off-black background and an off-white text color to create a natural, premium feel.
+
+Main Background: Deep Coffee Black (#171412)
+
+Surface/Container Cards: Roasted Bean (#241E1A)
+
+Main Text: Unbleached Cream (#F2EBD9)
+
+Accent Color A (Specialty Coffee Sections): Fermented Cherry Red (#8C2F39)
+
+Accent Color B (Sustainability & Biogas Sections): Mossy Green (#4A6B53)
+
+
+
+PART 2: HERO SECTION (Top of the Homepage)
+
+[Main Headline] > Beyond the Bean: Empowering Communities Through Coffee Innovation.
+
+[Sub-headline / Mission Statement]
+
+We turn coffee waste into wealth. Our project empowers local farmers and women's cooperatives in Sidama and Yirgacheffe by creating green energy, bio-pesticides, and premium cosmetics—proving that zero-waste agriculture leads to thriving communities.
+
+
+
+PART 3: THE THREE PILLARS (Main Website Sections)
+
+Section 1: Premium Valorization & Specialty Coffee
+
+(Use Accent Color A for highlighting text/buttons in this section)
+
+Heading: Specialty Coffee & Artisanal Coffee Wine
+
+Sub-text: We are redefining the value of the coffee cherry by treating it as a high-value fruit rather than just a casing for a bean. By applying advanced, controlled processing methods, we maximize flavor and create new revenue streams.
+
+Feature Bullet 1: Anaerobic Fermentation – By fermenting coffee cherries in oxygen-deprived environments, we unlock complex, wine-like, and highly sought-after flavor profiles in the coffee beans, appealing directly to the specialty market.
+
+Feature Bullet 2: Artisanal Coffee Wine – Instead of discarding the sugar-rich pulp and mucilage (cascara), we harness its natural yeasts and sugars to produce a rich, antioxidant-packed coffee cherry wine.
+
+Section 2: Circular Agro-Energy & Earth Care
+
+(Use Accent Color B for highlighting text/buttons in this section)
+
+Heading: Sustainable Bioenergy & Regenerative Soil Health
+
+Sub-text: Our operation closes the loop on coffee waste. What cannot be eaten or drunk is transformed into the fuel and foundation for the next harvest.
+
+Feature Bullet 1: Sustainable Bioenergy (Biogas) – Excess organic processing waste is fed into anaerobic digesters. This produces clean, renewable biogas that can power processing machinery or provide clean cooking energy for the surrounding community.
+
+Feature Bullet 2: Soil Health Enhancement (Biocompost) – The nutrient-dense byproduct left over after biogas production (digestate) is processed into a rich biocompost. This organic matter returns vital nitrogen, potassium, and carbon back to the soil.
+
+Section 3: Bio-Extracted Innovation
+
+Heading: Botanical Extractions & Co-Products
+
+Sub-text: The protective outer skin of the coffee cherry is loaded with bioactive compounds. We harness these natural defenses to support local agriculture and clean cosmetics.
+
+Feature Bullet 1: Botanical Pesticides – Using the high caffeine and tannin content naturally found in coffee pulp, we produce eco-friendly, botanical insecticides and fungicides. This reduces smallholder reliance on expensive, toxic synthetic chemicals.
+
+Feature Bullet 2: High-Value Cosmetics (Natural Hair Dyes) – The intense tannins and anthocyanins in the red cherry skin offer a perfect chemical-free alternative for natural hair dyes, opening doors into the global clean-beauty industry.
+
+
+
+PART 4: SOCIOECONOMIC IMPACT PAGE (or Section)
+
+[Page Heading] > Cultivating Community & Equitable Growth
+
+[Point 1] Women’s Economic Empowerment & Cooperatives
+
+Coffee production has traditionally seen gaps in gender equity. We are actively changing that narrative by placing women farmers at the center of our circular economy model.
+
+Detail A: We work directly with women’s cooperatives in Sidama and Yirgacheffe, training them to lead the production of high-value cascara products, bio-pesticides, and coffee wine.
+
+Detail B: By creating specialized products outside of just raw green beans, women gain direct control over new revenue streams.
+
+[Point 2] Green Job Creation & Skill Diversification
+
+By expanding a traditional coffee farm into a multi-product "biorefinery," we are creating brand-new, year-round job opportunities.
+
+Detail A: Traditional coffee jobs are highly seasonal. Our operations in biogas production, cosmetic extraction, and specialty fermentation create stable, year-round employment.
+
+Detail B: We provide local community members with advanced training in laboratory methodologies and specialized agricultural processing.
+
+[Point 3] Maximizing Revenue Per Coffee Tree
+
+The traditional coffee model leaves farmers highly vulnerable to volatile global market prices. Our circular approach acts as a financial safety net.
+
+Detail A: Instead of farmers only making money from the coffee seed (bean), they now generate income from the fruit's skin, pulp, and mucilage.
+
+Detail B: By producing organic biocompost and botanical pesticides locally from coffee waste, farmers save money they would have otherwise spent on expensive, imported synthetic fertilizers.
+
+[Point 4] Fostering Inclusive Stakeholder Partnerships
+
+Sustainable impact cannot be achieved in a vacuum. Our project bridges the gap between grassroots farming communities, academic institutions, and national authorities.
+
+
+
+
+
+
+
+
+
+Imagery Shot List for the Web Developer
+
+1. Hero Section (The Big Banner at the Top)
+
+The Vibe: Emotional, awe-inspiring, and human.
+
+The Shot: A wide, sweeping landscape shot of a lush, misty Ethiopian coffee forest in Sidama or Yirgacheffe, preferably taken at sunrise or sunset (golden hour).
+
+Alternative: A close-up, high-detail shot of a coffee farmer’s hands cradling a bunch of perfectly ripe, deep-red coffee cherries.
+
+Developer Note: Ensure the image is shot or edited with dark tones so our "Unbleached Cream" text is easily readable on top of it.
+
+2. Specialty Coffee & Wine Section
+
+The Vibe: High-end, luxurious, and artisanal.
+
+The Shot: A macro (extreme close-up) photo of dark red coffee cherries floating in water during the fermentation process, or coffee beans drying in the sun.
+
+Alternative: A sleek, dark bottle of your "Coffee Wine" or cascara beverage sitting on a rustic wooden table with a soft, warm light hitting the side of the glass.
+
+3. Bio-Energy & Soil Section
+
+The Vibe: Scientific, clean, and earthy.
+
+The Shot: A powerful, close-up shot of rich, dark, crumbling soil with a tiny, vibrant green coffee sprout pushing through it.
+
+Alternative: A modern, clean shot of a bio-digester setup at the farm, or a researcher in a lab coat holding up a glass beaker filled with nutrient-rich biocompost digestate.
+
+4. Cosmetics & Pesticides Section
+
+The Vibe: Wellness, natural, and raw.
+
+The Shot: A flat-lay (view from directly above) shot of raw, dried coffee cascara (cherry skins) piled up next to a pestle and mortar, giving the feeling of raw cosmetic ingredients.
+
+Alternative: A dropper bottle or a clear glass jar filled with the deep, rich liquid extract that is used for the hair dye or pesticide.
+
+5. Socioeconomic Impact Section
+
+The Vibe: Joyful, authentic, and empowering.
+
+The Shot: A group shot of the incredible women from the cooperatives working together at the drying beds or sorting cherries. They should be smiling or focused on their work, capturing genuine community and leadership.
+
+Developer Note: Avoid overly staged or "corporate-looking" photos. Real, authentic moments work best here.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -243,9 +243,7 @@ export const PartnersSection: React.FC = () => {
   const isHoveredRef = useRef(false);
   const isModalOpenRef = useRef(false);
   const currentAngleRef = useRef(0);
-  const radiusRef = useRef(
-    typeof window !== "undefined" && window.innerWidth < 768 ? 320 : 550
-  );
+  const radiusRef = useRef(550); // Default to desktop radius to avoid SSR hydration mismatch
 
   const animationFrameRef = useRef<number | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -261,6 +259,9 @@ export const PartnersSection: React.FC = () => {
   const [activePartner, setActivePartner] = useState<Partner | null>(null);
 
   useEffect(() => {
+    // Correct mobile size after hydration
+    radiusRef.current = window.innerWidth < 768 ? 320 : 550;
+
     // Desktop resize handles
     function onResize() {
       radiusRef.current =

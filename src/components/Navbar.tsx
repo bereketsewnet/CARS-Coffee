@@ -54,18 +54,18 @@ export function Navbar() {
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <Image
-            src="/assets/CARES LOGO.png"
+            src="/assets/IMAGE_FOR_LOGO.jpg"
             alt="CARES Logo"
-            width={60}
-            height={60}
-            className="h-14 w-14 rounded-full object-cover shadow-glow"
+            width={80}
+            height={80}
+            className="h-20 w-20 rounded-full object-cover shadow-glow"
             priority
           />
           <div className="hidden sm:block">
-            <span className="font-serif font-bold text-lg leading-none block text-foreground">
+            <span className="font-serif font-bold text-2xl leading-none block text-foreground">
               CARES
             </span>
-            <span className="text-xs text-leaf-bright tracking-wide">
+            <span className="text-sm text-leaf-bright tracking-wide">
               Circular Economy Research
             </span>
           </div>

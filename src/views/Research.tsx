@@ -41,7 +41,7 @@ const BASE_PILLARS = [
     image: "/assets/research-soil.webp",
     accentColor: "text-leaf-bright",
     tagClass: "",
-    title: "Soil Health",
+    title: "Valorization & Specialty Coffee",
   },
   {
     key: "WASTE_VALORIZATION",
@@ -50,7 +50,7 @@ const BASE_PILLARS = [
     image: "/assets/research-waste.webp",
     accentColor: "text-coffee-light",
     tagClass: "tag-coffee",
-    title: "Waste Valorization",
+    title: "Agro-Energy & Earth Care",
   },
   {
     key: "SOCIO_ECONOMIC",
@@ -59,7 +59,7 @@ const BASE_PILLARS = [
     image: "/assets/research-socio.webp",
     accentColor: "text-leaf-bright",
     tagClass: "",
-    title: "Socio-Economic Impact",
+    title: "Bio-Extracted Innovation",
   },
 ] as const;
 
@@ -177,17 +177,17 @@ export default function Research({
   const PILLARS = [
     {
       ...BASE_PILLARS[0],
-      tag: t.research.p1,
+      tag: t.home.p1,
       tagline: t.research.soilTag,
     },
     {
       ...BASE_PILLARS[1],
-      tag: t.research.p2,
+      tag: t.home.p2,
       tagline: t.research.wasteTag,
     },
     {
       ...BASE_PILLARS[2],
-      tag: t.research.p3,
+      tag: t.home.p3,
       tagline: t.research.socioTag,
     },
   ];

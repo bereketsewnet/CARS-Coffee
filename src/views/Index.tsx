@@ -333,25 +333,24 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
         <div
           ref={text1Ref}
           className="pointer-events-none container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 md:px-6"
-          style={{ zIndex: 3, paddingTop: "clamp(56px, 10vh, 96px)" }}
+          style={{ zIndex: 3, paddingTop: "clamp(120px, 15vh, 160px)" }}
         >
           <div className="max-w-3xl">
             <div ref={tagsRef} className="inline-flex flex-wrap items-center gap-2 mb-4 md:mb-6" style={{ opacity: 0, transform: "translateY(30px)" }}>
-              <span className="tag-pill">VLIR-UOS Cooperation</span>
-              <span className="tag-pill tag-coffee">Ethiopia × Belgium</span>
+                <span className="tag-pill text-sm md:text-base font-bold bg-white/10 uppercase tracking-widest">{t.home.tagline}</span>
             </div>
             <h1
               ref={h1Ref}
-              className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-4 md:mb-6"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6"
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
               {t.home.heroTitle1} {t.home.heroTitle2}
-              <br />
-              <span className="text-gradient-green">CARES</span>
+              <br className="hidden md:block" />
+              <span className="text-gradient-green text-3xl sm:text-5xl md:text-6xl lg:text-7xl block mt-2">CARES</span>
             </h1>
             <p
               ref={sub1Ref}
-              className="text-base md:text-xl text-muted-foreground leading-relaxed mb-6 md:mb-10 max-w-xl"
+              className="text-base md:text-xl text-muted-foreground leading-relaxed mb-6 md:mb-10 max-w-2xl"
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
               {t.home.heroSubtitle}
@@ -380,7 +379,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
         <div
           ref={text2Ref}
           className="pointer-events-none container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 md:px-6"
-          style={{ zIndex: 3, paddingTop: "clamp(56px, 10vh, 96px)" }}
+          style={{ zIndex: 3, paddingTop: "clamp(120px, 15vh, 160px)" }}
         >
           <div className="max-w-4xl">
             <h2
@@ -388,7 +387,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
               className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6 md:mb-8"
               style={{ opacity: 0, transform: "translateY(120px)" }}
             >
-              {t.home.heroImpactTitle}<br />
+              {t.home.heroImpactTitle}<br className="hidden md:block" />
               <span className="text-gradient-green">{t.home.heroImpactTitleBold}</span>
             </h2>
             {/* Stats: tightly packed flex on desktop, grid on mobile */}
@@ -526,37 +525,37 @@ function CounterStat({
 const pillars = [
   {
     icon: Leaf,
-    title: "Soil Health",
-    tag: "Pillar 1",
-    description:
-      "Composting coffee husk, biochar research, and soil fertility trials to restore Ethiopian farmlands.",
-    image: soilImg,
-    color: "gradient-green",
-    link: "/research#soil",
-  },
-  {
-    icon: Recycle,
-    title: "Waste Valorization",
-    tag: "Pillar 2",
-    description:
-      "Transforming coffee pulp and wastewater into valuable biorefinery products.",
-    image: wasteImg,
-    color: "gradient-coffee",
-    link: "/research#waste",
-  },
-  {
-    icon: Users,
-    title: "Socio-Economic Impact",
-    tag: "Pillar 3",
-    description:
-      "Empowering smallholder farmers, cooperatives, and promoting gender & youth inclusion.",
-    image: socioImg,
-    color: "gradient-green",
-    link: "/research#socio",
-  },
-];
+      title: "Specialty Coffee",
+      tag: "Pillar 1",
+      description:
+        "Premium Valorization methods like Anaerobic Fermentation and Artisanal Coffee Wine.",
+      image: soilImg,
+      color: "gradient-coffee",
+      link: "/research#specialty-coffee",
+    },
+    {
+      icon: Recycle,
+      title: "Agro-Energy & Earth Care",
+      tag: "Pillar 2",
+      description:
+        "Transforming coffee waste into Sustainable Bioenergy (Biogas) and Regenerative Biocompost.",
+      image: wasteImg,
+      color: "gradient-green",
+      link: "/research#agro-energy",
+    },
+    {
+      icon: Users,
+      title: "Bio-Extracted Innovation",
+      tag: "Pillar 3",
+      description:
+        "Developing Botanical Pesticides and High-Value Cosmetics from coffee cherry natural defenses.",
+      image: socioImg,
+      color: "gradient-green",
+      link: "/research#bio-extraction",
+      },
+    ];
 
-type NewsSnippet = {
+  type NewsSnippet = {
   id: string;
   title: string;
   date: Date | string;
@@ -674,13 +673,15 @@ export default function Index({
       {/* Mission */}
       <section id="mission" className="py-24">
         <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center mb-12">
             <span className="tag-pill mb-6 inline-block">{t.home.missionTitle}</span>
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
               Waste → <span className="text-gradient-green">Value</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed mb-8" dangerouslySetInnerHTML={{ __html: t.home.missionBody }} />
-            <div className="section-divider" />
+          </div>
+          <div className="max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-border">
+            <img src="/assets/IMAGE_1.jpg" alt="CARES Circular Economy Mission" className="w-full h-auto object-cover max-h-[600px]" />
           </div>
         </div>
       </section>
