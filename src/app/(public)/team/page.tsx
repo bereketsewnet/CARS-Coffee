@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
+import type { TeamMember as DbMember } from "../../../../generated/prisma-client";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 const DB_DISABLED = process.env.DB_DISABLED === "true";
 import Team from "@/views/Team";
 
@@ -13,10 +15,11 @@ export const metadata: Metadata = {
 
 export default async function TeamPage() {
   if (DB_DISABLED) {
-    return <Team members={[]} />;
+    return <Team />;
   }
 
-  let members: Awaited<ReturnType<typeof prisma.teamMember.findMany>> = [];
+  // null = DB unavailable, [] = DB connected but no active members
+  let members: DbMember[] | null = null;
 
   try {
     members = await prisma.teamMember.findMany({
@@ -24,7 +27,7 @@ export default async function TeamPage() {
       orderBy: { name: "asc" },
     });
   } catch (error) {
-    console.error("Failed to load team page data from database", error);
+    console.error("[TeamPage] DB fetch failed — falling back to static data", error);
   }
 
   return <Team members={members} />;

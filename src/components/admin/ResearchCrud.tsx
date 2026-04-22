@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import type { ResearchProject } from "../../../generated/prisma-client";
 import {
@@ -37,6 +38,7 @@ function toDateInput(d: Date | string | null | undefined): string {
 }
 
 export default function ResearchCrud({ items: initial }: { items: ResearchProject[] }) {
+  const router = useRouter();
   const [items, setItems] = useState(initial);
   const [mode, setMode] = useState<"add" | "edit" | null>(null);
   const [editing, setEditing] = useState<ResearchProject | null>(null);
@@ -59,8 +61,12 @@ export default function ResearchCrud({ items: initial }: { items: ResearchProjec
         const res = editing
           ? await updateResearchProject(editing.id, {}, fd)
           : await createResearchProject({}, fd);
-        if (res.error) setError(res.error);
-        else close();
+        if (res.error) {
+          setError(res.error);
+        } else {
+          close();
+          router.refresh(); // re-fetch server component data so list stays in sync
+        }
       } catch (e) { console.error(e); }
     });
   }
@@ -71,6 +77,7 @@ export default function ResearchCrud({ items: initial }: { items: ResearchProjec
       try {
         await deleteResearchProject(deleteTarget.id);
         setDeleteTarget(null);
+        router.refresh(); // re-fetch server component data
       } catch (e) { console.error(e); }
     });
   }

@@ -43,6 +43,17 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        // Transparently proxy /uploads/... to the dynamic media API route.
+        // This makes runtime-uploaded files (team photos, logos, PDFs) work in
+        // production, where Next.js static serving only covers build-time assets.
+        source: "/uploads/:path*",
+        destination: "/api/media/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -170,7 +170,7 @@ function MemberCard({ member }: { member: TeamMember }) {
   );
 }
 
-export default function Team({ members: dbMembers }: { members?: DbMember[] }) {
+export default function Team({ members: dbMembers }: { members?: DbMember[] | null }) {
   const { t } = useLanguage();
 
   const roleLabels = {
@@ -180,8 +180,15 @@ export default function Team({ members: dbMembers }: { members?: DbMember[] }) {
     "Research Assistant": t.team.ra,
   };
 
+  // null or undefined = DB unavailable → show static fallback
+  // [] = DB connected but no active members
+  // [...] = show DB members
   const team: TeamMember[] =
-    dbMembers && dbMembers.length > 0 ? dbMembers.map(dbToMember) : staticTeam;
+    dbMembers != null && dbMembers.length > 0
+      ? dbMembers.map(dbToMember)
+      : dbMembers == null
+      ? staticTeam   // DB unavailable → static
+      : [];          // DB up but no active members
   return (
     <div className="min-h-screen pt-24">
       <section className="py-20 bg-charcoal-mid relative overflow-hidden">

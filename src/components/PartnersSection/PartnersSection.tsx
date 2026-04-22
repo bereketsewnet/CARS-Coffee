@@ -15,6 +15,7 @@ import LifeAgro from "@/assets/Life_Agro_Coffee_Quality_Control_Training_Institu
 import NMWEO from "@/assets/New Millennium Women Empowerment Organization-NMWEO.jpg";
 import UniversityAntwerp from "@/assets/UNIVERSITY OF ANTWERP.jpg";
 import VLIRUOS from "@/assets/VLIRUOS.jpg";
+import KawetCoffee from "@/assets/kawetcoffee.jpg";
 
 type PartnerRole = "university" | "research" | "ngo" | "farmer" | "lab" | "other";
 
@@ -161,6 +162,16 @@ const partners: Partner[] = [
     role: "ngo",
     website: "https://nmweo.org/",
   },
+  {
+    id: "kawet-coffee",
+    name: "Kawet Coffee",
+    img: KawetCoffee.src,
+    isHorizontal: true,
+    context:
+      "A valuable partner integrating sustainable and circular practices in coffee processing and production.",
+    role: "other",
+    website: "https://www.kawetcoffee.com/",
+  },
 ];
 
 const GOOGLE_MODEL_URL =
@@ -233,7 +244,7 @@ export const PartnersSection: React.FC = () => {
   const isModalOpenRef = useRef(false);
   const currentAngleRef = useRef(0);
   const radiusRef = useRef(
-    typeof window !== "undefined" && window.innerWidth < 768 ? 320 : 520
+    typeof window !== "undefined" && window.innerWidth < 768 ? 320 : 550
   );
 
   const animationFrameRef = useRef<number | null>(null);
@@ -253,7 +264,7 @@ export const PartnersSection: React.FC = () => {
     // Desktop resize handles
     function onResize() {
       radiusRef.current =
-        window.innerWidth < 768 ? 320 : 520;
+        window.innerWidth < 768 ? 320 : 550;
     }
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);

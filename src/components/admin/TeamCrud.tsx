@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   Plus,
   Pencil,
@@ -32,6 +33,7 @@ const PILLAR_LABELS: Record<string, string> = {
 };
 
 export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
+  const router = useRouter();
   const [items, setItems] = useState(initial);
   const [mode, setMode] = useState<"add" | "edit" | null>(null);
   const [editing, setEditing] = useState<TeamMember | null>(null);
@@ -72,6 +74,10 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
     setMode(null);
     setEditing(null);
     setError(null);
+    // Revoke blob URL to avoid memory leaks
+    if (imgPreview && imgPreview.startsWith("blob:")) {
+      URL.revokeObjectURL(imgPreview);
+    }
     setImgPreview(null);
     setImgUrl(null);
     setUploadError(null);
@@ -127,6 +133,7 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
     e.preventDefault();
     if (uploading) return;
     const fd = new FormData(e.currentTarget);
+    // imgUrl is the persisted server-side URL (not the blob preview)
     fd.set("imageUrl", imgUrl ?? "");
     setError(null);
     startTransition(async () => {
@@ -134,8 +141,12 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
         const res = editing
           ? await updateTeamMember(editing.id, {}, fd)
           : await createTeamMember({}, fd);
-        if (res.error) setError(res.error);
-        else close();
+        if (res.error) {
+          setError(res.error);
+        } else {
+          close();
+          router.refresh(); // re-fetch server data so card grid shows updated photo
+        }
       } catch (e) { console.error(e); }
     });
   }
@@ -146,6 +157,7 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
       try {
         await deleteTeamMember(deleteTarget.id);
         setDeleteTarget(null);
+        router.refresh(); // re-fetch server data so deleted member disappears
       } catch (e) { console.error(e); }
     });
   }

@@ -1,10 +1,12 @@
-﻿import { Suspense } from "react";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import TeamCrud from "@/components/admin/TeamCrud";
 import PaginationNav from "@/components/ui/PaginationNav";
 
 export const metadata: Metadata = { title: "Team | Circular Coffee Admin" };
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const PAGE_SIZE = 10;
 

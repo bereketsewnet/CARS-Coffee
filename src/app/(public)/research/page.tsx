@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
+import type { ResearchProject, Publication } from "../../../../generated/prisma-client";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 const DB_DISABLED = process.env.DB_DISABLED === "true";
 import Research from "@/views/Research";
 
@@ -13,15 +15,13 @@ export const metadata: Metadata = {
 
 export default async function ResearchPage() {
   if (DB_DISABLED) {
-    return <Research projects={[]} publications={[]} />;
+    // DB explicitly disabled — use static fallback (pass undefined)
+    return <Research />;
   }
 
-  let projects: Awaited<
-    ReturnType<typeof prisma.researchProject.findMany>
-  > = [];
-  let publications: Awaited<
-    ReturnType<typeof prisma.publication.findMany>
-  > = [];
+  // null = DB unavailable (error), [] = DB connected but empty
+  let projects: ResearchProject[] | null = null;
+  let publications: Publication[] | null = null;
 
   try {
     [projects, publications] = await Promise.all([
@@ -35,7 +35,8 @@ export default async function ResearchPage() {
       }),
     ]);
   } catch (error) {
-    console.error("Failed to load research page data from database", error);
+    console.error("[ResearchPage] DB fetch failed — falling back to static data", error);
+    // Leave projects/publications as null so Research.tsx shows static fallback
   }
 
   return <Research projects={projects} publications={publications} />;

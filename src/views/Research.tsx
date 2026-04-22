@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Leaf, Recycle, Users, ChevronDown, ChevronUp, BookOpen } from "lucide-react";
+import { Leaf, Recycle, Users, ChevronDown, ChevronUp, BookOpen, FlaskConical } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ResearchProject, Publication } from "../../generated/prisma-client";
 
@@ -69,9 +69,10 @@ interface PillarCardProps {
   pillar: typeof BASE_PILLARS[number] & { tag: string; tagline: string; title: string };
   topics: { title: string; desc: string }[];
   pubLines: string[];
+  emptyState?: boolean; // true when DB is connected but no projects for this pillar yet
 }
 
-function PillarCard({ pillar, topics, pubLines, layman }: PillarCardProps & { layman: string }) {
+function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCardProps & { layman: string }) {
   const [showLayman, setShowLayman] = useState(false);
   const { t } = useLanguage();
   const Icon = pillar.icon;
@@ -91,12 +92,22 @@ function PillarCard({ pillar, topics, pubLines, layman }: PillarCardProps & { la
 
             {/* Topics */}
             <div className="space-y-5">
-              {topics.map((topic) => (
-                <div key={topic.title} className="glass-card rounded-xl p-5 border border-border">
-                  <h4 className="font-serif font-semibold text-base mb-2">{topic.title}</h4>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{topic.desc}</p>
+              {emptyState ? (
+                /* DB connected but no projects added for this pillar yet */
+                <div className="glass-card rounded-xl p-5 border border-dashed border-border text-center">
+                  <FlaskConical className="w-6 h-6 mx-auto mb-2 text-muted-foreground opacity-50" />
+                  <p className="text-muted-foreground text-sm">
+                    No research projects published for this pillar yet.
+                  </p>
                 </div>
-              ))}
+              ) : (
+                topics.map((topic) => (
+                  <div key={topic.title} className="glass-card rounded-xl p-5 border border-border">
+                    <h4 className="font-serif font-semibold text-base mb-2">{topic.title}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{topic.desc}</p>
+                  </div>
+                ))
+              )}
             </div>
 
             {/* Plain-language toggle */}
@@ -155,8 +166,11 @@ export default function Research({
   projects,
   publications,
 }: {
-  projects?: ResearchProject[];
-  publications?: Publication[];
+  // null  = DB unavailable (error/disabled) – show full static fallback
+  // []    = DB connected but no records yet – show DB-driven empty state per pillar
+  // [...] = DB data – show real projects
+  projects?: ResearchProject[] | null;
+  publications?: Publication[] | null;
 }) {
   const { t } = useLanguage();
 
@@ -233,27 +247,45 @@ export default function Research({
 
       {/* Pillar sections */}
       {PILLARS.map((pillar) => {
-        // Topics — DB projects for this pillar, fallback to static if none
-        const dbTopics =
-          projects && projects.filter((pr) => pr.pillar === pillar.key).length > 0
-            ? projects
-                .filter((pr) => pr.pillar === pillar.key)
-                .map((pr) => ({ title: pr.title, desc: pr.description ?? "" }))
-            : STATIC_TOPICS[pillar.key];
+        // projects === null/undefined → DB unavailable → use static topics
+        // projects is array → DB available → show DB topics (or empty state)
+        const dbAvailable = projects != null;
+        const pillarProjects = dbAvailable
+          ? projects.filter((pr) => pr.pillar === pillar.key)
+          : null;
+
+        const dbTopics: { title: string; desc: string }[] | null =
+          pillarProjects && pillarProjects.length > 0
+            ? pillarProjects.map((pr) => ({
+                title: pr.title,
+                desc:
+                  pr.description ||
+                  "Detailed description for this project has not yet been published.",
+              }))
+            : pillarProjects !== null
+            ? null  // DB available but no projects for this pillar → empty state
+            : STATIC_TOPICS[pillar.key]; // DB unavailable → static fallback
 
         // Publications — DB publications for this pillar, fallback to static if none
+        const pubAvailable = publications != null;
+        const pillarPubs = pubAvailable
+          ? publications.filter((pub) => pub.pillar === pillar.key)
+          : null;
         const dbPubs =
-          publications && publications.filter((pub) => pub.pillar === pillar.key).length > 0
-            ? publications.filter((pub) => pub.pillar === pillar.key).map(formatPub)
-            : STATIC_PUBS[pillar.key];
+          pillarPubs && pillarPubs.length > 0
+            ? pillarPubs.map(formatPub)
+            : pillarPubs !== null
+            ? []  // DB available but no publications for this pillar
+            : STATIC_PUBS[pillar.key]; // DB unavailable → static fallback
 
         return (
           <PillarCard
             key={pillar.key}
             pillar={pillar}
-            topics={dbTopics}
+            topics={dbTopics ?? []}          // null → [] triggers empty-state in PillarCard
             pubLines={dbPubs}
             layman={LAYMAN[pillar.key]}
+            emptyState={dbTopics === null}   // true when DB up but pillar has no projects
           />
         );
       })}

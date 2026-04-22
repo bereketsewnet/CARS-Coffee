@@ -58,9 +58,9 @@ export default function TheProject() {
             <p className="text-muted-foreground leading-relaxed">
               {t.project.vlirP2}
             </p>
-            <a href="#" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full text-sm font-semibold border border-border text-foreground hover:border-leaf-bright/50 transition-all">
+            {/* <a href="#" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full text-sm font-semibold border border-border text-foreground hover:border-leaf-bright/50 transition-all">
               <Download className="w-4 h-4" /> {t.project.downloadBrief}
-            </a>
+            </a> */}
           </div>
 
           {/* Problem statement */}

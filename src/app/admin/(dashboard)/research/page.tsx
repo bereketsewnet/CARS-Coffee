@@ -1,10 +1,12 @@
-﻿import { Suspense } from "react";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import ResearchCrud from "@/components/admin/ResearchCrud";
 import PaginationNav from "@/components/ui/PaginationNav";
 
 export const metadata: Metadata = { title: "Research | Circular Coffee Admin" };
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const PAGE_SIZE = 10;
 
