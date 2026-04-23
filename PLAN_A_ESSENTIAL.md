@@ -35,3 +35,18 @@ Reorganize the categories for the latest updates into the 4 requested groupings:
 * **Fieldwork and societal uptake:** Visits, Stakeholders, Pilot results
 * **Governance and Partnership News:** Committees, Equipment, Diversity
 * **Administrative and call updates:** Transitions, Open calls
+
+
+
+# A randomized secure string
+AUTH_SECRET="CARES_COFFEE_SECRET_2026"
+
+# Your live domain name
+NEXTAUTH_URL="https://cares-center.org"
+
+# The database connection string from Step 1
+DATABASE_URL="mysql://carecoffee_user:t7gE&7LWkgtwij9~@localhost:3306/carecoffee_db"
+
+# Admin setup
+ADMIN_EMAIL="getahunnegash12@gmail.com"
+ADMIN_PASSWORD="admin123"

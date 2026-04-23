@@ -736,8 +736,21 @@ export default function Index({
               </Link>
             ))}
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        {/* Circular Economy Model Diagram (IMAGE 2) */}
+        <section className="py-10 bg-charcoal-mid">
+          <div className="container mx-auto">
+            <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-border fade-up">
+              <img 
+                src="/assets/IMAGE_2.jpg" 
+                alt="Ethiopia Coffee Biorefinery Circular Economy Model" 
+                className="w-full h-auto object-contain" 
+              />
+            </div>
+          </div>
+        </section>
 
       {/* Impact Stats */}
       <section className="py-24">
@@ -933,3 +946,4 @@ export default function Index({
     </div>
   );
 }
+
