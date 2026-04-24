@@ -165,6 +165,10 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   bio: 'bio',
   email: 'email',
   imageUrl: 'imageUrl',
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  website: 'website',
   active: 'active',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -296,7 +300,11 @@ exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
   pillar: 'pillar',
   bio: 'bio',
   email: 'email',
-  imageUrl: 'imageUrl'
+  imageUrl: 'imageUrl',
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  website: 'website'
 };
 
 exports.Prisma.NewsEventOrderByRelevanceFieldEnum = {

@@ -14,9 +14,10 @@ export default async function HomePage() {
   let impactMetrics: Awaited<
     ReturnType<typeof prisma.impactMetric.findMany>
   > = [];
+  let teamPreview: Awaited<ReturnType<typeof prisma.teamMember.findMany>> = [];
 
   try {
-    [partners, latestNews, impactMetrics] = await Promise.all([
+    [partners, latestNews, impactMetrics, teamPreview] = await Promise.all([
       prisma.partner.findMany({
         where: { active: true },
         orderBy: [{ order: "asc" }, { name: "asc" }],
@@ -30,6 +31,11 @@ export default async function HomePage() {
         orderBy: { createdAt: "asc" },
         take: 4,
       }),
+      prisma.teamMember.findMany({
+        where: { active: true },
+        orderBy: { createdAt: "asc" },
+        take: 4,
+      }),
     ]);
   } catch (error) {
     console.error("Failed to load homepage data from database", error);
@@ -40,6 +46,7 @@ export default async function HomePage() {
       partners={partners}
       latestNews={latestNews}
       impactMetrics={impactMetrics}
+      teamPreview={teamPreview}
     />
   );
 }

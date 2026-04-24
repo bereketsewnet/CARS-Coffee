@@ -5,6 +5,11 @@ import { requireAdmin } from "./guard";
 
 export type TeamFormState = { error?: string; success?: boolean };
 
+function formatActionError(error: unknown, fallback: string): string {
+  if (error instanceof Error) return `${fallback} ${error.message}`;
+  return fallback;
+}
+
 export async function createTeamMember(
   _prev: TeamFormState,
   form: FormData
@@ -20,14 +25,14 @@ export async function createTeamMember(
         role: form.get("role") as string,
         institution: form.get("institution") as string,
         country: (form.get("country") as string) || "",
-        pillar: (form.get("pillar") as any) || undefined,
-        bio: (form.get("bio") as string) || undefined,
-        // // linkedin: (form.get("linkedin") as string) || undefined,
-        // // twitter: (form.get("twitter") as string) || undefined,
-        // // instagram: (form.get("instagram") as string) || undefined,
-        // // website: (form.get("website") as string) || undefined,
-        email: (form.get("email") as string) || undefined,
-        imageUrl: (form.get("imageUrl") as string) || undefined,
+        pillar: (form.get("pillar") as any) || null,
+        bio: (form.get("bio") as string) || null,
+        linkedin: (form.get("linkedin") as string) || null,
+        twitter: (form.get("twitter") as string) || null,
+        instagram: (form.get("instagram") as string) || null,
+        website: (form.get("website") as string) || null,
+        email: (form.get("email") as string) || null,
+        imageUrl: (form.get("imageUrl") as string) || null,
         active: form.get("active") === "true",
       },
     });
@@ -36,7 +41,7 @@ export async function createTeamMember(
     return { success: true };
   } catch (e) {
     console.error(e);
-    return { error: "Failed to create team member." };
+    return { error: formatActionError(e, "Failed to create team member.") };
   }
 }
 
@@ -54,14 +59,14 @@ export async function updateTeamMember(
         role: form.get("role") as string,
         institution: form.get("institution") as string,
         country: (form.get("country") as string) || "",
-        pillar: (form.get("pillar") as any) || undefined,
-        bio: (form.get("bio") as string) || undefined,
-        // // linkedin: (form.get("linkedin") as string) || undefined,
-        // // twitter: (form.get("twitter") as string) || undefined,
-        // // instagram: (form.get("instagram") as string) || undefined,
-        // // website: (form.get("website") as string) || undefined,
-        email: (form.get("email") as string) || undefined,
-        imageUrl: (form.get("imageUrl") as string) || undefined,
+        pillar: (form.get("pillar") as any) || null,
+        bio: (form.get("bio") as string) || null,
+        linkedin: (form.get("linkedin") as string) || null,
+        twitter: (form.get("twitter") as string) || null,
+        instagram: (form.get("instagram") as string) || null,
+        website: (form.get("website") as string) || null,
+        email: (form.get("email") as string) || null,
+        imageUrl: (form.get("imageUrl") as string) || null,
         active: form.get("active") === "true",
       },
     });
@@ -70,7 +75,7 @@ export async function updateTeamMember(
     return { success: true };
   } catch (e) {
     console.error(e);
-    return { error: "Failed to update team member." };
+    return { error: formatActionError(e, "Failed to update team member.") };
   }
 }
 

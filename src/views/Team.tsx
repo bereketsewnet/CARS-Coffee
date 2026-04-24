@@ -47,10 +47,10 @@ function dbToMember(m: DbMember, idx: number): TeamMember {
     initials,
     color: COLORS[idx % COLORS.length],
     imageUrl: m.imageUrl ?? null,
-    linkedin: (m as any).linkedin ?? null,
-    twitter: (m as any).twitter ?? null,
-    instagram: (m as any).instagram ?? null,
-    website: (m as any).website ?? null,
+    linkedin: m.linkedin ?? null,
+    twitter: m.twitter ?? null,
+    instagram: m.instagram ?? null,
+    website: m.website ?? null,
   };
 }
 

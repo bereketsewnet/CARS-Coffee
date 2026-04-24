@@ -4758,6 +4758,10 @@ export namespace Prisma {
     bio: string | null
     email: string | null
     imageUrl: string | null
+    linkedin: string | null
+    twitter: string | null
+    instagram: string | null
+    website: string | null
     active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4773,6 +4777,10 @@ export namespace Prisma {
     bio: string | null
     email: string | null
     imageUrl: string | null
+    linkedin: string | null
+    twitter: string | null
+    instagram: string | null
+    website: string | null
     active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4788,6 +4796,10 @@ export namespace Prisma {
     bio: number
     email: number
     imageUrl: number
+    linkedin: number
+    twitter: number
+    instagram: number
+    website: number
     active: number
     createdAt: number
     updatedAt: number
@@ -4805,6 +4817,10 @@ export namespace Prisma {
     bio?: true
     email?: true
     imageUrl?: true
+    linkedin?: true
+    twitter?: true
+    instagram?: true
+    website?: true
     active?: true
     createdAt?: true
     updatedAt?: true
@@ -4820,6 +4836,10 @@ export namespace Prisma {
     bio?: true
     email?: true
     imageUrl?: true
+    linkedin?: true
+    twitter?: true
+    instagram?: true
+    website?: true
     active?: true
     createdAt?: true
     updatedAt?: true
@@ -4835,6 +4855,10 @@ export namespace Prisma {
     bio?: true
     email?: true
     imageUrl?: true
+    linkedin?: true
+    twitter?: true
+    instagram?: true
+    website?: true
     active?: true
     createdAt?: true
     updatedAt?: true
@@ -4923,6 +4947,10 @@ export namespace Prisma {
     bio: string | null
     email: string | null
     imageUrl: string | null
+    linkedin: string | null
+    twitter: string | null
+    instagram: string | null
+    website: string | null
     active: boolean
     createdAt: Date
     updatedAt: Date
@@ -4955,6 +4983,10 @@ export namespace Prisma {
     bio?: boolean
     email?: boolean
     imageUrl?: boolean
+    linkedin?: boolean
+    twitter?: boolean
+    instagram?: boolean
+    website?: boolean
     active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4972,12 +5004,16 @@ export namespace Prisma {
     bio?: boolean
     email?: boolean
     imageUrl?: boolean
+    linkedin?: boolean
+    twitter?: boolean
+    instagram?: boolean
+    website?: boolean
     active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "institution" | "country" | "pillar" | "bio" | "email" | "imageUrl" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "institution" | "country" | "pillar" | "bio" | "email" | "imageUrl" | "linkedin" | "twitter" | "instagram" | "website" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
 
   export type $TeamMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamMember"
@@ -4992,6 +5028,10 @@ export namespace Prisma {
       bio: string | null
       email: string | null
       imageUrl: string | null
+      linkedin: string | null
+      twitter: string | null
+      instagram: string | null
+      website: string | null
       active: boolean
       createdAt: Date
       updatedAt: Date
@@ -5373,6 +5413,10 @@ export namespace Prisma {
     readonly bio: FieldRef<"TeamMember", 'String'>
     readonly email: FieldRef<"TeamMember", 'String'>
     readonly imageUrl: FieldRef<"TeamMember", 'String'>
+    readonly linkedin: FieldRef<"TeamMember", 'String'>
+    readonly twitter: FieldRef<"TeamMember", 'String'>
+    readonly instagram: FieldRef<"TeamMember", 'String'>
+    readonly website: FieldRef<"TeamMember", 'String'>
     readonly active: FieldRef<"TeamMember", 'Boolean'>
     readonly createdAt: FieldRef<"TeamMember", 'DateTime'>
     readonly updatedAt: FieldRef<"TeamMember", 'DateTime'>
@@ -12344,6 +12388,10 @@ export namespace Prisma {
     bio: 'bio',
     email: 'email',
     imageUrl: 'imageUrl',
+    linkedin: 'linkedin',
+    twitter: 'twitter',
+    instagram: 'instagram',
+    website: 'website',
     active: 'active',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -12514,7 +12562,11 @@ export namespace Prisma {
     pillar: 'pillar',
     bio: 'bio',
     email: 'email',
-    imageUrl: 'imageUrl'
+    imageUrl: 'imageUrl',
+    linkedin: 'linkedin',
+    twitter: 'twitter',
+    instagram: 'instagram',
+    website: 'website'
   };
 
   export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum]
@@ -12920,6 +12972,10 @@ export namespace Prisma {
     bio?: StringNullableFilter<"TeamMember"> | string | null
     email?: StringNullableFilter<"TeamMember"> | string | null
     imageUrl?: StringNullableFilter<"TeamMember"> | string | null
+    linkedin?: StringNullableFilter<"TeamMember"> | string | null
+    twitter?: StringNullableFilter<"TeamMember"> | string | null
+    instagram?: StringNullableFilter<"TeamMember"> | string | null
+    website?: StringNullableFilter<"TeamMember"> | string | null
     active?: BoolFilter<"TeamMember"> | boolean
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
@@ -12935,6 +12991,10 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    linkedin?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12954,6 +13014,10 @@ export namespace Prisma {
     bio?: StringNullableFilter<"TeamMember"> | string | null
     email?: StringNullableFilter<"TeamMember"> | string | null
     imageUrl?: StringNullableFilter<"TeamMember"> | string | null
+    linkedin?: StringNullableFilter<"TeamMember"> | string | null
+    twitter?: StringNullableFilter<"TeamMember"> | string | null
+    instagram?: StringNullableFilter<"TeamMember"> | string | null
+    website?: StringNullableFilter<"TeamMember"> | string | null
     active?: BoolFilter<"TeamMember"> | boolean
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
@@ -12969,6 +13033,10 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    linkedin?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12990,6 +13058,10 @@ export namespace Prisma {
     bio?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     email?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    linkedin?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    twitter?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    instagram?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    website?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     active?: BoolWithAggregatesFilter<"TeamMember"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
@@ -13763,6 +13835,10 @@ export namespace Prisma {
     bio?: string | null
     email?: string | null
     imageUrl?: string | null
+    linkedin?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    website?: string | null
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13778,6 +13854,10 @@ export namespace Prisma {
     bio?: string | null
     email?: string | null
     imageUrl?: string | null
+    linkedin?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    website?: string | null
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13793,6 +13873,10 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13808,6 +13892,10 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13823,6 +13911,10 @@ export namespace Prisma {
     bio?: string | null
     email?: string | null
     imageUrl?: string | null
+    linkedin?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    website?: string | null
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13838,6 +13930,10 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13853,6 +13949,10 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14788,6 +14888,10 @@ export namespace Prisma {
     bio?: SortOrder
     email?: SortOrder
     imageUrl?: SortOrder
+    linkedin?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    website?: SortOrder
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14803,6 +14907,10 @@ export namespace Prisma {
     bio?: SortOrder
     email?: SortOrder
     imageUrl?: SortOrder
+    linkedin?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    website?: SortOrder
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14818,6 +14926,10 @@ export namespace Prisma {
     bio?: SortOrder
     email?: SortOrder
     imageUrl?: SortOrder
+    linkedin?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    website?: SortOrder
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder

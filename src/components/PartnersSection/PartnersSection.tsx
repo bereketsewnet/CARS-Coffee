@@ -92,6 +92,7 @@ Answer the user's question concisely in 2-3 sentences. Keep the tone professiona
 export const PartnersSection: React.FC<{ partners?: Partner[] }> = ({ partners = [] }) => {
   if (!partners || partners.length === 0) return null;
   const { t } = useLanguage();
+  const getLogoSrc = (partner: Partner) => partner.logoUrl || partner.img || "";
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [cardStates, setCardStates] = useState<CardState[]>(
     () =>
@@ -298,7 +299,7 @@ export const PartnersSection: React.FC<{ partners?: Partner[] }> = ({ partners =
                   }
                 >
                   <img
-                    src={partner.img}
+                    src={getLogoSrc(partner)}
                     alt={`${partner.name} Logo`}
                     className="partner-logo"
                     draggable={false}
@@ -331,7 +332,7 @@ export const PartnersSection: React.FC<{ partners?: Partner[] }> = ({ partners =
             }
           }}>
             <div className="pm-logo-wrapper" style={!partner.isHorizontal ? { borderRadius: "50%" } : {}}>
-              <img src={partner.img} alt={partner.name} />
+              <img src={getLogoSrc(partner)} alt={partner.name} />
             </div>
           </div>
         ))}

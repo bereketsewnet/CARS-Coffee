@@ -13,6 +13,10 @@ import {
   Calendar,
   Microscope,
   Handshake,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Globe,
 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -43,6 +47,50 @@ type Partner = {
   order: number;
   active: boolean;
 };
+
+type TeamPreviewMember = {
+  id?: string;
+  name: string;
+  role: string;
+  institution: string;
+  imageUrl?: string | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  instagram?: string | null;
+  website?: string | null;
+};
+
+const FALLBACK_TEAM_PREVIEW_MEMBERS: TeamPreviewMember[] = [
+  {
+    name: "Prof. Dr. Jan De Moor",
+    role: "Principal Investigator (North)",
+    institution: "University of Antwerp",
+  },
+  {
+    name: "Prof. Dr. Tigist Alemu",
+    role: "Principal Investigator (South)",
+    institution: "Addis Ababa University",
+  },
+  {
+    name: "Selamawit Tadesse",
+    role: "PhD Candidate",
+    institution: "AAU / UA Antwerp",
+  },
+  {
+    name: "Thomas Claeys",
+    role: "PhD Candidate",
+    institution: "University of Antwerp",
+  },
+];
+
+function initialsFromName(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => w[0].toUpperCase())
+    .slice(0, 2)
+    .join("");
+}
 
 // ── Canvas constants ─────────────────────────────────────────────────────────────
 const TOTAL_FRAMES = 105;
@@ -244,7 +292,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
         {/* CARES wordmark */}
         <div style={{ textAlign: "center", marginBottom: 8 }}>
           <p style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Poppins', sans-serif",
             fontSize: 36,
             fontWeight: 700,
             color: "hsl(40 20% 92%)",
@@ -614,12 +662,19 @@ export default function Index({
   partners = [],
   latestNews,
   impactMetrics,
+  teamPreview,
 }: {
   partners?: Partner[];
   latestNews?: NewsSnippet[];
   impactMetrics?: ImpactMetric[];
+  teamPreview?: TeamPreviewMember[];
 }) {
   const { t } = useLanguage();
+
+  const previewTeamData = 
+    teamPreview && teamPreview.length > 0 
+      ? teamPreview 
+      : FALLBACK_TEAM_PREVIEW_MEMBERS;
 
   // Build the 4 stats: use DB data if available, else fall back to hardcoded
   const stats =
@@ -898,6 +953,92 @@ export default function Index({
               {t.home.allUpdates}{" "}
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Preview */}
+      <section className="py-24 border-t border-border">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 fade-up">
+            <div className="max-w-xl">
+              <span className="tag-pill mb-4 inline-block">Team Preview</span>
+              <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                Meet Our Core Researchers
+              </h2>
+              <p className="text-muted-foreground mt-4">
+                A quick look at our multidisciplinary team. Tap any profile to explore the full team page.
+              </p>
+            </div>
+            <Link
+              href="/team"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group"
+            >
+              View Full Team
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-grid">
+            {previewTeamData.map((member) => (
+              <div
+                key={member.name}
+                className="stagger-item glass-card rounded-2xl overflow-hidden border border-border pillar-hover group flex flex-col"
+              >
+                <Link href="/team" className="aspect-[4/3] w-full bg-card/50 overflow-hidden block">
+                  {member.imageUrl ? (
+                    <img
+                      src={member.imageUrl}
+                      alt={member.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full gradient-green flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
+                      <span className="font-serif font-bold text-5xl text-foreground/80">
+                        {initialsFromName(member.name)}
+                      </span>
+                    </div>
+                  )}
+                </Link>
+                <div className="p-5 flex flex-col flex-grow">
+                  <Link href="/team">
+                    <h3 className="font-serif text-xl font-bold leading-tight group-hover:text-leaf-bright transition-colors">
+                      {member.name}
+                    </h3>
+                  </Link>
+                  <p className="text-sm text-gradient-green font-semibold mt-1">
+                    {member.role}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-2 mb-4 flex-grow">
+                    {member.institution}
+                  </p>
+                  
+                  {/* Social Media Links */}
+                  <div className="flex items-center gap-3 mt-auto pt-4 border-t border-border/50">
+                    {member.linkedin && (
+                      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#0077b5] transition-colors" title="LinkedIn">
+                        <Linkedin className="w-4 h-4" />
+                      </a>
+                    )}
+                    {member.twitter && (
+                      <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#1DA1F2] transition-colors" title="Twitter">
+                        <Twitter className="w-4 h-4" />
+                      </a>
+                    )}
+                    {member.instagram && (
+                      <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-[#E1306C] transition-colors" title="Instagram">
+                        <Instagram className="w-4 h-4" />
+                      </a>
+                    )}
+                    {member.website && (
+                      <a href={member.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" title="Website">
+                        <Globe className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
