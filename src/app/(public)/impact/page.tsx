@@ -13,18 +13,25 @@ export const metadata: Metadata = {
 
 export default async function ImpactPage() {
   if (DB_DISABLED) {
-    return <Impact metrics={[]} />;
+    return <Impact metrics={[]} partners={[]} />;
   }
 
   let metrics: Awaited<ReturnType<typeof prisma.impactMetric.findMany>> = [];
+  let partners: any[] = [];
 
   try {
-    metrics = await prisma.impactMetric.findMany({
-      orderBy: { createdAt: "asc" },
-    });
+    [metrics, partners] = await Promise.all([
+      prisma.impactMetric.findMany({
+        orderBy: { createdAt: "asc" },
+      }),
+      prisma.partner.findMany({
+        where: { active: true },
+        orderBy: { order: "asc" },
+      })
+    ]);
   } catch (error) {
     console.error("Failed to load impact page data from database", error);
   }
 
-  return <Impact metrics={metrics} />;
+  return <Impact metrics={metrics} partners={partners} />;
 }

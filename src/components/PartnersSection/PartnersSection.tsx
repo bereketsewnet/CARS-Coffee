@@ -3,30 +3,20 @@ import { FiGlobe, FiArrowUpRight } from "react-icons/fi";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import "./PartnersSection.css";
 
-import AddisAbabaUniversity from "@/assets/ADDIS ABABA UNIVERSITY.jpg";
-import BelgiumDevelopment from "@/assets/BELGIUM DEVELOPMENT COOPERATION.jpg";
-import Ethiolab from "@/assets/Ethiolab.jpg";
-import Ethiomama from "@/assets/Ethiomama Coffee.jpg";
-import EthiopianCoffeeTea from "@/assets/Ethiopian Coffee and Tea Authority-ECTA.jpg";
-import EthiopianConformity from "@/assets/Ethiopian Conformity Assessment Enterprise-ECAE.jpg";
-import EthiopianSocietyChemEng from "@/assets/Ethiopian Society of Chemical Engineers.jpg";
-import Hafursa from "@/assets/Hafursa Cooperative.jpg";
-import LifeAgro from "@/assets/Life_Agro_Coffee_Quality_Control_Training_Institute_LIFE_AGRO.jpg";
-import NMWEO from "@/assets/New Millennium Women Empowerment Organization-NMWEO.jpg";
-import UniversityAntwerp from "@/assets/UNIVERSITY OF ANTWERP.jpg";
-import VLIRUOS from "@/assets/VLIRUOS.jpg";
-import KawetCoffee from "@/assets/kawetcoffee.jpg";
+
 
 type PartnerRole = "university" | "research" | "ngo" | "farmer" | "lab" | "other";
 
 export interface Partner {
   id: string;
   name: string;
-  img: string;
+  logoUrl?: string; // from db
+  img?: string;     // from old static
   isHorizontal: boolean;
-  context: string;
-  role?: PartnerRole;
-  website?: string;
+  description: string | null;
+  context?: string;
+  role?: PartnerRole | string | null;
+  website: string | null;
 }
 
 export interface ChatMessage {
@@ -44,135 +34,7 @@ interface CardState {
   pointerEvents: "auto" | "none";
 }
 
-const partners: Partner[] = [
-  {
-    id: "ethiolab",
-    name: "Ethiolab",
-    img: Ethiolab.src,
-    isHorizontal: true,
-    context:
-      "Provides laboratory testing, quality control, and scientific analysis for coffee byproducts.",
-    role: "lab",
-    website: "https://ethiolab.et/",
-  },
-  {
-    id: "vliruos",
-    name: "VLIR-UOS",
-    img: VLIRUOS.src,
-    isHorizontal: true,
-    context:
-      "The Flemish interuniversity council funding the north-south research collaboration between Belgium and Ethiopia.",
-    role: "research",
-    website: "https://www.vliruos.be/",
-  },
-  {
-    id: "life-agro",
-    name: "Life Agro",
-    img: LifeAgro.src,
-    isHorizontal: false,
-    context:
-      "A coffee training center focusing on capacity building, quality control, and sustainable agricultural practices.",
-    role: "research",
-  },
-  {
-    id: "hafursa",
-    name: "Hafursa Cooperative",
-    img: Hafursa.src,
-    isHorizontal: false,
-    context:
-      "A local Ethiopian coffee cooperative in Yirgacheffe supplying raw materials and community insight.",
-    role: "farmer",
-  },
-  {
-    id: "ethiomama",
-    name: "Ethiomama Coffee",
-    img: Ethiomama.src,
-    isHorizontal: false,
-    context:
-      "An Ethiopian coffee producer focusing on sustainable processing and female empowerment.",
-    role: "farmer",
-  },
-  {
-    id: "aau",
-    name: "Addis Ababa University",
-    img: AddisAbabaUniversity.src,
-    isHorizontal: false,
-    context:
-      "Leading the local academic research on transforming coffee waste into value.",
-    role: "university",
-    website: "https://www.aau.edu.et/",
-  },
-  {
-    id: "uantwerp",
-    name: "University of Antwerp",
-    img: UniversityAntwerp.src,
-    isHorizontal: true,
-    context:
-      "Providing international research expertise in circular economy and bio-engineering.",
-    role: "university",
-    website: "https://www.uantwerpen.be/en/",
-  },
-  {
-    id: "belgium-dev",
-    name: "Belgian Development Cooperation",
-    img: BelgiumDevelopment.src,
-    isHorizontal: true,
-    context:
-      "Supports sustainable development initiatives and international collaboration in Ethiopia.",
-    role: "ngo",
-    website: "https://www.enabel.be/",
-  },
-  {
-    id: "eca",
-    name: "Ethiopian Coffee and Tea Authority",
-    img: EthiopianCoffeeTea.src,
-    isHorizontal: true,
-    context:
-      "Provides policy guidance and sector leadership for Ethiopia's coffee and tea value chains.",
-    role: "other",
-    website: "https://ethiocta.gov.et/",
-  },
-  {
-    id: "ecae",
-    name: "Ethiopian Conformity Assessment Enterprise",
-    img: EthiopianConformity.src,
-    isHorizontal: true,
-    context:
-      "Ensures conformity assessment, certification, and quality standards for coffee products.",
-    role: "lab",
-    website: "https://ecae.org.et/",
-  },
-  {
-    id: "esce",
-    name: "Ethiopian Society of Chemical Engineers",
-    img: EthiopianSocietyChemEng.src,
-    isHorizontal: true,
-    context:
-      "Brings chemical engineering expertise to valorize coffee waste into new materials and products.",
-    role: "research",
-    website: "https://www.eschenew.com/",
-  },
-  {
-    id: "nmweo",
-    name: "New Millennium Women Empowerment Organization",
-    img: NMWEO.src,
-    isHorizontal: true,
-    context:
-      "Partners on gender-inclusive value chains and community impact in the circular coffee economy.",
-    role: "ngo",
-    website: "https://nmweo.org/",
-  },
-  {
-    id: "kawet-coffee",
-    name: "Kawet Coffee",
-    img: KawetCoffee.src,
-    isHorizontal: true,
-    context:
-      "A valuable partner integrating sustainable and circular practices in coffee processing and production.",
-    role: "other",
-    website: "https://www.kawetcoffee.com/",
-  },
-];
+
 
 const GOOGLE_MODEL_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent";
@@ -188,7 +50,7 @@ async function askGeminiAPI(question: string, partner: Partner): Promise<string>
   const systemPrompt = `You are a helpful, inspiring AI ambassador for the CARES (Circular Coffee Economy Research) project in Ethiopia.
 Our mission is transforming coffee waste (husks, pulp, wastewater) into value for farmers and the environment.
 You are currently representing our partner: ${partner.name}.
-Context about this partner: ${partner.context}.
+Context about this partner: ${partner.description ?? partner.context ?? "A valued partner"}.
 Answer the user's question concisely in 2-3 sentences. Keep the tone professional, optimistic, and focused on sustainability, research, and circular economy.`;
 
   const payload = {
@@ -227,7 +89,8 @@ Answer the user's question concisely in 2-3 sentences. Keep the tone professiona
   }
 }
 
-export const PartnersSection: React.FC = () => {
+export const PartnersSection: React.FC<{ partners?: Partner[] }> = ({ partners = [] }) => {
+  if (!partners || partners.length === 0) return null;
   const { t } = useLanguage();
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [cardStates, setCardStates] = useState<CardState[]>(

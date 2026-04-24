@@ -10362,6 +10362,9 @@ export namespace Prisma {
     website: string | null
     order: number | null
     active: boolean | null
+    description: string | null
+    role: string | null
+    isHorizontal: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10373,6 +10376,9 @@ export namespace Prisma {
     website: string | null
     order: number | null
     active: boolean | null
+    description: string | null
+    role: string | null
+    isHorizontal: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10384,6 +10390,9 @@ export namespace Prisma {
     website: number
     order: number
     active: number
+    description: number
+    role: number
+    isHorizontal: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10405,6 +10414,9 @@ export namespace Prisma {
     website?: true
     order?: true
     active?: true
+    description?: true
+    role?: true
+    isHorizontal?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10416,6 +10428,9 @@ export namespace Prisma {
     website?: true
     order?: true
     active?: true
+    description?: true
+    role?: true
+    isHorizontal?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10427,6 +10442,9 @@ export namespace Prisma {
     website?: true
     order?: true
     active?: true
+    description?: true
+    role?: true
+    isHorizontal?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10525,6 +10543,9 @@ export namespace Prisma {
     website: string | null
     order: number
     active: boolean
+    description: string | null
+    role: string | null
+    isHorizontal: boolean
     createdAt: Date
     updatedAt: Date
     _count: PartnerCountAggregateOutputType | null
@@ -10555,6 +10576,9 @@ export namespace Prisma {
     website?: boolean
     order?: boolean
     active?: boolean
+    description?: boolean
+    role?: boolean
+    isHorizontal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["partner"]>
@@ -10568,11 +10592,14 @@ export namespace Prisma {
     website?: boolean
     order?: boolean
     active?: boolean
+    description?: boolean
+    role?: boolean
+    isHorizontal?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PartnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "logoUrl" | "website" | "order" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["partner"]>
+  export type PartnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "logoUrl" | "website" | "order" | "active" | "description" | "role" | "isHorizontal" | "createdAt" | "updatedAt", ExtArgs["result"]["partner"]>
 
   export type $PartnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Partner"
@@ -10584,6 +10611,9 @@ export namespace Prisma {
       website: string | null
       order: number
       active: boolean
+      description: string | null
+      role: string | null
+      isHorizontal: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["partner"]>
@@ -10961,6 +10991,9 @@ export namespace Prisma {
     readonly website: FieldRef<"Partner", 'String'>
     readonly order: FieldRef<"Partner", 'Int'>
     readonly active: FieldRef<"Partner", 'Boolean'>
+    readonly description: FieldRef<"Partner", 'String'>
+    readonly role: FieldRef<"Partner", 'String'>
+    readonly isHorizontal: FieldRef<"Partner", 'Boolean'>
     readonly createdAt: FieldRef<"Partner", 'DateTime'>
     readonly updatedAt: FieldRef<"Partner", 'DateTime'>
   }
@@ -12399,6 +12432,9 @@ export namespace Prisma {
     website: 'website',
     order: 'order',
     active: 'active',
+    description: 'description',
+    role: 'role',
+    isHorizontal: 'isHorizontal',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12545,7 +12581,9 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     logoUrl: 'logoUrl',
-    website: 'website'
+    website: 'website',
+    description: 'description',
+    role: 'role'
   };
 
   export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
@@ -13322,6 +13360,9 @@ export namespace Prisma {
     website?: StringNullableFilter<"Partner"> | string | null
     order?: IntFilter<"Partner"> | number
     active?: BoolFilter<"Partner"> | boolean
+    description?: StringNullableFilter<"Partner"> | string | null
+    role?: StringNullableFilter<"Partner"> | string | null
+    isHorizontal?: BoolFilter<"Partner"> | boolean
     createdAt?: DateTimeFilter<"Partner"> | Date | string
     updatedAt?: DateTimeFilter<"Partner"> | Date | string
   }
@@ -13333,6 +13374,9 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     order?: SortOrder
     active?: SortOrder
+    description?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    isHorizontal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _relevance?: PartnerOrderByRelevanceInput
@@ -13348,6 +13392,9 @@ export namespace Prisma {
     website?: StringNullableFilter<"Partner"> | string | null
     order?: IntFilter<"Partner"> | number
     active?: BoolFilter<"Partner"> | boolean
+    description?: StringNullableFilter<"Partner"> | string | null
+    role?: StringNullableFilter<"Partner"> | string | null
+    isHorizontal?: BoolFilter<"Partner"> | boolean
     createdAt?: DateTimeFilter<"Partner"> | Date | string
     updatedAt?: DateTimeFilter<"Partner"> | Date | string
   }, "id">
@@ -13359,6 +13406,9 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     order?: SortOrder
     active?: SortOrder
+    description?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    isHorizontal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PartnerCountOrderByAggregateInput
@@ -13378,6 +13428,9 @@ export namespace Prisma {
     website?: StringNullableWithAggregatesFilter<"Partner"> | string | null
     order?: IntWithAggregatesFilter<"Partner"> | number
     active?: BoolWithAggregatesFilter<"Partner"> | boolean
+    description?: StringNullableWithAggregatesFilter<"Partner"> | string | null
+    role?: StringNullableWithAggregatesFilter<"Partner"> | string | null
+    isHorizontal?: BoolWithAggregatesFilter<"Partner"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Partner"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Partner"> | Date | string
   }
@@ -14218,6 +14271,9 @@ export namespace Prisma {
     website?: string | null
     order?: number
     active?: boolean
+    description?: string | null
+    role?: string | null
+    isHorizontal?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14229,6 +14285,9 @@ export namespace Prisma {
     website?: string | null
     order?: number
     active?: boolean
+    description?: string | null
+    role?: string | null
+    isHorizontal?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14240,6 +14299,9 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     active?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    isHorizontal?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14251,6 +14313,9 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     active?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    isHorizontal?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14262,6 +14327,9 @@ export namespace Prisma {
     website?: string | null
     order?: number
     active?: boolean
+    description?: string | null
+    role?: string | null
+    isHorizontal?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14273,6 +14341,9 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     active?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    isHorizontal?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14284,6 +14355,9 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     active?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    isHorizontal?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15042,6 +15116,9 @@ export namespace Prisma {
     website?: SortOrder
     order?: SortOrder
     active?: SortOrder
+    description?: SortOrder
+    role?: SortOrder
+    isHorizontal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15057,6 +15134,9 @@ export namespace Prisma {
     website?: SortOrder
     order?: SortOrder
     active?: SortOrder
+    description?: SortOrder
+    role?: SortOrder
+    isHorizontal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15068,6 +15148,9 @@ export namespace Prisma {
     website?: SortOrder
     order?: SortOrder
     active?: SortOrder
+    description?: SortOrder
+    role?: SortOrder
+    isHorizontal?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

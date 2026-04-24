@@ -15,7 +15,7 @@ const ProjectMap = dynamic(() => import("@/components/ProjectMap"), {
 
 type MetricDisplay = { value: string; label: string; sub: string };
 
-export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[] }) {
+export default function Impact({ metrics: dbMetrics, partners = [] }: { metrics?: ImpactMetric[], partners?: any[] }) {
   const { t } = useLanguage();
 
   const staticMetrics: MetricDisplay[] = [
@@ -167,7 +167,7 @@ export default function Impact({ metrics: dbMetrics }: { metrics?: ImpactMetric[
       </section>
 
       {/* Partners */}
-      <PartnersSection />
+      <PartnersSection partners={partners} />
 
       {/* Interactive Map */}
       <section className="py-20 bg-charcoal-mid">

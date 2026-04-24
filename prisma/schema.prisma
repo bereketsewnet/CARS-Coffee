@@ -46,7 +46,7 @@ model Publication {
   authors   String
   year      Int
   type      PublicationType
-  pillar String?
+  pillar    String?
   status    PublicationStatus @default(DRAFT)
   abstract  String?           @db.Text
   url       String?           @db.Text
@@ -73,18 +73,18 @@ enum PublicationStatus {
 // ─── Team members ─────────────────────────────────────────────────────────────
 
 model TeamMember {
-  id          String          @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   role        String
   institution String
   country     String
-  pillar String?
-  bio         String?         @db.Text
+  pillar      String?
+  bio         String?  @db.Text
   email       String?
-  imageUrl    String?         @db.Text
-  active      Boolean         @default(true)
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  imageUrl    String?  @db.Text
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // ─── News & Events ────────────────────────────────────────────────────────────
@@ -120,7 +120,7 @@ enum NewsEventStatus {
 model ResearchProject {
   id          String         @id @default(cuid())
   title       String
-  pillar String
+  pillar      String
   status      ResearchStatus @default(ACTIVE)
   lead        String?
   description String?        @db.Text
@@ -131,12 +131,12 @@ model ResearchProject {
 }
 
 model PillarContent {
-  id String @id @default(cuid())
-  pillar String @unique
-  title String
-  tagline String @db.Text
+  id         String  @id @default(cuid())
+  pillar     String  @unique
+  title      String
+  tagline    String  @db.Text
   laymanDesc String? @db.Text
-  imageUrl String? @db.Text
+  imageUrl   String? @db.Text
 }
 
 enum ResearchStatus {
@@ -165,7 +165,7 @@ model NewsletterSubscriber {
   id        String   @id @default(cuid())
   email     String   @unique @db.VarChar(191)
   name      String?
-  source    String?  // "contact_form" | "sidebar_widget" | "homepage"
+  source    String? // "contact_form" | "sidebar_widget" | "homepage"
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -174,26 +174,28 @@ model NewsletterSubscriber {
 // ─── Partners ─────────────────────────────────────────────────────────────────
 
 model Partner {
-  id        String   @id @default(cuid())
-  name      String
-  logoUrl   String?  @db.Text
-  website   String?  @db.Text
-  order     Int      @default(0)
-  active    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  logoUrl      String?  @db.Text
+  website      String?  @db.Text
+  order        Int      @default(0)
+  active       Boolean  @default(true)
+  description  String?  @db.Text
+  role         String?
+  isHorizontal Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 // ─── Impact metrics ───────────────────────────────────────────────────────────
 
 model ImpactMetric {
-  id        String          @id @default(cuid())
+  id        String   @id @default(cuid())
   label     String
   value     String
-  pillar String?
+  pillar    String?
   year      Int
-  notes     String?         @db.Text
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-

@@ -22,6 +22,9 @@ type Partner = {
   name: string;
   logoUrl: string | null;
   website: string | null;
+  description: string | null;
+  role: string | null;
+  isHorizontal: boolean;
   order: number;
   active: boolean;
   createdAt: Date;
@@ -339,6 +342,44 @@ export default function PartnerCrud({ items: initial }: { items: Partner[] }) {
             {uploadError && (
               <p className="text-xs text-rose-400 mt-1">{uploadError}</p>
             )}
+          </Field>
+
+          
+          <Field label="Description">
+            <textarea
+              name="description"
+              defaultValue={editing?.description ?? ""}
+              placeholder="Provides laboratory testing..."
+              className={inputCls + " min-h-[80px]"}
+            />
+          </Field>
+
+          <Field label="Role">
+            <select
+              name="role"
+              defaultValue={editing?.role ?? "other"}
+              className={"w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-leaf-bright/40"}
+            >
+              <option value="university">University</option>
+              <option value="research">Research</option>
+              <option value="ngo">NGO</option>
+              <option value="farmer">Farmer</option>
+              <option value="lab">Lab</option>
+              <option value="other">Other</option>
+            </select>
+          </Field>
+
+          <Field label="Is Horizontal Logo?">
+             <label className="flex items-center gap-2 cursor-pointer mt-1">
+              <input
+                type="checkbox"
+                name="isHorizontal"
+                value="true"
+                defaultChecked={editing?.isHorizontal ?? false}
+                className="w-4 h-4 rounded border-border"
+              />
+              <span className="text-sm text-muted-foreground">Check if the logo is wide/horizontal</span>
+            </label>
           </Field>
 
           <Field label="Website">

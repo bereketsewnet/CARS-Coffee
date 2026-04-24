@@ -235,6 +235,9 @@ exports.Prisma.PartnerScalarFieldEnum = {
   website: 'website',
   order: 'order',
   active: 'active',
+  description: 'description',
+  role: 'role',
+  isHorizontal: 'isHorizontal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -342,7 +345,9 @@ exports.Prisma.PartnerOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
   logoUrl: 'logoUrl',
-  website: 'website'
+  website: 'website',
+  description: 'description',
+  role: 'role'
 };
 
 exports.Prisma.ImpactMetricOrderByRelevanceFieldEnum = {
