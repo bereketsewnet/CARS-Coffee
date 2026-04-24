@@ -17,8 +17,8 @@ export async function createResearchProject(
     await prisma.researchProject.create({
       data: {
         title: form.get("title") as string,
-        pillar: form.get("pillar") as any,
-        status: (form.get("status") as any) ?? "ACTIVE",
+        pillar: form.get("pillar") as string,
+        status: (form.get("status") as any ?? "ACTIVE"),
         lead: (form.get("lead") as string) || undefined,
         description: (form.get("description") as string) || undefined,
         startDate: form.get("startDate") ? new Date(form.get("startDate") as string) : undefined,
@@ -45,7 +45,7 @@ export async function updateResearchProject(
       where: { id },
       data: {
         title: form.get("title") as string,
-        pillar: form.get("pillar") as any,
+        pillar: form.get("pillar") as string,
         status: form.get("status") as any,
         lead: (form.get("lead") as string) || undefined,
         description: (form.get("description") as string) || undefined,
@@ -67,4 +67,60 @@ export async function deleteResearchProject(id: string): Promise<void> {
   await prisma.researchProject.delete({ where: { id } });
   revalidatePath("/admin/research");
   revalidatePath("/research");
+}
+
+
+export async function updatePillarContent(_prev: ResearchFormState, id: string, form: FormData): Promise<ResearchFormState> {
+  await requireAdmin();
+  try {
+    await prisma.pillarContent.update({
+      where: { id },
+      data: {
+        title: form.get("title") as string,
+        tagline: form.get("tagline") as string,
+        laymanDesc: (form.get("laymanDesc") as string) || undefined,
+      },
+    });
+    revalidatePath("/admin/research");
+    revalidatePath("/research");
+    return { success: true };
+  } catch (e: any) {
+    console.error(e);
+    return { error: e.message || "Failed to update pillar content." };
+  }
+}
+
+export async function createPillarContent(_prev: ResearchFormState, form: FormData): Promise<ResearchFormState> {
+  await requireAdmin();
+  try {
+    const title = form.get('title') as string;
+    const pillarStr = title.replace(/\s+/g, '_').toUpperCase() + Math.random().toString().slice(2,6);
+    await prisma.pillarContent.create({
+      data: {
+        pillar: pillarStr,
+        title,
+        tagline: (form.get('tagline') as string) || '',
+        laymanDesc: (form.get('laymanDesc') as string) || undefined,
+      }
+    });
+    revalidatePath("/admin/research");
+    revalidatePath("/research");
+    return { success: true };
+  } catch (e: any) {
+    console.error(e);
+    return { error: e.message || 'Failed to create pillar.' };
+  }
+}
+
+export async function deletePillarContent(id: string): Promise<ResearchFormState> {
+  await requireAdmin();
+  try {
+    await prisma.pillarContent.delete({ where: { id } });
+    revalidatePath("/admin/research");
+    revalidatePath("/research");
+    return { success: true };
+  } catch (e: any) {
+    console.error(e);
+    return { error: 'Failed to delete pillar. Ensure no dependencies remain.' };
+  }
 }

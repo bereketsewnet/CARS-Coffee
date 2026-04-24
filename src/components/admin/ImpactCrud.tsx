@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import { Plus, Pencil, Trash2, BarChart3, TrendingUp, Users, Leaf, TreePine } from "lucide-react";
-import type { ImpactMetric } from "../../../generated/prisma-client";
+import type { ImpactMetric, PillarContent } from "../../../generated/prisma-client";
 import type { LucideIcon } from "lucide-react";
 import {
   createImpactMetric,
@@ -18,12 +18,6 @@ import {
   SubmitBtn,
 } from "./CrudHelpers";
 
-const PILLAR_LABELS: Record<string, string> = {
-  SOIL_HEALTH: "Soil Health",
-  WASTE_VALORIZATION: "Waste Valorization",
-  SOCIO_ECONOMIC: "Socio-Economic",
-};
-
 const iconMap: Record<string, LucideIcon> = {
   "Farmers Reached": Users,
   "Tonnes Composted": Leaf,
@@ -37,11 +31,6 @@ const colorMap: Record<string, string> = {
   "Average Income Increase": "text-purple-400",
 };
 
-const pillarsProgress = [
-  { name: "Soil Health", progress: 72, target: "Improve soil carbon in 1 000 ha by 2026" },
-  { name: "Waste Valorization", progress: 58, target: "Valorize 500 t of coffee by-products annually" },
-  { name: "Socio-Economic", progress: 65, target: "Reach 2 000 smallholders with training" },
-];
 const highlights = [
   { year: "2022", event: "Project launched in Jimma and Sidama zones" },
   { year: "2023", event: "First compost applied to 120 ha; 340 farmers trained" },
@@ -49,7 +38,7 @@ const highlights = [
   { year: "2025", event: "Wastewater anaerobic digestion pilot operational" },
 ];
 
-export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }) {
+export default function ImpactCrud({ items: initial, pillarContents = [] }: { items: ImpactMetric[], pillarContents?: PillarContent[] }) {
   const [items, setItems] = useState(initial);
   const [mode, setMode] = useState<"add" | "edit" | null>(null);
   const [editing, setEditing] = useState<ImpactMetric | null>(null);
@@ -88,16 +77,22 @@ export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }
     });
   }
 
+  // Quick fallback mock progress so it's not totally empty visually
+  // based on array index.
+  const getMockProgress = (i: number) => {
+    const list = [72, 58, 65, 80, 45, 90, 30];
+    return list[i % list.length];
+  };
+
   return (
     <>
-      {/* KPI cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {items.map((m) => {
           const Icon = iconMap[m.label] ?? BarChart3;
           const color = colorMap[m.label] ?? "text-leaf-bright";
           return (
             <div key={m.id} className="glass-card rounded-xl border border-border p-5 space-y-3 relative group">
-              <div className={`w-8 h-8 rounded-lg bg-muted flex items-center justify-center ${color}`}>
+              <div className={"w-8 h-8 rounded-lg bg-muted flex items-center justify-center " + color}>
                 <Icon className="w-4 h-4" />
               </div>
               <div>
@@ -112,7 +107,6 @@ export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }
             </div>
           );
         })}
-        {/* Add button card */}
         <button
           onClick={openAdd}
           className="glass-card rounded-xl border border-dashed border-border p-5 flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-leaf-bright hover:border-leaf-bright/40 transition-colors"
@@ -122,24 +116,23 @@ export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }
         </button>
       </div>
 
-      {/* Pillars progress */}
       <div className="glass-card rounded-xl border border-border p-5 space-y-5">
         <h2 className="font-semibold text-foreground">Pillar-Level Progress</h2>
-        {pillarsProgress.map((p) => (
-          <div key={p.name} className="space-y-1.5">
+        {pillarContents.length === 0 && <p className="text-sm text-muted-foreground">No custom Pillars have been created yet.</p>}
+        {pillarContents.map((p, i) => (
+          <div key={p.pillar} className="space-y-1.5">
             <div className="flex justify-between text-sm">
-              <span className="font-medium text-foreground">{p.name}</span>
-              <span className="text-muted-foreground">{p.progress}%</span>
+              <span className="font-medium text-foreground">{p.title}</span>
+              <span className="text-muted-foreground">{getMockProgress(i)}%</span>
             </div>
             <div className="h-2 rounded-full bg-muted overflow-hidden">
-              <div className="h-full rounded-full gradient-green transition-all" style={{ width: `${p.progress}%` }} />
+              <div className="h-full rounded-full gradient-green transition-all" style={{ width: getMockProgress(i) + '%' }} />
             </div>
-            <p className="text-xs text-muted-foreground">{p.target}</p>
+            <p className="text-xs text-muted-foreground">{p.tagline || p.laymanDesc || 'Ongoing milestones'}</p>
           </div>
         ))}
       </div>
 
-      {/* Timeline */}
       <div className="glass-card rounded-xl border border-border p-5">
         <h2 className="font-semibold text-foreground mb-4">Project Milestones</h2>
         <div className="relative pl-6 space-y-4">
@@ -154,7 +147,6 @@ export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }
         </div>
       </div>
 
-      {/* Modal */}
       <CrudModal open={mode !== null} onClose={close} title={editing ? "Edit Impact Metric" : "Add Impact Metric"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -169,8 +161,8 @@ export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }
             </Field>
             <Field label="Research Pillar">
               <select name="pillar" defaultValue={editing?.pillar ?? ""} className={selectCls}>
-                <option value="">— None —</option>
-                {Object.entries(PILLAR_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                <option value="">� None �</option>
+                {pillarContents.map((p) => <option key={p.pillar} value={p.pillar}>{p.title}</option>)}
               </select>
             </Field>
             <div className="sm:col-span-2">
@@ -188,9 +180,9 @@ export default function ImpactCrud({ items: initial }: { items: ImpactMetric[] }
         open={deleteTarget !== null}
         onClose={() => setDeleteTarget(null)}
         onConfirm={handleDelete}
-        label={`"${deleteTarget?.label ?? ""}"`}
+        label={deleteTarget?.label || ""}
         pending={deletePending}
       />
     </>
   );
-}
+}

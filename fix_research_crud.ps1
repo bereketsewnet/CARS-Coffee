@@ -1,4 +1,5 @@
-﻿"use client";
+﻿$text = @'
+"use client";
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil, Trash2 } from "lucide-react";
@@ -80,10 +81,10 @@ export default function ResearchCrud({ items: initial, pillarContents = [] }: { 
         {pillarStats.map((p) => (
           <div key={p.key} className="glass-card rounded-xl border border-border p-5 space-y-3 relative group">
             <div className="flex items-center justify-between">
-              <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${p.color}`}>{p.name}</span>
+              <span className={	ext-xs px-2 py-0.5 rounded-full border font-medium }>{p.name}</span>
               <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button type="button" onClick={() => { setEditingPillar(p.dbPillar); setPillarMode("edit"); }} className="text-muted-foreground hover:text-leaf-bright transition-colors" title="Edit"><Pencil className="w-4 h-4 cursor-pointer" /></button>
-                <button type="button" onClick={() => setDeletePillarTarget(p.dbPillar)} className="text-muted-foreground hover:text-rose-400 transition-colors" title="Delete"><Trash2 className="w-4 h-4 cursor-pointer" /></button>
+                <button onClick={() => { setEditingPillar(p.dbPillar); setPillarMode("edit"); }} className="text-muted-foreground hover:text-leaf-bright transition-colors" title="Edit"><Pencil className="w-4 h-4 cursor-pointer" /></button>
+                <button onClick={() => setDeletePillarTarget(p.dbPillar)} className="text-muted-foreground hover:text-rose-400 transition-colors" title="Delete"><Trash2 className="w-4 h-4 cursor-pointer" /></button>
               </div>
             </div>
             <div className="flex items-end justify-between">
@@ -106,12 +107,12 @@ export default function ResearchCrud({ items: initial, pillarContents = [] }: { 
         <ul>
           {items.map((proj) => (
             <li key={proj.id} className="px-5 py-4 border-b border-border/50 last:border-b-0 hover:bg-muted/20 transition-colors flex items-center justify-between gap-4">
-              <div className="flex-1 min-w-0"><p className="font-medium text-foreground truncate">{proj.title}</p><p className="text-xs text-muted-foreground mt-0.5">{proj.lead ? `Lead: ${proj.lead}` : ""}</p></div>
+              <div className="flex-1 min-w-0"><p className="font-medium text-foreground truncate">{proj.title}</p><p className="text-xs text-muted-foreground mt-0.5">{proj.lead ? Lead:  : ""}</p></div>
               <div className="flex items-center gap-3 shrink-0">
                 <span className="tag-pill text-xs hidden sm:inline">{getPillarName(proj.pillar)}</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${STATUS_COLORS[proj.status] ?? STATUS_COLORS.PAUSED}`}>{proj.status.charAt(0) + proj.status.slice(1).toLowerCase()}</span>
-                <button type="button" onClick={() => { setEditing(proj); setMode("edit"); }} className="text-muted-foreground hover:text-foreground transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-                <button type="button" onClick={() => setDeleteTarget(proj)} className="text-muted-foreground hover:text-rose-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                <span className={	ext-xs px-2 py-0.5 rounded-full border font-medium }>{proj.status.charAt(0) + proj.status.slice(1).toLowerCase()}</span>
+                <button onClick={() => { setEditing(proj); setMode("edit"); }} className="text-muted-foreground hover:text-foreground transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
+                <button onClick={() => setDeleteTarget(proj)} className="text-muted-foreground hover:text-rose-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
               </div>
             </li>
           ))}
@@ -136,18 +137,21 @@ export default function ResearchCrud({ items: initial, pillarContents = [] }: { 
         </form>
       </CrudModal>
 
-      <CrudModal open={pillarMode !== null} onClose={close} title={pillarMode === "edit" ? `Edit Pillar (${getPillarName(editingPillar?.pillar)})` : "New Pillar"}>
+      <CrudModal open={pillarMode !== null} onClose={close} title={pillarMode === "edit" ? Edit Pillar () : "New Pillar"}>
         <form onSubmit={handlePillarSubmit} className="space-y-4">
           <Field label="Title" required><input name="title" defaultValue={editingPillar?.title ?? ""} required className={inputCls} placeholder="Pillar Title" /></Field>
-          <Field label="Tagline" required><textarea name="tagline" defaultValue={editingPillar?.tagline ?? ""} required rows={3} className={textareaCls} placeholder="Short subtitle..." /></Field>
-          <Field label="Layman Description"><textarea name="laymanDesc" defaultValue={editingPillar?.laymanDesc ?? ""} rows={5} className={textareaCls} placeholder="Plain-English explanation..." /></Field>
+          <Field label="Tagline" required><textarea name="tagline" defaultValue={editingPillar?.tagline ?? ""} required rows={2} className={textareaCls} placeholder="Short subtitle..." /></Field>
+          <Field label="Layman Description"><textarea name="laymanDesc" defaultValue={editingPillar?.laymanDesc ?? ""} rows={4} className={textareaCls} placeholder="Plain-English explanation..." /></Field>
           {error && <p className="text-xs text-rose-400">{error}</p>}
           <SubmitBtn pending={pending} label={pillarMode === "edit" ? "Save Content" : "Create Pillar"} />
         </form>
       </CrudModal>
 
-      <ConfirmDeleteDialog open={deleteTarget !== null} onClose={() => setDeleteTarget(null)} onConfirm={handleDelete} label={`"${deleteTarget?.title ?? ""}"`} pending={deletePending} />
-      <ConfirmDeleteDialog open={deletePillarTarget !== null} onClose={() => setDeletePillarTarget(null)} onConfirm={handleDeletePillar} label={`"${deletePillarTarget?.title ?? ""}" pillar?`} pending={deletePending} />
+      <ConfirmDeleteDialog open={deleteTarget !== null} onClose={() => setDeleteTarget(null)} onConfirm={handleDelete} label={""} pending={deletePending} />
+      <ConfirmDeleteDialog open={deletePillarTarget !== null} onClose={() => setDeletePillarTarget(null)} onConfirm={handleDeletePillar} label={"" pillar?} pending={deletePending} />
     </>
   );
 }
+'@
+Set-Content -Path "src/components/admin/ResearchCrud.tsx" -Value $text
+

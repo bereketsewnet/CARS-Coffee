@@ -1,4 +1,4 @@
-﻿import { Suspense } from "react";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import PublicationCrud from "@/components/admin/PublicationCrud";
@@ -19,13 +19,14 @@ export default async function PublicationsPage({
   const page = Math.max(1, Number(rawPage) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const [publications, total] = await Promise.all([
+  const [publications, total, pillarContents] = await Promise.all([
     prisma.publication.findMany({
       orderBy: [{ year: "desc" }, { createdAt: "desc" }],
       skip,
       take: PAGE_SIZE,
     }),
     prisma.publication.count(),
+    prisma.pillarContent.findMany(),
   ]);
   const pageCount = Math.ceil(total / PAGE_SIZE);
 
@@ -42,7 +43,7 @@ export default async function PublicationsPage({
           </span>
         </p>
       </div>
-      <PublicationCrud items={publications} />
+      <PublicationCrud items={publications} pillarContents={pillarContents} />
       <Suspense>
         <PaginationNav page={page} pageCount={pageCount} />
       </Suspense>

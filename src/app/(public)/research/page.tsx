@@ -20,11 +20,13 @@ export default async function ResearchPage() {
   }
 
   // null = DB unavailable (error), [] = DB connected but empty
+    let pillarContents: any[] | null = null;
   let projects: ResearchProject[] | null = null;
   let publications: Publication[] | null = null;
 
   try {
-    [projects, publications] = await Promise.all([
+    [pillarContents, projects, publications] = await Promise.all([
+      prisma.pillarContent.findMany({}), 
       prisma.researchProject.findMany({
         where: { status: { not: "PAUSED" } },
         orderBy: { createdAt: "asc" },
@@ -39,5 +41,6 @@ export default async function ResearchPage() {
     // Leave projects/publications as null so Research.tsx shows static fallback
   }
 
-  return <Research projects={projects} publications={publications} />;
+  return <Research projects={projects} publications={publications} pillarContents={pillarContents} />;
 }
+

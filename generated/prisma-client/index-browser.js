@@ -197,6 +197,15 @@ exports.Prisma.ResearchProjectScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PillarContentScalarFieldEnum = {
+  id: 'id',
+  pillar: 'pillar',
+  title: 'title',
+  tagline: 'tagline',
+  laymanDesc: 'laymanDesc',
+  imageUrl: 'imageUrl'
+};
+
 exports.Prisma.ContactMessageScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -268,6 +277,7 @@ exports.Prisma.PublicationOrderByRelevanceFieldEnum = {
   id: 'id',
   title: 'title',
   authors: 'authors',
+  pillar: 'pillar',
   abstract: 'abstract',
   url: 'url',
   doi: 'doi',
@@ -280,6 +290,7 @@ exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
   role: 'role',
   institution: 'institution',
   country: 'country',
+  pillar: 'pillar',
   bio: 'bio',
   email: 'email',
   imageUrl: 'imageUrl'
@@ -297,8 +308,18 @@ exports.Prisma.NewsEventOrderByRelevanceFieldEnum = {
 exports.Prisma.ResearchProjectOrderByRelevanceFieldEnum = {
   id: 'id',
   title: 'title',
+  pillar: 'pillar',
   lead: 'lead',
   description: 'description'
+};
+
+exports.Prisma.PillarContentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  pillar: 'pillar',
+  title: 'title',
+  tagline: 'tagline',
+  laymanDesc: 'laymanDesc',
+  imageUrl: 'imageUrl'
 };
 
 exports.Prisma.ContactMessageOrderByRelevanceFieldEnum = {
@@ -328,6 +349,7 @@ exports.Prisma.ImpactMetricOrderByRelevanceFieldEnum = {
   id: 'id',
   label: 'label',
   value: 'value',
+  pillar: 'pillar',
   notes: 'notes'
 };
 exports.Role = exports.$Enums.Role = {
@@ -341,12 +363,6 @@ exports.PublicationType = exports.$Enums.PublicationType = {
   MANUAL: 'MANUAL',
   CONFERENCE: 'CONFERENCE',
   REPORT: 'REPORT'
-};
-
-exports.ResearchPillar = exports.$Enums.ResearchPillar = {
-  SOIL_HEALTH: 'SOIL_HEALTH',
-  WASTE_VALORIZATION: 'WASTE_VALORIZATION',
-  SOCIO_ECONOMIC: 'SOCIO_ECONOMIC'
 };
 
 exports.PublicationStatus = exports.$Enums.PublicationStatus = {
@@ -380,6 +396,7 @@ exports.Prisma.ModelName = {
   TeamMember: 'TeamMember',
   NewsEvent: 'NewsEvent',
   ResearchProject: 'ResearchProject',
+  PillarContent: 'PillarContent',
   ContactMessage: 'ContactMessage',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',

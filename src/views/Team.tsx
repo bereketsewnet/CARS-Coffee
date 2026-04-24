@@ -1,6 +1,6 @@
 "use client";
 
-import { Linkedin, Globe } from "lucide-react";
+import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { TeamMember as DbMember } from "../../generated/prisma-client";
 
@@ -13,6 +13,10 @@ interface TeamMember {
   initials: string;
   color: string;
   imageUrl?: string | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  instagram?: string | null;
+  website?: string | null;
 }
 
 const COLORS = ["gradient-green", "gradient-coffee"];
@@ -43,6 +47,10 @@ function dbToMember(m: DbMember, idx: number): TeamMember {
     initials,
     color: COLORS[idx % COLORS.length],
     imageUrl: m.imageUrl ?? null,
+    linkedin: (m as any).linkedin ?? null,
+    twitter: (m as any).twitter ?? null,
+    instagram: (m as any).instagram ?? null,
+    website: (m as any).website ?? null,
   };
 }
 
@@ -125,46 +133,69 @@ const roleOrder = ["PI", "Co-Supervisor", "PhD", "Research Assistant"] as const;
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <div className="glass-card rounded-2xl p-6 border border-border pillar-hover flex flex-col h-full">
-      <div className="flex items-center gap-4 mb-4">
-        <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 shadow-glow border-2 border-border">
-          {member.imageUrl ? (
-            <img
-              src={member.imageUrl}
-              alt={member.name}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div
-              className={`w-full h-full ${member.color} flex items-center justify-center text-foreground font-serif font-bold text-xl`}
-            >
+    <div className="glass-card rounded-3xl overflow-hidden border border-border pillar-hover flex flex-col h-full group">
+      <div className="aspect-[4/3] w-full relative overflow-hidden bg-card/50 flex-shrink-0">
+        {member.imageUrl ? (
+          <img
+            src={member.imageUrl}
+            alt={member.name}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div
+            className={`w-full h-full ${member.color} flex items-center justify-center transition-transform duration-700 group-hover:scale-105`}
+          >
+            <span className="font-serif font-bold text-5xl text-foreground mix-blend-soft-light opacity-80 shadow-sm">
               {member.initials}
-            </div>
+            </span>
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-black/20 to-transparent opacity-80" />
+        <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
+          {member.linkedin && (
+            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-background/60 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-[#0077b5] transition-all shadow-sm">
+              <Linkedin className="w-4 h-4" />
+            </a>
+          )}
+          {member.twitter && (
+             <a href={member.twitter} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-background/60 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-black transition-all shadow-sm">
+             <Twitter className="w-4 h-4" />
+           </a>
+          )}
+          {member.instagram && (
+            <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-background/60 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-[#E1306C] transition-all shadow-sm">
+              <Instagram className="w-4 h-4" />
+            </a>
+          )}
+          {member.website && (
+            <a href={member.website} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-background/60 backdrop-blur-md border border-border/50 flex items-center justify-center text-muted-foreground hover:text-white hover:bg-leaf transition-all shadow-sm">
+              <LinkIcon className="w-4 h-4" />
+            </a>
           )}
         </div>
-        <div>
-          <h3 className="font-serif font-semibold text-base leading-tight">
+      </div>
+      
+      <div className="p-6 flex flex-col flex-1 relative z-10 bg-background/40 backdrop-blur-sm -mt-2">
+        <div className="mb-4">
+          <h3 className="font-serif font-bold text-xl leading-tight mb-1 group-hover:text-leaf-bright transition-colors">
             {member.name}
           </h3>
-          <p className="text-xs text-muted-foreground mt-0.5">{member.title}</p>
+          <p className="text-sm font-medium text-gradient-green">{member.title}</p>
         </div>
-      </div>
-      <div className="flex-1">
-        <div className="flex items-center gap-1 mb-2">
-          <Globe className="w-3.5 h-3.5 text-muted-foreground" />
-          <span className="text-xs text-muted-foreground">
-            {member.institution}
-          </span>
+        <div className="flex-1 space-y-3">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Globe className="w-4 h-4 shrink-0" />
+            <span className="text-sm truncate">
+              {member.institution}
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+            {member.focus}
+          </p>
         </div>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          {member.focus}
-        </p>
-      </div>
-      <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-        <span className="tag-pill text-xs">{member.role}</span>
-        <button className="text-muted-foreground hover:text-leaf-bright transition-colors">
-          <Linkedin className="w-4 h-4" />
-        </button>
+        <div className="mt-5 pt-4 border-t border-border/50 flex items-start">
+          <span className="tag-pill text-xs shadow-sm bg-card/80 backdrop-blur-sm">{member.role}</span>
+        </div>
       </div>
     </div>
   );

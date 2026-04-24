@@ -9,7 +9,7 @@ import {
   Loader2,
   Download,
 } from "lucide-react";
-import type { Publication } from "../../../generated/prisma-client";
+import type { Publication, PillarContent } from "../../../generated/prisma-client";
 import {
   createPublication,
   updatePublication,
@@ -48,10 +48,9 @@ const STATUS_COLORS: Record<string, string> = {
   DRAFT: "text-muted-foreground bg-muted border-border",
 };
 
-export default function PublicationCrud({
-  items: initial,
-}: {
+export default function PublicationCrud({ items: initial, pillarContents = [] }: {
   items: Publication[];
+  pillarContents?: PillarContent[];
 }) {
   const [items, setItems] = useState(initial);
   const [mode, setMode] = useState<"add" | "edit" | null>(null);
@@ -227,7 +226,7 @@ export default function PublicationCrud({
                   <td className="px-4 py-4 hidden lg:table-cell whitespace-nowrap">
                     <span className="tag-pill text-xs">
                       {pub.pillar
-                        ? (PILLAR_LABELS[pub.pillar] ?? pub.pillar)
+                        ? ((pillarContents.find(p => p.pillar === pub.pillar)?.title) ?? pub.pillar)
                         : "—"}
                     </span>
                   </td>
@@ -364,11 +363,7 @@ export default function PublicationCrud({
                   className={selectCls}
                 >
                   <option value="">— None —</option>
-                  {Object.entries(PILLAR_LABELS).map(([v, l]) => (
-                    <option key={v} value={v}>
-                      {l}
-                    </option>
-                  ))}
+                  {pillarContents.map(p=>(<option key={p.pillar} value={p.pillar}>{p.title}</option>))}
                 </select>
               </Field>
             </div>

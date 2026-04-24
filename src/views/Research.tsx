@@ -27,7 +27,7 @@ const STATIC_PUBS: Record<string, string[]> = {
 // Replaced by inline definitions inside components.
 
 function formatPub(p: Publication): string {
-  const authorShort = p.authors.split(",")[0].trim() + (p.authors.includes(",") ? " et al." : "");
+  const authorShort = (p.authors || "").split(",")[0].trim() + ((p.authors || "").includes(",") ? " et al." : "");
   return `${authorShort} (${p.year}) — ${p.title}`;
 }
 
@@ -165,32 +165,27 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
 export default function Research({
   projects,
   publications,
+  pillarContents,
 }: {
   // null  = DB unavailable (error/disabled) – show full static fallback
   // []    = DB connected but no records yet – show DB-driven empty state per pillar
   // [...] = DB data – show real projects
   projects?: ResearchProject[] | null;
   publications?: Publication[] | null;
+  pillarContents?: any[] | null;
 }) {
   const { t } = useLanguage();
 
-  const PILLARS = [
-    {
-      ...BASE_PILLARS[0],
-      tag: t.research.p1,
-      tagline: t.research.soilTag,
-    },
-    {
-      ...BASE_PILLARS[1],
-      tag: t.research.p2,
-      tagline: t.research.wasteTag,
-    },
-    {
-      ...BASE_PILLARS[2],
-      tag: t.research.p3,
-      tagline: t.research.socioTag,
-    },
-  ];
+    const PILLARS = BASE_PILLARS.map((base, i) => {
+    const dbPillar = pillarContents?.find(p => p.pillar === base.key);
+    return {
+      ...base,
+      title: dbPillar?.title || base.title,
+      tag: (i === 0 ? t.research.p1 : i === 1 ? t.research.p2 : t.research.p3),
+      tagline: dbPillar?.tagline || (i === 0 ? t.research.soilTag : i === 1 ? t.research.wasteTag : t.research.socioTag),
+      layman: dbPillar?.laymanDesc || (i === 0 ? t.research.laymanSoil : i === 1 ? t.research.laymanWaste : t.research.laymanSocio)
+    }
+  });
 
   const STATIC_TOPICS: Record<string, { title: string; desc: string }[]> = {
     SOIL_HEALTH: [
@@ -284,7 +279,7 @@ export default function Research({
             pillar={pillar}
             topics={dbTopics ?? []}          // null → [] triggers empty-state in PillarCard
             pubLines={dbPubs}
-            layman={LAYMAN[pillar.key]}
+            layman={pillar.layman}
             emptyState={dbTopics === null}   // true when DB up but pillar has no projects
           />
         );
@@ -292,3 +287,8 @@ export default function Research({
     </div>
   );
 }
+
+
+
+
+

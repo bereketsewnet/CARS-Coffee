@@ -19,13 +19,14 @@ export default async function ResearchPage({
   const page = Math.max(1, Number(rawPage) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const [projects, total] = await Promise.all([
+  const [projects, total, pillarContents] = await Promise.all([
     prisma.researchProject.findMany({
       orderBy: { createdAt: "desc" },
       skip,
       take: PAGE_SIZE,
     }),
     prisma.researchProject.count(),
+    prisma.pillarContent.findMany(),
   ]);
   const pageCount = Math.ceil(total / PAGE_SIZE);
 
@@ -42,7 +43,7 @@ export default async function ResearchPage({
           </span>
         </p>
       </div>
-      <ResearchCrud items={projects} />
+      <ResearchCrud items={projects} pillarContents={pillarContents} />
       <Suspense>
         <PaginationNav page={page} pageCount={pageCount} />
       </Suspense>

@@ -46,7 +46,7 @@ model Publication {
   authors   String
   year      Int
   type      PublicationType
-  pillar    ResearchPillar?
+  pillar    String?
   status    PublicationStatus @default(DRAFT)
   abstract  String?           @db.Text
   url       String?           @db.Text
@@ -73,18 +73,18 @@ enum PublicationStatus {
 // ─── Team members ─────────────────────────────────────────────────────────────
 
 model TeamMember {
-  id          String          @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   role        String
   institution String
   country     String
-  pillar      ResearchPillar?
-  bio         String?         @db.Text
+  pillar      String?
+  bio         String?  @db.Text
   email       String?
-  imageUrl    String?         @db.Text
-  active      Boolean         @default(true)
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  imageUrl    String?  @db.Text
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 // ─── News & Events ────────────────────────────────────────────────────────────
@@ -120,7 +120,7 @@ enum NewsEventStatus {
 model ResearchProject {
   id          String         @id @default(cuid())
   title       String
-  pillar      ResearchPillar
+  pillar      String
   status      ResearchStatus @default(ACTIVE)
   lead        String?
   description String?        @db.Text
@@ -130,10 +130,13 @@ model ResearchProject {
   updatedAt   DateTime       @updatedAt
 }
 
-enum ResearchPillar {
-  SOIL_HEALTH
-  WASTE_VALORIZATION
-  SOCIO_ECONOMIC
+model PillarContent {
+  id         String  @id @default(cuid())
+  pillar     String  @unique
+  title      String
+  tagline    String  @db.Text
+  laymanDesc String? @db.Text
+  imageUrl   String? @db.Text
 }
 
 enum ResearchStatus {
@@ -184,12 +187,12 @@ model Partner {
 // ─── Impact metrics ───────────────────────────────────────────────────────────
 
 model ImpactMetric {
-  id        String          @id @default(cuid())
+  id        String   @id @default(cuid())
   label     String
   value     String
-  pillar    ResearchPillar?
+  pillar    String?
   year      Int
-  notes     String?         @db.Text
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

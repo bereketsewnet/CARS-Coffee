@@ -44,6 +44,11 @@ export type NewsEvent = $Result.DefaultSelection<Prisma.$NewsEventPayload>
  */
 export type ResearchProject = $Result.DefaultSelection<Prisma.$ResearchProjectPayload>
 /**
+ * Model PillarContent
+ * 
+ */
+export type PillarContent = $Result.DefaultSelection<Prisma.$PillarContentPayload>
+/**
  * Model ContactMessage
  * 
  */
@@ -114,15 +119,6 @@ export const NewsEventStatus: {
 export type NewsEventStatus = (typeof NewsEventStatus)[keyof typeof NewsEventStatus]
 
 
-export const ResearchPillar: {
-  SOIL_HEALTH: 'SOIL_HEALTH',
-  WASTE_VALORIZATION: 'WASTE_VALORIZATION',
-  SOCIO_ECONOMIC: 'SOCIO_ECONOMIC'
-};
-
-export type ResearchPillar = (typeof ResearchPillar)[keyof typeof ResearchPillar]
-
-
 export const ResearchStatus: {
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',
@@ -152,10 +148,6 @@ export const NewsEventType: typeof $Enums.NewsEventType
 export type NewsEventStatus = $Enums.NewsEventStatus
 
 export const NewsEventStatus: typeof $Enums.NewsEventStatus
-
-export type ResearchPillar = $Enums.ResearchPillar
-
-export const ResearchPillar: typeof $Enums.ResearchPillar
 
 export type ResearchStatus = $Enums.ResearchStatus
 
@@ -341,6 +333,16 @@ export class PrismaClient<
     * ```
     */
   get researchProject(): Prisma.ResearchProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pillarContent`: Exposes CRUD operations for the **PillarContent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PillarContents
+    * const pillarContents = await prisma.pillarContent.findMany()
+    * ```
+    */
+  get pillarContent(): Prisma.PillarContentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.contactMessage`: Exposes CRUD operations for the **ContactMessage** model.
@@ -821,6 +823,7 @@ export namespace Prisma {
     TeamMember: 'TeamMember',
     NewsEvent: 'NewsEvent',
     ResearchProject: 'ResearchProject',
+    PillarContent: 'PillarContent',
     ContactMessage: 'ContactMessage',
     NewsletterSubscriber: 'NewsletterSubscriber',
     Partner: 'Partner',
@@ -840,7 +843,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "contactMessage" | "newsletterSubscriber" | "partner" | "impactMetric"
+      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "impactMetric"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1240,6 +1243,72 @@ export namespace Prisma {
           }
         }
       }
+      PillarContent: {
+        payload: Prisma.$PillarContentPayload<ExtArgs>
+        fields: Prisma.PillarContentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PillarContentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PillarContentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>
+          }
+          findFirst: {
+            args: Prisma.PillarContentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PillarContentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>
+          }
+          findMany: {
+            args: Prisma.PillarContentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>[]
+          }
+          create: {
+            args: Prisma.PillarContentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>
+          }
+          createMany: {
+            args: Prisma.PillarContentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PillarContentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>
+          }
+          update: {
+            args: Prisma.PillarContentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>
+          }
+          deleteMany: {
+            args: Prisma.PillarContentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PillarContentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PillarContentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PillarContentPayload>
+          }
+          aggregate: {
+            args: Prisma.PillarContentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePillarContent>
+          }
+          groupBy: {
+            args: Prisma.PillarContentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PillarContentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PillarContentCountArgs<ExtArgs>
+            result: $Utils.Optional<PillarContentCountAggregateOutputType> | number
+          }
+        }
+      }
       ContactMessage: {
         payload: Prisma.$ContactMessagePayload<ExtArgs>
         fields: Prisma.ContactMessageFieldRefs
@@ -1618,6 +1687,7 @@ export namespace Prisma {
     teamMember?: TeamMemberOmit
     newsEvent?: NewsEventOmit
     researchProject?: ResearchProjectOmit
+    pillarContent?: PillarContentOmit
     contactMessage?: ContactMessageOmit
     newsletterSubscriber?: NewsletterSubscriberOmit
     partner?: PartnerOmit
@@ -3685,7 +3755,7 @@ export namespace Prisma {
     authors: string | null
     year: number | null
     type: $Enums.PublicationType | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     status: $Enums.PublicationStatus | null
     abstract: string | null
     url: string | null
@@ -3701,7 +3771,7 @@ export namespace Prisma {
     authors: string | null
     year: number | null
     type: $Enums.PublicationType | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     status: $Enums.PublicationStatus | null
     abstract: string | null
     url: string | null
@@ -3878,7 +3948,7 @@ export namespace Prisma {
     authors: string
     year: number
     type: $Enums.PublicationType
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     status: $Enums.PublicationStatus
     abstract: string | null
     url: string | null
@@ -3952,7 +4022,7 @@ export namespace Prisma {
       authors: string
       year: number
       type: $Enums.PublicationType
-      pillar: $Enums.ResearchPillar | null
+      pillar: string | null
       status: $Enums.PublicationStatus
       abstract: string | null
       url: string | null
@@ -4334,7 +4404,7 @@ export namespace Prisma {
     readonly authors: FieldRef<"Publication", 'String'>
     readonly year: FieldRef<"Publication", 'Int'>
     readonly type: FieldRef<"Publication", 'PublicationType'>
-    readonly pillar: FieldRef<"Publication", 'ResearchPillar'>
+    readonly pillar: FieldRef<"Publication", 'String'>
     readonly status: FieldRef<"Publication", 'PublicationStatus'>
     readonly abstract: FieldRef<"Publication", 'String'>
     readonly url: FieldRef<"Publication", 'String'>
@@ -4684,7 +4754,7 @@ export namespace Prisma {
     role: string | null
     institution: string | null
     country: string | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     bio: string | null
     email: string | null
     imageUrl: string | null
@@ -4699,7 +4769,7 @@ export namespace Prisma {
     role: string | null
     institution: string | null
     country: string | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     bio: string | null
     email: string | null
     imageUrl: string | null
@@ -4849,7 +4919,7 @@ export namespace Prisma {
     role: string
     institution: string
     country: string
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     bio: string | null
     email: string | null
     imageUrl: string | null
@@ -4918,7 +4988,7 @@ export namespace Prisma {
       role: string
       institution: string
       country: string
-      pillar: $Enums.ResearchPillar | null
+      pillar: string | null
       bio: string | null
       email: string | null
       imageUrl: string | null
@@ -5299,7 +5369,7 @@ export namespace Prisma {
     readonly role: FieldRef<"TeamMember", 'String'>
     readonly institution: FieldRef<"TeamMember", 'String'>
     readonly country: FieldRef<"TeamMember", 'String'>
-    readonly pillar: FieldRef<"TeamMember", 'ResearchPillar'>
+    readonly pillar: FieldRef<"TeamMember", 'String'>
     readonly bio: FieldRef<"TeamMember", 'String'>
     readonly email: FieldRef<"TeamMember", 'String'>
     readonly imageUrl: FieldRef<"TeamMember", 'String'>
@@ -6598,7 +6668,7 @@ export namespace Prisma {
   export type ResearchProjectMinAggregateOutputType = {
     id: string | null
     title: string | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     status: $Enums.ResearchStatus | null
     lead: string | null
     description: string | null
@@ -6611,7 +6681,7 @@ export namespace Prisma {
   export type ResearchProjectMaxAggregateOutputType = {
     id: string | null
     title: string | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     status: $Enums.ResearchStatus | null
     lead: string | null
     description: string | null
@@ -6751,7 +6821,7 @@ export namespace Prisma {
   export type ResearchProjectGroupByOutputType = {
     id: string
     title: string
-    pillar: $Enums.ResearchPillar
+    pillar: string
     status: $Enums.ResearchStatus
     lead: string | null
     description: string | null
@@ -6814,7 +6884,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
-      pillar: $Enums.ResearchPillar
+      pillar: string
       status: $Enums.ResearchStatus
       lead: string | null
       description: string | null
@@ -7193,7 +7263,7 @@ export namespace Prisma {
   interface ResearchProjectFieldRefs {
     readonly id: FieldRef<"ResearchProject", 'String'>
     readonly title: FieldRef<"ResearchProject", 'String'>
-    readonly pillar: FieldRef<"ResearchProject", 'ResearchPillar'>
+    readonly pillar: FieldRef<"ResearchProject", 'String'>
     readonly status: FieldRef<"ResearchProject", 'ResearchStatus'>
     readonly lead: FieldRef<"ResearchProject", 'String'>
     readonly description: FieldRef<"ResearchProject", 'String'>
@@ -7524,6 +7594,904 @@ export namespace Prisma {
      * Omit specific fields from the ResearchProject
      */
     omit?: ResearchProjectOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PillarContent
+   */
+
+  export type AggregatePillarContent = {
+    _count: PillarContentCountAggregateOutputType | null
+    _min: PillarContentMinAggregateOutputType | null
+    _max: PillarContentMaxAggregateOutputType | null
+  }
+
+  export type PillarContentMinAggregateOutputType = {
+    id: string | null
+    pillar: string | null
+    title: string | null
+    tagline: string | null
+    laymanDesc: string | null
+    imageUrl: string | null
+  }
+
+  export type PillarContentMaxAggregateOutputType = {
+    id: string | null
+    pillar: string | null
+    title: string | null
+    tagline: string | null
+    laymanDesc: string | null
+    imageUrl: string | null
+  }
+
+  export type PillarContentCountAggregateOutputType = {
+    id: number
+    pillar: number
+    title: number
+    tagline: number
+    laymanDesc: number
+    imageUrl: number
+    _all: number
+  }
+
+
+  export type PillarContentMinAggregateInputType = {
+    id?: true
+    pillar?: true
+    title?: true
+    tagline?: true
+    laymanDesc?: true
+    imageUrl?: true
+  }
+
+  export type PillarContentMaxAggregateInputType = {
+    id?: true
+    pillar?: true
+    title?: true
+    tagline?: true
+    laymanDesc?: true
+    imageUrl?: true
+  }
+
+  export type PillarContentCountAggregateInputType = {
+    id?: true
+    pillar?: true
+    title?: true
+    tagline?: true
+    laymanDesc?: true
+    imageUrl?: true
+    _all?: true
+  }
+
+  export type PillarContentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PillarContent to aggregate.
+     */
+    where?: PillarContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PillarContents to fetch.
+     */
+    orderBy?: PillarContentOrderByWithRelationInput | PillarContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PillarContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PillarContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PillarContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PillarContents
+    **/
+    _count?: true | PillarContentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PillarContentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PillarContentMaxAggregateInputType
+  }
+
+  export type GetPillarContentAggregateType<T extends PillarContentAggregateArgs> = {
+        [P in keyof T & keyof AggregatePillarContent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePillarContent[P]>
+      : GetScalarType<T[P], AggregatePillarContent[P]>
+  }
+
+
+
+
+  export type PillarContentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PillarContentWhereInput
+    orderBy?: PillarContentOrderByWithAggregationInput | PillarContentOrderByWithAggregationInput[]
+    by: PillarContentScalarFieldEnum[] | PillarContentScalarFieldEnum
+    having?: PillarContentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PillarContentCountAggregateInputType | true
+    _min?: PillarContentMinAggregateInputType
+    _max?: PillarContentMaxAggregateInputType
+  }
+
+  export type PillarContentGroupByOutputType = {
+    id: string
+    pillar: string
+    title: string
+    tagline: string
+    laymanDesc: string | null
+    imageUrl: string | null
+    _count: PillarContentCountAggregateOutputType | null
+    _min: PillarContentMinAggregateOutputType | null
+    _max: PillarContentMaxAggregateOutputType | null
+  }
+
+  type GetPillarContentGroupByPayload<T extends PillarContentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PillarContentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PillarContentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PillarContentGroupByOutputType[P]>
+            : GetScalarType<T[P], PillarContentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PillarContentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pillar?: boolean
+    title?: boolean
+    tagline?: boolean
+    laymanDesc?: boolean
+    imageUrl?: boolean
+  }, ExtArgs["result"]["pillarContent"]>
+
+
+
+  export type PillarContentSelectScalar = {
+    id?: boolean
+    pillar?: boolean
+    title?: boolean
+    tagline?: boolean
+    laymanDesc?: boolean
+    imageUrl?: boolean
+  }
+
+  export type PillarContentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pillar" | "title" | "tagline" | "laymanDesc" | "imageUrl", ExtArgs["result"]["pillarContent"]>
+
+  export type $PillarContentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PillarContent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      pillar: string
+      title: string
+      tagline: string
+      laymanDesc: string | null
+      imageUrl: string | null
+    }, ExtArgs["result"]["pillarContent"]>
+    composites: {}
+  }
+
+  type PillarContentGetPayload<S extends boolean | null | undefined | PillarContentDefaultArgs> = $Result.GetResult<Prisma.$PillarContentPayload, S>
+
+  type PillarContentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PillarContentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PillarContentCountAggregateInputType | true
+    }
+
+  export interface PillarContentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PillarContent'], meta: { name: 'PillarContent' } }
+    /**
+     * Find zero or one PillarContent that matches the filter.
+     * @param {PillarContentFindUniqueArgs} args - Arguments to find a PillarContent
+     * @example
+     * // Get one PillarContent
+     * const pillarContent = await prisma.pillarContent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PillarContentFindUniqueArgs>(args: SelectSubset<T, PillarContentFindUniqueArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PillarContent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PillarContentFindUniqueOrThrowArgs} args - Arguments to find a PillarContent
+     * @example
+     * // Get one PillarContent
+     * const pillarContent = await prisma.pillarContent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PillarContentFindUniqueOrThrowArgs>(args: SelectSubset<T, PillarContentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PillarContent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentFindFirstArgs} args - Arguments to find a PillarContent
+     * @example
+     * // Get one PillarContent
+     * const pillarContent = await prisma.pillarContent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PillarContentFindFirstArgs>(args?: SelectSubset<T, PillarContentFindFirstArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PillarContent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentFindFirstOrThrowArgs} args - Arguments to find a PillarContent
+     * @example
+     * // Get one PillarContent
+     * const pillarContent = await prisma.pillarContent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PillarContentFindFirstOrThrowArgs>(args?: SelectSubset<T, PillarContentFindFirstOrThrowArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PillarContents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PillarContents
+     * const pillarContents = await prisma.pillarContent.findMany()
+     * 
+     * // Get first 10 PillarContents
+     * const pillarContents = await prisma.pillarContent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pillarContentWithIdOnly = await prisma.pillarContent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PillarContentFindManyArgs>(args?: SelectSubset<T, PillarContentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PillarContent.
+     * @param {PillarContentCreateArgs} args - Arguments to create a PillarContent.
+     * @example
+     * // Create one PillarContent
+     * const PillarContent = await prisma.pillarContent.create({
+     *   data: {
+     *     // ... data to create a PillarContent
+     *   }
+     * })
+     * 
+     */
+    create<T extends PillarContentCreateArgs>(args: SelectSubset<T, PillarContentCreateArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PillarContents.
+     * @param {PillarContentCreateManyArgs} args - Arguments to create many PillarContents.
+     * @example
+     * // Create many PillarContents
+     * const pillarContent = await prisma.pillarContent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PillarContentCreateManyArgs>(args?: SelectSubset<T, PillarContentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PillarContent.
+     * @param {PillarContentDeleteArgs} args - Arguments to delete one PillarContent.
+     * @example
+     * // Delete one PillarContent
+     * const PillarContent = await prisma.pillarContent.delete({
+     *   where: {
+     *     // ... filter to delete one PillarContent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PillarContentDeleteArgs>(args: SelectSubset<T, PillarContentDeleteArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PillarContent.
+     * @param {PillarContentUpdateArgs} args - Arguments to update one PillarContent.
+     * @example
+     * // Update one PillarContent
+     * const pillarContent = await prisma.pillarContent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PillarContentUpdateArgs>(args: SelectSubset<T, PillarContentUpdateArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PillarContents.
+     * @param {PillarContentDeleteManyArgs} args - Arguments to filter PillarContents to delete.
+     * @example
+     * // Delete a few PillarContents
+     * const { count } = await prisma.pillarContent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PillarContentDeleteManyArgs>(args?: SelectSubset<T, PillarContentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PillarContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PillarContents
+     * const pillarContent = await prisma.pillarContent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PillarContentUpdateManyArgs>(args: SelectSubset<T, PillarContentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PillarContent.
+     * @param {PillarContentUpsertArgs} args - Arguments to update or create a PillarContent.
+     * @example
+     * // Update or create a PillarContent
+     * const pillarContent = await prisma.pillarContent.upsert({
+     *   create: {
+     *     // ... data to create a PillarContent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PillarContent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PillarContentUpsertArgs>(args: SelectSubset<T, PillarContentUpsertArgs<ExtArgs>>): Prisma__PillarContentClient<$Result.GetResult<Prisma.$PillarContentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PillarContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentCountArgs} args - Arguments to filter PillarContents to count.
+     * @example
+     * // Count the number of PillarContents
+     * const count = await prisma.pillarContent.count({
+     *   where: {
+     *     // ... the filter for the PillarContents we want to count
+     *   }
+     * })
+    **/
+    count<T extends PillarContentCountArgs>(
+      args?: Subset<T, PillarContentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PillarContentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PillarContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PillarContentAggregateArgs>(args: Subset<T, PillarContentAggregateArgs>): Prisma.PrismaPromise<GetPillarContentAggregateType<T>>
+
+    /**
+     * Group by PillarContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PillarContentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PillarContentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PillarContentGroupByArgs['orderBy'] }
+        : { orderBy?: PillarContentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PillarContentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPillarContentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PillarContent model
+   */
+  readonly fields: PillarContentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PillarContent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PillarContentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PillarContent model
+   */
+  interface PillarContentFieldRefs {
+    readonly id: FieldRef<"PillarContent", 'String'>
+    readonly pillar: FieldRef<"PillarContent", 'String'>
+    readonly title: FieldRef<"PillarContent", 'String'>
+    readonly tagline: FieldRef<"PillarContent", 'String'>
+    readonly laymanDesc: FieldRef<"PillarContent", 'String'>
+    readonly imageUrl: FieldRef<"PillarContent", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PillarContent findUnique
+   */
+  export type PillarContentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * Filter, which PillarContent to fetch.
+     */
+    where: PillarContentWhereUniqueInput
+  }
+
+  /**
+   * PillarContent findUniqueOrThrow
+   */
+  export type PillarContentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * Filter, which PillarContent to fetch.
+     */
+    where: PillarContentWhereUniqueInput
+  }
+
+  /**
+   * PillarContent findFirst
+   */
+  export type PillarContentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * Filter, which PillarContent to fetch.
+     */
+    where?: PillarContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PillarContents to fetch.
+     */
+    orderBy?: PillarContentOrderByWithRelationInput | PillarContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PillarContents.
+     */
+    cursor?: PillarContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PillarContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PillarContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PillarContents.
+     */
+    distinct?: PillarContentScalarFieldEnum | PillarContentScalarFieldEnum[]
+  }
+
+  /**
+   * PillarContent findFirstOrThrow
+   */
+  export type PillarContentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * Filter, which PillarContent to fetch.
+     */
+    where?: PillarContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PillarContents to fetch.
+     */
+    orderBy?: PillarContentOrderByWithRelationInput | PillarContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PillarContents.
+     */
+    cursor?: PillarContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PillarContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PillarContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PillarContents.
+     */
+    distinct?: PillarContentScalarFieldEnum | PillarContentScalarFieldEnum[]
+  }
+
+  /**
+   * PillarContent findMany
+   */
+  export type PillarContentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * Filter, which PillarContents to fetch.
+     */
+    where?: PillarContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PillarContents to fetch.
+     */
+    orderBy?: PillarContentOrderByWithRelationInput | PillarContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PillarContents.
+     */
+    cursor?: PillarContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PillarContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PillarContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PillarContents.
+     */
+    distinct?: PillarContentScalarFieldEnum | PillarContentScalarFieldEnum[]
+  }
+
+  /**
+   * PillarContent create
+   */
+  export type PillarContentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PillarContent.
+     */
+    data: XOR<PillarContentCreateInput, PillarContentUncheckedCreateInput>
+  }
+
+  /**
+   * PillarContent createMany
+   */
+  export type PillarContentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PillarContents.
+     */
+    data: PillarContentCreateManyInput | PillarContentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PillarContent update
+   */
+  export type PillarContentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PillarContent.
+     */
+    data: XOR<PillarContentUpdateInput, PillarContentUncheckedUpdateInput>
+    /**
+     * Choose, which PillarContent to update.
+     */
+    where: PillarContentWhereUniqueInput
+  }
+
+  /**
+   * PillarContent updateMany
+   */
+  export type PillarContentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PillarContents.
+     */
+    data: XOR<PillarContentUpdateManyMutationInput, PillarContentUncheckedUpdateManyInput>
+    /**
+     * Filter which PillarContents to update
+     */
+    where?: PillarContentWhereInput
+    /**
+     * Limit how many PillarContents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PillarContent upsert
+   */
+  export type PillarContentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PillarContent to update in case it exists.
+     */
+    where: PillarContentWhereUniqueInput
+    /**
+     * In case the PillarContent found by the `where` argument doesn't exist, create a new PillarContent with this data.
+     */
+    create: XOR<PillarContentCreateInput, PillarContentUncheckedCreateInput>
+    /**
+     * In case the PillarContent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PillarContentUpdateInput, PillarContentUncheckedUpdateInput>
+  }
+
+  /**
+   * PillarContent delete
+   */
+  export type PillarContentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
+    /**
+     * Filter which PillarContent to delete.
+     */
+    where: PillarContentWhereUniqueInput
+  }
+
+  /**
+   * PillarContent deleteMany
+   */
+  export type PillarContentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PillarContents to delete
+     */
+    where?: PillarContentWhereInput
+    /**
+     * Limit how many PillarContents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PillarContent without action
+   */
+  export type PillarContentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PillarContent
+     */
+    select?: PillarContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PillarContent
+     */
+    omit?: PillarContentOmit<ExtArgs> | null
   }
 
 
@@ -10345,7 +11313,7 @@ export namespace Prisma {
     id: string | null
     label: string | null
     value: string | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     year: number | null
     notes: string | null
     createdAt: Date | null
@@ -10356,7 +11324,7 @@ export namespace Prisma {
     id: string | null
     label: string | null
     value: string | null
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     year: number | null
     notes: string | null
     createdAt: Date | null
@@ -10508,7 +11476,7 @@ export namespace Prisma {
     id: string
     label: string
     value: string
-    pillar: $Enums.ResearchPillar | null
+    pillar: string | null
     year: number
     notes: string | null
     createdAt: Date
@@ -10567,7 +11535,7 @@ export namespace Prisma {
       id: string
       label: string
       value: string
-      pillar: $Enums.ResearchPillar | null
+      pillar: string | null
       year: number
       notes: string | null
       createdAt: Date
@@ -10944,7 +11912,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ImpactMetric", 'String'>
     readonly label: FieldRef<"ImpactMetric", 'String'>
     readonly value: FieldRef<"ImpactMetric", 'String'>
-    readonly pillar: FieldRef<"ImpactMetric", 'ResearchPillar'>
+    readonly pillar: FieldRef<"ImpactMetric", 'String'>
     readonly year: FieldRef<"ImpactMetric", 'Int'>
     readonly notes: FieldRef<"ImpactMetric", 'String'>
     readonly createdAt: FieldRef<"ImpactMetric", 'DateTime'>
@@ -11384,6 +12352,18 @@ export namespace Prisma {
   export type ResearchProjectScalarFieldEnum = (typeof ResearchProjectScalarFieldEnum)[keyof typeof ResearchProjectScalarFieldEnum]
 
 
+  export const PillarContentScalarFieldEnum: {
+    id: 'id',
+    pillar: 'pillar',
+    title: 'title',
+    tagline: 'tagline',
+    laymanDesc: 'laymanDesc',
+    imageUrl: 'imageUrl'
+  };
+
+  export type PillarContentScalarFieldEnum = (typeof PillarContentScalarFieldEnum)[keyof typeof PillarContentScalarFieldEnum]
+
+
   export const ContactMessageScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -11479,6 +12459,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     authors: 'authors',
+    pillar: 'pillar',
     abstract: 'abstract',
     url: 'url',
     doi: 'doi',
@@ -11494,6 +12475,7 @@ export namespace Prisma {
     role: 'role',
     institution: 'institution',
     country: 'country',
+    pillar: 'pillar',
     bio: 'bio',
     email: 'email',
     imageUrl: 'imageUrl'
@@ -11517,11 +12499,24 @@ export namespace Prisma {
   export const ResearchProjectOrderByRelevanceFieldEnum: {
     id: 'id',
     title: 'title',
+    pillar: 'pillar',
     lead: 'lead',
     description: 'description'
   };
 
   export type ResearchProjectOrderByRelevanceFieldEnum = (typeof ResearchProjectOrderByRelevanceFieldEnum)[keyof typeof ResearchProjectOrderByRelevanceFieldEnum]
+
+
+  export const PillarContentOrderByRelevanceFieldEnum: {
+    id: 'id',
+    pillar: 'pillar',
+    title: 'title',
+    tagline: 'tagline',
+    laymanDesc: 'laymanDesc',
+    imageUrl: 'imageUrl'
+  };
+
+  export type PillarContentOrderByRelevanceFieldEnum = (typeof PillarContentOrderByRelevanceFieldEnum)[keyof typeof PillarContentOrderByRelevanceFieldEnum]
 
 
   export const ContactMessageOrderByRelevanceFieldEnum: {
@@ -11560,6 +12555,7 @@ export namespace Prisma {
     id: 'id',
     label: 'label',
     value: 'value',
+    pillar: 'pillar',
     notes: 'notes'
   };
 
@@ -11610,13 +12606,6 @@ export namespace Prisma {
    * Reference to a field of type 'PublicationType'
    */
   export type EnumPublicationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PublicationType'>
-    
-
-
-  /**
-   * Reference to a field of type 'ResearchPillar'
-   */
-  export type EnumResearchPillarFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResearchPillar'>
     
 
 
@@ -11794,7 +12783,7 @@ export namespace Prisma {
     authors?: StringFilter<"Publication"> | string
     year?: IntFilter<"Publication"> | number
     type?: EnumPublicationTypeFilter<"Publication"> | $Enums.PublicationType
-    pillar?: EnumResearchPillarNullableFilter<"Publication"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableFilter<"Publication"> | string | null
     status?: EnumPublicationStatusFilter<"Publication"> | $Enums.PublicationStatus
     abstract?: StringNullableFilter<"Publication"> | string | null
     url?: StringNullableFilter<"Publication"> | string | null
@@ -11830,7 +12819,7 @@ export namespace Prisma {
     authors?: StringFilter<"Publication"> | string
     year?: IntFilter<"Publication"> | number
     type?: EnumPublicationTypeFilter<"Publication"> | $Enums.PublicationType
-    pillar?: EnumResearchPillarNullableFilter<"Publication"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableFilter<"Publication"> | string | null
     status?: EnumPublicationStatusFilter<"Publication"> | $Enums.PublicationStatus
     abstract?: StringNullableFilter<"Publication"> | string | null
     url?: StringNullableFilter<"Publication"> | string | null
@@ -11870,7 +12859,7 @@ export namespace Prisma {
     authors?: StringWithAggregatesFilter<"Publication"> | string
     year?: IntWithAggregatesFilter<"Publication"> | number
     type?: EnumPublicationTypeWithAggregatesFilter<"Publication"> | $Enums.PublicationType
-    pillar?: EnumResearchPillarNullableWithAggregatesFilter<"Publication"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableWithAggregatesFilter<"Publication"> | string | null
     status?: EnumPublicationStatusWithAggregatesFilter<"Publication"> | $Enums.PublicationStatus
     abstract?: StringNullableWithAggregatesFilter<"Publication"> | string | null
     url?: StringNullableWithAggregatesFilter<"Publication"> | string | null
@@ -11889,7 +12878,7 @@ export namespace Prisma {
     role?: StringFilter<"TeamMember"> | string
     institution?: StringFilter<"TeamMember"> | string
     country?: StringFilter<"TeamMember"> | string
-    pillar?: EnumResearchPillarNullableFilter<"TeamMember"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableFilter<"TeamMember"> | string | null
     bio?: StringNullableFilter<"TeamMember"> | string | null
     email?: StringNullableFilter<"TeamMember"> | string | null
     imageUrl?: StringNullableFilter<"TeamMember"> | string | null
@@ -11923,7 +12912,7 @@ export namespace Prisma {
     role?: StringFilter<"TeamMember"> | string
     institution?: StringFilter<"TeamMember"> | string
     country?: StringFilter<"TeamMember"> | string
-    pillar?: EnumResearchPillarNullableFilter<"TeamMember"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableFilter<"TeamMember"> | string | null
     bio?: StringNullableFilter<"TeamMember"> | string | null
     email?: StringNullableFilter<"TeamMember"> | string | null
     imageUrl?: StringNullableFilter<"TeamMember"> | string | null
@@ -11959,7 +12948,7 @@ export namespace Prisma {
     role?: StringWithAggregatesFilter<"TeamMember"> | string
     institution?: StringWithAggregatesFilter<"TeamMember"> | string
     country?: StringWithAggregatesFilter<"TeamMember"> | string
-    pillar?: EnumResearchPillarNullableWithAggregatesFilter<"TeamMember"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     bio?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     email?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
@@ -12057,7 +13046,7 @@ export namespace Prisma {
     NOT?: ResearchProjectWhereInput | ResearchProjectWhereInput[]
     id?: StringFilter<"ResearchProject"> | string
     title?: StringFilter<"ResearchProject"> | string
-    pillar?: EnumResearchPillarFilter<"ResearchProject"> | $Enums.ResearchPillar
+    pillar?: StringFilter<"ResearchProject"> | string
     status?: EnumResearchStatusFilter<"ResearchProject"> | $Enums.ResearchStatus
     lead?: StringNullableFilter<"ResearchProject"> | string | null
     description?: StringNullableFilter<"ResearchProject"> | string | null
@@ -12087,7 +13076,7 @@ export namespace Prisma {
     OR?: ResearchProjectWhereInput[]
     NOT?: ResearchProjectWhereInput | ResearchProjectWhereInput[]
     title?: StringFilter<"ResearchProject"> | string
-    pillar?: EnumResearchPillarFilter<"ResearchProject"> | $Enums.ResearchPillar
+    pillar?: StringFilter<"ResearchProject"> | string
     status?: EnumResearchStatusFilter<"ResearchProject"> | $Enums.ResearchStatus
     lead?: StringNullableFilter<"ResearchProject"> | string | null
     description?: StringNullableFilter<"ResearchProject"> | string | null
@@ -12119,7 +13108,7 @@ export namespace Prisma {
     NOT?: ResearchProjectScalarWhereWithAggregatesInput | ResearchProjectScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ResearchProject"> | string
     title?: StringWithAggregatesFilter<"ResearchProject"> | string
-    pillar?: EnumResearchPillarWithAggregatesFilter<"ResearchProject"> | $Enums.ResearchPillar
+    pillar?: StringWithAggregatesFilter<"ResearchProject"> | string
     status?: EnumResearchStatusWithAggregatesFilter<"ResearchProject"> | $Enums.ResearchStatus
     lead?: StringNullableWithAggregatesFilter<"ResearchProject"> | string | null
     description?: StringNullableWithAggregatesFilter<"ResearchProject"> | string | null
@@ -12127,6 +13116,64 @@ export namespace Prisma {
     endDate?: DateTimeNullableWithAggregatesFilter<"ResearchProject"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ResearchProject"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ResearchProject"> | Date | string
+  }
+
+  export type PillarContentWhereInput = {
+    AND?: PillarContentWhereInput | PillarContentWhereInput[]
+    OR?: PillarContentWhereInput[]
+    NOT?: PillarContentWhereInput | PillarContentWhereInput[]
+    id?: StringFilter<"PillarContent"> | string
+    pillar?: StringFilter<"PillarContent"> | string
+    title?: StringFilter<"PillarContent"> | string
+    tagline?: StringFilter<"PillarContent"> | string
+    laymanDesc?: StringNullableFilter<"PillarContent"> | string | null
+    imageUrl?: StringNullableFilter<"PillarContent"> | string | null
+  }
+
+  export type PillarContentOrderByWithRelationInput = {
+    id?: SortOrder
+    pillar?: SortOrder
+    title?: SortOrder
+    tagline?: SortOrder
+    laymanDesc?: SortOrderInput | SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    _relevance?: PillarContentOrderByRelevanceInput
+  }
+
+  export type PillarContentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    pillar?: string
+    AND?: PillarContentWhereInput | PillarContentWhereInput[]
+    OR?: PillarContentWhereInput[]
+    NOT?: PillarContentWhereInput | PillarContentWhereInput[]
+    title?: StringFilter<"PillarContent"> | string
+    tagline?: StringFilter<"PillarContent"> | string
+    laymanDesc?: StringNullableFilter<"PillarContent"> | string | null
+    imageUrl?: StringNullableFilter<"PillarContent"> | string | null
+  }, "id" | "pillar">
+
+  export type PillarContentOrderByWithAggregationInput = {
+    id?: SortOrder
+    pillar?: SortOrder
+    title?: SortOrder
+    tagline?: SortOrder
+    laymanDesc?: SortOrderInput | SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    _count?: PillarContentCountOrderByAggregateInput
+    _max?: PillarContentMaxOrderByAggregateInput
+    _min?: PillarContentMinOrderByAggregateInput
+  }
+
+  export type PillarContentScalarWhereWithAggregatesInput = {
+    AND?: PillarContentScalarWhereWithAggregatesInput | PillarContentScalarWhereWithAggregatesInput[]
+    OR?: PillarContentScalarWhereWithAggregatesInput[]
+    NOT?: PillarContentScalarWhereWithAggregatesInput | PillarContentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PillarContent"> | string
+    pillar?: StringWithAggregatesFilter<"PillarContent"> | string
+    title?: StringWithAggregatesFilter<"PillarContent"> | string
+    tagline?: StringWithAggregatesFilter<"PillarContent"> | string
+    laymanDesc?: StringNullableWithAggregatesFilter<"PillarContent"> | string | null
+    imageUrl?: StringNullableWithAggregatesFilter<"PillarContent"> | string | null
   }
 
   export type ContactMessageWhereInput = {
@@ -12342,7 +13389,7 @@ export namespace Prisma {
     id?: StringFilter<"ImpactMetric"> | string
     label?: StringFilter<"ImpactMetric"> | string
     value?: StringFilter<"ImpactMetric"> | string
-    pillar?: EnumResearchPillarNullableFilter<"ImpactMetric"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableFilter<"ImpactMetric"> | string | null
     year?: IntFilter<"ImpactMetric"> | number
     notes?: StringNullableFilter<"ImpactMetric"> | string | null
     createdAt?: DateTimeFilter<"ImpactMetric"> | Date | string
@@ -12368,7 +13415,7 @@ export namespace Prisma {
     NOT?: ImpactMetricWhereInput | ImpactMetricWhereInput[]
     label?: StringFilter<"ImpactMetric"> | string
     value?: StringFilter<"ImpactMetric"> | string
-    pillar?: EnumResearchPillarNullableFilter<"ImpactMetric"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableFilter<"ImpactMetric"> | string | null
     year?: IntFilter<"ImpactMetric"> | number
     notes?: StringNullableFilter<"ImpactMetric"> | string | null
     createdAt?: DateTimeFilter<"ImpactMetric"> | Date | string
@@ -12398,7 +13445,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ImpactMetric"> | string
     label?: StringWithAggregatesFilter<"ImpactMetric"> | string
     value?: StringWithAggregatesFilter<"ImpactMetric"> | string
-    pillar?: EnumResearchPillarNullableWithAggregatesFilter<"ImpactMetric"> | $Enums.ResearchPillar | null
+    pillar?: StringNullableWithAggregatesFilter<"ImpactMetric"> | string | null
     year?: IntWithAggregatesFilter<"ImpactMetric"> | number
     notes?: StringNullableWithAggregatesFilter<"ImpactMetric"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ImpactMetric"> | Date | string
@@ -12547,7 +13594,7 @@ export namespace Prisma {
     authors: string
     year: number
     type: $Enums.PublicationType
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     status?: $Enums.PublicationStatus
     abstract?: string | null
     url?: string | null
@@ -12563,7 +13610,7 @@ export namespace Prisma {
     authors: string
     year: number
     type: $Enums.PublicationType
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     status?: $Enums.PublicationStatus
     abstract?: string | null
     url?: string | null
@@ -12579,7 +13626,7 @@ export namespace Prisma {
     authors?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     type?: EnumPublicationTypeFieldUpdateOperationsInput | $Enums.PublicationType
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
     abstract?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12595,7 +13642,7 @@ export namespace Prisma {
     authors?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     type?: EnumPublicationTypeFieldUpdateOperationsInput | $Enums.PublicationType
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
     abstract?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12611,7 +13658,7 @@ export namespace Prisma {
     authors: string
     year: number
     type: $Enums.PublicationType
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     status?: $Enums.PublicationStatus
     abstract?: string | null
     url?: string | null
@@ -12627,7 +13674,7 @@ export namespace Prisma {
     authors?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     type?: EnumPublicationTypeFieldUpdateOperationsInput | $Enums.PublicationType
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
     abstract?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12643,7 +13690,7 @@ export namespace Prisma {
     authors?: StringFieldUpdateOperationsInput | string
     year?: IntFieldUpdateOperationsInput | number
     type?: EnumPublicationTypeFieldUpdateOperationsInput | $Enums.PublicationType
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
     abstract?: NullableStringFieldUpdateOperationsInput | string | null
     url?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12659,7 +13706,7 @@ export namespace Prisma {
     role: string
     institution: string
     country: string
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     bio?: string | null
     email?: string | null
     imageUrl?: string | null
@@ -12674,7 +13721,7 @@ export namespace Prisma {
     role: string
     institution: string
     country: string
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     bio?: string | null
     email?: string | null
     imageUrl?: string | null
@@ -12689,7 +13736,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12704,7 +13751,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12719,7 +13766,7 @@ export namespace Prisma {
     role: string
     institution: string
     country: string
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     bio?: string | null
     email?: string | null
     imageUrl?: string | null
@@ -12734,7 +13781,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12749,7 +13796,7 @@ export namespace Prisma {
     role?: StringFieldUpdateOperationsInput | string
     institution?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12859,7 +13906,7 @@ export namespace Prisma {
   export type ResearchProjectCreateInput = {
     id?: string
     title: string
-    pillar: $Enums.ResearchPillar
+    pillar: string
     status?: $Enums.ResearchStatus
     lead?: string | null
     description?: string | null
@@ -12872,7 +13919,7 @@ export namespace Prisma {
   export type ResearchProjectUncheckedCreateInput = {
     id?: string
     title: string
-    pillar: $Enums.ResearchPillar
+    pillar: string
     status?: $Enums.ResearchStatus
     lead?: string | null
     description?: string | null
@@ -12885,7 +13932,7 @@ export namespace Prisma {
   export type ResearchProjectUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    pillar?: EnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar
+    pillar?: StringFieldUpdateOperationsInput | string
     status?: EnumResearchStatusFieldUpdateOperationsInput | $Enums.ResearchStatus
     lead?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12898,7 +13945,7 @@ export namespace Prisma {
   export type ResearchProjectUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    pillar?: EnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar
+    pillar?: StringFieldUpdateOperationsInput | string
     status?: EnumResearchStatusFieldUpdateOperationsInput | $Enums.ResearchStatus
     lead?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12911,7 +13958,7 @@ export namespace Prisma {
   export type ResearchProjectCreateManyInput = {
     id?: string
     title: string
-    pillar: $Enums.ResearchPillar
+    pillar: string
     status?: $Enums.ResearchStatus
     lead?: string | null
     description?: string | null
@@ -12924,7 +13971,7 @@ export namespace Prisma {
   export type ResearchProjectUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    pillar?: EnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar
+    pillar?: StringFieldUpdateOperationsInput | string
     status?: EnumResearchStatusFieldUpdateOperationsInput | $Enums.ResearchStatus
     lead?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12937,7 +13984,7 @@ export namespace Prisma {
   export type ResearchProjectUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    pillar?: EnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar
+    pillar?: StringFieldUpdateOperationsInput | string
     status?: EnumResearchStatusFieldUpdateOperationsInput | $Enums.ResearchStatus
     lead?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12945,6 +13992,69 @@ export namespace Prisma {
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PillarContentCreateInput = {
+    id?: string
+    pillar: string
+    title: string
+    tagline: string
+    laymanDesc?: string | null
+    imageUrl?: string | null
+  }
+
+  export type PillarContentUncheckedCreateInput = {
+    id?: string
+    pillar: string
+    title: string
+    tagline: string
+    laymanDesc?: string | null
+    imageUrl?: string | null
+  }
+
+  export type PillarContentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pillar?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    tagline?: StringFieldUpdateOperationsInput | string
+    laymanDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PillarContentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pillar?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    tagline?: StringFieldUpdateOperationsInput | string
+    laymanDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PillarContentCreateManyInput = {
+    id?: string
+    pillar: string
+    title: string
+    tagline: string
+    laymanDesc?: string | null
+    imageUrl?: string | null
+  }
+
+  export type PillarContentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pillar?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    tagline?: StringFieldUpdateOperationsInput | string
+    laymanDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type PillarContentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pillar?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    tagline?: StringFieldUpdateOperationsInput | string
+    laymanDesc?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ContactMessageCreateInput = {
@@ -13182,7 +14292,7 @@ export namespace Prisma {
     id?: string
     label: string
     value: string
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     year: number
     notes?: string | null
     createdAt?: Date | string
@@ -13193,7 +14303,7 @@ export namespace Prisma {
     id?: string
     label: string
     value: string
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     year: number
     notes?: string | null
     createdAt?: Date | string
@@ -13204,7 +14314,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
     value?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     year?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13215,7 +14325,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
     value?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     year?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13226,7 +14336,7 @@ export namespace Prisma {
     id?: string
     label: string
     value: string
-    pillar?: $Enums.ResearchPillar | null
+    pillar?: string | null
     year: number
     notes?: string | null
     createdAt?: Date | string
@@ -13237,7 +14347,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
     value?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     year?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13248,7 +14358,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
     value?: StringFieldUpdateOperationsInput | string
-    pillar?: NullableEnumResearchPillarFieldUpdateOperationsInput | $Enums.ResearchPillar | null
+    pillar?: NullableStringFieldUpdateOperationsInput | string | null
     year?: IntFieldUpdateOperationsInput | number
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13483,13 +14593,6 @@ export namespace Prisma {
     not?: NestedEnumPublicationTypeFilter<$PrismaModel> | $Enums.PublicationType
   }
 
-  export type EnumResearchPillarNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ResearchPillar[] | null
-    notIn?: $Enums.ResearchPillar[] | null
-    not?: NestedEnumResearchPillarNullableFilter<$PrismaModel> | $Enums.ResearchPillar | null
-  }
-
   export type EnumPublicationStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.PublicationStatus | EnumPublicationStatusFieldRefInput<$PrismaModel>
     in?: $Enums.PublicationStatus[]
@@ -13583,16 +14686,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPublicationTypeFilter<$PrismaModel>
     _max?: NestedEnumPublicationTypeFilter<$PrismaModel>
-  }
-
-  export type EnumResearchPillarNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ResearchPillar[] | null
-    notIn?: $Enums.ResearchPillar[] | null
-    not?: NestedEnumResearchPillarNullableWithAggregatesFilter<$PrismaModel> | $Enums.ResearchPillar | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumResearchPillarNullableFilter<$PrismaModel>
-    _max?: NestedEnumResearchPillarNullableFilter<$PrismaModel>
   }
 
   export type EnumPublicationStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -13738,13 +14831,6 @@ export namespace Prisma {
     _max?: NestedEnumNewsEventStatusFilter<$PrismaModel>
   }
 
-  export type EnumResearchPillarFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel>
-    in?: $Enums.ResearchPillar[]
-    notIn?: $Enums.ResearchPillar[]
-    not?: NestedEnumResearchPillarFilter<$PrismaModel> | $Enums.ResearchPillar
-  }
-
   export type EnumResearchStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ResearchStatus | EnumResearchStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ResearchStatus[]
@@ -13808,16 +14894,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type EnumResearchPillarWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel>
-    in?: $Enums.ResearchPillar[]
-    notIn?: $Enums.ResearchPillar[]
-    not?: NestedEnumResearchPillarWithAggregatesFilter<$PrismaModel> | $Enums.ResearchPillar
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumResearchPillarFilter<$PrismaModel>
-    _max?: NestedEnumResearchPillarFilter<$PrismaModel>
-  }
-
   export type EnumResearchStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ResearchStatus | EnumResearchStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ResearchStatus[]
@@ -13840,6 +14916,39 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type PillarContentOrderByRelevanceInput = {
+    fields: PillarContentOrderByRelevanceFieldEnum | PillarContentOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type PillarContentCountOrderByAggregateInput = {
+    id?: SortOrder
+    pillar?: SortOrder
+    title?: SortOrder
+    tagline?: SortOrder
+    laymanDesc?: SortOrder
+    imageUrl?: SortOrder
+  }
+
+  export type PillarContentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    pillar?: SortOrder
+    title?: SortOrder
+    tagline?: SortOrder
+    laymanDesc?: SortOrder
+    imageUrl?: SortOrder
+  }
+
+  export type PillarContentMinOrderByAggregateInput = {
+    id?: SortOrder
+    pillar?: SortOrder
+    title?: SortOrder
+    tagline?: SortOrder
+    laymanDesc?: SortOrder
+    imageUrl?: SortOrder
   }
 
   export type ContactMessageOrderByRelevanceInput = {
@@ -14102,10 +15211,6 @@ export namespace Prisma {
     set?: $Enums.PublicationType
   }
 
-  export type NullableEnumResearchPillarFieldUpdateOperationsInput = {
-    set?: $Enums.ResearchPillar | null
-  }
-
   export type EnumPublicationStatusFieldUpdateOperationsInput = {
     set?: $Enums.PublicationStatus
   }
@@ -14116,10 +15221,6 @@ export namespace Prisma {
 
   export type EnumNewsEventStatusFieldUpdateOperationsInput = {
     set?: $Enums.NewsEventStatus
-  }
-
-  export type EnumResearchPillarFieldUpdateOperationsInput = {
-    set?: $Enums.ResearchPillar
   }
 
   export type EnumResearchStatusFieldUpdateOperationsInput = {
@@ -14280,13 +15381,6 @@ export namespace Prisma {
     not?: NestedEnumPublicationTypeFilter<$PrismaModel> | $Enums.PublicationType
   }
 
-  export type NestedEnumResearchPillarNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ResearchPillar[] | null
-    notIn?: $Enums.ResearchPillar[] | null
-    not?: NestedEnumResearchPillarNullableFilter<$PrismaModel> | $Enums.ResearchPillar | null
-  }
-
   export type NestedEnumPublicationStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.PublicationStatus | EnumPublicationStatusFieldRefInput<$PrismaModel>
     in?: $Enums.PublicationStatus[]
@@ -14329,16 +15423,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPublicationTypeFilter<$PrismaModel>
     _max?: NestedEnumPublicationTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumResearchPillarNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ResearchPillar[] | null
-    notIn?: $Enums.ResearchPillar[] | null
-    not?: NestedEnumResearchPillarNullableWithAggregatesFilter<$PrismaModel> | $Enums.ResearchPillar | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumResearchPillarNullableFilter<$PrismaModel>
-    _max?: NestedEnumResearchPillarNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumPublicationStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -14385,13 +15469,6 @@ export namespace Prisma {
     _max?: NestedEnumNewsEventStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumResearchPillarFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel>
-    in?: $Enums.ResearchPillar[]
-    notIn?: $Enums.ResearchPillar[]
-    not?: NestedEnumResearchPillarFilter<$PrismaModel> | $Enums.ResearchPillar
-  }
-
   export type NestedEnumResearchStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.ResearchStatus | EnumResearchStatusFieldRefInput<$PrismaModel>
     in?: $Enums.ResearchStatus[]
@@ -14408,16 +15485,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedEnumResearchPillarWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ResearchPillar | EnumResearchPillarFieldRefInput<$PrismaModel>
-    in?: $Enums.ResearchPillar[]
-    notIn?: $Enums.ResearchPillar[]
-    not?: NestedEnumResearchPillarWithAggregatesFilter<$PrismaModel> | $Enums.ResearchPillar
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumResearchPillarFilter<$PrismaModel>
-    _max?: NestedEnumResearchPillarFilter<$PrismaModel>
   }
 
   export type NestedEnumResearchStatusWithAggregatesFilter<$PrismaModel = never> = {

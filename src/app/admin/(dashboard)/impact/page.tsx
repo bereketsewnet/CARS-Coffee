@@ -1,13 +1,16 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import ImpactCrud from "@/components/admin/ImpactCrud";
 
 export const metadata: Metadata = { title: "Impact | Circular Coffee Admin" };
 
 export default async function ImpactPage() {
-  const metrics = await prisma.impactMetric.findMany({
-    orderBy: { createdAt: "asc" },
-  });
+  const [metrics, pillarContents] = await Promise.all([
+    prisma.impactMetric.findMany({
+      orderBy: { createdAt: "asc" },
+    }),
+    prisma.pillarContent.findMany(),
+  ]);
 
   return (
     <div className="space-y-6">
@@ -19,7 +22,7 @@ export default async function ImpactPage() {
           Monitor project outcomes and key performance indicators.
         </p>
       </div>
-      <ImpactCrud items={metrics} />
+      <ImpactCrud items={metrics} pillarContents={pillarContents} />
     </div>
   );
 }

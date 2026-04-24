@@ -421,8 +421,19 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
                   placeholder="Short biography…"
                 />
               </Field>
-            </div>
-          </div>
+            </div>            
+            <Field label="LinkedIn">
+              <input type="url" name="linkedin" defaultValue={(editing as any)?.linkedin ?? ""} className={inputCls} placeholder="https://linkedin.com/..." />
+            </Field>
+            <Field label="X (Twitter)">
+              <input type="url" name="twitter" defaultValue={(editing as any)?.twitter ?? ""} className={inputCls} placeholder="https://x.com/..." />
+            </Field>
+            <Field label="Instagram">
+              <input type="url" name="instagram" defaultValue={(editing as any)?.instagram ?? ""} className={inputCls} placeholder="https://instagram.com/..." />
+            </Field>
+            <Field label="Website">
+              <input type="url" name="website" defaultValue={(editing as any)?.website ?? ""} className={inputCls} placeholder="https://..." />
+            </Field>          </div>
           {error && <p className="text-xs text-rose-400">{error}</p>}
           <SubmitBtn
             pending={pending || uploading}
