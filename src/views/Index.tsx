@@ -25,6 +25,8 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ImpactMetric } from "../../generated/prisma-client";
 
 // Parse a value string like "1,200+", "34%", "8" into { target, suffix }
+import CircularAnimation from "@/components/CircularAnimation";
+
 function parseMetricValue(v: string): { target: number; suffix: string } {
   const clean = v.replace(/,/g, "");
   const m = clean.match(/^(\d+(?:\.\d+)?)(.*)/)
@@ -112,6 +114,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
   const text2Ref = useRef<HTMLDivElement>(null);     // State 2 container
   const h1Ref = useRef<HTMLHeadingElement>(null);    // only the h1 fades out
   const sub1Ref = useRef<HTMLParagraphElement>(null); // subtitle fades out with h1
+  const circleRef = useRef<HTMLDivElement>(null);     // circular animation fades out with h1
   const h2Ref = useRef<HTMLHeadingElement>(null);    // only the h2 fades in
   const sub2Ref = useRef<HTMLDivElement>(null);      // State 2 subtitle (now a grid div) fades in with h2
   const tagsRef = useRef<HTMLDivElement>(null);      // initial tags for entrance animation
@@ -164,7 +167,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
 
     // ── INITIAL LOAD ENTRANCE ANIMATION ──────────────────────────────
     // Hide State 1 elements immediately so they can animate in smoothly
-    const initialElements = [tagsRef.current, h1Ref.current, sub1Ref.current, btnsRef.current];
+    const initialElements = [tagsRef.current, h1Ref.current, sub1Ref.current, btnsRef.current, circleRef.current];
     gsap.set(initialElements, { opacity: 0, y: 30 });
 
     // Trigger the staggered fade/slide-up
@@ -248,6 +251,13 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
     tl.to(
       [h1Ref.current, sub1Ref.current],
       { duration: 0.45, opacity: 0, y: -120, ease: "none", stagger: 0.05 },
+      0
+    );
+
+    // Circle immediately fades out as soon as user starts scrolling
+    tl.to(
+      circleRef.current,
+      { duration: 0.05, opacity: 0, y: -30, ease: "power2.out" },
       0
     );
 
@@ -380,10 +390,10 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
         {/* ── STATE 1: Initial text block ── */}
         <div
           ref={text1Ref}
-          className="pointer-events-none container mx-auto absolute inset-x-0 top-1/2 -translate-y-1/2 px-4 md:px-6"
-          style={{ zIndex: 3, paddingTop: "clamp(120px, 15vh, 160px)" }}
+          className="pointer-events-none container mx-auto absolute inset-0 flex flex-col lg:flex-row items-center justify-between px-4 md:px-6"
+          style={{ zIndex: 3, paddingTop: "clamp(120px, 15vh, 180px)" }}
         >
-          <div className="max-w-3xl">
+          <div className="max-w-3xl flex-1 self-center w-full lg:w-auto">
             <div ref={tagsRef} className="inline-flex flex-wrap items-center gap-2 mb-4 md:mb-6" style={{ opacity: 0, transform: "translateY(30px)" }}>
                 <span className="tag-pill text-sm md:text-base font-bold bg-white/10 uppercase tracking-widest">{t.home.tagline}</span>
             </div>
@@ -420,6 +430,11 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
                 <BookOpen className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
               </Link>
             </div>
+          </div>
+          
+          {/* Circular Animation Section - Attached to State 1 so it fades out on scroll */}
+          <div ref={circleRef} className="hidden lg:block lg:flex-1 lg:max-w-xl self-center" style={{ opacity: 0, transform: "translateY(30px)" }}>
+             <CircularAnimation />
           </div>
         </div>
 

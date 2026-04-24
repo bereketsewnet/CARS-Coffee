@@ -39,11 +39,11 @@ export function LoginForm() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <Image
-            src="/assets/CARES LOGO.png"
+            src="/assets/IMAGE_FOR_LOGO.jpg"
             alt="CARES Logo"
-            width={72}
-            height={72}
-            className="w-18 h-18 rounded-full object-cover shadow-glow mb-4"
+            width={80}
+            height={80}
+            className="w-20 h-20 rounded-full object-cover shadow-glow mb-4"
             priority
           />
           <h1 className="font-serif text-xl font-bold text-foreground text-center leading-snug">

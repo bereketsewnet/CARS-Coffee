@@ -56,9 +56,9 @@ export function Navbar() {
           <Image
             src="/assets/IMAGE_FOR_LOGO.jpg"
             alt="CARES Logo"
-            width={80}
-            height={80}
-            className="h-20 w-20 rounded-full object-cover shadow-glow"
+            width={60}
+            height={60}
+            className="h-[60px] w-[60px] rounded-full object-cover shadow-glow transition-all duration-300"
             priority
           />
           <div className="hidden sm:block">

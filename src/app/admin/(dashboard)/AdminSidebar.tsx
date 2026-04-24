@@ -79,11 +79,11 @@ export function AdminSidebar({
         {/* Header */}
         <div className="flex items-center gap-3 px-4 py-5 border-b border-border min-h-[72px]">
           <Image
-            src="/assets/CARES LOGO.png"
+            src="/assets/IMAGE_FOR_LOGO.jpg"
             alt="CARES Logo"
-            width={32}
-            height={32}
-            className="w-8 h-8 rounded-full object-cover shadow-glow shrink-0"
+            width={40}
+            height={40}
+            className="w-10 h-10 rounded-full object-cover shadow-glow shrink-0"
           />
           {!collapsed && (
             <div className="min-w-0">
