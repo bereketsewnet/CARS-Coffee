@@ -385,6 +385,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
             style={{ animation: "spin-slow 30s linear infinite reverse" }}
           />
           <div className="absolute inset-20 rounded-full border border-leaf-bright/15" />
+
         </div>
 
         {/* ── STATE 1: Initial text block ── */}
@@ -399,12 +400,12 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
             </div>
             <h1
               ref={h1Ref}
-              className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6"
+              className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-snug mb-4 md:mb-6"
               style={{ opacity: 0, transform: "translateY(30px)" }}
             >
               {t.home.heroTitle1} {t.home.heroTitle2}
               <br className="hidden md:block" />
-              <span className="text-gradient-green text-3xl sm:text-5xl md:text-6xl lg:text-7xl block mt-2">CARES</span>
+              <span className="text-gradient-green text-2xl sm:text-4xl md:text-5xl lg:text-6xl block mt-1">CARES</span>
             </h1>
             <p
               ref={sub1Ref}

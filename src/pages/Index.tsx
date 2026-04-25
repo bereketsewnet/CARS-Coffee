@@ -257,7 +257,7 @@ export default function Index() {
           style={{ zIndex: 1 }}
         />
 
-        {/* Spinning ring decoration */}
+        {/* Spinning ring decoration with partner logos */}
         <div
           className="absolute right-[-10%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] hidden xl:block"
           style={{ zIndex: 2 }}
@@ -268,6 +268,49 @@ export default function Index() {
             style={{ animation: "spin-slow 30s linear infinite reverse" }}
           />
           <div className="absolute inset-20 rounded-full border border-leaf-bright/15" />
+
+          {/* Partner logos pinned at fixed positions inside the ring */}
+          {/* VLIR-UOS — top */}
+          <div
+            className="absolute"
+            style={{ top: "6%", left: "50%", transform: "translateX(-50%)" }}
+          >
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-2 shadow-lg">
+              <img
+                src="/assets/VLIRUOS.jpg"
+                alt="VLIR-UOS"
+                className="h-10 w-auto object-contain"
+              />
+            </div>
+          </div>
+
+          {/* AAU — bottom-left */}
+          <div
+            className="absolute"
+            style={{ bottom: "12%", left: "10%" }}
+          >
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-2 shadow-lg">
+              <img
+                src="/assets/ADDIS ABABA UNIVERSITY.jpg"
+                alt="Addis Ababa University"
+                className="h-10 w-auto object-contain"
+              />
+            </div>
+          </div>
+
+          {/* University of Antwerp — bottom-right */}
+          <div
+            className="absolute"
+            style={{ bottom: "12%", right: "10%" }}
+          >
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-2 shadow-lg">
+              <img
+                src="/assets/UNIVERSITY OF ANTWERP.jpg"
+                alt="University of Antwerp"
+                className="h-10 w-auto object-contain"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Foreground content */}
@@ -466,20 +509,49 @@ export default function Index() {
       {/* ── Partners ──────────────────────────────────────────────────────── */}
       <section className="py-16 bg-charcoal-mid border-t border-border">
         <div className="container mx-auto">
-          <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mb-8 font-medium">
+          <p className="text-center text-xs uppercase tracking-widest text-muted-foreground mb-10 font-medium">
             Our Partners
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {["AAU", "University of Antwerp", "VLIR-UOS", "Belgian Development"].map(
-              (p) => (
-                <div
-                  key={p}
-                  className="glass-card px-6 py-3 rounded-xl text-sm font-semibold text-muted-foreground border border-border"
-                >
-                  {p}
-                </div>
-              )
-            )}
+          <div className="flex flex-wrap items-center justify-center gap-10">
+            {/* VLIR-UOS */}
+            <div className="glass-card rounded-2xl p-4 border border-border flex flex-col items-center gap-2 hover:border-leaf-bright/30 transition-all duration-200">
+              <img
+                src="/assets/VLIRUOS.jpg"
+                alt="VLIR-UOS"
+                className="h-12 w-auto object-contain"
+              />
+              <span className="text-xs text-muted-foreground font-medium">VLIR-UOS</span>
+            </div>
+
+            {/* AAU */}
+            <div className="glass-card rounded-2xl p-4 border border-border flex flex-col items-center gap-2 hover:border-leaf-bright/30 transition-all duration-200">
+              <img
+                src="/assets/ADDIS ABABA UNIVERSITY.jpg"
+                alt="Addis Ababa University"
+                className="h-12 w-auto object-contain"
+              />
+              <span className="text-xs text-muted-foreground font-medium">AAU</span>
+            </div>
+
+            {/* University of Antwerp */}
+            <div className="glass-card rounded-2xl p-4 border border-border flex flex-col items-center gap-2 hover:border-leaf-bright/30 transition-all duration-200">
+              <img
+                src="/assets/UNIVERSITY OF ANTWERP.jpg"
+                alt="University of Antwerp"
+                className="h-12 w-auto object-contain"
+              />
+              <span className="text-xs text-muted-foreground font-medium">University of Antwerp</span>
+            </div>
+
+            {/* Belgian Development Cooperation */}
+            <div className="glass-card rounded-2xl p-4 border border-border flex flex-col items-center gap-2 hover:border-leaf-bright/30 transition-all duration-200">
+              <img
+                src="/assets/BELGIUM DEVELOPMENT COOPERATION.jpg"
+                alt="Belgian Development Cooperation"
+                className="h-12 w-auto object-contain"
+              />
+              <span className="text-xs text-muted-foreground font-medium">Belgian Development</span>
+            </div>
           </div>
         </div>
       </section>
