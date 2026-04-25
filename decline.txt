@@ -1,8 +1,0 @@
-🔴 3. Not Good / Micromanagement (Pushback / Ignore)
-This is where the client is trying to "play developer." You should push back on these to protect the site's responsive design and your timeline:
-
-"Increase the size of the logo / Increase the font size": They request this multiple times for various headings. Pushback: Tell the client that font sizes and logo dimensions are strictly controlled by a responsive design system (Tailwind) to ensure the site looks good on mobile devices. Making them arbitrarily larger will break the mobile view.
-"Adopt colour based on PART 1 for this specific text": Pushback: Explain that for web accessibility and clean styling, colors are applied globally to themes, not painted onto individual sentences.
-"YOU CAN MAKE AN ANIMATION HERE": Pushback: Custom animations are time-consuming, can slow down the website's loading speed, and are often distracting. Offer a simple, standard fade-in transition instead.
-Next Steps Strategy for You:
-Tell the client: "I will systematically implement the new text content, the Three Pillars, and the new sections. However, to ensure the website remains mobile-friendly and fast, I will use my professional discretion regarding the font sizes, animations, and exact layout spacing."
