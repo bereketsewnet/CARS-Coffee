@@ -257,6 +257,22 @@ exports.Prisma.ImpactMetricScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SiteContactInfoScalarFieldEnum = {
+  id: 'id',
+  generalEmail: 'generalEmail',
+  researchEmail: 'researchEmail',
+  mediaEmail: 'mediaEmail',
+  northLocation: 'northLocation',
+  southLocation: 'southLocation',
+  linkedin: 'linkedin',
+  youtube: 'youtube',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  tiktok: 'tiktok',
+  website: 'website',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -365,6 +381,21 @@ exports.Prisma.ImpactMetricOrderByRelevanceFieldEnum = {
   pillar: 'pillar',
   notes: 'notes'
 };
+
+exports.Prisma.SiteContactInfoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  generalEmail: 'generalEmail',
+  researchEmail: 'researchEmail',
+  mediaEmail: 'mediaEmail',
+  northLocation: 'northLocation',
+  southLocation: 'southLocation',
+  linkedin: 'linkedin',
+  youtube: 'youtube',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  tiktok: 'tiktok',
+  website: 'website'
+};
 exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN'
@@ -413,7 +444,8 @@ exports.Prisma.ModelName = {
   ContactMessage: 'ContactMessage',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',
-  ImpactMetric: 'ImpactMetric'
+  ImpactMetric: 'ImpactMetric',
+  SiteContactInfo: 'SiteContactInfo'
 };
 
 /**

@@ -60,11 +60,11 @@ export default function CircularAnimation() {
           {/* ── Item 1: VLIR-UOS logo ── */}
           <div style={orbitStyle(1, TOTAL_ITEMS)}>
             <div className="animate-spin-reverse-slow">
-              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-xl p-1.5 shadow-lg">
+              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-xl p-0.5 shadow-lg overflow-hidden flex items-center justify-center w-12 h-12 md:w-16 md:h-16">
                 <img
                   src="/assets/VLIRUOS.jpg"
                   alt="VLIR-UOS"
-                  className="w-9 h-9 md:w-11 md:h-11 object-contain rounded-lg"
+                  className="w-full h-full object-contain scale-125"
                   draggable={false}
                 />
               </div>
@@ -83,11 +83,11 @@ export default function CircularAnimation() {
           {/* ── Item 3: AAU logo ── */}
           <div style={orbitStyle(3, TOTAL_ITEMS)}>
             <div className="animate-spin-reverse-slow">
-              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-xl p-1.5 shadow-lg">
+              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-xl p-0.5 shadow-lg overflow-hidden flex items-center justify-center w-12 h-12 md:w-16 md:h-16">
                 <img
                   src="/assets/ADDIS ABABA UNIVERSITY.jpg"
                   alt="Addis Ababa University"
-                  className="w-9 h-9 md:w-11 md:h-11 object-contain rounded-lg"
+                  className="w-full h-full object-contain scale-125"
                   draggable={false}
                 />
               </div>
@@ -106,11 +106,11 @@ export default function CircularAnimation() {
           {/* ── Item 5: University of Antwerp logo ── */}
           <div style={orbitStyle(5, TOTAL_ITEMS)}>
             <div className="animate-spin-reverse-slow">
-              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-xl p-1.5 shadow-lg">
+              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-xl p-0.5 shadow-lg overflow-hidden flex items-center justify-center w-12 h-12 md:w-16 md:h-16">
                 <img
                   src="/assets/UNIVERSITY OF ANTWERP.jpg"
                   alt="University of Antwerp"
-                  className="w-9 h-9 md:w-11 md:h-11 object-contain rounded-lg"
+                  className="w-full h-full object-contain scale-125"
                   draggable={false}
                 />
               </div>

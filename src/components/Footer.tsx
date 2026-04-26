@@ -1,12 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin, ExternalLink } from "lucide-react";
+import { Mail, MapPin, ExternalLink, Linkedin, Youtube, Twitter, Instagram, Globe, Music2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { getSiteContactInfo } from "@/lib/actions/siteContact";
+import type { SiteContactInfo } from "../../generated/prisma-client";
+
+const SOCIAL_ICONS: Record<string, { icon: React.ElementType; color: string }> = {
+  linkedin:  { icon: Linkedin,  color: "#0A66C2" },
+  youtube:   { icon: Youtube,   color: "#FF0000" },
+  twitter:   { icon: Twitter,   color: "#1DA1F2" },
+  instagram: { icon: Instagram, color: "#E1306C" },
+  tiktok:    { icon: Music2,    color: "#69C9D0" },
+  website:   { icon: Globe,     color: "#4ade80" },
+};
 
 export function Footer() {
   const { t } = useLanguage();
+  const [info, setInfo] = useState<SiteContactInfo | null>(null);
+
+  useEffect(() => {
+    getSiteContactInfo().then(setInfo);
+  }, []);
+
+  const generalEmail = info?.generalEmail || "info@circularcoffee.org";
+  
+  // Create short versions of locations for the footer
+  const northLocFull = info?.northLocation || "Prinsstraat 13, 2000 Antwerp, Belgium";
+  const southLocFull = info?.southLocation || "King George VI Street, Addis Ababa, Ethiopia";
+  
+  // Extract just the university name roughly
+  const northLocShort = northLocFull.includes(",") ? northLocFull.split(",").pop()?.trim() || "Antwerp" : "Antwerp";
+  const southLocShort = southLocFull.includes(",") ? southLocFull.split(",").pop()?.trim() || "Addis Ababa" : "Addis Ababa";
+
+  const socialLinks = Object.entries(SOCIAL_ICONS).flatMap(([key, meta]) => {
+    const url = info?.[key as keyof SiteContactInfo] as string | null | undefined;
+    return url ? [{ key, url, ...meta }] : [];
+  });
+
   return (
     <footer className="border-t border-border bg-charcoal-mid mt-0">
       <div className="container mx-auto py-16">
@@ -85,7 +118,9 @@ export function Footer() {
               ))}
               <li>
                 <a
-                  href="#"
+                  href="https://www.vliruos.be"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-leaf-bright transition-colors flex items-center gap-1"
                 >
                   VLIR-UOS Website <ExternalLink className="w-3 h-3" />
@@ -102,32 +137,54 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2 text-muted-foreground">
                 <Mail className="w-4 h-4 mt-0.5 text-leaf-bright shrink-0" />
-                <span>info@circularcoffee.org</span>
+                <a href={`mailto:${generalEmail}`} className="hover:text-leaf-bright transition-colors">
+                  {generalEmail}
+                </a>
               </li>
               <li className="flex items-start gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4 mt-0.5 text-leaf-bright shrink-0" />
                 <span>
-                  Antwerp University &<br />
+                  University of Antwerp &<br />
                   AAU, Addis Ababa
                 </span>
               </li>
             </ul>
-            <div className="mt-5">
-              <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">
-                Partners
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">
-                  AAU
-                </span>
-                <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">
-                  UA Antwerp
-                </span>
-                <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">
-                  VLIR-UOS
-                </span>
+
+            {/* Social Links */}
+            {socialLinks.length > 0 && (
+              <div className="mt-5">
+                <p className="text-xs text-muted-foreground mb-3 uppercase tracking-widest">
+                  Follow Us
+                </p>
+                <div className="flex flex-wrap gap-2.5">
+                  {socialLinks.map(({ key, url, icon: Icon, color }) => (
+                    <a
+                      key={key}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-lg bg-muted/80 hover:bg-muted border border-transparent hover:border-border transition-all duration-200 group"
+                    >
+                      <Icon className="w-4 h-4 transition-colors opacity-80 group-hover:opacity-100" style={{ color }} />
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+            
+            {/* Partners */}
+            {socialLinks.length === 0 && (
+              <div className="mt-5">
+                <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">
+                  Partners
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">AAU</span>
+                  <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">UA Antwerp</span>
+                  <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">VLIR-UOS</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

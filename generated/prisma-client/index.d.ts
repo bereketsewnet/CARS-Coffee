@@ -68,6 +68,11 @@ export type Partner = $Result.DefaultSelection<Prisma.$PartnerPayload>
  * 
  */
 export type ImpactMetric = $Result.DefaultSelection<Prisma.$ImpactMetricPayload>
+/**
+ * Model SiteContactInfo
+ * 
+ */
+export type SiteContactInfo = $Result.DefaultSelection<Prisma.$SiteContactInfoPayload>
 
 /**
  * Enums
@@ -383,6 +388,16 @@ export class PrismaClient<
     * ```
     */
   get impactMetric(): Prisma.ImpactMetricDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.siteContactInfo`: Exposes CRUD operations for the **SiteContactInfo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SiteContactInfos
+    * const siteContactInfos = await prisma.siteContactInfo.findMany()
+    * ```
+    */
+  get siteContactInfo(): Prisma.SiteContactInfoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -827,7 +842,8 @@ export namespace Prisma {
     ContactMessage: 'ContactMessage',
     NewsletterSubscriber: 'NewsletterSubscriber',
     Partner: 'Partner',
-    ImpactMetric: 'ImpactMetric'
+    ImpactMetric: 'ImpactMetric',
+    SiteContactInfo: 'SiteContactInfo'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -843,7 +859,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "impactMetric"
+      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "impactMetric" | "siteContactInfo"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1573,6 +1589,72 @@ export namespace Prisma {
           }
         }
       }
+      SiteContactInfo: {
+        payload: Prisma.$SiteContactInfoPayload<ExtArgs>
+        fields: Prisma.SiteContactInfoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SiteContactInfoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SiteContactInfoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>
+          }
+          findFirst: {
+            args: Prisma.SiteContactInfoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SiteContactInfoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>
+          }
+          findMany: {
+            args: Prisma.SiteContactInfoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>[]
+          }
+          create: {
+            args: Prisma.SiteContactInfoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>
+          }
+          createMany: {
+            args: Prisma.SiteContactInfoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.SiteContactInfoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>
+          }
+          update: {
+            args: Prisma.SiteContactInfoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>
+          }
+          deleteMany: {
+            args: Prisma.SiteContactInfoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SiteContactInfoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SiteContactInfoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiteContactInfoPayload>
+          }
+          aggregate: {
+            args: Prisma.SiteContactInfoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSiteContactInfo>
+          }
+          groupBy: {
+            args: Prisma.SiteContactInfoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SiteContactInfoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SiteContactInfoCountArgs<ExtArgs>
+            result: $Utils.Optional<SiteContactInfoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1692,6 +1774,7 @@ export namespace Prisma {
     newsletterSubscriber?: NewsletterSubscriberOmit
     partner?: PartnerOmit
     impactMetric?: ImpactMetricOmit
+    siteContactInfo?: SiteContactInfoOmit
   }
 
   /* Types for Logging */
@@ -12321,6 +12404,981 @@ export namespace Prisma {
 
 
   /**
+   * Model SiteContactInfo
+   */
+
+  export type AggregateSiteContactInfo = {
+    _count: SiteContactInfoCountAggregateOutputType | null
+    _min: SiteContactInfoMinAggregateOutputType | null
+    _max: SiteContactInfoMaxAggregateOutputType | null
+  }
+
+  export type SiteContactInfoMinAggregateOutputType = {
+    id: string | null
+    generalEmail: string | null
+    researchEmail: string | null
+    mediaEmail: string | null
+    northLocation: string | null
+    southLocation: string | null
+    linkedin: string | null
+    youtube: string | null
+    twitter: string | null
+    instagram: string | null
+    tiktok: string | null
+    website: string | null
+    updatedAt: Date | null
+  }
+
+  export type SiteContactInfoMaxAggregateOutputType = {
+    id: string | null
+    generalEmail: string | null
+    researchEmail: string | null
+    mediaEmail: string | null
+    northLocation: string | null
+    southLocation: string | null
+    linkedin: string | null
+    youtube: string | null
+    twitter: string | null
+    instagram: string | null
+    tiktok: string | null
+    website: string | null
+    updatedAt: Date | null
+  }
+
+  export type SiteContactInfoCountAggregateOutputType = {
+    id: number
+    generalEmail: number
+    researchEmail: number
+    mediaEmail: number
+    northLocation: number
+    southLocation: number
+    linkedin: number
+    youtube: number
+    twitter: number
+    instagram: number
+    tiktok: number
+    website: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SiteContactInfoMinAggregateInputType = {
+    id?: true
+    generalEmail?: true
+    researchEmail?: true
+    mediaEmail?: true
+    northLocation?: true
+    southLocation?: true
+    linkedin?: true
+    youtube?: true
+    twitter?: true
+    instagram?: true
+    tiktok?: true
+    website?: true
+    updatedAt?: true
+  }
+
+  export type SiteContactInfoMaxAggregateInputType = {
+    id?: true
+    generalEmail?: true
+    researchEmail?: true
+    mediaEmail?: true
+    northLocation?: true
+    southLocation?: true
+    linkedin?: true
+    youtube?: true
+    twitter?: true
+    instagram?: true
+    tiktok?: true
+    website?: true
+    updatedAt?: true
+  }
+
+  export type SiteContactInfoCountAggregateInputType = {
+    id?: true
+    generalEmail?: true
+    researchEmail?: true
+    mediaEmail?: true
+    northLocation?: true
+    southLocation?: true
+    linkedin?: true
+    youtube?: true
+    twitter?: true
+    instagram?: true
+    tiktok?: true
+    website?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SiteContactInfoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SiteContactInfo to aggregate.
+     */
+    where?: SiteContactInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SiteContactInfos to fetch.
+     */
+    orderBy?: SiteContactInfoOrderByWithRelationInput | SiteContactInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SiteContactInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SiteContactInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SiteContactInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SiteContactInfos
+    **/
+    _count?: true | SiteContactInfoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SiteContactInfoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SiteContactInfoMaxAggregateInputType
+  }
+
+  export type GetSiteContactInfoAggregateType<T extends SiteContactInfoAggregateArgs> = {
+        [P in keyof T & keyof AggregateSiteContactInfo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSiteContactInfo[P]>
+      : GetScalarType<T[P], AggregateSiteContactInfo[P]>
+  }
+
+
+
+
+  export type SiteContactInfoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SiteContactInfoWhereInput
+    orderBy?: SiteContactInfoOrderByWithAggregationInput | SiteContactInfoOrderByWithAggregationInput[]
+    by: SiteContactInfoScalarFieldEnum[] | SiteContactInfoScalarFieldEnum
+    having?: SiteContactInfoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SiteContactInfoCountAggregateInputType | true
+    _min?: SiteContactInfoMinAggregateInputType
+    _max?: SiteContactInfoMaxAggregateInputType
+  }
+
+  export type SiteContactInfoGroupByOutputType = {
+    id: string
+    generalEmail: string | null
+    researchEmail: string | null
+    mediaEmail: string | null
+    northLocation: string | null
+    southLocation: string | null
+    linkedin: string | null
+    youtube: string | null
+    twitter: string | null
+    instagram: string | null
+    tiktok: string | null
+    website: string | null
+    updatedAt: Date
+    _count: SiteContactInfoCountAggregateOutputType | null
+    _min: SiteContactInfoMinAggregateOutputType | null
+    _max: SiteContactInfoMaxAggregateOutputType | null
+  }
+
+  type GetSiteContactInfoGroupByPayload<T extends SiteContactInfoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SiteContactInfoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SiteContactInfoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SiteContactInfoGroupByOutputType[P]>
+            : GetScalarType<T[P], SiteContactInfoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SiteContactInfoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    generalEmail?: boolean
+    researchEmail?: boolean
+    mediaEmail?: boolean
+    northLocation?: boolean
+    southLocation?: boolean
+    linkedin?: boolean
+    youtube?: boolean
+    twitter?: boolean
+    instagram?: boolean
+    tiktok?: boolean
+    website?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["siteContactInfo"]>
+
+
+
+  export type SiteContactInfoSelectScalar = {
+    id?: boolean
+    generalEmail?: boolean
+    researchEmail?: boolean
+    mediaEmail?: boolean
+    northLocation?: boolean
+    southLocation?: boolean
+    linkedin?: boolean
+    youtube?: boolean
+    twitter?: boolean
+    instagram?: boolean
+    tiktok?: boolean
+    website?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SiteContactInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "generalEmail" | "researchEmail" | "mediaEmail" | "northLocation" | "southLocation" | "linkedin" | "youtube" | "twitter" | "instagram" | "tiktok" | "website" | "updatedAt", ExtArgs["result"]["siteContactInfo"]>
+
+  export type $SiteContactInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SiteContactInfo"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      generalEmail: string | null
+      researchEmail: string | null
+      mediaEmail: string | null
+      northLocation: string | null
+      southLocation: string | null
+      linkedin: string | null
+      youtube: string | null
+      twitter: string | null
+      instagram: string | null
+      tiktok: string | null
+      website: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["siteContactInfo"]>
+    composites: {}
+  }
+
+  type SiteContactInfoGetPayload<S extends boolean | null | undefined | SiteContactInfoDefaultArgs> = $Result.GetResult<Prisma.$SiteContactInfoPayload, S>
+
+  type SiteContactInfoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SiteContactInfoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SiteContactInfoCountAggregateInputType | true
+    }
+
+  export interface SiteContactInfoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SiteContactInfo'], meta: { name: 'SiteContactInfo' } }
+    /**
+     * Find zero or one SiteContactInfo that matches the filter.
+     * @param {SiteContactInfoFindUniqueArgs} args - Arguments to find a SiteContactInfo
+     * @example
+     * // Get one SiteContactInfo
+     * const siteContactInfo = await prisma.siteContactInfo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SiteContactInfoFindUniqueArgs>(args: SelectSubset<T, SiteContactInfoFindUniqueArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SiteContactInfo that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SiteContactInfoFindUniqueOrThrowArgs} args - Arguments to find a SiteContactInfo
+     * @example
+     * // Get one SiteContactInfo
+     * const siteContactInfo = await prisma.siteContactInfo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SiteContactInfoFindUniqueOrThrowArgs>(args: SelectSubset<T, SiteContactInfoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SiteContactInfo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoFindFirstArgs} args - Arguments to find a SiteContactInfo
+     * @example
+     * // Get one SiteContactInfo
+     * const siteContactInfo = await prisma.siteContactInfo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SiteContactInfoFindFirstArgs>(args?: SelectSubset<T, SiteContactInfoFindFirstArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SiteContactInfo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoFindFirstOrThrowArgs} args - Arguments to find a SiteContactInfo
+     * @example
+     * // Get one SiteContactInfo
+     * const siteContactInfo = await prisma.siteContactInfo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SiteContactInfoFindFirstOrThrowArgs>(args?: SelectSubset<T, SiteContactInfoFindFirstOrThrowArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SiteContactInfos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SiteContactInfos
+     * const siteContactInfos = await prisma.siteContactInfo.findMany()
+     * 
+     * // Get first 10 SiteContactInfos
+     * const siteContactInfos = await prisma.siteContactInfo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const siteContactInfoWithIdOnly = await prisma.siteContactInfo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SiteContactInfoFindManyArgs>(args?: SelectSubset<T, SiteContactInfoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SiteContactInfo.
+     * @param {SiteContactInfoCreateArgs} args - Arguments to create a SiteContactInfo.
+     * @example
+     * // Create one SiteContactInfo
+     * const SiteContactInfo = await prisma.siteContactInfo.create({
+     *   data: {
+     *     // ... data to create a SiteContactInfo
+     *   }
+     * })
+     * 
+     */
+    create<T extends SiteContactInfoCreateArgs>(args: SelectSubset<T, SiteContactInfoCreateArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SiteContactInfos.
+     * @param {SiteContactInfoCreateManyArgs} args - Arguments to create many SiteContactInfos.
+     * @example
+     * // Create many SiteContactInfos
+     * const siteContactInfo = await prisma.siteContactInfo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SiteContactInfoCreateManyArgs>(args?: SelectSubset<T, SiteContactInfoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a SiteContactInfo.
+     * @param {SiteContactInfoDeleteArgs} args - Arguments to delete one SiteContactInfo.
+     * @example
+     * // Delete one SiteContactInfo
+     * const SiteContactInfo = await prisma.siteContactInfo.delete({
+     *   where: {
+     *     // ... filter to delete one SiteContactInfo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SiteContactInfoDeleteArgs>(args: SelectSubset<T, SiteContactInfoDeleteArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SiteContactInfo.
+     * @param {SiteContactInfoUpdateArgs} args - Arguments to update one SiteContactInfo.
+     * @example
+     * // Update one SiteContactInfo
+     * const siteContactInfo = await prisma.siteContactInfo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SiteContactInfoUpdateArgs>(args: SelectSubset<T, SiteContactInfoUpdateArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SiteContactInfos.
+     * @param {SiteContactInfoDeleteManyArgs} args - Arguments to filter SiteContactInfos to delete.
+     * @example
+     * // Delete a few SiteContactInfos
+     * const { count } = await prisma.siteContactInfo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SiteContactInfoDeleteManyArgs>(args?: SelectSubset<T, SiteContactInfoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SiteContactInfos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SiteContactInfos
+     * const siteContactInfo = await prisma.siteContactInfo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SiteContactInfoUpdateManyArgs>(args: SelectSubset<T, SiteContactInfoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SiteContactInfo.
+     * @param {SiteContactInfoUpsertArgs} args - Arguments to update or create a SiteContactInfo.
+     * @example
+     * // Update or create a SiteContactInfo
+     * const siteContactInfo = await prisma.siteContactInfo.upsert({
+     *   create: {
+     *     // ... data to create a SiteContactInfo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SiteContactInfo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SiteContactInfoUpsertArgs>(args: SelectSubset<T, SiteContactInfoUpsertArgs<ExtArgs>>): Prisma__SiteContactInfoClient<$Result.GetResult<Prisma.$SiteContactInfoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SiteContactInfos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoCountArgs} args - Arguments to filter SiteContactInfos to count.
+     * @example
+     * // Count the number of SiteContactInfos
+     * const count = await prisma.siteContactInfo.count({
+     *   where: {
+     *     // ... the filter for the SiteContactInfos we want to count
+     *   }
+     * })
+    **/
+    count<T extends SiteContactInfoCountArgs>(
+      args?: Subset<T, SiteContactInfoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SiteContactInfoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SiteContactInfo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SiteContactInfoAggregateArgs>(args: Subset<T, SiteContactInfoAggregateArgs>): Prisma.PrismaPromise<GetSiteContactInfoAggregateType<T>>
+
+    /**
+     * Group by SiteContactInfo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiteContactInfoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SiteContactInfoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SiteContactInfoGroupByArgs['orderBy'] }
+        : { orderBy?: SiteContactInfoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SiteContactInfoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSiteContactInfoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SiteContactInfo model
+   */
+  readonly fields: SiteContactInfoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SiteContactInfo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SiteContactInfoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SiteContactInfo model
+   */
+  interface SiteContactInfoFieldRefs {
+    readonly id: FieldRef<"SiteContactInfo", 'String'>
+    readonly generalEmail: FieldRef<"SiteContactInfo", 'String'>
+    readonly researchEmail: FieldRef<"SiteContactInfo", 'String'>
+    readonly mediaEmail: FieldRef<"SiteContactInfo", 'String'>
+    readonly northLocation: FieldRef<"SiteContactInfo", 'String'>
+    readonly southLocation: FieldRef<"SiteContactInfo", 'String'>
+    readonly linkedin: FieldRef<"SiteContactInfo", 'String'>
+    readonly youtube: FieldRef<"SiteContactInfo", 'String'>
+    readonly twitter: FieldRef<"SiteContactInfo", 'String'>
+    readonly instagram: FieldRef<"SiteContactInfo", 'String'>
+    readonly tiktok: FieldRef<"SiteContactInfo", 'String'>
+    readonly website: FieldRef<"SiteContactInfo", 'String'>
+    readonly updatedAt: FieldRef<"SiteContactInfo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SiteContactInfo findUnique
+   */
+  export type SiteContactInfoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * Filter, which SiteContactInfo to fetch.
+     */
+    where: SiteContactInfoWhereUniqueInput
+  }
+
+  /**
+   * SiteContactInfo findUniqueOrThrow
+   */
+  export type SiteContactInfoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * Filter, which SiteContactInfo to fetch.
+     */
+    where: SiteContactInfoWhereUniqueInput
+  }
+
+  /**
+   * SiteContactInfo findFirst
+   */
+  export type SiteContactInfoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * Filter, which SiteContactInfo to fetch.
+     */
+    where?: SiteContactInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SiteContactInfos to fetch.
+     */
+    orderBy?: SiteContactInfoOrderByWithRelationInput | SiteContactInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SiteContactInfos.
+     */
+    cursor?: SiteContactInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SiteContactInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SiteContactInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SiteContactInfos.
+     */
+    distinct?: SiteContactInfoScalarFieldEnum | SiteContactInfoScalarFieldEnum[]
+  }
+
+  /**
+   * SiteContactInfo findFirstOrThrow
+   */
+  export type SiteContactInfoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * Filter, which SiteContactInfo to fetch.
+     */
+    where?: SiteContactInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SiteContactInfos to fetch.
+     */
+    orderBy?: SiteContactInfoOrderByWithRelationInput | SiteContactInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SiteContactInfos.
+     */
+    cursor?: SiteContactInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SiteContactInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SiteContactInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SiteContactInfos.
+     */
+    distinct?: SiteContactInfoScalarFieldEnum | SiteContactInfoScalarFieldEnum[]
+  }
+
+  /**
+   * SiteContactInfo findMany
+   */
+  export type SiteContactInfoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * Filter, which SiteContactInfos to fetch.
+     */
+    where?: SiteContactInfoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SiteContactInfos to fetch.
+     */
+    orderBy?: SiteContactInfoOrderByWithRelationInput | SiteContactInfoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SiteContactInfos.
+     */
+    cursor?: SiteContactInfoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SiteContactInfos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SiteContactInfos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SiteContactInfos.
+     */
+    distinct?: SiteContactInfoScalarFieldEnum | SiteContactInfoScalarFieldEnum[]
+  }
+
+  /**
+   * SiteContactInfo create
+   */
+  export type SiteContactInfoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SiteContactInfo.
+     */
+    data: XOR<SiteContactInfoCreateInput, SiteContactInfoUncheckedCreateInput>
+  }
+
+  /**
+   * SiteContactInfo createMany
+   */
+  export type SiteContactInfoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SiteContactInfos.
+     */
+    data: SiteContactInfoCreateManyInput | SiteContactInfoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SiteContactInfo update
+   */
+  export type SiteContactInfoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SiteContactInfo.
+     */
+    data: XOR<SiteContactInfoUpdateInput, SiteContactInfoUncheckedUpdateInput>
+    /**
+     * Choose, which SiteContactInfo to update.
+     */
+    where: SiteContactInfoWhereUniqueInput
+  }
+
+  /**
+   * SiteContactInfo updateMany
+   */
+  export type SiteContactInfoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SiteContactInfos.
+     */
+    data: XOR<SiteContactInfoUpdateManyMutationInput, SiteContactInfoUncheckedUpdateManyInput>
+    /**
+     * Filter which SiteContactInfos to update
+     */
+    where?: SiteContactInfoWhereInput
+    /**
+     * Limit how many SiteContactInfos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SiteContactInfo upsert
+   */
+  export type SiteContactInfoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SiteContactInfo to update in case it exists.
+     */
+    where: SiteContactInfoWhereUniqueInput
+    /**
+     * In case the SiteContactInfo found by the `where` argument doesn't exist, create a new SiteContactInfo with this data.
+     */
+    create: XOR<SiteContactInfoCreateInput, SiteContactInfoUncheckedCreateInput>
+    /**
+     * In case the SiteContactInfo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SiteContactInfoUpdateInput, SiteContactInfoUncheckedUpdateInput>
+  }
+
+  /**
+   * SiteContactInfo delete
+   */
+  export type SiteContactInfoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+    /**
+     * Filter which SiteContactInfo to delete.
+     */
+    where: SiteContactInfoWhereUniqueInput
+  }
+
+  /**
+   * SiteContactInfo deleteMany
+   */
+  export type SiteContactInfoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SiteContactInfos to delete
+     */
+    where?: SiteContactInfoWhereInput
+    /**
+     * Limit how many SiteContactInfos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SiteContactInfo without action
+   */
+  export type SiteContactInfoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SiteContactInfo
+     */
+    select?: SiteContactInfoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SiteContactInfo
+     */
+    omit?: SiteContactInfoOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12504,6 +13562,25 @@ export namespace Prisma {
   export type ImpactMetricScalarFieldEnum = (typeof ImpactMetricScalarFieldEnum)[keyof typeof ImpactMetricScalarFieldEnum]
 
 
+  export const SiteContactInfoScalarFieldEnum: {
+    id: 'id',
+    generalEmail: 'generalEmail',
+    researchEmail: 'researchEmail',
+    mediaEmail: 'mediaEmail',
+    northLocation: 'northLocation',
+    southLocation: 'southLocation',
+    linkedin: 'linkedin',
+    youtube: 'youtube',
+    twitter: 'twitter',
+    instagram: 'instagram',
+    tiktok: 'tiktok',
+    website: 'website',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SiteContactInfoScalarFieldEnum = (typeof SiteContactInfoScalarFieldEnum)[keyof typeof SiteContactInfoScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -12650,6 +13727,24 @@ export namespace Prisma {
   };
 
   export type ImpactMetricOrderByRelevanceFieldEnum = (typeof ImpactMetricOrderByRelevanceFieldEnum)[keyof typeof ImpactMetricOrderByRelevanceFieldEnum]
+
+
+  export const SiteContactInfoOrderByRelevanceFieldEnum: {
+    id: 'id',
+    generalEmail: 'generalEmail',
+    researchEmail: 'researchEmail',
+    mediaEmail: 'mediaEmail',
+    northLocation: 'northLocation',
+    southLocation: 'southLocation',
+    linkedin: 'linkedin',
+    youtube: 'youtube',
+    twitter: 'twitter',
+    instagram: 'instagram',
+    tiktok: 'tiktok',
+    website: 'website'
+  };
+
+  export type SiteContactInfoOrderByRelevanceFieldEnum = (typeof SiteContactInfoOrderByRelevanceFieldEnum)[keyof typeof SiteContactInfoOrderByRelevanceFieldEnum]
 
 
   /**
@@ -13575,6 +14670,99 @@ export namespace Prisma {
     notes?: StringNullableWithAggregatesFilter<"ImpactMetric"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ImpactMetric"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ImpactMetric"> | Date | string
+  }
+
+  export type SiteContactInfoWhereInput = {
+    AND?: SiteContactInfoWhereInput | SiteContactInfoWhereInput[]
+    OR?: SiteContactInfoWhereInput[]
+    NOT?: SiteContactInfoWhereInput | SiteContactInfoWhereInput[]
+    id?: StringFilter<"SiteContactInfo"> | string
+    generalEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    researchEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    mediaEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    northLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
+    southLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
+    linkedin?: StringNullableFilter<"SiteContactInfo"> | string | null
+    youtube?: StringNullableFilter<"SiteContactInfo"> | string | null
+    twitter?: StringNullableFilter<"SiteContactInfo"> | string | null
+    instagram?: StringNullableFilter<"SiteContactInfo"> | string | null
+    tiktok?: StringNullableFilter<"SiteContactInfo"> | string | null
+    website?: StringNullableFilter<"SiteContactInfo"> | string | null
+    updatedAt?: DateTimeFilter<"SiteContactInfo"> | Date | string
+  }
+
+  export type SiteContactInfoOrderByWithRelationInput = {
+    id?: SortOrder
+    generalEmail?: SortOrderInput | SortOrder
+    researchEmail?: SortOrderInput | SortOrder
+    mediaEmail?: SortOrderInput | SortOrder
+    northLocation?: SortOrderInput | SortOrder
+    southLocation?: SortOrderInput | SortOrder
+    linkedin?: SortOrderInput | SortOrder
+    youtube?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    tiktok?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _relevance?: SiteContactInfoOrderByRelevanceInput
+  }
+
+  export type SiteContactInfoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SiteContactInfoWhereInput | SiteContactInfoWhereInput[]
+    OR?: SiteContactInfoWhereInput[]
+    NOT?: SiteContactInfoWhereInput | SiteContactInfoWhereInput[]
+    generalEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    researchEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    mediaEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    northLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
+    southLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
+    linkedin?: StringNullableFilter<"SiteContactInfo"> | string | null
+    youtube?: StringNullableFilter<"SiteContactInfo"> | string | null
+    twitter?: StringNullableFilter<"SiteContactInfo"> | string | null
+    instagram?: StringNullableFilter<"SiteContactInfo"> | string | null
+    tiktok?: StringNullableFilter<"SiteContactInfo"> | string | null
+    website?: StringNullableFilter<"SiteContactInfo"> | string | null
+    updatedAt?: DateTimeFilter<"SiteContactInfo"> | Date | string
+  }, "id">
+
+  export type SiteContactInfoOrderByWithAggregationInput = {
+    id?: SortOrder
+    generalEmail?: SortOrderInput | SortOrder
+    researchEmail?: SortOrderInput | SortOrder
+    mediaEmail?: SortOrderInput | SortOrder
+    northLocation?: SortOrderInput | SortOrder
+    southLocation?: SortOrderInput | SortOrder
+    linkedin?: SortOrderInput | SortOrder
+    youtube?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    tiktok?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: SiteContactInfoCountOrderByAggregateInput
+    _max?: SiteContactInfoMaxOrderByAggregateInput
+    _min?: SiteContactInfoMinOrderByAggregateInput
+  }
+
+  export type SiteContactInfoScalarWhereWithAggregatesInput = {
+    AND?: SiteContactInfoScalarWhereWithAggregatesInput | SiteContactInfoScalarWhereWithAggregatesInput[]
+    OR?: SiteContactInfoScalarWhereWithAggregatesInput[]
+    NOT?: SiteContactInfoScalarWhereWithAggregatesInput | SiteContactInfoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SiteContactInfo"> | string
+    generalEmail?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    researchEmail?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    mediaEmail?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    northLocation?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    southLocation?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    linkedin?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    youtube?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    twitter?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    instagram?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    tiktok?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    website?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"SiteContactInfo"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -14539,6 +15727,118 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SiteContactInfoCreateInput = {
+    id?: string
+    generalEmail?: string | null
+    researchEmail?: string | null
+    mediaEmail?: string | null
+    northLocation?: string | null
+    southLocation?: string | null
+    linkedin?: string | null
+    youtube?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    tiktok?: string | null
+    website?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type SiteContactInfoUncheckedCreateInput = {
+    id?: string
+    generalEmail?: string | null
+    researchEmail?: string | null
+    mediaEmail?: string | null
+    northLocation?: string | null
+    southLocation?: string | null
+    linkedin?: string | null
+    youtube?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    tiktok?: string | null
+    website?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type SiteContactInfoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    northLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    southLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktok?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiteContactInfoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    northLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    southLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktok?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiteContactInfoCreateManyInput = {
+    id?: string
+    generalEmail?: string | null
+    researchEmail?: string | null
+    mediaEmail?: string | null
+    northLocation?: string | null
+    southLocation?: string | null
+    linkedin?: string | null
+    youtube?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    tiktok?: string | null
+    website?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type SiteContactInfoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    northLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    southLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktok?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiteContactInfoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    northLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    southLocation?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    youtube?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktok?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -15316,6 +16616,60 @@ export namespace Prisma {
 
   export type ImpactMetricSumOrderByAggregateInput = {
     year?: SortOrder
+  }
+
+  export type SiteContactInfoOrderByRelevanceInput = {
+    fields: SiteContactInfoOrderByRelevanceFieldEnum | SiteContactInfoOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type SiteContactInfoCountOrderByAggregateInput = {
+    id?: SortOrder
+    generalEmail?: SortOrder
+    researchEmail?: SortOrder
+    mediaEmail?: SortOrder
+    northLocation?: SortOrder
+    southLocation?: SortOrder
+    linkedin?: SortOrder
+    youtube?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    tiktok?: SortOrder
+    website?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SiteContactInfoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    generalEmail?: SortOrder
+    researchEmail?: SortOrder
+    mediaEmail?: SortOrder
+    northLocation?: SortOrder
+    southLocation?: SortOrder
+    linkedin?: SortOrder
+    youtube?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    tiktok?: SortOrder
+    website?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SiteContactInfoMinOrderByAggregateInput = {
+    id?: SortOrder
+    generalEmail?: SortOrder
+    researchEmail?: SortOrder
+    mediaEmail?: SortOrder
+    northLocation?: SortOrder
+    southLocation?: SortOrder
+    linkedin?: SortOrder
+    youtube?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    tiktok?: SortOrder
+    website?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type PasswordResetTokenCreateNestedManyWithoutUserInput = {

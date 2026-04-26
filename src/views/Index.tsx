@@ -104,6 +104,241 @@ function frameSrc(i: number): string {
   return `/hero3D/ezgif-frame-${pad3(i + 1)}.webp`;
 }
 
+// ── Coffee particle types ─────────────────────────────────────────────────────
+type Particle = {
+  id: number;
+  type: "bean" | "cherry";
+  x: number;        // vw %
+  y: number;        // vh % baseline (no scroll)
+  size: number;     // px
+  rotation: number; // deg
+  opacity: number;
+  depth: number;    // 0.1 (far/slow) … 1.0 (near/fast) — parallax multiplier
+  rotationSpeed: number; // deg per 100px scroll
+};
+
+const HERO_PARTICLES: Particle[] = [
+  // ── Far layer — tiny, slow, slightly blurred ──────────────────────────────
+  { id:  1, type: "bean",   x: 72,  y:  8,  size:  8, rotation:  30, opacity: 0.20, depth: 0.10, rotationSpeed:  0.3 },
+  { id:  2, type: "bean",   x: 85,  y: 18,  size:  9, rotation: 120, opacity: 0.18, depth: 0.09, rotationSpeed: -0.2 },
+  { id:  3, type: "bean",   x: 58,  y: 74,  size:  8, rotation:  75, opacity: 0.17, depth: 0.11, rotationSpeed:  0.4 },
+  { id:  4, type: "bean",   x: 92,  y: 55,  size: 10, rotation: 200, opacity: 0.15, depth: 0.08, rotationSpeed: -0.3 },
+  { id:  5, type: "bean",   x: 15,  y: 28,  size:  9, rotation:  50, opacity: 0.16, depth: 0.10, rotationSpeed:  0.2 },
+  { id:  6, type: "cherry", x: 48,  y: 12,  size:  9, rotation:  10, opacity: 0.18, depth: 0.09, rotationSpeed: -0.2 },
+  { id:  7, type: "cherry", x: 25,  y: 80,  size: 10, rotation: 330, opacity: 0.16, depth: 0.10, rotationSpeed:  0.3 },
+  // ── Mid layer — medium, moderate speed ───────────────────────────────────
+  { id:  8, type: "bean",   x: 78,  y: 35,  size: 18, rotation:  10, opacity: 0.30, depth: 0.25, rotationSpeed:  0.6 },
+  { id:  9, type: "bean",   x: 64,  y: 62,  size: 22, rotation: 155, opacity: 0.28, depth: 0.28, rotationSpeed: -0.5 },
+  { id: 10, type: "bean",   x: 88,  y: 80,  size: 20, rotation:  88, opacity: 0.26, depth: 0.22, rotationSpeed:  0.7 },
+  { id: 11, type: "bean",   x: 20,  y: 65,  size: 24, rotation: 220, opacity: 0.28, depth: 0.24, rotationSpeed: -0.4 },
+  { id: 12, type: "bean",   x:  8,  y: 85,  size: 19, rotation:  40, opacity: 0.25, depth: 0.26, rotationSpeed:  0.5 },
+  { id: 13, type: "cherry", x: 55,  y: 48,  size: 18, rotation:  45, opacity: 0.28, depth: 0.20, rotationSpeed: -0.4 },
+  { id: 14, type: "cherry", x: 30,  y: 22,  size: 20, rotation: 135, opacity: 0.30, depth: 0.32, rotationSpeed: -0.5 },
+  { id: 15, type: "cherry", x: 80,  y: 26,  size: 16, rotation:   0, opacity: 0.26, depth: 0.18, rotationSpeed:  0.3 },
+  { id: 16, type: "cherry", x: 12,  y: 48,  size: 22, rotation: 200, opacity: 0.28, depth: 0.28, rotationSpeed:  0.6 },
+  // ── Near layer — large, fastest, sharp ──────────────────────────────────
+  { id: 17, type: "bean",   x: 91,  y: 10,  size: 36, rotation:   5, opacity: 0.38, depth: 0.55, rotationSpeed:  1.1 },
+  { id: 18, type: "bean",   x: 69,  y: 85,  size: 44, rotation: 170, opacity: 0.35, depth: 0.62, rotationSpeed: -0.9 },
+  { id: 19, type: "bean",   x: 10,  y: 14,  size: 32, rotation: 310, opacity: 0.34, depth: 0.50, rotationSpeed:  0.8 },
+  { id: 20, type: "bean",   x: 50,  y: 82,  size: 52, rotation: 240, opacity: 0.40, depth: 0.70, rotationSpeed: -1.2 },
+  { id: 21, type: "bean",   x: 35,  y:  5,  size: 28, rotation:  95, opacity: 0.32, depth: 0.45, rotationSpeed:  0.7 },
+  { id: 22, type: "cherry", x: 75,  y: 76,  size: 38, rotation:  15, opacity: 0.40, depth: 0.68, rotationSpeed:  1.0 },
+  { id: 23, type: "cherry", x: 45,  y: 90,  size: 30, rotation: 270, opacity: 0.36, depth: 0.55, rotationSpeed: -0.8 },
+  { id: 24, type: "cherry", x: 95,  y: 68,  size: 22, rotation:  90, opacity: 0.30, depth: 0.38, rotationSpeed:  0.5 },
+  { id: 25, type: "cherry", x:  5,  y: 60,  size: 46, rotation: 180, opacity: 0.38, depth: 0.65, rotationSpeed: -1.0 },
+  // ── Extra scattered single cherries for colour pops ───────────────────
+  { id: 26, type: "cherry", x: 60,  y: 30,  size: 14, rotation:  60, opacity: 0.22, depth: 0.18, rotationSpeed:  0.3 },
+  { id: 27, type: "bean",   x: 38,  y: 44,  size: 15, rotation: 190, opacity: 0.22, depth: 0.20, rotationSpeed: -0.4 },
+  { id: 28, type: "bean",   x: 82,  y: 55,  size: 12, rotation: 330, opacity: 0.20, depth: 0.14, rotationSpeed:  0.3 },
+];
+
+// ── Photorealistic coffee bean SVG ───────────────────────────────────────────
+function BeanSVG({ size, depth }: { size: number; depth: number }) {
+  // Colour palette shifts from pale tan (far) to very dark roast (near)
+  const baseLight = depth > 0.45 ? "#3b1a0a" : depth > 0.22 ? "#5c3010" : "#8a5c30";
+  const baseDark  = depth > 0.45 ? "#1a0800" : depth > 0.22 ? "#2e1406" : "#4a2e12";
+  const highlight = depth > 0.45 ? "rgba(255,200,140,0.22)" : "rgba(255,210,160,0.15)";
+  const id = `b${size}${Math.round(depth*100)}`;
+  return (
+    <svg width={size} height={Math.round(size * 1.6)} viewBox="0 0 40 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        {/* Radial gradient: lighter edge, dark centre for 3-D roundness */}
+        <radialGradient id={`rg${id}`} cx="38%" cy="30%" r="62%">
+          <stop offset="0%"   stopColor={baseLight} />
+          <stop offset="55%"  stopColor={baseDark}  />
+          <stop offset="100%" stopColor="#0d0400"   />
+        </radialGradient>
+        {/* Soft shadow behind the bean */}
+        <radialGradient id={`sh${id}`} cx="50%" cy="90%" r="50%">
+          <stop offset="0%"  stopColor="rgba(0,0,0,0.45)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+        </radialGradient>
+      </defs>
+      {/* Drop shadow */}
+      <ellipse cx="20" cy="62" rx="14" ry="3" fill={`url(#sh${id})`} />
+      {/* Bean body */}
+      <ellipse cx="20" cy="31" rx="17" ry="27" fill={`url(#rg${id})`} />
+      {/* Top specular gloss */}
+      <ellipse cx="13" cy="18" rx="6" ry="4" fill={highlight} style={{ transform: "rotate(-20deg)", transformOrigin: "13px 18px" }} />
+      {/* Centre crease — two close lines for depth */}
+      <path d="M20 6 Q11 31 20 58" stroke="rgba(0,0,0,0.55)" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+      <path d="M21 6 Q13 31 21 58" stroke="rgba(0,0,0,0.20)" strokeWidth="1.0" strokeLinecap="round" fill="none" />
+      {/* Edge rim highlight */}
+      <ellipse cx="20" cy="31" rx="17" ry="27" stroke={highlight} strokeWidth="1" fill="none" />
+    </svg>
+  );
+}
+
+// ── Photorealistic coffee cherry SVG ─────────────────────────────────────────
+function CherrySVG({ size, depth }: { size: number; depth: number }) {
+  // Real coffee cherries: vivid crimson-red with a slight orange tint at highlight
+  const red   = depth > 0.45 ? "#a01010" : depth > 0.22 ? "#b52010" : "#8b1a0e";
+  const dark  = depth > 0.45 ? "#4a0000" : depth > 0.22 ? "#600800" : "#400000";
+  const id = `c${size}${Math.round(depth*100)}`;
+  return (
+    <svg width={Math.round(size * 2.4)} height={Math.round(size * 2.2)} viewBox="0 0 72 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        {/* Left cherry gradient */}
+        <radialGradient id={`lrg${id}`} cx="35%" cy="30%" r="65%">
+          <stop offset="0%"   stopColor="#e84030" />
+          <stop offset="40%"  stopColor={red}  />
+          <stop offset="100%" stopColor={dark} />
+        </radialGradient>
+        {/* Right cherry gradient */}
+        <radialGradient id={`rrg${id}`} cx="35%" cy="30%" r="65%">
+          <stop offset="0%"   stopColor="#e84030" />
+          <stop offset="40%"  stopColor={red}  />
+          <stop offset="100%" stopColor={dark} />
+        </radialGradient>
+        {/* Drop shadow */}
+        <radialGradient id={`csh${id}`} cx="50%" cy="90%" r="50%">
+          <stop offset="0%"  stopColor="rgba(0,0,0,0.4)" />
+          <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+        </radialGradient>
+      </defs>
+      {/* Stem — thin wiry branch */}
+      <path d="M36 14 C36 8 30 3 22 2" stroke="#4a2c0a" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+      <path d="M36 14 C36 8 42 3 50 2" stroke="#4a2c0a" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+      <path d="M36 14 C36 8 30 3 22 2" stroke="#8b5a1a" strokeWidth="0.8" strokeLinecap="round" fill="none" />
+      {/* Shadow under both cherries */}
+      <ellipse cx="20" cy="64" rx="13" ry="3" fill={`url(#csh${id})`} />
+      <ellipse cx="52" cy="64" rx="13" ry="3" fill={`url(#csh${id})`} />
+      {/* Left cherry */}
+      <circle cx="20" cy="44" r="18" fill={`url(#lrg${id})`} />
+      {/* left cherry navel dimple */}
+      <circle cx="20" cy="60" r="2.5" fill="rgba(0,0,0,0.4)" />
+      {/* left gloss */}
+      <ellipse cx="13" cy="35" rx="5" ry="3.5" fill="rgba(255,255,255,0.28)" style={{ transform: "rotate(-30deg)", transformOrigin: "13px 35px" }} />
+      {/* Right cherry */}
+      <circle cx="52" cy="44" r="18" fill={`url(#rrg${id})`} />
+      {/* right cherry navel dimple */}
+      <circle cx="52" cy="60" r="2.5" fill="rgba(0,0,0,0.4)" />
+      {/* right gloss */}
+      <ellipse cx="45" cy="35" rx="5" ry="3.5" fill="rgba(255,255,255,0.28)" style={{ transform: "rotate(-30deg)", transformOrigin: "45px 35px" }} />
+      {/* Join shadow between the two fruits */}
+      <ellipse cx="36" cy="44" rx="4" ry="16" fill="rgba(0,0,0,0.18)" />
+    </svg>
+  );
+}
+
+// ── Floating particle layer — parallax on scroll + self-float animation ────────
+function HeroParticleLayer() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const nodes = container.querySelectorAll<HTMLElement>('[data-pid]');
+
+    function tick() {
+      const sy = window.scrollY;
+      nodes.forEach((el) => {
+        const pid = Number(el.dataset.pid);
+        const p = HERO_PARTICLES.find((x) => x.id === pid);
+        if (!p) return;
+        const translateY = -(sy * p.depth);
+        const rot = p.rotation + sy * p.rotationSpeed * 0.01;
+        el.style.transform = `translateY(${translateY}px) rotate(${rot}deg)`;
+      });
+      rafRef.current = requestAnimationFrame(tick);
+    }
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
+
+  return (
+    <>
+      {/* Inject keyframe once */}
+      <style>{`
+        @keyframes particleFloat {
+          0%   { translate: 0px 0px; }
+          25%  { translate: 3px -8px; }
+          50%  { translate: -2px -14px; }
+          75%  { translate: -4px -6px; }
+          100% { translate: 0px 0px; }
+        }
+        @keyframes particleDrift {
+          0%   { translate: 0px 0px; }
+          33%  { translate: -5px -10px; }
+          66%  { translate: 4px -18px; }
+          100% { translate: 0px 0px; }
+        }
+        @keyframes particleSway {
+          0%   { translate: 0px 0px; }
+          20%  { translate: 6px -5px; }
+          50%  { translate: -3px -12px; }
+          80%  { translate: 5px -8px; }
+          100% { translate: 0px 0px; }
+        }
+      `}</style>
+      <div
+        ref={containerRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 2,
+          pointerEvents: "none",
+          overflow: "hidden",
+        }}
+      >
+        {HERO_PARTICLES.map((p) => {
+          // Pick one of 3 animation patterns for variety
+          const animName = p.id % 3 === 0 ? "particleDrift" : p.id % 3 === 1 ? "particleFloat" : "particleSway";
+          // Duration: far particles move slower, near faster; all slowed down to feel natural
+          const duration = 4 + (1 - p.depth) * 6; // 4s (near) to 10s (far)
+          const delay = (p.id * 0.73) % 5; // stagger start times
+          return (
+            <div
+              key={p.id}
+              data-pid={p.id}
+              style={{
+                position: "absolute",
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                opacity: p.opacity,
+                transform: `rotate(${p.rotation}deg)`,
+                willChange: "transform, translate",
+                filter: `blur(${p.depth < 0.15 ? 1.5 : p.depth < 0.3 ? 0.5 : 0}px)`,
+                animation: `${animName} ${duration.toFixed(1)}s ${delay.toFixed(1)}s ease-in-out infinite`,
+              }}
+            >
+              {p.type === "bean" ? (
+                <BeanSVG size={p.size} depth={p.depth} />
+              ) : (
+                <CherrySVG size={p.size} depth={p.depth} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
 // ── Scroll-Driven Hero Section ───────────────────────────────────────────────────
 function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
   // Refs for GSAP targets
@@ -373,6 +608,9 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           className="absolute inset-0 bg-gradient-to-r from-charcoal/60 to-transparent"
           style={{ zIndex: 1 }}
         />
+
+        {/* ── Coffee & cherry parallax depth particles — z 2 */}
+        <HeroParticleLayer />
 
         {/* Spinning ring decoration — z 2 */}
         <div

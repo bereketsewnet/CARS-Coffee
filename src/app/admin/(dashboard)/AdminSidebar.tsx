@@ -17,21 +17,23 @@ import {
   Menu,
   Handshake,
   UserCog,
+  PhoneCall,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const navItems = [
-  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { label: "Research", href: "/admin/research", icon: Beaker },
-  { label: "Team", href: "/admin/team", icon: Users },
-  { label: "News & Events", href: "/admin/news", icon: Newspaper },
+  { label: "Dashboard",   href: "/admin/dashboard",   icon: LayoutDashboard },
+  { label: "Research",     href: "/admin/research",     icon: Beaker },
+  { label: "Team",         href: "/admin/team",         icon: Users },
+  { label: "News & Events",href: "/admin/news",         icon: Newspaper },
   { label: "Publications", href: "/admin/publications", icon: BookOpen },
-  { label: "Impact", href: "/admin/impact", icon: TrendingUp },
-  { label: "Messages", href: "/admin/messages", icon: Mail },
-  { label: "Newsletter", href: "/admin/newsletter", icon: Bell },
-  { label: "Partners", href: "/admin/partners", icon: Handshake },
+  { label: "Impact",       href: "/admin/impact",       icon: TrendingUp },
+  { label: "Messages",     href: "/admin/messages",     icon: Mail },
+  { label: "Newsletter",   href: "/admin/newsletter",   icon: Bell },
+  { label: "Partners",     href: "/admin/partners",     icon: Handshake },
+  { label: "Contact Info", href: "/admin/contact",      icon: PhoneCall },
 ];
 
 export function AdminSidebar({

@@ -203,3 +203,28 @@ model ImpactMetric {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// ─── Site Contact Info ────────────────────────────────────────────────────────
+
+model SiteContactInfo {
+  id        String   @id @default(cuid())
+
+  // Institutional emails
+  generalEmail    String?
+  researchEmail   String?
+  mediaEmail      String?
+
+  // Locations
+  northLocation   String? @db.Text   // e.g. "Prinsstraat 13, 2000 Antwerp, Belgium"
+  southLocation   String? @db.Text   // e.g. "King George VI Street, Addis Ababa, Ethiopia"
+
+  // Social media
+  linkedin    String? @db.Text
+  youtube     String? @db.Text
+  twitter     String? @db.Text
+  instagram   String? @db.Text
+  tiktok      String? @db.Text
+  website     String? @db.Text
+
+  updatedAt DateTime @updatedAt
+}
