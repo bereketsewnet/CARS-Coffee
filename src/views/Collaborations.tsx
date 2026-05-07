@@ -122,9 +122,9 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)" }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">Partner Coordination</span>
+          <span className="tag-pill mb-4 inline-block">Coordinators</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Our <span className="text-gradient-green">Collaborators</span>
+            Our <span className="text-gradient-green">Coordinators</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
             Government officials, sponsors, civil society partners, and supporters who make the CARES mission possible.

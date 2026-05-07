@@ -28,24 +28,51 @@ const ICONS = [
 export default function CircularAnimation() {
   return (
     <div className="relative flex items-center justify-center animate-fadeInUp delay-500 mt-16 lg:mt-0">
+      <style>{`
+        @keyframes ropeColorCycle {
+          0%   { stroke: #92400e; }
+          30%  { stroke: #78350f; }
+          60%  { stroke: #b45309; }
+          100% { stroke: #92400e; }
+        }
+        @keyframes ropeColorCycle2 {
+          0%   { stroke: #7c2d12; }
+          30%  { stroke: #a16207; }
+          60%  { stroke: #6b3a2a; }
+          100% { stroke: #7c2d12; }
+        }
+      `}</style>
+
       <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px]">
 
-        {/* Rotating Container */}
+        {/* Rotating container */}
         <div className="absolute inset-0 animate-spin-slow">
-          {/* Dashed orbit ring */}
+
+          {/* Rope ring — two overlapping dashed rings offset to mimic twisted rope */}
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+            {/* outer strand */}
             <circle
-              cx="50"
-              cy="50"
-              r="49"
+              cx="50" cy="50" r="49"
               fill="none"
-              stroke="currentColor"
-              strokeWidth="0.5"
-              strokeDasharray="12 8"
-              className="text-amber-500/30"
+              strokeWidth="2.2"
+              strokeDasharray="5 3.5"
+              strokeDashoffset="0"
+              strokeLinecap="round"
+              style={{ animation: "ropeColorCycle 8s ease-in-out infinite" }}
+            />
+            {/* inner strand — offset to create rope twist */}
+            <circle
+              cx="50" cy="50" r="49"
+              fill="none"
+              strokeWidth="2.2"
+              strokeDasharray="5 3.5"
+              strokeDashoffset="4.25"
+              strokeLinecap="round"
+              style={{ animation: "ropeColorCycle2 8s ease-in-out infinite" }}
             />
           </svg>
 
+          {/* Icons on the rope */}
           {ICONS.map((item, i) => (
             <div key={i} style={orbitStyle(i, ICONS.length)}>
               <div className="animate-spin-reverse-slow">

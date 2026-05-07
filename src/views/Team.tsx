@@ -12,6 +12,7 @@ interface TeamMember {
   role: "PI" | "Co-Supervisor" | "PhD" | "Research Assistant";
   initials: string;
   color: string;
+  order: number;
   imageUrl?: string | null;
   linkedin?: string | null;
   twitter?: string | null;
@@ -46,6 +47,7 @@ function dbToMember(m: DbMember, idx: number): TeamMember {
     role: deriveCategory(m.role),
     initials,
     color: COLORS[idx % COLORS.length],
+    order: (m as any).order ?? 0,
     imageUrl: m.imageUrl ?? null,
     linkedin: m.linkedin ?? null,
     twitter: m.twitter ?? null,
@@ -63,6 +65,7 @@ const staticTeam: TeamMember[] = [
     role: "PI",
     initials: "JD",
     color: "gradient-green",
+    order: 0,
   },
   {
     name: "Prof. Dr. Tigist Alemu",
@@ -72,6 +75,7 @@ const staticTeam: TeamMember[] = [
     role: "PI",
     initials: "TA",
     color: "gradient-coffee",
+    order: 1,
   },
   {
     name: "Dr. Lena Verheyden",
@@ -81,6 +85,7 @@ const staticTeam: TeamMember[] = [
     role: "Co-Supervisor",
     initials: "LV",
     color: "gradient-green",
+    order: 0,
   },
   {
     name: "Dr. Mulugeta Bekele",
@@ -90,6 +95,7 @@ const staticTeam: TeamMember[] = [
     role: "Co-Supervisor",
     initials: "MB",
     color: "gradient-coffee",
+    order: 1,
   },
   {
     name: "Selamawit Tadesse",
@@ -99,6 +105,7 @@ const staticTeam: TeamMember[] = [
     role: "PhD",
     initials: "ST",
     color: "gradient-green",
+    order: 0,
   },
   {
     name: "Robel Getachew",
@@ -108,6 +115,7 @@ const staticTeam: TeamMember[] = [
     role: "PhD",
     initials: "RG",
     color: "gradient-coffee",
+    order: 1,
   },
   {
     name: "Amina Desta",
@@ -117,6 +125,7 @@ const staticTeam: TeamMember[] = [
     role: "PhD",
     initials: "AD",
     color: "gradient-green",
+    order: 2,
   },
   {
     name: "Thomas Claeys",
@@ -126,6 +135,7 @@ const staticTeam: TeamMember[] = [
     role: "PhD",
     initials: "TC",
     color: "gradient-coffee",
+    order: 3,
   },
 ];
 
@@ -243,7 +253,9 @@ export default function Team({ members: dbMembers }: { members?: DbMember[] | nu
       <div className="py-20">
         <div className="container mx-auto space-y-16">
           {roleOrder.map((role) => {
-            const members = team.filter((m) => m.role === role);
+            const members = team
+              .filter((m) => m.role === role)
+              .sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
             if (!members.length) return null;
             return (
               <div key={role}>

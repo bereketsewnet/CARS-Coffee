@@ -689,6 +689,17 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
 
         </div>
 
+        {/* Tag — pinned just below navbar */}
+        <div
+          ref={tagsRef}
+          className="absolute pointer-events-none px-4 md:px-6 container mx-auto left-0 right-0"
+          style={{ top: "82px", zIndex: 4, opacity: 0, transform: "translateY(30px)" }}
+        >
+          <span className="tag-pill text-xs md:text-sm font-bold uppercase tracking-widest">
+            {t.home.tagline}
+          </span>
+        </div>
+
         {/* ── STATE 1: Initial text block ── */}
         <div
           ref={text1Ref}
@@ -697,13 +708,10 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
         >
           <div className="max-w-2xl flex-1 self-center w-full lg:w-auto">
             <div>
-              <div ref={tagsRef} className="inline-flex flex-wrap items-center gap-2 mb-3 md:mb-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
-                <span className="tag-pill text-sm md:text-base font-bold bg-white/10 uppercase tracking-widest">{t.home.tagline}</span>
-              </div>
               <h1
                 ref={h1Ref}
-                className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug mb-3 md:mb-5"
-                style={{ opacity: 0, transform: "translateY(30px)" }}
+                className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug mb-3 md:mb-4"
+                style={{ opacity: 0, transform: "translateY(30px)", letterSpacing: "0.05em" }}
               >
                 {t.home.heroTitle1} {t.home.heroTitle2}
                 <br className="hidden md:block" />
@@ -716,7 +724,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
               >
                 {t.home.heroSubtitle}
               </p>
-              <div ref={btnsRef} className="pointer-events-auto flex flex-wrap gap-3 md:gap-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
+              <div ref={btnsRef} className="pointer-events-auto flex flex-wrap gap-3 md:gap-4 mt-6 md:mt-8" style={{ opacity: 0, transform: "translateY(30px)" }}>
                 <Link
                   href="/project"
                   className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-300 shadow-glow"

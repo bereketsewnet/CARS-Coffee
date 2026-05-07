@@ -26,6 +26,22 @@ import {
   SubmitBtn,
 } from "./CrudHelpers";
 
+function deriveCategory(role: string): string {
+  const r = role.toLowerCase();
+  if (r.includes("principal")) return "PI";
+  if (r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Supervisor";
+  if (r.includes("phd") || r.includes("candidate") || r.includes("researcher")) return "PhD";
+  return "Research Assistant";
+}
+
+const CATEGORY_ORDER = ["PI", "Co-Supervisor", "PhD", "Research Assistant"] as const;
+const CATEGORY_LABELS: Record<string, string> = {
+  "PI":                 "Principal Investigators",
+  "Co-Supervisor":      "Co-Supervisors",
+  "PhD":                "PhD Candidates",
+  "Research Assistant": "Research Assistants",
+};
+
 export default function TeamCrud({ items: initial, pillars = [] }: { items: TeamMember[]; pillars?: { pillar: string; title: string }[] }) {
   const router = useRouter();
   const [items, setItems] = useState(initial);
@@ -190,76 +206,72 @@ export default function TeamCrud({ items: initial, pillars = [] }: { items: Team
         </button>
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.map((m) => (
-          <div
-            key={m.id}
-            className="glass-card rounded-xl border border-border p-5 space-y-3"
-          >
-            <div className="flex items-start justify-between">
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-secondary/30 flex items-center justify-center text-leaf-bright font-bold text-sm flex-shrink-0">
-                {m.imageUrl ? (
-                  <img
-                    src={m.imageUrl}
-                    alt={m.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  m.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .slice(0, 2)
-                )}
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full border font-medium ${m.active ? "text-leaf-bright bg-leaf/10 border-leaf/20" : "text-muted-foreground bg-muted border-border"}`}
-                >
-                  {m.active ? "Active" : "Inactive"}
-                </span>
-                <button
-                  onClick={() => openEdit(m)}
-                  className="text-muted-foreground hover:text-foreground transition-colors p-1"
-                >
-                  <Pencil className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => setDeleteTarget(m)}
-                  className="text-muted-foreground hover:text-rose-400 transition-colors p-1"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-            <div>
-              <p className="font-semibold text-foreground">{m.name}</p>
-              <p className="text-xs text-muted-foreground">{m.role}</p>
-              <p className="text-xs text-muted-foreground">
-                {m.institution} · {m.country}
-              </p>
-            </div>
-            <span className="tag-pill text-xs">
-              {m.pillar ? (pillars.find((p) => p.pillar === m.pillar)?.title ?? m.pillar) : "—"}
-            </span>
-            <div className="flex gap-2 pt-1">
-              {m.email && (
-                <a
-                  href={`mailto:${m.email}`}
-                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Mail className="w-3 h-3" /> Email
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
+      {/* Grouped by category */}
+      <div className="space-y-8">
         {items.length === 0 && (
-          <div className="col-span-3 py-12 text-center text-muted-foreground text-sm">
-            No team members yet.
-          </div>
+          <p className="py-12 text-center text-muted-foreground text-sm">No team members yet.</p>
         )}
+        {CATEGORY_ORDER.map((cat) => {
+          const group = items
+            .filter((m) => deriveCategory(m.role) === cat)
+            .sort((a, b) => ((a as any).order ?? 0) - ((b as any).order ?? 0) || a.name.localeCompare(b.name));
+          if (!group.length) return null;
+          return (
+            <div key={cat}>
+              {/* Category separator */}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-6 h-0.5 rounded-full bg-leaf-bright inline-block" />
+                <h3 className="font-serif text-base font-semibold text-foreground">{CATEGORY_LABELS[cat]}</h3>
+                <span className="text-xs text-muted-foreground">({group.length})</span>
+                <div className="flex-1 h-px bg-border" />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {group.map((m) => (
+                  <div key={m.id} className="glass-card rounded-xl border border-border p-5 space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="w-10 h-10 rounded-full overflow-hidden bg-secondary/30 flex items-center justify-center text-leaf-bright font-bold text-sm flex-shrink-0">
+                        {m.imageUrl ? (
+                          <img src={m.imageUrl} alt={m.name} className="w-full h-full object-cover" />
+                        ) : (
+                          m.name.split(" ").map((n) => n[0]).join("").slice(0, 2)
+                        )}
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${m.active ? "text-leaf-bright bg-leaf/10 border-leaf/20" : "text-muted-foreground bg-muted border-border"}`}>
+                          {m.active ? "Active" : "Inactive"}
+                        </span>
+                        <button onClick={() => openEdit(m)} className="text-muted-foreground hover:text-foreground transition-colors p-1">
+                          <Pencil className="w-3.5 h-3.5" />
+                        </button>
+                        <button onClick={() => setDeleteTarget(m)} className="text-muted-foreground hover:text-rose-400 transition-colors p-1">
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-foreground">{m.name}</p>
+                      <p className="text-xs text-muted-foreground">{m.role}</p>
+                      <p className="text-xs text-muted-foreground">{m.institution} · {m.country}</p>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="tag-pill text-xs">
+                        {m.pillar ? (pillars.find((p) => p.pillar === m.pillar)?.title ?? m.pillar) : "—"}
+                      </span>
+                      {(m as any).order !== undefined && (
+                        <span className="text-xs text-muted-foreground border border-border rounded px-1.5 py-0.5">#{(m as any).order}</span>
+                      )}
+                    </div>
+                    {m.email && (
+                      <a href={`mailto:${m.email}`} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                        <Mail className="w-3 h-3" /> Email
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Modal */}
@@ -386,6 +398,17 @@ export default function TeamCrud({ items: initial, pillars = [] }: { items: Team
                 ))}
               </select>
             </Field>
+            <div className="sm:col-span-2">
+              <Field label="Display Order">
+                <input
+                  name="order"
+                  type="number"
+                  defaultValue={Number((editing as any)?.order ?? 0)}
+                  className={inputCls}
+                  placeholder="0"
+                />
+              </Field>
+            </div>
             <Field label="Email">
               <input
                 name="email"

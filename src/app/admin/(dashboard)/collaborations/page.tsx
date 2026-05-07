@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import CollaboratorsCrud from "@/components/admin/CollaboratorsCrud";
 import PaginationNav from "@/components/ui/PaginationNav";
 
-export const metadata: Metadata = { title: "Collaborations | Circular Coffee Admin" };
+export const metadata: Metadata = { title: "Coordinators | Circular Coffee Admin" };
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -32,9 +32,9 @@ export default async function CollaborationsAdminPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-2xl font-bold text-foreground">Collaborations</h1>
+        <h1 className="font-serif text-2xl font-bold text-foreground">Coordinators</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Manage government officials, sponsors, NGO partners and other collaborators.{" "}
+          Manage government officials, sponsors, NGO partners and other coordinators.{" "}
           <span className="text-muted-foreground/60 font-normal">{total} total</span>
         </p>
       </div>

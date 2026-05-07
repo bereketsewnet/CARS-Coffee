@@ -56,7 +56,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-3 group py-1.5">
           <div className="w-14 h-14 rounded-xl bg-[#1a2e1a] border border-leaf-bright/30 overflow-hidden shrink-0 shadow-glow flex items-center justify-center">
             <Image
-              src="/assets/IMAGE_FOR_LOGO.jpg"
+              src="/assets/header logo.jpg"
               alt="CARES Logo"
               width={56}
               height={56}
@@ -65,10 +65,10 @@ export function Navbar() {
             />
           </div>
           <div className="hidden sm:block">
-            <span className="font-serif font-bold text-2xl leading-none block text-foreground">
+            <span className="font-serif font-bold text-2xl leading-none block" style={{ color: "#9B1B1B" }}>
               CARES
             </span>
-            <span className="text-sm text-leaf-bright tracking-wide">
+            <span className="text-sm tracking-wide" style={{ color: "#FBBF24" }}>
               Circular Economy Research
             </span>
           </div>

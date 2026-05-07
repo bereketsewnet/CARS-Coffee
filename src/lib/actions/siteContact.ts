@@ -18,6 +18,7 @@ export async function upsertSiteContactInfo(formData: FormData) {
     linkedin:       (formData.get("linkedin")       as string) || null,
     youtube:        (formData.get("youtube")        as string) || null,
     twitter:        (formData.get("twitter")        as string) || null,
+    facebook:       (formData.get("facebook")       as string) || null,
     instagram:      (formData.get("instagram")      as string) || null,
     tiktok:         (formData.get("tiktok")         as string) || null,
     website:        (formData.get("website")        as string) || null,

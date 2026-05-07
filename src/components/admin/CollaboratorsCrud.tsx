@@ -143,7 +143,7 @@ export default function CollaboratorsCrud({ items: initial }: { items: Collabora
           onClick={openAdd}
           className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-colors text-sm font-semibold shadow-glow"
         >
-          <Plus className="w-4 h-4" /> Add Collaborator
+          <Plus className="w-4 h-4" /> Add Coordinator
         </button>
       </div>
 
@@ -196,7 +196,7 @@ export default function CollaboratorsCrud({ items: initial }: { items: Collabora
       </div>
 
       {/* Modal */}
-      <CrudModal open={mode !== null} onClose={close} title={editing ? "Edit Collaborator" : "Add Collaborator"}>
+      <CrudModal open={mode !== null} onClose={close} title={editing ? "Edit Coordinator" : "Add Coordinator"}>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Photo upload */}
@@ -273,7 +273,7 @@ export default function CollaboratorsCrud({ items: initial }: { items: Collabora
             </Field>
           </div>
           {error && <p className="text-xs text-rose-400">{error}</p>}
-          <SubmitBtn pending={pending || uploading} label={editing ? "Save Changes" : "Add Collaborator"} />
+          <SubmitBtn pending={pending || uploading} label={editing ? "Save Changes" : "Add Coordinator"} />
         </form>
       </CrudModal>
 

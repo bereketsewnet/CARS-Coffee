@@ -3,7 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin, ExternalLink, Linkedin, Youtube, Twitter, Instagram, Globe, Music2 } from "lucide-react";
+import { Mail, MapPin, ExternalLink, Linkedin, Youtube, Instagram, Globe, Music2, Facebook } from "lucide-react";
+
+function XIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+    </svg>
+  );
+}
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { getSiteContactInfo } from "@/lib/actions/siteContact";
 import type { SiteContactInfo } from "../../generated/prisma-client";
@@ -11,7 +19,8 @@ import type { SiteContactInfo } from "../../generated/prisma-client";
 const SOCIAL_ICONS: Record<string, { icon: React.ElementType; color: string }> = {
   linkedin:  { icon: Linkedin,  color: "#0A66C2" },
   youtube:   { icon: Youtube,   color: "#FF0000" },
-  twitter:   { icon: Twitter,   color: "#1DA1F2" },
+  twitter:   { icon: XIcon,     color: "#ffffff" },
+  facebook:  { icon: Facebook,  color: "#1877F2" },
   instagram: { icon: Instagram, color: "#E1306C" },
   tiktok:    { icon: Music2,    color: "#69C9D0" },
   website:   { icon: Globe,     color: "#4ade80" },

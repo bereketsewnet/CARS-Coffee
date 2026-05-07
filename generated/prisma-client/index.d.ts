@@ -4926,8 +4926,18 @@ export namespace Prisma {
 
   export type AggregateTeamMember = {
     _count: TeamMemberCountAggregateOutputType | null
+    _avg: TeamMemberAvgAggregateOutputType | null
+    _sum: TeamMemberSumAggregateOutputType | null
     _min: TeamMemberMinAggregateOutputType | null
     _max: TeamMemberMaxAggregateOutputType | null
+  }
+
+  export type TeamMemberAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type TeamMemberSumAggregateOutputType = {
+    order: number | null
   }
 
   export type TeamMemberMinAggregateOutputType = {
@@ -4945,6 +4955,7 @@ export namespace Prisma {
     instagram: string | null
     website: string | null
     active: boolean | null
+    order: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4964,6 +4975,7 @@ export namespace Prisma {
     instagram: string | null
     website: string | null
     active: boolean | null
+    order: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4983,11 +4995,20 @@ export namespace Prisma {
     instagram: number
     website: number
     active: number
+    order: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type TeamMemberAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type TeamMemberSumAggregateInputType = {
+    order?: true
+  }
 
   export type TeamMemberMinAggregateInputType = {
     id?: true
@@ -5004,6 +5025,7 @@ export namespace Prisma {
     instagram?: true
     website?: true
     active?: true
+    order?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5023,6 +5045,7 @@ export namespace Prisma {
     instagram?: true
     website?: true
     active?: true
+    order?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5042,6 +5065,7 @@ export namespace Prisma {
     instagram?: true
     website?: true
     active?: true
+    order?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5085,6 +5109,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: TeamMemberAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TeamMemberSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: TeamMemberMinAggregateInputType
@@ -5115,6 +5151,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: TeamMemberCountAggregateInputType | true
+    _avg?: TeamMemberAvgAggregateInputType
+    _sum?: TeamMemberSumAggregateInputType
     _min?: TeamMemberMinAggregateInputType
     _max?: TeamMemberMaxAggregateInputType
   }
@@ -5134,9 +5172,12 @@ export namespace Prisma {
     instagram: string | null
     website: string | null
     active: boolean
+    order: number
     createdAt: Date
     updatedAt: Date
     _count: TeamMemberCountAggregateOutputType | null
+    _avg: TeamMemberAvgAggregateOutputType | null
+    _sum: TeamMemberSumAggregateOutputType | null
     _min: TeamMemberMinAggregateOutputType | null
     _max: TeamMemberMaxAggregateOutputType | null
   }
@@ -5170,6 +5211,7 @@ export namespace Prisma {
     instagram?: boolean
     website?: boolean
     active?: boolean
+    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["teamMember"]>
@@ -5191,11 +5233,12 @@ export namespace Prisma {
     instagram?: boolean
     website?: boolean
     active?: boolean
+    order?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "institution" | "country" | "pillar" | "bio" | "email" | "imageUrl" | "linkedin" | "twitter" | "instagram" | "website" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "institution" | "country" | "pillar" | "bio" | "email" | "imageUrl" | "linkedin" | "twitter" | "instagram" | "website" | "active" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
 
   export type $TeamMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamMember"
@@ -5215,6 +5258,7 @@ export namespace Prisma {
       instagram: string | null
       website: string | null
       active: boolean
+      order: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["teamMember"]>
@@ -5600,6 +5644,7 @@ export namespace Prisma {
     readonly instagram: FieldRef<"TeamMember", 'String'>
     readonly website: FieldRef<"TeamMember", 'String'>
     readonly active: FieldRef<"TeamMember", 'Boolean'>
+    readonly order: FieldRef<"TeamMember", 'Int'>
     readonly createdAt: FieldRef<"TeamMember", 'DateTime'>
     readonly updatedAt: FieldRef<"TeamMember", 'DateTime'>
   }
@@ -13575,6 +13620,7 @@ export namespace Prisma {
     linkedin: string | null
     youtube: string | null
     twitter: string | null
+    facebook: string | null
     instagram: string | null
     tiktok: string | null
     website: string | null
@@ -13591,6 +13637,7 @@ export namespace Prisma {
     linkedin: string | null
     youtube: string | null
     twitter: string | null
+    facebook: string | null
     instagram: string | null
     tiktok: string | null
     website: string | null
@@ -13607,6 +13654,7 @@ export namespace Prisma {
     linkedin: number
     youtube: number
     twitter: number
+    facebook: number
     instagram: number
     tiktok: number
     website: number
@@ -13625,6 +13673,7 @@ export namespace Prisma {
     linkedin?: true
     youtube?: true
     twitter?: true
+    facebook?: true
     instagram?: true
     tiktok?: true
     website?: true
@@ -13641,6 +13690,7 @@ export namespace Prisma {
     linkedin?: true
     youtube?: true
     twitter?: true
+    facebook?: true
     instagram?: true
     tiktok?: true
     website?: true
@@ -13657,6 +13707,7 @@ export namespace Prisma {
     linkedin?: true
     youtube?: true
     twitter?: true
+    facebook?: true
     instagram?: true
     tiktok?: true
     website?: true
@@ -13746,6 +13797,7 @@ export namespace Prisma {
     linkedin: string | null
     youtube: string | null
     twitter: string | null
+    facebook: string | null
     instagram: string | null
     tiktok: string | null
     website: string | null
@@ -13779,6 +13831,7 @@ export namespace Prisma {
     linkedin?: boolean
     youtube?: boolean
     twitter?: boolean
+    facebook?: boolean
     instagram?: boolean
     tiktok?: boolean
     website?: boolean
@@ -13797,13 +13850,14 @@ export namespace Prisma {
     linkedin?: boolean
     youtube?: boolean
     twitter?: boolean
+    facebook?: boolean
     instagram?: boolean
     tiktok?: boolean
     website?: boolean
     updatedAt?: boolean
   }
 
-  export type SiteContactInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "generalEmail" | "researchEmail" | "mediaEmail" | "northLocation" | "southLocation" | "linkedin" | "youtube" | "twitter" | "instagram" | "tiktok" | "website" | "updatedAt", ExtArgs["result"]["siteContactInfo"]>
+  export type SiteContactInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "generalEmail" | "researchEmail" | "mediaEmail" | "northLocation" | "southLocation" | "linkedin" | "youtube" | "twitter" | "facebook" | "instagram" | "tiktok" | "website" | "updatedAt", ExtArgs["result"]["siteContactInfo"]>
 
   export type $SiteContactInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SiteContactInfo"
@@ -13818,6 +13872,7 @@ export namespace Prisma {
       linkedin: string | null
       youtube: string | null
       twitter: string | null
+      facebook: string | null
       instagram: string | null
       tiktok: string | null
       website: string | null
@@ -14200,6 +14255,7 @@ export namespace Prisma {
     readonly linkedin: FieldRef<"SiteContactInfo", 'String'>
     readonly youtube: FieldRef<"SiteContactInfo", 'String'>
     readonly twitter: FieldRef<"SiteContactInfo", 'String'>
+    readonly facebook: FieldRef<"SiteContactInfo", 'String'>
     readonly instagram: FieldRef<"SiteContactInfo", 'String'>
     readonly tiktok: FieldRef<"SiteContactInfo", 'String'>
     readonly website: FieldRef<"SiteContactInfo", 'String'>
@@ -14603,6 +14659,7 @@ export namespace Prisma {
     instagram: 'instagram',
     website: 'website',
     active: 'active',
+    order: 'order',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -14747,6 +14804,7 @@ export namespace Prisma {
     linkedin: 'linkedin',
     youtube: 'youtube',
     twitter: 'twitter',
+    facebook: 'facebook',
     instagram: 'instagram',
     tiktok: 'tiktok',
     website: 'website',
@@ -14932,6 +14990,7 @@ export namespace Prisma {
     linkedin: 'linkedin',
     youtube: 'youtube',
     twitter: 'twitter',
+    facebook: 'facebook',
     instagram: 'instagram',
     tiktok: 'tiktok',
     website: 'website'
@@ -15272,6 +15331,7 @@ export namespace Prisma {
     instagram?: StringNullableFilter<"TeamMember"> | string | null
     website?: StringNullableFilter<"TeamMember"> | string | null
     active?: BoolFilter<"TeamMember"> | boolean
+    order?: IntFilter<"TeamMember"> | number
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }
@@ -15291,6 +15351,7 @@ export namespace Prisma {
     instagram?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     active?: SortOrder
+    order?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _relevance?: TeamMemberOrderByRelevanceInput
@@ -15314,6 +15375,7 @@ export namespace Prisma {
     instagram?: StringNullableFilter<"TeamMember"> | string | null
     website?: StringNullableFilter<"TeamMember"> | string | null
     active?: BoolFilter<"TeamMember"> | boolean
+    order?: IntFilter<"TeamMember"> | number
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }, "id">
@@ -15333,11 +15395,14 @@ export namespace Prisma {
     instagram?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     active?: SortOrder
+    order?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TeamMemberCountOrderByAggregateInput
+    _avg?: TeamMemberAvgOrderByAggregateInput
     _max?: TeamMemberMaxOrderByAggregateInput
     _min?: TeamMemberMinOrderByAggregateInput
+    _sum?: TeamMemberSumOrderByAggregateInput
   }
 
   export type TeamMemberScalarWhereWithAggregatesInput = {
@@ -15358,6 +15423,7 @@ export namespace Prisma {
     instagram?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     website?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     active?: BoolWithAggregatesFilter<"TeamMember"> | boolean
+    order?: IntWithAggregatesFilter<"TeamMember"> | number
     createdAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
   }
@@ -16000,6 +16066,7 @@ export namespace Prisma {
     linkedin?: StringNullableFilter<"SiteContactInfo"> | string | null
     youtube?: StringNullableFilter<"SiteContactInfo"> | string | null
     twitter?: StringNullableFilter<"SiteContactInfo"> | string | null
+    facebook?: StringNullableFilter<"SiteContactInfo"> | string | null
     instagram?: StringNullableFilter<"SiteContactInfo"> | string | null
     tiktok?: StringNullableFilter<"SiteContactInfo"> | string | null
     website?: StringNullableFilter<"SiteContactInfo"> | string | null
@@ -16016,6 +16083,7 @@ export namespace Prisma {
     linkedin?: SortOrderInput | SortOrder
     youtube?: SortOrderInput | SortOrder
     twitter?: SortOrderInput | SortOrder
+    facebook?: SortOrderInput | SortOrder
     instagram?: SortOrderInput | SortOrder
     tiktok?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
@@ -16036,6 +16104,7 @@ export namespace Prisma {
     linkedin?: StringNullableFilter<"SiteContactInfo"> | string | null
     youtube?: StringNullableFilter<"SiteContactInfo"> | string | null
     twitter?: StringNullableFilter<"SiteContactInfo"> | string | null
+    facebook?: StringNullableFilter<"SiteContactInfo"> | string | null
     instagram?: StringNullableFilter<"SiteContactInfo"> | string | null
     tiktok?: StringNullableFilter<"SiteContactInfo"> | string | null
     website?: StringNullableFilter<"SiteContactInfo"> | string | null
@@ -16052,6 +16121,7 @@ export namespace Prisma {
     linkedin?: SortOrderInput | SortOrder
     youtube?: SortOrderInput | SortOrder
     twitter?: SortOrderInput | SortOrder
+    facebook?: SortOrderInput | SortOrder
     instagram?: SortOrderInput | SortOrder
     tiktok?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
@@ -16074,6 +16144,7 @@ export namespace Prisma {
     linkedin?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     youtube?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     twitter?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    facebook?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     instagram?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     tiktok?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     website?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
@@ -16343,6 +16414,7 @@ export namespace Prisma {
     instagram?: string | null
     website?: string | null
     active?: boolean
+    order?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16362,6 +16434,7 @@ export namespace Prisma {
     instagram?: string | null
     website?: string | null
     active?: boolean
+    order?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16381,6 +16454,7 @@ export namespace Prisma {
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16400,6 +16474,7 @@ export namespace Prisma {
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16419,6 +16494,7 @@ export namespace Prisma {
     instagram?: string | null
     website?: string | null
     active?: boolean
+    order?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16438,6 +16514,7 @@ export namespace Prisma {
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16457,6 +16534,7 @@ export namespace Prisma {
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17192,6 +17270,7 @@ export namespace Prisma {
     linkedin?: string | null
     youtube?: string | null
     twitter?: string | null
+    facebook?: string | null
     instagram?: string | null
     tiktok?: string | null
     website?: string | null
@@ -17208,6 +17287,7 @@ export namespace Prisma {
     linkedin?: string | null
     youtube?: string | null
     twitter?: string | null
+    facebook?: string | null
     instagram?: string | null
     tiktok?: string | null
     website?: string | null
@@ -17224,6 +17304,7 @@ export namespace Prisma {
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     tiktok?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17240,6 +17321,7 @@ export namespace Prisma {
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     tiktok?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17256,6 +17338,7 @@ export namespace Prisma {
     linkedin?: string | null
     youtube?: string | null
     twitter?: string | null
+    facebook?: string | null
     instagram?: string | null
     tiktok?: string | null
     website?: string | null
@@ -17272,6 +17355,7 @@ export namespace Prisma {
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     tiktok?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17288,6 +17372,7 @@ export namespace Prisma {
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
     youtube?: NullableStringFieldUpdateOperationsInput | string | null
     twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    facebook?: NullableStringFieldUpdateOperationsInput | string | null
     instagram?: NullableStringFieldUpdateOperationsInput | string | null
     tiktok?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17648,8 +17733,13 @@ export namespace Prisma {
     instagram?: SortOrder
     website?: SortOrder
     active?: SortOrder
+    order?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type TeamMemberAvgOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type TeamMemberMaxOrderByAggregateInput = {
@@ -17667,6 +17757,7 @@ export namespace Prisma {
     instagram?: SortOrder
     website?: SortOrder
     active?: SortOrder
+    order?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -17686,8 +17777,13 @@ export namespace Prisma {
     instagram?: SortOrder
     website?: SortOrder
     active?: SortOrder
+    order?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type TeamMemberSumOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type EnumNewsEventTypeFilter<$PrismaModel = never> = {
@@ -18180,6 +18276,7 @@ export namespace Prisma {
     linkedin?: SortOrder
     youtube?: SortOrder
     twitter?: SortOrder
+    facebook?: SortOrder
     instagram?: SortOrder
     tiktok?: SortOrder
     website?: SortOrder
@@ -18196,6 +18293,7 @@ export namespace Prisma {
     linkedin?: SortOrder
     youtube?: SortOrder
     twitter?: SortOrder
+    facebook?: SortOrder
     instagram?: SortOrder
     tiktok?: SortOrder
     website?: SortOrder
@@ -18212,6 +18310,7 @@ export namespace Prisma {
     linkedin?: SortOrder
     youtube?: SortOrder
     twitter?: SortOrder
+    facebook?: SortOrder
     instagram?: SortOrder
     tiktok?: SortOrder
     website?: SortOrder

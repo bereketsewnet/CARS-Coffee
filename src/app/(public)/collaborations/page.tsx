@@ -7,8 +7,8 @@ export const revalidate = 0;
 const DB_DISABLED = process.env.DB_DISABLED === "true";
 
 export const metadata: Metadata = {
-  title: "Collaborations | CARES",
-  description: "Government officials, sponsors, NGO partners and other collaborators supporting the CARES circular coffee project.",
+  title: "Coordinators | CARES",
+  description: "Government officials, sponsors, NGO partners and other coordinators supporting the CARES circular coffee project.",
 };
 
 export default async function CollaborationsPage() {

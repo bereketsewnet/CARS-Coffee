@@ -27,7 +27,7 @@ const navItems = [
   { label: "Dashboard",   href: "/admin/dashboard",   icon: LayoutDashboard },
   { label: "Research",     href: "/admin/research",     icon: Beaker },
   { label: "Team",          href: "/admin/team",            icon: Users },
-  { label: "Collaborations",href: "/admin/collaborations",  icon: Handshake },
+  { label: "Coordinators",   href: "/admin/collaborations",  icon: Handshake },
   { label: "News & Events", href: "/admin/news",            icon: Newspaper },
   { label: "Publications", href: "/admin/publications", icon: BookOpen },
   { label: "Impact",       href: "/admin/impact",       icon: TrendingUp },

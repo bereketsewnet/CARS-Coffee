@@ -24,7 +24,7 @@ export default async function TeamPage() {
   try {
     members = await prisma.teamMember.findMany({
       where: { active: true },
-      orderBy: { name: "asc" },
+      orderBy: [{ order: "asc" }, { name: "asc" }],
     });
   } catch (error) {
     console.error("[TeamPage] DB fetch failed — falling back to static data", error);

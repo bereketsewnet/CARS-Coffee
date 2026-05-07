@@ -4,9 +4,17 @@ import { useState, useTransition, useEffect } from "react";
 import { upsertSiteContactInfo } from "@/lib/actions/siteContact";
 import type { SiteContactInfo } from "../../../generated/prisma-client";
 import {
-  Mail, MapPin, Linkedin, Youtube, Twitter, Instagram, Globe,
-  Save, CheckCircle, Loader2, Music2,
+  Mail, MapPin, Linkedin, Youtube, Instagram, Globe,
+  Save, CheckCircle, Loader2, Music2, Facebook,
 } from "lucide-react";
+
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+    </svg>
+  );
+}
 
 type Props = { info: SiteContactInfo | null };
 
@@ -126,7 +134,8 @@ export default function ContactInfoCrud({ info }: Props) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Field label="LinkedIn"   name="linkedin"  icon={Linkedin}  defaultValue={v("linkedin", "")}  placeholder="https://linkedin.com/company/..." />
           <Field label="YouTube"    name="youtube"   icon={Youtube}   defaultValue={v("youtube", "")}   placeholder="https://youtube.com/@..." />
-          <Field label="Twitter / X" name="twitter"  icon={Twitter}   defaultValue={v("twitter", "")}   placeholder="https://x.com/..." />
+          <Field label="X (Twitter)" name="twitter"  icon={XIcon}     defaultValue={v("twitter", "")}   placeholder="https://x.com/..." />
+          <Field label="Facebook"   name="facebook"  icon={Facebook}  defaultValue={v("facebook", "")}  placeholder="https://facebook.com/..." />
           <Field label="Instagram"  name="instagram" icon={Instagram} defaultValue={v("instagram", "")} placeholder="https://instagram.com/..." />
           <Field label="TikTok"     name="tiktok"    icon={Music2}    defaultValue={v("tiktok", "")}    placeholder="https://tiktok.com/@..." />
           <Field label="Website"    name="website"   icon={Globe}     defaultValue={v("website", "")}   placeholder="https://circularcoffee.org" />

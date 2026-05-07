@@ -170,6 +170,7 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   instagram: 'instagram',
   website: 'website',
   active: 'active',
+  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -287,6 +288,7 @@ exports.Prisma.SiteContactInfoScalarFieldEnum = {
   linkedin: 'linkedin',
   youtube: 'youtube',
   twitter: 'twitter',
+  facebook: 'facebook',
   instagram: 'instagram',
   tiktok: 'tiktok',
   website: 'website',
@@ -427,6 +429,7 @@ exports.Prisma.SiteContactInfoOrderByRelevanceFieldEnum = {
   linkedin: 'linkedin',
   youtube: 'youtube',
   twitter: 'twitter',
+  facebook: 'facebook',
   instagram: 'instagram',
   tiktok: 'tiktok',
   website: 'website'

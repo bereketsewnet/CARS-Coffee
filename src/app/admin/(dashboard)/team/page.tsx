@@ -21,7 +21,7 @@ export default async function TeamPage({
 
   const [members, total, pillars] = await Promise.all([
     prisma.teamMember.findMany({
-      orderBy: { name: "asc" },
+      orderBy: [{ order: "asc" }, { name: "asc" }],
       skip,
       take: PAGE_SIZE,
     }),

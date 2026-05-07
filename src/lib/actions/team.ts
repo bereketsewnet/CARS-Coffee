@@ -34,6 +34,7 @@ export async function createTeamMember(
         email: (form.get("email") as string) || null,
         imageUrl: (form.get("imageUrl") as string) || null,
         active: form.get("active") === "true",
+        order: Number(form.get("order")) || 0,
       },
     });
     revalidatePath("/admin/team");
@@ -68,6 +69,7 @@ export async function updateTeamMember(
         email: (form.get("email") as string) || null,
         imageUrl: (form.get("imageUrl") as string) || null,
         active: form.get("active") === "true",
+        order: Number(form.get("order")) || 0,
       },
     });
     revalidatePath("/admin/team");

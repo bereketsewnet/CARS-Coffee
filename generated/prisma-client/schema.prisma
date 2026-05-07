@@ -87,6 +87,7 @@ model TeamMember {
   instagram   String?  @db.Text
   website     String?  @db.Text
   active      Boolean  @default(true)
+  order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -253,6 +254,7 @@ model SiteContactInfo {
   linkedin  String? @db.Text
   youtube   String? @db.Text
   twitter   String? @db.Text
+  facebook  String? @db.Text
   instagram String? @db.Text
   tiktok    String? @db.Text
   website   String? @db.Text
