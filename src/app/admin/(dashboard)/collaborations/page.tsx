@@ -1,16 +1,16 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
-import TeamCrud from "@/components/admin/TeamCrud";
+import CollaboratorsCrud from "@/components/admin/CollaboratorsCrud";
 import PaginationNav from "@/components/ui/PaginationNav";
 
-export const metadata: Metadata = { title: "Team | Circular Coffee Admin" };
+export const metadata: Metadata = { title: "Collaborations | Circular Coffee Admin" };
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 12;
 
-export default async function TeamPage({
+export default async function CollaborationsAdminPage({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string }>;
@@ -19,31 +19,26 @@ export default async function TeamPage({
   const page = Math.max(1, Number(rawPage) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const [members, total, pillars] = await Promise.all([
-    prisma.teamMember.findMany({
-      orderBy: { name: "asc" },
+  const [collaborators, total] = await Promise.all([
+    prisma.collaborator.findMany({
+      orderBy: [{ order: "asc" }, { name: "asc" }],
       skip,
       take: PAGE_SIZE,
     }),
-    prisma.teamMember.count(),
-    prisma.pillarContent.findMany({ orderBy: { title: "asc" } }),
+    prisma.collaborator.count(),
   ]);
   const pageCount = Math.ceil(total / PAGE_SIZE);
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-2xl font-bold text-foreground">
-          Team
-        </h1>
+        <h1 className="font-serif text-2xl font-bold text-foreground">Collaborations</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          Manage team members across all partner institutions.{" "}
-          <span className="text-muted-foreground/60 font-normal">
-            {total} total
-          </span>
+          Manage government officials, sponsors, NGO partners and other collaborators.{" "}
+          <span className="text-muted-foreground/60 font-normal">{total} total</span>
         </p>
       </div>
-      <TeamCrud items={members} pillars={pillars} />
+      <CollaboratorsCrud items={collaborators} />
       <Suspense>
         <PaginationNav page={page} pageCount={pageCount} />
       </Suspense>

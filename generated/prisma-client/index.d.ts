@@ -64,6 +64,11 @@ export type NewsletterSubscriber = $Result.DefaultSelection<Prisma.$NewsletterSu
  */
 export type Partner = $Result.DefaultSelection<Prisma.$PartnerPayload>
 /**
+ * Model Collaborator
+ * 
+ */
+export type Collaborator = $Result.DefaultSelection<Prisma.$CollaboratorPayload>
+/**
  * Model ImpactMetric
  * 
  */
@@ -132,6 +137,18 @@ export const ResearchStatus: {
 
 export type ResearchStatus = (typeof ResearchStatus)[keyof typeof ResearchStatus]
 
+
+export const CollaboratorCategory: {
+  GOVERNMENT: 'GOVERNMENT',
+  SPONSOR: 'SPONSOR',
+  NGO: 'NGO',
+  ACADEMIC: 'ACADEMIC',
+  INDUSTRY: 'INDUSTRY',
+  OTHER: 'OTHER'
+};
+
+export type CollaboratorCategory = (typeof CollaboratorCategory)[keyof typeof CollaboratorCategory]
+
 }
 
 export type Role = $Enums.Role
@@ -157,6 +174,10 @@ export const NewsEventStatus: typeof $Enums.NewsEventStatus
 export type ResearchStatus = $Enums.ResearchStatus
 
 export const ResearchStatus: typeof $Enums.ResearchStatus
+
+export type CollaboratorCategory = $Enums.CollaboratorCategory
+
+export const CollaboratorCategory: typeof $Enums.CollaboratorCategory
 
 /**
  * ##  Prisma Client ʲˢ
@@ -378,6 +399,16 @@ export class PrismaClient<
     * ```
     */
   get partner(): Prisma.PartnerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.collaborator`: Exposes CRUD operations for the **Collaborator** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Collaborators
+    * const collaborators = await prisma.collaborator.findMany()
+    * ```
+    */
+  get collaborator(): Prisma.CollaboratorDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.impactMetric`: Exposes CRUD operations for the **ImpactMetric** model.
@@ -842,6 +873,7 @@ export namespace Prisma {
     ContactMessage: 'ContactMessage',
     NewsletterSubscriber: 'NewsletterSubscriber',
     Partner: 'Partner',
+    Collaborator: 'Collaborator',
     ImpactMetric: 'ImpactMetric',
     SiteContactInfo: 'SiteContactInfo'
   };
@@ -859,7 +891,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "impactMetric" | "siteContactInfo"
+      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "collaborator" | "impactMetric" | "siteContactInfo"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1523,6 +1555,72 @@ export namespace Prisma {
           }
         }
       }
+      Collaborator: {
+        payload: Prisma.$CollaboratorPayload<ExtArgs>
+        fields: Prisma.CollaboratorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CollaboratorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CollaboratorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>
+          }
+          findFirst: {
+            args: Prisma.CollaboratorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CollaboratorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>
+          }
+          findMany: {
+            args: Prisma.CollaboratorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>[]
+          }
+          create: {
+            args: Prisma.CollaboratorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>
+          }
+          createMany: {
+            args: Prisma.CollaboratorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CollaboratorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>
+          }
+          update: {
+            args: Prisma.CollaboratorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>
+          }
+          deleteMany: {
+            args: Prisma.CollaboratorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CollaboratorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CollaboratorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaboratorPayload>
+          }
+          aggregate: {
+            args: Prisma.CollaboratorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCollaborator>
+          }
+          groupBy: {
+            args: Prisma.CollaboratorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CollaboratorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CollaboratorCountArgs<ExtArgs>
+            result: $Utils.Optional<CollaboratorCountAggregateOutputType> | number
+          }
+        }
+      }
       ImpactMetric: {
         payload: Prisma.$ImpactMetricPayload<ExtArgs>
         fields: Prisma.ImpactMetricFieldRefs
@@ -1773,6 +1871,7 @@ export namespace Prisma {
     contactMessage?: ContactMessageOmit
     newsletterSubscriber?: NewsletterSubscriberOmit
     partner?: PartnerOmit
+    collaborator?: CollaboratorOmit
     impactMetric?: ImpactMetricOmit
     siteContactInfo?: SiteContactInfoOmit
   }
@@ -11450,6 +11549,1059 @@ export namespace Prisma {
 
 
   /**
+   * Model Collaborator
+   */
+
+  export type AggregateCollaborator = {
+    _count: CollaboratorCountAggregateOutputType | null
+    _avg: CollaboratorAvgAggregateOutputType | null
+    _sum: CollaboratorSumAggregateOutputType | null
+    _min: CollaboratorMinAggregateOutputType | null
+    _max: CollaboratorMaxAggregateOutputType | null
+  }
+
+  export type CollaboratorAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type CollaboratorSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type CollaboratorMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    role: string | null
+    organisation: string | null
+    country: string | null
+    category: $Enums.CollaboratorCategory | null
+    bio: string | null
+    email: string | null
+    imageUrl: string | null
+    linkedin: string | null
+    twitter: string | null
+    instagram: string | null
+    website: string | null
+    active: boolean | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CollaboratorMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    role: string | null
+    organisation: string | null
+    country: string | null
+    category: $Enums.CollaboratorCategory | null
+    bio: string | null
+    email: string | null
+    imageUrl: string | null
+    linkedin: string | null
+    twitter: string | null
+    instagram: string | null
+    website: string | null
+    active: boolean | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CollaboratorCountAggregateOutputType = {
+    id: number
+    name: number
+    role: number
+    organisation: number
+    country: number
+    category: number
+    bio: number
+    email: number
+    imageUrl: number
+    linkedin: number
+    twitter: number
+    instagram: number
+    website: number
+    active: number
+    order: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CollaboratorAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type CollaboratorSumAggregateInputType = {
+    order?: true
+  }
+
+  export type CollaboratorMinAggregateInputType = {
+    id?: true
+    name?: true
+    role?: true
+    organisation?: true
+    country?: true
+    category?: true
+    bio?: true
+    email?: true
+    imageUrl?: true
+    linkedin?: true
+    twitter?: true
+    instagram?: true
+    website?: true
+    active?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CollaboratorMaxAggregateInputType = {
+    id?: true
+    name?: true
+    role?: true
+    organisation?: true
+    country?: true
+    category?: true
+    bio?: true
+    email?: true
+    imageUrl?: true
+    linkedin?: true
+    twitter?: true
+    instagram?: true
+    website?: true
+    active?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CollaboratorCountAggregateInputType = {
+    id?: true
+    name?: true
+    role?: true
+    organisation?: true
+    country?: true
+    category?: true
+    bio?: true
+    email?: true
+    imageUrl?: true
+    linkedin?: true
+    twitter?: true
+    instagram?: true
+    website?: true
+    active?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CollaboratorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Collaborator to aggregate.
+     */
+    where?: CollaboratorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Collaborators to fetch.
+     */
+    orderBy?: CollaboratorOrderByWithRelationInput | CollaboratorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CollaboratorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Collaborators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Collaborators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Collaborators
+    **/
+    _count?: true | CollaboratorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CollaboratorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CollaboratorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CollaboratorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CollaboratorMaxAggregateInputType
+  }
+
+  export type GetCollaboratorAggregateType<T extends CollaboratorAggregateArgs> = {
+        [P in keyof T & keyof AggregateCollaborator]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCollaborator[P]>
+      : GetScalarType<T[P], AggregateCollaborator[P]>
+  }
+
+
+
+
+  export type CollaboratorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CollaboratorWhereInput
+    orderBy?: CollaboratorOrderByWithAggregationInput | CollaboratorOrderByWithAggregationInput[]
+    by: CollaboratorScalarFieldEnum[] | CollaboratorScalarFieldEnum
+    having?: CollaboratorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CollaboratorCountAggregateInputType | true
+    _avg?: CollaboratorAvgAggregateInputType
+    _sum?: CollaboratorSumAggregateInputType
+    _min?: CollaboratorMinAggregateInputType
+    _max?: CollaboratorMaxAggregateInputType
+  }
+
+  export type CollaboratorGroupByOutputType = {
+    id: string
+    name: string
+    role: string
+    organisation: string
+    country: string
+    category: $Enums.CollaboratorCategory
+    bio: string | null
+    email: string | null
+    imageUrl: string | null
+    linkedin: string | null
+    twitter: string | null
+    instagram: string | null
+    website: string | null
+    active: boolean
+    order: number
+    createdAt: Date
+    updatedAt: Date
+    _count: CollaboratorCountAggregateOutputType | null
+    _avg: CollaboratorAvgAggregateOutputType | null
+    _sum: CollaboratorSumAggregateOutputType | null
+    _min: CollaboratorMinAggregateOutputType | null
+    _max: CollaboratorMaxAggregateOutputType | null
+  }
+
+  type GetCollaboratorGroupByPayload<T extends CollaboratorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CollaboratorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CollaboratorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CollaboratorGroupByOutputType[P]>
+            : GetScalarType<T[P], CollaboratorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CollaboratorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    role?: boolean
+    organisation?: boolean
+    country?: boolean
+    category?: boolean
+    bio?: boolean
+    email?: boolean
+    imageUrl?: boolean
+    linkedin?: boolean
+    twitter?: boolean
+    instagram?: boolean
+    website?: boolean
+    active?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["collaborator"]>
+
+
+
+  export type CollaboratorSelectScalar = {
+    id?: boolean
+    name?: boolean
+    role?: boolean
+    organisation?: boolean
+    country?: boolean
+    category?: boolean
+    bio?: boolean
+    email?: boolean
+    imageUrl?: boolean
+    linkedin?: boolean
+    twitter?: boolean
+    instagram?: boolean
+    website?: boolean
+    active?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CollaboratorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "organisation" | "country" | "category" | "bio" | "email" | "imageUrl" | "linkedin" | "twitter" | "instagram" | "website" | "active" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["collaborator"]>
+
+  export type $CollaboratorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Collaborator"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      role: string
+      organisation: string
+      country: string
+      category: $Enums.CollaboratorCategory
+      bio: string | null
+      email: string | null
+      imageUrl: string | null
+      linkedin: string | null
+      twitter: string | null
+      instagram: string | null
+      website: string | null
+      active: boolean
+      order: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["collaborator"]>
+    composites: {}
+  }
+
+  type CollaboratorGetPayload<S extends boolean | null | undefined | CollaboratorDefaultArgs> = $Result.GetResult<Prisma.$CollaboratorPayload, S>
+
+  type CollaboratorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CollaboratorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CollaboratorCountAggregateInputType | true
+    }
+
+  export interface CollaboratorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Collaborator'], meta: { name: 'Collaborator' } }
+    /**
+     * Find zero or one Collaborator that matches the filter.
+     * @param {CollaboratorFindUniqueArgs} args - Arguments to find a Collaborator
+     * @example
+     * // Get one Collaborator
+     * const collaborator = await prisma.collaborator.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CollaboratorFindUniqueArgs>(args: SelectSubset<T, CollaboratorFindUniqueArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Collaborator that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CollaboratorFindUniqueOrThrowArgs} args - Arguments to find a Collaborator
+     * @example
+     * // Get one Collaborator
+     * const collaborator = await prisma.collaborator.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CollaboratorFindUniqueOrThrowArgs>(args: SelectSubset<T, CollaboratorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Collaborator that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorFindFirstArgs} args - Arguments to find a Collaborator
+     * @example
+     * // Get one Collaborator
+     * const collaborator = await prisma.collaborator.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CollaboratorFindFirstArgs>(args?: SelectSubset<T, CollaboratorFindFirstArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Collaborator that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorFindFirstOrThrowArgs} args - Arguments to find a Collaborator
+     * @example
+     * // Get one Collaborator
+     * const collaborator = await prisma.collaborator.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CollaboratorFindFirstOrThrowArgs>(args?: SelectSubset<T, CollaboratorFindFirstOrThrowArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Collaborators that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Collaborators
+     * const collaborators = await prisma.collaborator.findMany()
+     * 
+     * // Get first 10 Collaborators
+     * const collaborators = await prisma.collaborator.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const collaboratorWithIdOnly = await prisma.collaborator.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CollaboratorFindManyArgs>(args?: SelectSubset<T, CollaboratorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Collaborator.
+     * @param {CollaboratorCreateArgs} args - Arguments to create a Collaborator.
+     * @example
+     * // Create one Collaborator
+     * const Collaborator = await prisma.collaborator.create({
+     *   data: {
+     *     // ... data to create a Collaborator
+     *   }
+     * })
+     * 
+     */
+    create<T extends CollaboratorCreateArgs>(args: SelectSubset<T, CollaboratorCreateArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Collaborators.
+     * @param {CollaboratorCreateManyArgs} args - Arguments to create many Collaborators.
+     * @example
+     * // Create many Collaborators
+     * const collaborator = await prisma.collaborator.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CollaboratorCreateManyArgs>(args?: SelectSubset<T, CollaboratorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Collaborator.
+     * @param {CollaboratorDeleteArgs} args - Arguments to delete one Collaborator.
+     * @example
+     * // Delete one Collaborator
+     * const Collaborator = await prisma.collaborator.delete({
+     *   where: {
+     *     // ... filter to delete one Collaborator
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CollaboratorDeleteArgs>(args: SelectSubset<T, CollaboratorDeleteArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Collaborator.
+     * @param {CollaboratorUpdateArgs} args - Arguments to update one Collaborator.
+     * @example
+     * // Update one Collaborator
+     * const collaborator = await prisma.collaborator.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CollaboratorUpdateArgs>(args: SelectSubset<T, CollaboratorUpdateArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Collaborators.
+     * @param {CollaboratorDeleteManyArgs} args - Arguments to filter Collaborators to delete.
+     * @example
+     * // Delete a few Collaborators
+     * const { count } = await prisma.collaborator.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CollaboratorDeleteManyArgs>(args?: SelectSubset<T, CollaboratorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Collaborators.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Collaborators
+     * const collaborator = await prisma.collaborator.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CollaboratorUpdateManyArgs>(args: SelectSubset<T, CollaboratorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Collaborator.
+     * @param {CollaboratorUpsertArgs} args - Arguments to update or create a Collaborator.
+     * @example
+     * // Update or create a Collaborator
+     * const collaborator = await prisma.collaborator.upsert({
+     *   create: {
+     *     // ... data to create a Collaborator
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Collaborator we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CollaboratorUpsertArgs>(args: SelectSubset<T, CollaboratorUpsertArgs<ExtArgs>>): Prisma__CollaboratorClient<$Result.GetResult<Prisma.$CollaboratorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Collaborators.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorCountArgs} args - Arguments to filter Collaborators to count.
+     * @example
+     * // Count the number of Collaborators
+     * const count = await prisma.collaborator.count({
+     *   where: {
+     *     // ... the filter for the Collaborators we want to count
+     *   }
+     * })
+    **/
+    count<T extends CollaboratorCountArgs>(
+      args?: Subset<T, CollaboratorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CollaboratorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Collaborator.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CollaboratorAggregateArgs>(args: Subset<T, CollaboratorAggregateArgs>): Prisma.PrismaPromise<GetCollaboratorAggregateType<T>>
+
+    /**
+     * Group by Collaborator.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaboratorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CollaboratorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CollaboratorGroupByArgs['orderBy'] }
+        : { orderBy?: CollaboratorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CollaboratorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCollaboratorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Collaborator model
+   */
+  readonly fields: CollaboratorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Collaborator.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CollaboratorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Collaborator model
+   */
+  interface CollaboratorFieldRefs {
+    readonly id: FieldRef<"Collaborator", 'String'>
+    readonly name: FieldRef<"Collaborator", 'String'>
+    readonly role: FieldRef<"Collaborator", 'String'>
+    readonly organisation: FieldRef<"Collaborator", 'String'>
+    readonly country: FieldRef<"Collaborator", 'String'>
+    readonly category: FieldRef<"Collaborator", 'CollaboratorCategory'>
+    readonly bio: FieldRef<"Collaborator", 'String'>
+    readonly email: FieldRef<"Collaborator", 'String'>
+    readonly imageUrl: FieldRef<"Collaborator", 'String'>
+    readonly linkedin: FieldRef<"Collaborator", 'String'>
+    readonly twitter: FieldRef<"Collaborator", 'String'>
+    readonly instagram: FieldRef<"Collaborator", 'String'>
+    readonly website: FieldRef<"Collaborator", 'String'>
+    readonly active: FieldRef<"Collaborator", 'Boolean'>
+    readonly order: FieldRef<"Collaborator", 'Int'>
+    readonly createdAt: FieldRef<"Collaborator", 'DateTime'>
+    readonly updatedAt: FieldRef<"Collaborator", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Collaborator findUnique
+   */
+  export type CollaboratorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * Filter, which Collaborator to fetch.
+     */
+    where: CollaboratorWhereUniqueInput
+  }
+
+  /**
+   * Collaborator findUniqueOrThrow
+   */
+  export type CollaboratorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * Filter, which Collaborator to fetch.
+     */
+    where: CollaboratorWhereUniqueInput
+  }
+
+  /**
+   * Collaborator findFirst
+   */
+  export type CollaboratorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * Filter, which Collaborator to fetch.
+     */
+    where?: CollaboratorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Collaborators to fetch.
+     */
+    orderBy?: CollaboratorOrderByWithRelationInput | CollaboratorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Collaborators.
+     */
+    cursor?: CollaboratorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Collaborators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Collaborators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Collaborators.
+     */
+    distinct?: CollaboratorScalarFieldEnum | CollaboratorScalarFieldEnum[]
+  }
+
+  /**
+   * Collaborator findFirstOrThrow
+   */
+  export type CollaboratorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * Filter, which Collaborator to fetch.
+     */
+    where?: CollaboratorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Collaborators to fetch.
+     */
+    orderBy?: CollaboratorOrderByWithRelationInput | CollaboratorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Collaborators.
+     */
+    cursor?: CollaboratorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Collaborators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Collaborators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Collaborators.
+     */
+    distinct?: CollaboratorScalarFieldEnum | CollaboratorScalarFieldEnum[]
+  }
+
+  /**
+   * Collaborator findMany
+   */
+  export type CollaboratorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * Filter, which Collaborators to fetch.
+     */
+    where?: CollaboratorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Collaborators to fetch.
+     */
+    orderBy?: CollaboratorOrderByWithRelationInput | CollaboratorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Collaborators.
+     */
+    cursor?: CollaboratorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Collaborators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Collaborators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Collaborators.
+     */
+    distinct?: CollaboratorScalarFieldEnum | CollaboratorScalarFieldEnum[]
+  }
+
+  /**
+   * Collaborator create
+   */
+  export type CollaboratorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Collaborator.
+     */
+    data: XOR<CollaboratorCreateInput, CollaboratorUncheckedCreateInput>
+  }
+
+  /**
+   * Collaborator createMany
+   */
+  export type CollaboratorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Collaborators.
+     */
+    data: CollaboratorCreateManyInput | CollaboratorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Collaborator update
+   */
+  export type CollaboratorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Collaborator.
+     */
+    data: XOR<CollaboratorUpdateInput, CollaboratorUncheckedUpdateInput>
+    /**
+     * Choose, which Collaborator to update.
+     */
+    where: CollaboratorWhereUniqueInput
+  }
+
+  /**
+   * Collaborator updateMany
+   */
+  export type CollaboratorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Collaborators.
+     */
+    data: XOR<CollaboratorUpdateManyMutationInput, CollaboratorUncheckedUpdateManyInput>
+    /**
+     * Filter which Collaborators to update
+     */
+    where?: CollaboratorWhereInput
+    /**
+     * Limit how many Collaborators to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Collaborator upsert
+   */
+  export type CollaboratorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Collaborator to update in case it exists.
+     */
+    where: CollaboratorWhereUniqueInput
+    /**
+     * In case the Collaborator found by the `where` argument doesn't exist, create a new Collaborator with this data.
+     */
+    create: XOR<CollaboratorCreateInput, CollaboratorUncheckedCreateInput>
+    /**
+     * In case the Collaborator was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CollaboratorUpdateInput, CollaboratorUncheckedUpdateInput>
+  }
+
+  /**
+   * Collaborator delete
+   */
+  export type CollaboratorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+    /**
+     * Filter which Collaborator to delete.
+     */
+    where: CollaboratorWhereUniqueInput
+  }
+
+  /**
+   * Collaborator deleteMany
+   */
+  export type CollaboratorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Collaborators to delete
+     */
+    where?: CollaboratorWhereInput
+    /**
+     * Limit how many Collaborators to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Collaborator without action
+   */
+  export type CollaboratorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborator
+     */
+    select?: CollaboratorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborator
+     */
+    omit?: CollaboratorOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model ImpactMetric
    */
 
@@ -13548,6 +14700,29 @@ export namespace Prisma {
   export type PartnerScalarFieldEnum = (typeof PartnerScalarFieldEnum)[keyof typeof PartnerScalarFieldEnum]
 
 
+  export const CollaboratorScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    role: 'role',
+    organisation: 'organisation',
+    country: 'country',
+    category: 'category',
+    bio: 'bio',
+    email: 'email',
+    imageUrl: 'imageUrl',
+    linkedin: 'linkedin',
+    twitter: 'twitter',
+    instagram: 'instagram',
+    website: 'website',
+    active: 'active',
+    order: 'order',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CollaboratorScalarFieldEnum = (typeof CollaboratorScalarFieldEnum)[keyof typeof CollaboratorScalarFieldEnum]
+
+
   export const ImpactMetricScalarFieldEnum: {
     id: 'id',
     label: 'label',
@@ -13718,6 +14893,24 @@ export namespace Prisma {
   export type PartnerOrderByRelevanceFieldEnum = (typeof PartnerOrderByRelevanceFieldEnum)[keyof typeof PartnerOrderByRelevanceFieldEnum]
 
 
+  export const CollaboratorOrderByRelevanceFieldEnum: {
+    id: 'id',
+    name: 'name',
+    role: 'role',
+    organisation: 'organisation',
+    country: 'country',
+    bio: 'bio',
+    email: 'email',
+    imageUrl: 'imageUrl',
+    linkedin: 'linkedin',
+    twitter: 'twitter',
+    instagram: 'instagram',
+    website: 'website'
+  };
+
+  export type CollaboratorOrderByRelevanceFieldEnum = (typeof CollaboratorOrderByRelevanceFieldEnum)[keyof typeof CollaboratorOrderByRelevanceFieldEnum]
+
+
   export const ImpactMetricOrderByRelevanceFieldEnum: {
     id: 'id',
     label: 'label',
@@ -13819,6 +15012,13 @@ export namespace Prisma {
    * Reference to a field of type 'ResearchStatus'
    */
   export type EnumResearchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResearchStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'CollaboratorCategory'
+   */
+  export type EnumCollaboratorCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollaboratorCategory'>
     
 
 
@@ -14600,6 +15800,121 @@ export namespace Prisma {
     isHorizontal?: BoolWithAggregatesFilter<"Partner"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Partner"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Partner"> | Date | string
+  }
+
+  export type CollaboratorWhereInput = {
+    AND?: CollaboratorWhereInput | CollaboratorWhereInput[]
+    OR?: CollaboratorWhereInput[]
+    NOT?: CollaboratorWhereInput | CollaboratorWhereInput[]
+    id?: StringFilter<"Collaborator"> | string
+    name?: StringFilter<"Collaborator"> | string
+    role?: StringFilter<"Collaborator"> | string
+    organisation?: StringFilter<"Collaborator"> | string
+    country?: StringFilter<"Collaborator"> | string
+    category?: EnumCollaboratorCategoryFilter<"Collaborator"> | $Enums.CollaboratorCategory
+    bio?: StringNullableFilter<"Collaborator"> | string | null
+    email?: StringNullableFilter<"Collaborator"> | string | null
+    imageUrl?: StringNullableFilter<"Collaborator"> | string | null
+    linkedin?: StringNullableFilter<"Collaborator"> | string | null
+    twitter?: StringNullableFilter<"Collaborator"> | string | null
+    instagram?: StringNullableFilter<"Collaborator"> | string | null
+    website?: StringNullableFilter<"Collaborator"> | string | null
+    active?: BoolFilter<"Collaborator"> | boolean
+    order?: IntFilter<"Collaborator"> | number
+    createdAt?: DateTimeFilter<"Collaborator"> | Date | string
+    updatedAt?: DateTimeFilter<"Collaborator"> | Date | string
+  }
+
+  export type CollaboratorOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    role?: SortOrder
+    organisation?: SortOrder
+    country?: SortOrder
+    category?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    linkedin?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
+    active?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: CollaboratorOrderByRelevanceInput
+  }
+
+  export type CollaboratorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CollaboratorWhereInput | CollaboratorWhereInput[]
+    OR?: CollaboratorWhereInput[]
+    NOT?: CollaboratorWhereInput | CollaboratorWhereInput[]
+    name?: StringFilter<"Collaborator"> | string
+    role?: StringFilter<"Collaborator"> | string
+    organisation?: StringFilter<"Collaborator"> | string
+    country?: StringFilter<"Collaborator"> | string
+    category?: EnumCollaboratorCategoryFilter<"Collaborator"> | $Enums.CollaboratorCategory
+    bio?: StringNullableFilter<"Collaborator"> | string | null
+    email?: StringNullableFilter<"Collaborator"> | string | null
+    imageUrl?: StringNullableFilter<"Collaborator"> | string | null
+    linkedin?: StringNullableFilter<"Collaborator"> | string | null
+    twitter?: StringNullableFilter<"Collaborator"> | string | null
+    instagram?: StringNullableFilter<"Collaborator"> | string | null
+    website?: StringNullableFilter<"Collaborator"> | string | null
+    active?: BoolFilter<"Collaborator"> | boolean
+    order?: IntFilter<"Collaborator"> | number
+    createdAt?: DateTimeFilter<"Collaborator"> | Date | string
+    updatedAt?: DateTimeFilter<"Collaborator"> | Date | string
+  }, "id">
+
+  export type CollaboratorOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    role?: SortOrder
+    organisation?: SortOrder
+    country?: SortOrder
+    category?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    linkedin?: SortOrderInput | SortOrder
+    twitter?: SortOrderInput | SortOrder
+    instagram?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
+    active?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CollaboratorCountOrderByAggregateInput
+    _avg?: CollaboratorAvgOrderByAggregateInput
+    _max?: CollaboratorMaxOrderByAggregateInput
+    _min?: CollaboratorMinOrderByAggregateInput
+    _sum?: CollaboratorSumOrderByAggregateInput
+  }
+
+  export type CollaboratorScalarWhereWithAggregatesInput = {
+    AND?: CollaboratorScalarWhereWithAggregatesInput | CollaboratorScalarWhereWithAggregatesInput[]
+    OR?: CollaboratorScalarWhereWithAggregatesInput[]
+    NOT?: CollaboratorScalarWhereWithAggregatesInput | CollaboratorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Collaborator"> | string
+    name?: StringWithAggregatesFilter<"Collaborator"> | string
+    role?: StringWithAggregatesFilter<"Collaborator"> | string
+    organisation?: StringWithAggregatesFilter<"Collaborator"> | string
+    country?: StringWithAggregatesFilter<"Collaborator"> | string
+    category?: EnumCollaboratorCategoryWithAggregatesFilter<"Collaborator"> | $Enums.CollaboratorCategory
+    bio?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    email?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    imageUrl?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    linkedin?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    twitter?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    instagram?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    website?: StringNullableWithAggregatesFilter<"Collaborator"> | string | null
+    active?: BoolWithAggregatesFilter<"Collaborator"> | boolean
+    order?: IntWithAggregatesFilter<"Collaborator"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Collaborator"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Collaborator"> | Date | string
   }
 
   export type ImpactMetricWhereInput = {
@@ -15650,6 +16965,146 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CollaboratorCreateInput = {
+    id?: string
+    name: string
+    role: string
+    organisation: string
+    country: string
+    category?: $Enums.CollaboratorCategory
+    bio?: string | null
+    email?: string | null
+    imageUrl?: string | null
+    linkedin?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    website?: string | null
+    active?: boolean
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CollaboratorUncheckedCreateInput = {
+    id?: string
+    name: string
+    role: string
+    organisation: string
+    country: string
+    category?: $Enums.CollaboratorCategory
+    bio?: string | null
+    email?: string | null
+    imageUrl?: string | null
+    linkedin?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    website?: string | null
+    active?: boolean
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CollaboratorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    organisation?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    category?: EnumCollaboratorCategoryFieldUpdateOperationsInput | $Enums.CollaboratorCategory
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CollaboratorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    organisation?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    category?: EnumCollaboratorCategoryFieldUpdateOperationsInput | $Enums.CollaboratorCategory
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CollaboratorCreateManyInput = {
+    id?: string
+    name: string
+    role: string
+    organisation: string
+    country: string
+    category?: $Enums.CollaboratorCategory
+    bio?: string | null
+    email?: string | null
+    imageUrl?: string | null
+    linkedin?: string | null
+    twitter?: string | null
+    instagram?: string | null
+    website?: string | null
+    active?: boolean
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CollaboratorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    organisation?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    category?: EnumCollaboratorCategoryFieldUpdateOperationsInput | $Enums.CollaboratorCategory
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CollaboratorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    organisation?: StringFieldUpdateOperationsInput | string
+    country?: StringFieldUpdateOperationsInput | string
+    category?: EnumCollaboratorCategoryFieldUpdateOperationsInput | $Enums.CollaboratorCategory
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    linkedin?: NullableStringFieldUpdateOperationsInput | string | null
+    twitter?: NullableStringFieldUpdateOperationsInput | string | null
+    instagram?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ImpactMetricCreateInput = {
     id?: string
     label: string
@@ -16571,6 +18026,97 @@ export namespace Prisma {
     order?: SortOrder
   }
 
+  export type EnumCollaboratorCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.CollaboratorCategory | EnumCollaboratorCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CollaboratorCategory[]
+    notIn?: $Enums.CollaboratorCategory[]
+    not?: NestedEnumCollaboratorCategoryFilter<$PrismaModel> | $Enums.CollaboratorCategory
+  }
+
+  export type CollaboratorOrderByRelevanceInput = {
+    fields: CollaboratorOrderByRelevanceFieldEnum | CollaboratorOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CollaboratorCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    role?: SortOrder
+    organisation?: SortOrder
+    country?: SortOrder
+    category?: SortOrder
+    bio?: SortOrder
+    email?: SortOrder
+    imageUrl?: SortOrder
+    linkedin?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    website?: SortOrder
+    active?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CollaboratorAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type CollaboratorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    role?: SortOrder
+    organisation?: SortOrder
+    country?: SortOrder
+    category?: SortOrder
+    bio?: SortOrder
+    email?: SortOrder
+    imageUrl?: SortOrder
+    linkedin?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    website?: SortOrder
+    active?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CollaboratorMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    role?: SortOrder
+    organisation?: SortOrder
+    country?: SortOrder
+    category?: SortOrder
+    bio?: SortOrder
+    email?: SortOrder
+    imageUrl?: SortOrder
+    linkedin?: SortOrder
+    twitter?: SortOrder
+    instagram?: SortOrder
+    website?: SortOrder
+    active?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CollaboratorSumOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type EnumCollaboratorCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CollaboratorCategory | EnumCollaboratorCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CollaboratorCategory[]
+    notIn?: $Enums.CollaboratorCategory[]
+    not?: NestedEnumCollaboratorCategoryWithAggregatesFilter<$PrismaModel> | $Enums.CollaboratorCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
+    _max?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
+  }
+
   export type ImpactMetricOrderByRelevanceInput = {
     fields: ImpactMetricOrderByRelevanceFieldEnum | ImpactMetricOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -16778,6 +18324,10 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type EnumCollaboratorCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.CollaboratorCategory
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -17058,6 +18608,23 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCollaboratorCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.CollaboratorCategory | EnumCollaboratorCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CollaboratorCategory[]
+    notIn?: $Enums.CollaboratorCategory[]
+    not?: NestedEnumCollaboratorCategoryFilter<$PrismaModel> | $Enums.CollaboratorCategory
+  }
+
+  export type NestedEnumCollaboratorCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CollaboratorCategory | EnumCollaboratorCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.CollaboratorCategory[]
+    notIn?: $Enums.CollaboratorCategory[]
+    not?: NestedEnumCollaboratorCategoryWithAggregatesFilter<$PrismaModel> | $Enums.CollaboratorCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
+    _max?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
   }
 
   export type PasswordResetTokenCreateWithoutUserInput = {

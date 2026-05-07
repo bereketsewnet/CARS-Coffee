@@ -117,39 +117,83 @@ type Particle = {
   rotationSpeed: number; // deg per 100px scroll
 };
 
-const HERO_PARTICLES: Particle[] = [
-  // ── Far layer — tiny, slow, slightly blurred ──────────────────────────────
-  { id:  1, type: "bean",   x: 72,  y:  8,  size:  8, rotation:  30, opacity: 0.20, depth: 0.10, rotationSpeed:  0.3 },
-  { id:  2, type: "bean",   x: 85,  y: 18,  size:  9, rotation: 120, opacity: 0.18, depth: 0.09, rotationSpeed: -0.2 },
-  { id:  3, type: "bean",   x: 58,  y: 74,  size:  8, rotation:  75, opacity: 0.17, depth: 0.11, rotationSpeed:  0.4 },
-  { id:  4, type: "bean",   x: 92,  y: 55,  size: 10, rotation: 200, opacity: 0.15, depth: 0.08, rotationSpeed: -0.3 },
-  { id:  5, type: "bean",   x: 15,  y: 28,  size:  9, rotation:  50, opacity: 0.16, depth: 0.10, rotationSpeed:  0.2 },
-  { id:  6, type: "cherry", x: 48,  y: 12,  size:  9, rotation:  10, opacity: 0.18, depth: 0.09, rotationSpeed: -0.2 },
-  { id:  7, type: "cherry", x: 25,  y: 80,  size: 10, rotation: 330, opacity: 0.16, depth: 0.10, rotationSpeed:  0.3 },
-  // ── Mid layer — medium, moderate speed ───────────────────────────────────
-  { id:  8, type: "bean",   x: 78,  y: 35,  size: 18, rotation:  10, opacity: 0.30, depth: 0.25, rotationSpeed:  0.6 },
-  { id:  9, type: "bean",   x: 64,  y: 62,  size: 22, rotation: 155, opacity: 0.28, depth: 0.28, rotationSpeed: -0.5 },
-  { id: 10, type: "bean",   x: 88,  y: 80,  size: 20, rotation:  88, opacity: 0.26, depth: 0.22, rotationSpeed:  0.7 },
-  { id: 11, type: "bean",   x: 20,  y: 65,  size: 24, rotation: 220, opacity: 0.28, depth: 0.24, rotationSpeed: -0.4 },
-  { id: 12, type: "bean",   x:  8,  y: 85,  size: 19, rotation:  40, opacity: 0.25, depth: 0.26, rotationSpeed:  0.5 },
-  { id: 13, type: "cherry", x: 55,  y: 48,  size: 18, rotation:  45, opacity: 0.28, depth: 0.20, rotationSpeed: -0.4 },
-  { id: 14, type: "cherry", x: 30,  y: 22,  size: 20, rotation: 135, opacity: 0.30, depth: 0.32, rotationSpeed: -0.5 },
-  { id: 15, type: "cherry", x: 80,  y: 26,  size: 16, rotation:   0, opacity: 0.26, depth: 0.18, rotationSpeed:  0.3 },
-  { id: 16, type: "cherry", x: 12,  y: 48,  size: 22, rotation: 200, opacity: 0.28, depth: 0.28, rotationSpeed:  0.6 },
-  // ── Near layer — large, fastest, sharp ──────────────────────────────────
-  { id: 17, type: "bean",   x: 91,  y: 10,  size: 36, rotation:   5, opacity: 0.38, depth: 0.55, rotationSpeed:  1.1 },
-  { id: 18, type: "bean",   x: 69,  y: 85,  size: 44, rotation: 170, opacity: 0.35, depth: 0.62, rotationSpeed: -0.9 },
-  { id: 19, type: "bean",   x: 10,  y: 14,  size: 32, rotation: 310, opacity: 0.34, depth: 0.50, rotationSpeed:  0.8 },
-  { id: 20, type: "bean",   x: 50,  y: 82,  size: 52, rotation: 240, opacity: 0.40, depth: 0.70, rotationSpeed: -1.2 },
-  { id: 21, type: "bean",   x: 35,  y:  5,  size: 28, rotation:  95, opacity: 0.32, depth: 0.45, rotationSpeed:  0.7 },
-  { id: 22, type: "cherry", x: 75,  y: 76,  size: 38, rotation:  15, opacity: 0.40, depth: 0.68, rotationSpeed:  1.0 },
-  { id: 23, type: "cherry", x: 45,  y: 90,  size: 30, rotation: 270, opacity: 0.36, depth: 0.55, rotationSpeed: -0.8 },
-  { id: 24, type: "cherry", x: 95,  y: 68,  size: 22, rotation:  90, opacity: 0.30, depth: 0.38, rotationSpeed:  0.5 },
-  { id: 25, type: "cherry", x:  5,  y: 60,  size: 46, rotation: 180, opacity: 0.38, depth: 0.65, rotationSpeed: -1.0 },
-  // ── Extra scattered single cherries for colour pops ───────────────────
-  { id: 26, type: "cherry", x: 60,  y: 30,  size: 14, rotation:  60, opacity: 0.22, depth: 0.18, rotationSpeed:  0.3 },
-  { id: 27, type: "bean",   x: 38,  y: 44,  size: 15, rotation: 190, opacity: 0.22, depth: 0.20, rotationSpeed: -0.4 },
-  { id: 28, type: "bean",   x: 82,  y: 55,  size: 12, rotation: 330, opacity: 0.20, depth: 0.14, rotationSpeed:  0.3 },
+// ── Per-section particle configs ──────────────────────────────────────────
+// All particles are positioned at section edges to avoid covering essential
+// content (text, images, cards). Coordinates are % within each section.
+// depth drives parallax speed: 0.05 = barely moves (far), 0.65 = fastest (near)
+const MISSION_PARTICLES: Particle[] = [
+  { id: 101, type: "cherry", x:  3, y: 12, size: 26, rotation:  30, opacity: 0.28, depth: 0.60, rotationSpeed: 0 },
+  { id: 102, type: "bean",   x: 94, y: 18, size: 22, rotation: 120, opacity: 0.24, depth: 0.12, rotationSpeed: 0 },
+  { id: 103, type: "bean",   x:  4, y: 78, size: 18, rotation: 200, opacity: 0.22, depth: 0.38, rotationSpeed: 0 },
+  { id: 104, type: "cherry", x: 95, y: 82, size: 20, rotation:  90, opacity: 0.26, depth: 0.55, rotationSpeed: 0 },
+  { id: 105, type: "bean",   x:  8, y: 45, size: 14, rotation:  70, opacity: 0.18, depth: 0.08, rotationSpeed: 0 },
+  { id: 106, type: "cherry", x: 90, y: 50, size: 16, rotation: 240, opacity: 0.20, depth: 0.45, rotationSpeed: 0 },
+  { id: 107, type: "bean",   x:  2, y: 30, size: 12, rotation: 310, opacity: 0.16, depth: 0.06, rotationSpeed: 0 },
+  { id: 108, type: "cherry", x: 97, y: 65, size: 14, rotation: 150, opacity: 0.18, depth: 0.28, rotationSpeed: 0 },
+];
+
+const PILLARS_PARTICLES: Particle[] = [
+  { id: 201, type: "bean",   x:  2, y:  6, size: 28, rotation:  45, opacity: 0.22, depth: 0.65, rotationSpeed: 0 },
+  { id: 202, type: "cherry", x: 96, y: 10, size: 22, rotation: 150, opacity: 0.26, depth: 0.10, rotationSpeed: 0 },
+  { id: 203, type: "bean",   x:  3, y: 92, size: 20, rotation: 280, opacity: 0.20, depth: 0.42, rotationSpeed: 0 },
+  { id: 204, type: "cherry", x: 97, y: 90, size: 26, rotation:   0, opacity: 0.24, depth: 0.58, rotationSpeed: 0 },
+  { id: 205, type: "bean",   x:  6, y: 50, size: 14, rotation: 100, opacity: 0.18, depth: 0.07, rotationSpeed: 0 },
+  { id: 206, type: "cherry", x: 94, y: 52, size: 16, rotation: 220, opacity: 0.20, depth: 0.33, rotationSpeed: 0 },
+  { id: 207, type: "cherry", x:  5, y: 25, size: 12, rotation:  60, opacity: 0.18, depth: 0.50, rotationSpeed: 0 },
+  { id: 208, type: "bean",   x: 92, y: 30, size: 14, rotation: 200, opacity: 0.18, depth: 0.15, rotationSpeed: 0 },
+  { id: 209, type: "bean",   x:  8, y: 72, size: 12, rotation: 330, opacity: 0.16, depth: 0.22, rotationSpeed: 0 },
+  { id: 210, type: "cherry", x: 91, y: 75, size: 14, rotation:  10, opacity: 0.20, depth: 0.62, rotationSpeed: 0 },
+];
+
+const DIAGRAM_PARTICLES: Particle[] = [
+  { id: 301, type: "bean",   x:  3, y: 30, size: 22, rotation:  60, opacity: 0.22, depth: 0.55, rotationSpeed: 0 },
+  { id: 302, type: "cherry", x: 96, y: 60, size: 24, rotation: 180, opacity: 0.24, depth: 0.08, rotationSpeed: 0 },
+  { id: 303, type: "cherry", x:  5, y: 70, size: 14, rotation: 110, opacity: 0.20, depth: 0.40, rotationSpeed: 0 },
+  { id: 304, type: "bean",   x: 94, y: 20, size: 14, rotation: 250, opacity: 0.18, depth: 0.18, rotationSpeed: 0 },
+];
+
+const IMPACT_PARTICLES: Particle[] = [
+  { id: 401, type: "cherry", x:  6, y: 18, size: 22, rotation:  60, opacity: 0.26, depth: 0.60, rotationSpeed: 0 },
+  { id: 402, type: "bean",   x: 92, y: 28, size: 18, rotation: 200, opacity: 0.22, depth: 0.09, rotationSpeed: 0 },
+  { id: 403, type: "bean",   x:  4, y: 75, size: 24, rotation: 100, opacity: 0.24, depth: 0.48, rotationSpeed: 0 },
+  { id: 404, type: "cherry", x: 94, y: 82, size: 20, rotation: 270, opacity: 0.22, depth: 0.25, rotationSpeed: 0 },
+  { id: 405, type: "bean",   x:  2, y: 45, size: 12, rotation:  20, opacity: 0.16, depth: 0.06, rotationSpeed: 0 },
+  { id: 406, type: "cherry", x: 97, y: 50, size: 14, rotation: 160, opacity: 0.20, depth: 0.35, rotationSpeed: 0 },
+  { id: 407, type: "cherry", x:  8, y: 92, size: 12, rotation:  50, opacity: 0.18, depth: 0.55, rotationSpeed: 0 },
+  { id: 408, type: "bean",   x: 90, y:  8, size: 14, rotation: 290, opacity: 0.18, depth: 0.14, rotationSpeed: 0 },
+];
+
+const NEWS_PARTICLES: Particle[] = [
+  { id: 501, type: "bean",   x:  2, y:  8, size: 30, rotation:  30, opacity: 0.18, depth: 0.62, rotationSpeed: 0 },
+  { id: 502, type: "cherry", x: 97, y: 14, size: 22, rotation: 180, opacity: 0.22, depth: 0.11, rotationSpeed: 0 },
+  { id: 503, type: "cherry", x:  3, y: 92, size: 18, rotation:  90, opacity: 0.24, depth: 0.40, rotationSpeed: 0 },
+  { id: 504, type: "bean",   x: 96, y: 80, size: 26, rotation: 220, opacity: 0.18, depth: 0.57, rotationSpeed: 0 },
+  { id: 505, type: "bean",   x:  5, y: 40, size: 14, rotation: 130, opacity: 0.18, depth: 0.08, rotationSpeed: 0 },
+  { id: 506, type: "cherry", x: 94, y: 45, size: 16, rotation: 300, opacity: 0.20, depth: 0.30, rotationSpeed: 0 },
+  { id: 507, type: "cherry", x:  4, y: 65, size: 12, rotation:  20, opacity: 0.18, depth: 0.52, rotationSpeed: 0 },
+  { id: 508, type: "bean",   x: 96, y: 60, size: 14, rotation: 250, opacity: 0.18, depth: 0.17, rotationSpeed: 0 },
+];
+
+const TEAM_PARTICLES: Particle[] = [
+  { id: 601, type: "cherry", x:  3, y: 10, size: 24, rotation:  45, opacity: 0.24, depth: 0.58, rotationSpeed: 0 },
+  { id: 602, type: "bean",   x: 95, y:  6, size: 20, rotation: 150, opacity: 0.22, depth: 0.10, rotationSpeed: 0 },
+  { id: 603, type: "bean",   x:  4, y: 90, size: 22, rotation: 320, opacity: 0.20, depth: 0.44, rotationSpeed: 0 },
+  { id: 604, type: "cherry", x: 96, y: 88, size: 18, rotation:  60, opacity: 0.24, depth: 0.62, rotationSpeed: 0 },
+  { id: 605, type: "cherry", x:  6, y: 48, size: 14, rotation: 110, opacity: 0.20, depth: 0.07, rotationSpeed: 0 },
+  { id: 606, type: "bean",   x: 93, y: 52, size: 16, rotation: 240, opacity: 0.18, depth: 0.28, rotationSpeed: 0 },
+  { id: 607, type: "bean",   x:  2, y: 28, size: 12, rotation:  10, opacity: 0.16, depth: 0.50, rotationSpeed: 0 },
+  { id: 608, type: "cherry", x: 97, y: 70, size: 12, rotation: 200, opacity: 0.18, depth: 0.16, rotationSpeed: 0 },
+];
+
+const CTA_PARTICLES: Particle[] = [
+  { id: 701, type: "bean",   x:  4, y: 22, size: 26, rotation:  60, opacity: 0.24, depth: 0.55, rotationSpeed: 0 },
+  { id: 702, type: "cherry", x: 93, y: 18, size: 24, rotation: 180, opacity: 0.28, depth: 0.09, rotationSpeed: 0 },
+  { id: 703, type: "cherry", x:  5, y: 80, size: 20, rotation: 270, opacity: 0.24, depth: 0.42, rotationSpeed: 0 },
+  { id: 704, type: "bean",   x: 95, y: 76, size: 22, rotation: 100, opacity: 0.22, depth: 0.63, rotationSpeed: 0 },
+  { id: 705, type: "cherry", x:  2, y: 50, size: 14, rotation:  40, opacity: 0.20, depth: 0.12, rotationSpeed: 0 },
+  { id: 706, type: "bean",   x: 97, y: 48, size: 14, rotation: 220, opacity: 0.18, depth: 0.35, rotationSpeed: 0 },
+  { id: 707, type: "bean",   x:  8, y:  6, size: 12, rotation: 320, opacity: 0.18, depth: 0.56, rotationSpeed: 0 },
+  { id: 708, type: "cherry", x: 90, y: 92, size: 14, rotation:  80, opacity: 0.20, depth: 0.08, rotationSpeed: 0 },
 ];
 
 // ── Photorealistic coffee bean SVG ───────────────────────────────────────────
@@ -241,101 +285,104 @@ function CherrySVG({ size, depth }: { size: number; depth: number }) {
   );
 }
 
-// ── Floating particle layer — parallax on scroll + self-float animation ────────
-function HeroParticleLayer() {
+// ── Particle keyframes — injected once at the top of the page ─────────────
+function ParticleKeyframes() {
+  return (
+    <style>{`
+      @keyframes particleFloat {
+        0%   { translate: 0px 0px; }
+        25%  { translate: 3px -8px; }
+        50%  { translate: -2px -14px; }
+        75%  { translate: -4px -6px; }
+        100% { translate: 0px 0px; }
+      }
+      @keyframes particleDrift {
+        0%   { translate: 0px 0px; }
+        33%  { translate: -5px -10px; }
+        66%  { translate: 4px -18px; }
+        100% { translate: 0px 0px; }
+      }
+      @keyframes particleSway {
+        0%   { translate: 0px 0px; }
+        20%  { translate: 6px -5px; }
+        50%  { translate: -3px -12px; }
+        80%  { translate: 5px -8px; }
+        100% { translate: 0px 0px; }
+      }
+    `}</style>
+  );
+}
+
+// ── Section-level decorative particle layer with scroll parallax ──────────
+// depth (0.05–0.65) controls scroll speed — low = far/slow, high = near/fast.
+// CSS `translate` (standalone) drives the float animation independently of
+// the JS-controlled `transform`, so both compose without conflict.
+function SectionParticles({ particles }: { particles: Particle[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
-    const nodes = container.querySelectorAll<HTMLElement>('[data-pid]');
+    const nodes = container.querySelectorAll<HTMLElement>("[data-pid]");
+    const pidMap = new Map(particles.map((p) => [p.id, p]));
 
     function tick() {
-      const sy = window.scrollY;
+      const rect = container.getBoundingClientRect();
+      const scrolled = window.innerHeight - rect.top;
       nodes.forEach((el) => {
-        const pid = Number(el.dataset.pid);
-        const p = HERO_PARTICLES.find((x) => x.id === pid);
+        const p = pidMap.get(Number(el.dataset.pid));
         if (!p) return;
-        const translateY = -(sy * p.depth);
-        const rot = p.rotation + sy * p.rotationSpeed * 0.01;
-        el.style.transform = `translateY(${translateY}px) rotate(${rot}deg)`;
+        const ty = -(scrolled * p.depth * 0.18);
+        el.style.transform = `rotate(${p.rotation}deg) translateY(${ty}px)`;
       });
       rafRef.current = requestAnimationFrame(tick);
     }
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [particles]);
 
   return (
-    <>
-      {/* Inject keyframe once */}
-      <style>{`
-        @keyframes particleFloat {
-          0%   { translate: 0px 0px; }
-          25%  { translate: 3px -8px; }
-          50%  { translate: -2px -14px; }
-          75%  { translate: -4px -6px; }
-          100% { translate: 0px 0px; }
-        }
-        @keyframes particleDrift {
-          0%   { translate: 0px 0px; }
-          33%  { translate: -5px -10px; }
-          66%  { translate: 4px -18px; }
-          100% { translate: 0px 0px; }
-        }
-        @keyframes particleSway {
-          0%   { translate: 0px 0px; }
-          20%  { translate: 6px -5px; }
-          50%  { translate: -3px -12px; }
-          80%  { translate: 5px -8px; }
-          100% { translate: 0px 0px; }
-        }
-      `}</style>
-      <div
-        ref={containerRef}
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 2,
-          pointerEvents: "none",
-          overflow: "hidden",
-        }}
-      >
-        {HERO_PARTICLES.map((p) => {
-          // Pick one of 3 animation patterns for variety
-          const animName = p.id % 3 === 0 ? "particleDrift" : p.id % 3 === 1 ? "particleFloat" : "particleSway";
-          // Duration: far particles move slower, near faster; all slowed down to feel natural
-          const duration = 4 + (1 - p.depth) * 6; // 4s (near) to 10s (far)
-          const delay = (p.id * 0.73) % 5; // stagger start times
-          return (
-            <div
-              key={p.id}
-              data-pid={p.id}
-              style={{
-                position: "absolute",
-                left: `${p.x}%`,
-                top: `${p.y}%`,
-                opacity: p.opacity,
-                transform: `rotate(${p.rotation}deg)`,
-                willChange: "transform, translate",
-                filter: `blur(${p.depth < 0.15 ? 1.5 : p.depth < 0.3 ? 0.5 : 0}px)`,
-                animation: `${animName} ${duration.toFixed(1)}s ${delay.toFixed(1)}s ease-in-out infinite`,
-              }}
-            >
-              {p.type === "bean" ? (
-                <BeanSVG size={p.size} depth={p.depth} />
-              ) : (
-                <CherrySVG size={p.size} depth={p.depth} />
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </>
+    <div
+      ref={containerRef}
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: "none",
+        overflow: "hidden",
+      }}
+    >
+      {particles.map((p) => {
+        const animName = p.id % 3 === 0 ? "particleDrift" : p.id % 3 === 1 ? "particleFloat" : "particleSway";
+        const duration = 4 + (1 - p.depth) * 6;
+        const delay = (p.id * 0.73) % 5;
+        return (
+          <div
+            key={p.id}
+            data-pid={p.id}
+            style={{
+              position: "absolute",
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              opacity: p.opacity,
+              transform: `rotate(${p.rotation}deg)`,
+              willChange: "transform, translate",
+              filter: `blur(${p.depth < 0.12 ? 1.5 : p.depth < 0.25 ? 0.5 : 0}px)`,
+              animation: `${animName} ${duration.toFixed(1)}s ${delay.toFixed(1)}s ease-in-out infinite`,
+            }}
+          >
+            {p.type === "bean" ? (
+              <BeanSVG size={p.size} depth={p.depth} />
+            ) : (
+              <CherrySVG size={p.size} depth={p.depth} />
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -609,8 +656,24 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           style={{ zIndex: 1 }}
         />
 
-        {/* ── Coffee & cherry parallax depth particles — z 2 */}
-        <HeroParticleLayer />
+        {/* Partner logos column — top right of hero */}
+        <div
+          className="hidden lg:flex flex-col gap-2"
+          style={{ position: "absolute", top: "6rem", right: "2rem", zIndex: 10 }}
+        >
+          {[
+            { src: "/assets/VLIRUOS.jpg",                alt: "VLIR-UOS" },
+            { src: "/assets/ADDIS ABABA UNIVERSITY.jpg", alt: "Addis Ababa University" },
+            { src: "/assets/UNIVERSITY OF ANTWERP.jpg",  alt: "University of Antwerp" },
+          ].map((logo) => (
+            <div
+              key={logo.alt}
+              className="w-14 h-14 rounded-xl bg-white border border-white/60 shadow-lg overflow-hidden flex items-center justify-center p-1"
+            >
+              <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain" draggable={false} />
+            </div>
+          ))}
+        </div>
 
         {/* Spinning ring decoration — z 2 */}
         <div
@@ -632,42 +695,43 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           className="pointer-events-none container mx-auto absolute inset-0 flex flex-col lg:flex-row items-center justify-between px-4 md:px-6"
           style={{ zIndex: 3, paddingTop: "clamp(120px, 15vh, 180px)" }}
         >
-          <div className="max-w-3xl flex-1 self-center w-full lg:w-auto">
-            <div ref={tagsRef} className="inline-flex flex-wrap items-center gap-2 mb-4 md:mb-6" style={{ opacity: 0, transform: "translateY(30px)" }}>
+          <div className="max-w-2xl flex-1 self-center w-full lg:w-auto">
+            <div>
+              <div ref={tagsRef} className="inline-flex flex-wrap items-center gap-2 mb-3 md:mb-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
                 <span className="tag-pill text-sm md:text-base font-bold bg-white/10 uppercase tracking-widest">{t.home.tagline}</span>
-            </div>
-            <h1
-              ref={h1Ref}
-              className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-snug mb-4 md:mb-6"
-              style={{ opacity: 0, transform: "translateY(30px)" }}
-            >
-              {t.home.heroTitle1} {t.home.heroTitle2}
-              <br className="hidden md:block" />
-              <span className="text-gradient-green text-2xl sm:text-4xl md:text-5xl lg:text-6xl block mt-1">CARES</span>
-            </h1>
-            <p
-              ref={sub1Ref}
-              className="text-base md:text-xl text-muted-foreground leading-relaxed mb-6 md:mb-10 max-w-2xl"
-              style={{ opacity: 0, transform: "translateY(30px)" }}
-            >
-              {t.home.heroSubtitle}
-            </p>
-            {/* Fix 3: Buttons with arrow hover animation */}
-            <div ref={btnsRef} className="pointer-events-auto flex flex-wrap gap-3 md:gap-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
-              <Link
-                href="/project"
-                className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-300 shadow-glow"
+              </div>
+              <h1
+                ref={h1Ref}
+                className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug mb-3 md:mb-5"
+                style={{ opacity: 0, transform: "translateY(30px)" }}
               >
-                {t.home.ctaExplore}
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/research"
-                className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base border border-border text-foreground hover:border-leaf-bright hover:text-leaf-bright transition-all duration-300"
+                {t.home.heroTitle1} {t.home.heroTitle2}
+                <br className="hidden md:block" />
+                <span className="text-gradient-green text-xl sm:text-3xl md:text-4xl lg:text-5xl block mt-1">CARES</span>
+              </h1>
+              <p
+                ref={sub1Ref}
+                className="text-sm md:text-base text-muted-foreground leading-relaxed mb-5 md:mb-7 max-w-xl"
+                style={{ opacity: 0, transform: "translateY(30px)" }}
               >
-                {t.home.ctaResearch}
-                <BookOpen className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-              </Link>
+                {t.home.heroSubtitle}
+              </p>
+              <div ref={btnsRef} className="pointer-events-auto flex flex-wrap gap-3 md:gap-4" style={{ opacity: 0, transform: "translateY(30px)" }}>
+                <Link
+                  href="/project"
+                  className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-all duration-300 shadow-glow"
+                >
+                  {t.home.ctaExplore}
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="/research"
+                  className="group inline-flex items-center gap-2 px-5 md:px-7 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base border border-border text-foreground hover:border-leaf-bright hover:text-leaf-bright transition-all duration-300"
+                >
+                  {t.home.ctaResearch}
+                  <BookOpen className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                </Link>
+              </div>
             </div>
           </div>
           
@@ -686,7 +750,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           <div className="max-w-4xl">
             <h2
               ref={h2Ref}
-              className="font-serif text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6 md:mb-8"
+              className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 md:mb-8"
               style={{ opacity: 0, transform: "translateY(120px)" }}
             >
               {t.home.heroImpactTitle}<br className="hidden md:block" />
@@ -763,7 +827,7 @@ function HeroCounter({ target, suffix, label }: { target: number; suffix: string
 
   return (
     <div ref={ref} className="flex flex-col">
-      <span className="text-4xl md:text-5xl font-bold text-leaf-bright mb-1 font-serif">
+      <span className="text-3xl md:text-4xl font-bold text-leaf-bright mb-1 font-serif">
         {count}{suffix}
       </span>
       <span className="text-muted-foreground text-xs md:text-sm uppercase tracking-wider font-semibold">
@@ -976,12 +1040,14 @@ export default function Index({
 
   return (
     <div className="min-h-screen">
+      <ParticleKeyframes />
       {/* Hero — scroll-scrubbed 3D canvas + two-state text */}
       <HeroSection t={t as unknown as Record<string, Record<string, string>>} />
 
       {/* Mission */}
-      <section id="mission" className="py-24">
-        <div className="container mx-auto">
+      <section id="mission" className="py-24 relative overflow-hidden">
+        <SectionParticles particles={MISSION_PARTICLES} />
+        <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <span className="tag-pill mb-6 inline-block">{t.home.missionTitle}</span>
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
@@ -996,8 +1062,9 @@ export default function Index({
       </section>
 
       {/* Pillars */}
-      <section className="py-24 bg-charcoal-mid">
-        <div className="container mx-auto">
+      <section className="py-24 bg-charcoal-mid relative overflow-hidden">
+        <SectionParticles particles={PILLARS_PARTICLES} />
+        <div className="container mx-auto relative z-10">
           <div className="text-center mb-16 fade-up">
             <span className="tag-pill mb-4 inline-block">
               Research Framework
@@ -1049,8 +1116,9 @@ export default function Index({
         </section>
 
         {/* Circular Economy Model Diagram (IMAGE 2) */}
-        <section className="py-10 bg-charcoal-mid">
-          <div className="container mx-auto">
+        <section className="py-10 bg-charcoal-mid relative overflow-hidden">
+          <SectionParticles particles={DIAGRAM_PARTICLES} />
+          <div className="container mx-auto relative z-10">
             <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-border fade-up">
               <img 
                 src="/assets/IMAGE_2.jpg" 
@@ -1062,8 +1130,9 @@ export default function Index({
         </section>
 
       {/* Impact Stats */}
-      <section className="py-24">
-        <div className="container mx-auto">
+      <section className="py-24 relative overflow-hidden">
+        <SectionParticles particles={IMPACT_PARTICLES} />
+        <div className="container mx-auto relative z-10">
           <div className="text-center mb-16 fade-up">
             <span className="tag-pill mb-4 inline-block">
               {t.home.impactSubtitle}
@@ -1093,6 +1162,8 @@ export default function Index({
         {/* Subtle premium background glow effects */}
         <div className="absolute top-0 left-1/4 w-full max-w-[600px] h-[600px] bg-leaf-bright/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-full max-w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <SectionParticles particles={NEWS_PARTICLES} />
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           {/* Header */}
@@ -1212,8 +1283,9 @@ export default function Index({
       </section>
 
       {/* Team Preview */}
-      <section className="py-24 border-t border-border">
-        <div className="container mx-auto px-4 md:px-6">
+      <section className="py-24 border-t border-border relative overflow-hidden">
+        <SectionParticles particles={TEAM_PARTICLES} />
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 fade-up">
             <div className="max-w-xl">
               <span className="tag-pill mb-4 inline-block">Team Preview</span>
@@ -1301,8 +1373,9 @@ export default function Index({
       <PartnersSection partners={partners as any} />
 
       {/* CTA Section */}
-      <section className="py-24 md:py-32 px-4 md:px-6">
-        <div className="container mx-auto">
+      <section className="py-24 md:py-32 px-4 md:px-6 relative overflow-hidden">
+        <SectionParticles particles={CTA_PARTICLES} />
+        <div className="container mx-auto relative z-10">
           <div className="relative rounded-[2.5rem] overflow-hidden p-12 md:p-24 text-center bg-[#0a0a0a] border border-border shadow-2xl fade-up">
             {/* Cinematic background gradients */}
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-coffee/10 via-transparent to-leaf-bright/5 pointer-events-none" />

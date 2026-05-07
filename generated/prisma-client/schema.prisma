@@ -191,6 +191,37 @@ model Partner {
   updatedAt    DateTime @updatedAt
 }
 
+// ─── Collaborators ────────────────────────────────────────────────────────────
+
+model Collaborator {
+  id           String               @id @default(cuid())
+  name         String
+  role         String
+  organisation String
+  country      String
+  category     CollaboratorCategory @default(OTHER)
+  bio          String?              @db.Text
+  email        String?
+  imageUrl     String?              @db.Text
+  linkedin     String?              @db.Text
+  twitter      String?              @db.Text
+  instagram    String?              @db.Text
+  website      String?              @db.Text
+  active       Boolean              @default(true)
+  order        Int                  @default(0)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+}
+
+enum CollaboratorCategory {
+  GOVERNMENT
+  SPONSOR
+  NGO
+  ACADEMIC
+  INDUSTRY
+  OTHER
+}
+
 // ─── Impact metrics ───────────────────────────────────────────────────────────
 
 model ImpactMetric {

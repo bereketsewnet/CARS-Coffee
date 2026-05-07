@@ -7,6 +7,7 @@ export interface Translations {
     project: string;
     research: string;
     team: string;
+    collaborations: string;
     impact: string;
     library: string;
     news: string;
@@ -190,6 +191,7 @@ export const translations: Record<Lang, Translations> = {
       project: "The Project",
       research: "Research",
       team: "Team",
+      collaborations: "Collaborations",
       impact: "Impact",
       library: "Library",
       news: "News",
@@ -413,6 +415,7 @@ export const translations: Record<Lang, Translations> = {
       project: "ፕሮጀክቱ",
       research: "ምርምር",
       team: "ቡድን",
+      collaborations: "ትብብሮች",
       impact: "ተጽዕኖ",
       library: "ቤተ-መጻሕፍት",
       news: "ዜና",

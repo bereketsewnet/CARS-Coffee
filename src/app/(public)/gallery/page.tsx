@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, memo } from "react";
 import Image from "next/image";
-import { Folder, Calendar } from "lucide-react";
+import { Folder, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface GalleryImage {
@@ -227,13 +227,29 @@ export default function GalleryPage() {
         <main className="w-full lg:w-3/4 flex flex-col h-[50vh] lg:h-full relative rounded-2xl overflow-hidden glass-card shadow-card bg-charcoal-mid/40 border border-border">
           
           {/* Viewport (Top 75%) */}
-          <div 
+          <div
             ref={viewportRef}
             className="flex-1 w-full h-full relative flex items-center justify-center p-4 lg:p-12 overflow-hidden z-10"
             style={{ perspective: "1200px" }}
             onMouseMove={(e) => { setIsMainHovered(true); handleViewportMouseMove(e); }}
             onMouseLeave={handleViewportMouseLeave}
           >
+            {/* Prev arrow */}
+            <button
+              onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center bg-black/50 border border-white/20 text-white hover:bg-black/80 hover:border-leaf-bright/60 hover:text-leaf-bright transition-all duration-200 backdrop-blur-sm"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            {/* Next arrow */}
+            <button
+              onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full flex items-center justify-center bg-black/50 border border-white/20 text-white hover:bg-black/80 hover:border-leaf-bright/60 hover:text-leaf-bright transition-all duration-200 backdrop-blur-sm"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
             <div 
               className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black/60 border border-border"
               style={{

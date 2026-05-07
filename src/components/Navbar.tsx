@@ -20,6 +20,7 @@ export function Navbar() {
     { label: t.nav.project, path: "/project" },
     { label: t.nav.research, path: "/research" },
     { label: t.nav.team, path: "/team" },
+    { label: t.nav.collaborations, path: "/collaborations" },
     { label: t.nav.impact, path: "/impact" },
     { label: t.nav.library, path: "/library" },
     { label: t.nav.news, path: "/news" },
@@ -48,19 +49,21 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass-card shadow-card py-3" : "py-5 bg-transparent"
+        scrolled ? "glass-card shadow-card" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
-          <Image
-            src="/assets/IMAGE_FOR_LOGO.jpg"
-            alt="CARES Logo"
-            width={60}
-            height={60}
-            className="h-[60px] w-[60px] rounded-full object-cover shadow-glow transition-all duration-300"
-            priority
-          />
+        <Link href="/" className="flex items-center gap-3 group py-1.5">
+          <div className="w-14 h-14 rounded-xl bg-[#1a2e1a] border border-leaf-bright/30 overflow-hidden shrink-0 shadow-glow flex items-center justify-center">
+            <Image
+              src="/assets/IMAGE_FOR_LOGO.jpg"
+              alt="CARES Logo"
+              width={56}
+              height={56}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </div>
           <div className="hidden sm:block">
             <span className="font-serif font-bold text-2xl leading-none block text-foreground">
               CARES
@@ -72,7 +75,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden lg:flex items-center gap-1">
+        <ul className="hidden lg:flex items-center gap-1 py-4">
           {navItems.map((item) => (
             <li key={item.path}>
               <Link
@@ -92,7 +95,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 py-4">
           {/* Language toggle */}
           <button
             onClick={toggle}

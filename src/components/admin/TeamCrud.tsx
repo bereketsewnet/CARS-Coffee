@@ -26,13 +26,7 @@ import {
   SubmitBtn,
 } from "./CrudHelpers";
 
-const PILLAR_LABELS: Record<string, string> = {
-  SOIL_HEALTH: "Soil Health",
-  WASTE_VALORIZATION: "Waste Valorization",
-  SOCIO_ECONOMIC: "Socio-Economic",
-};
-
-export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
+export default function TeamCrud({ items: initial, pillars = [] }: { items: TeamMember[]; pillars?: { pillar: string; title: string }[] }) {
   const router = useRouter();
   const [items, setItems] = useState(initial);
   const [mode, setMode] = useState<"add" | "edit" | null>(null);
@@ -247,7 +241,7 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
               </p>
             </div>
             <span className="tag-pill text-xs">
-              {m.pillar ? (PILLAR_LABELS[m.pillar] ?? m.pillar) : "—"}
+              {m.pillar ? (pillars.find((p) => p.pillar === m.pillar)?.title ?? m.pillar) : "—"}
             </span>
             <div className="flex gap-2 pt-1">
               {m.email && (
@@ -385,9 +379,9 @@ export default function TeamCrud({ items: initial }: { items: TeamMember[] }) {
                 className={selectCls}
               >
                 <option value="">— None —</option>
-                {Object.entries(PILLAR_LABELS).map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
+                {pillars.map((p) => (
+                  <option key={p.pillar} value={p.pillar}>
+                    {p.title}
                   </option>
                 ))}
               </select>

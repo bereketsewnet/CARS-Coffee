@@ -246,6 +246,26 @@ exports.Prisma.PartnerScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CollaboratorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  role: 'role',
+  organisation: 'organisation',
+  country: 'country',
+  category: 'category',
+  bio: 'bio',
+  email: 'email',
+  imageUrl: 'imageUrl',
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  website: 'website',
+  active: 'active',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ImpactMetricScalarFieldEnum = {
   id: 'id',
   label: 'label',
@@ -374,6 +394,21 @@ exports.Prisma.PartnerOrderByRelevanceFieldEnum = {
   role: 'role'
 };
 
+exports.Prisma.CollaboratorOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  role: 'role',
+  organisation: 'organisation',
+  country: 'country',
+  bio: 'bio',
+  email: 'email',
+  imageUrl: 'imageUrl',
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  instagram: 'instagram',
+  website: 'website'
+};
+
 exports.Prisma.ImpactMetricOrderByRelevanceFieldEnum = {
   id: 'id',
   label: 'label',
@@ -433,6 +468,15 @@ exports.ResearchStatus = exports.$Enums.ResearchStatus = {
   COMPLETED: 'COMPLETED'
 };
 
+exports.CollaboratorCategory = exports.$Enums.CollaboratorCategory = {
+  GOVERNMENT: 'GOVERNMENT',
+  SPONSOR: 'SPONSOR',
+  NGO: 'NGO',
+  ACADEMIC: 'ACADEMIC',
+  INDUSTRY: 'INDUSTRY',
+  OTHER: 'OTHER'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   PasswordResetToken: 'PasswordResetToken',
@@ -444,6 +488,7 @@ exports.Prisma.ModelName = {
   ContactMessage: 'ContactMessage',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',
+  Collaborator: 'Collaborator',
   ImpactMetric: 'ImpactMetric',
   SiteContactInfo: 'SiteContactInfo'
 };
