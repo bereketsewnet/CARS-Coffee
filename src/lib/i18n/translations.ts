@@ -49,6 +49,19 @@ export interface Translations {
     phd: string;
     ra: string;
   };
+  coordinators: {
+    heroSub: string;
+    heroTitle1: string;
+    heroTitle2: string;
+    heroDesc: string;
+    comingSoon: string;
+    catGov: string;
+    catSponsor: string;
+    catNgo: string;
+    catAcademic: string;
+    catIndustry: string;
+    catOther: string;
+  };
   impact: {
     heroSub: string;
     heroTitle1: string;
@@ -253,9 +266,22 @@ export const translations: Record<Lang, Translations> = {
       heroTitle2: "Research Team",
       heroDesc: "A multidisciplinary team spanning soil science, environmental engineering, economics, and gender studies from Ethiopia and Belgium.",
       pi: "Principal Investigators",
-      coSupervise: "Co-Supervisors",
-      phd: "PhD Candidates",
-      ra: "Research Assistants",
+      coSupervise: "Co-Investigators",
+      phd: "PhD Researchers",
+      ra: "MSc Researchers",
+    },
+    coordinators: {
+      heroSub: "Coordinations",
+      heroTitle1: "Our",
+      heroTitle2: "Coordinations",
+      heroDesc: "Government officials, sponsors, civil society partners, and supporters who make the CARES mission possible.",
+      comingSoon: "Coordinator profiles are coming soon.",
+      catGov: "Government Officials",
+      catSponsor: "Sponsors & Funders",
+      catNgo: "NGO & Civil Society",
+      catAcademic: "Academic Partners",
+      catIndustry: "Industry Partners",
+      catOther: "Other Partners",
     },
     impact: {
       heroSub: "Real-World Change",
@@ -477,9 +503,22 @@ export const translations: Record<Lang, Translations> = {
       heroTitle2: "የምርምር ቡድን",
       heroDesc: "ከኢትዮጵያ እና ከቤልጂየም በግብርና አፈር ሳይንስ፣ አካባቢ ምህንድስና፣ ኢኮኖሚክስ እና የፆታ ጥናት የተውጣጣ ሁለገብ ቡድን።",
       pi: "ዋና ተመራማሪዎች",
-      coSupervise: "ተባባሪ ተቆጣጣሪዎች",
-      phd: "የፒኤችዲ ተማሪዎች",
-      ra: "የምርምር ረዳቶች",
+      coSupervise: "ተባባሪ ተመራማሪዎች",
+      phd: "የፒኤችዲ ተመራማሪዎች",
+      ra: "የኤምኤስሲ ተመራማሪዎች",
+    },
+    coordinators: {
+      heroSub: "አስተባባሪዎች",
+      heroTitle1: "የእኛ",
+      heroTitle2: "አስተባባሪዎች",
+      heroDesc: "የCARES ተልዕኮን ሊያሳኩ የሚችሉ የመንግስት ባለስልጣናት፣ ስፖንሰሮች፣ የሲቪል ማህበረሰብ አጋሮች እና ደጋፊዎች።",
+      comingSoon: "የአስተባባሪ መግለጫዎች ብዙም ሳይቆይ ይመጣሉ።",
+      catGov: "የመንግስት ባለስልጣናት",
+      catSponsor: "ስፖንሰሮች እና ፋይናንሰሮች",
+      catNgo: "መንግሰታዊ ያልሆኑ ድርጅቶች",
+      catAcademic: "አካዳሚያዊ አጋሮች",
+      catIndustry: "የኢንዱስትሪ አጋሮች",
+      catOther: "ሌሎች አጋሮች",
     },
     impact: {
       heroSub: "እውነተኛ ለውጥ",

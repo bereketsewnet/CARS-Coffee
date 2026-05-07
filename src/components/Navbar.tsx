@@ -65,10 +65,10 @@ export function Navbar() {
             />
           </div>
           <div className="hidden sm:block">
-            <span className="font-serif font-bold text-2xl leading-none block" style={{ color: "#9B1B1B" }}>
+            <span className="font-serif font-bold text-2xl leading-none block" style={{ color: "#D4AF37" }}>
               CARES
             </span>
-            <span className="text-sm tracking-wide" style={{ color: "#FBBF24" }}>
+            <span className="text-sm tracking-wide text-leaf-bright">
               Circular Economy Research
             </span>
           </div>

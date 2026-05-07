@@ -1,15 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { TeamMember as DbMember } from "../../generated/prisma-client";
+
+type RoleCategory = "Principal Investigator" | "Co-Investigator" | "PhD Researcher" | "MSc Researcher";
 
 interface TeamMember {
   name: string;
   title: string;
   institution: string;
   focus: string;
-  role: "PI" | "Co-Supervisor" | "PhD" | "Research Assistant";
+  role: RoleCategory;
   initials: string;
   color: string;
   order: number;
@@ -22,14 +25,12 @@ interface TeamMember {
 
 const COLORS = ["gradient-green", "gradient-coffee"];
 
-function deriveCategory(role: string): TeamMember["role"] {
-  const r = role.toLowerCase();
-  if (r.includes("principal")) return "PI";
-  if (r.includes("co-supervisor") || r.includes("co supervisor"))
-    return "Co-Supervisor";
-  if (r.includes("phd") || r.includes("candidate") || r.includes("researcher"))
-    return "PhD";
-  return "Research Assistant";
+function deriveCategory(role: string): RoleCategory {
+  const r = role.toLowerCase().trim();
+  if (r === "principal investigator" || r.includes("principal")) return "Principal Investigator";
+  if (r === "co-investigator" || r.includes("co-invest") || r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Investigator";
+  if (r === "phd researcher" || r.includes("phd") || r.includes("candidate")) return "PhD Researcher";
+  return "MSc Researcher";
 }
 
 function dbToMember(m: DbMember, idx: number): TeamMember {
@@ -62,7 +63,7 @@ const staticTeam: TeamMember[] = [
     title: "Principal Investigator (North)",
     institution: "University of Antwerp",
     focus: "Circular Bioeconomy & Waste Valorization",
-    role: "PI",
+    role: "Principal Investigator",
     initials: "JD",
     color: "gradient-green",
     order: 0,
@@ -72,84 +73,88 @@ const staticTeam: TeamMember[] = [
     title: "Principal Investigator (South)",
     institution: "Addis Ababa University",
     focus: "Soil Science & Agroecology",
-    role: "PI",
+    role: "Principal Investigator",
     initials: "TA",
     color: "gradient-coffee",
     order: 1,
   },
   {
     name: "Dr. Lena Verheyden",
-    title: "Co-Supervisor",
+    title: "Co-Investigator",
     institution: "University of Antwerp",
     focus: "Environmental Engineering & Biorefinery",
-    role: "Co-Supervisor",
+    role: "Co-Investigator",
     initials: "LV",
     color: "gradient-green",
     order: 0,
   },
   {
     name: "Dr. Mulugeta Bekele",
-    title: "Co-Supervisor",
+    title: "Co-Investigator",
     institution: "Hawassa University",
     focus: "Agricultural Economics",
-    role: "Co-Supervisor",
+    role: "Co-Investigator",
     initials: "MB",
     color: "gradient-coffee",
     order: 1,
   },
   {
     name: "Selamawit Tadesse",
-    title: "PhD Candidate",
+    title: "PhD Researcher",
     institution: "AAU / UA Antwerp",
     focus: "Coffee Husk Compost Trials",
-    role: "PhD",
+    role: "PhD Researcher",
     initials: "ST",
     color: "gradient-green",
     order: 0,
   },
   {
     name: "Robel Getachew",
-    title: "PhD Candidate",
+    title: "PhD Researcher",
     institution: "Addis Ababa University",
     focus: "Anaerobic Digestion Systems",
-    role: "PhD",
+    role: "PhD Researcher",
     initials: "RG",
     color: "gradient-coffee",
     order: 1,
   },
   {
     name: "Amina Desta",
-    title: "PhD Candidate",
+    title: "PhD Researcher",
     institution: "AAU / IFPRI",
     focus: "Gender & Value Chain Analysis",
-    role: "PhD",
+    role: "PhD Researcher",
     initials: "AD",
     color: "gradient-green",
     order: 2,
   },
   {
     name: "Thomas Claeys",
-    title: "PhD Candidate",
+    title: "MSc Researcher",
     institution: "University of Antwerp",
     focus: "Biochar Characterization",
-    role: "PhD",
+    role: "MSc Researcher",
     initials: "TC",
     color: "gradient-coffee",
-    order: 3,
+    order: 0,
   },
 ];
 
-const roleOrder = ["PI", "Co-Supervisor", "PhD", "Research Assistant"] as const;
+const roleOrder: RoleCategory[] = ["Principal Investigator", "Co-Investigator", "PhD Researcher", "MSc Researcher"];
 
 function MemberCard({ member }: { member: TeamMember }) {
+  const [expanded, setExpanded] = useState(false);
+  const LIMIT = 120;
+  const isLong = (member.focus?.length ?? 0) > LIMIT;
+
   return (
     <div className="glass-card rounded-3xl overflow-hidden border border-border pillar-hover flex flex-col h-full group">
-      <div className="aspect-[4/3] w-full relative overflow-hidden bg-card/50 flex-shrink-0">
+      <div className="aspect-square w-full relative overflow-hidden bg-card/50 flex-shrink-0">
         {member.imageUrl ? (
           <img
             src={member.imageUrl}
             alt={member.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div
@@ -199,8 +204,16 @@ function MemberCard({ member }: { member: TeamMember }) {
               {member.institution}
             </span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-            {member.focus}
+          <p className="text-sm text-muted-foreground leading-relaxed text-justify hyphens-auto">
+            {expanded || !isLong ? member.focus : `${member.focus.slice(0, LIMIT)}…`}
+            {isLong && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="ml-1 text-leaf-bright hover:underline text-xs font-medium"
+              >
+                {expanded ? "See less" : "See more"}
+              </button>
+            )}
           </p>
         </div>
         <div className="mt-5 pt-4 border-t border-border/50 flex items-start">
@@ -214,11 +227,11 @@ function MemberCard({ member }: { member: TeamMember }) {
 export default function Team({ members: dbMembers }: { members?: DbMember[] | null }) {
   const { t } = useLanguage();
 
-  const roleLabels = {
-    PI: t.team.pi,
-    "Co-Supervisor": t.team.coSupervise,
-    PhD: t.team.phd,
-    "Research Assistant": t.team.ra,
+  const roleLabels: Record<RoleCategory, string> = {
+    "Principal Investigator": t.team.pi,
+    "Co-Investigator":        t.team.coSupervise,
+    "PhD Researcher":         t.team.phd,
+    "MSc Researcher":         t.team.ra,
   };
 
   // null or undefined = DB unavailable → show static fallback

@@ -1,16 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon, Building2 } from "lucide-react";
 import type { Collaborator } from "../../generated/prisma-client";
-
-const CATEGORY_LABELS: Record<string, string> = {
-  GOVERNMENT: "Government Officials",
-  SPONSOR:    "Sponsors & Funders",
-  NGO:        "NGO & Civil Society",
-  ACADEMIC:   "Academic Partners",
-  INDUSTRY:   "Industry Partners",
-  OTHER:      "Other Partners",
-};
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const CATEGORY_ORDER = ["GOVERNMENT", "SPONSOR", "NGO", "ACADEMIC", "INDUSTRY", "OTHER"];
 
@@ -20,17 +13,21 @@ function initialsFromName(name: string) {
   return name.split(" ").filter(Boolean).map((w) => w[0].toUpperCase()).slice(0, 2).join("");
 }
 
-function CollaboratorCard({ c, idx }: { c: Collaborator; idx: number }) {
+function CollaboratorCard({ c, idx, categoryLabel }: { c: Collaborator; idx: number; categoryLabel: string }) {
   const color = COLORS[idx % COLORS.length];
+  const [expanded, setExpanded] = useState(false);
+  const LIMIT = 120;
+  const isLong = (c.bio?.length ?? 0) > LIMIT;
+
   return (
     <div className="glass-card rounded-3xl overflow-hidden border border-border pillar-hover flex flex-col h-full group">
       {/* Photo or gradient initials */}
-      <div className="aspect-[4/3] w-full relative overflow-hidden bg-card/50 flex-shrink-0">
+      <div className="aspect-square w-full relative overflow-hidden bg-card/50 flex-shrink-0">
         {c.imageUrl ? (
           <img
             src={c.imageUrl}
             alt={c.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div className={`w-full h-full ${color} flex items-center justify-center transition-transform duration-700 group-hover:scale-105`}>
@@ -92,12 +89,22 @@ function CollaboratorCard({ c, idx }: { c: Collaborator; idx: number }) {
             </div>
           )}
           {c.bio && (
-            <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{c.bio}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {expanded || !isLong ? c.bio : `${c.bio.slice(0, LIMIT)}…`}
+              {isLong && (
+                <button
+                  onClick={() => setExpanded(!expanded)}
+                  className="ml-1 text-leaf-bright hover:underline text-xs font-medium"
+                >
+                  {expanded ? "See less" : "See more"}
+                </button>
+              )}
+            </p>
           )}
         </div>
         <div className="mt-5 pt-4 border-t border-border/50">
           <span className="tag-pill text-xs shadow-sm bg-card/80 backdrop-blur-sm">
-            {CATEGORY_LABELS[c.category] ?? c.category}
+            {categoryLabel}
           </span>
         </div>
       </div>
@@ -106,6 +113,17 @@ function CollaboratorCard({ c, idx }: { c: Collaborator; idx: number }) {
 }
 
 export default function Collaborations({ collaborators }: { collaborators: Collaborator[] | null }) {
+  const { t } = useLanguage();
+
+  const CATEGORY_LABELS: Record<string, string> = {
+    GOVERNMENT: t.coordinators.catGov,
+    SPONSOR:    t.coordinators.catSponsor,
+    NGO:        t.coordinators.catNgo,
+    ACADEMIC:   t.coordinators.catAcademic,
+    INDUSTRY:   t.coordinators.catIndustry,
+    OTHER:      t.coordinators.catOther,
+  };
+
   const groups = CATEGORY_ORDER.map((cat) => ({
     cat,
     label: CATEGORY_LABELS[cat],
@@ -122,12 +140,12 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)" }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">Coordinators</span>
+          <span className="tag-pill mb-4 inline-block">{t.coordinators.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            Our <span className="text-gradient-green">Coordinators</span>
+            <span className="text-gradient-green">{t.coordinators.heroTitle2}</span>
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Government officials, sponsors, civil society partners, and supporters who make the CARES mission possible.
+            {t.coordinators.heroDesc}
           </p>
         </div>
       </section>
@@ -137,7 +155,7 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
         <div className="container mx-auto space-y-16">
           {groups.length === 0 ? (
             <p className="text-center text-muted-foreground py-24 text-lg">
-              Collaborator profiles are coming soon.
+              {t.coordinators.comingSoon}
             </p>
           ) : (
             groups.map((g) => (
@@ -148,7 +166,7 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {g.members.map((c, i) => (
-                    <CollaboratorCard key={c.id} c={c} idx={i} />
+                    <CollaboratorCard key={c.id} c={c} idx={i} categoryLabel={CATEGORY_LABELS[c.category] ?? c.category} />
                   ))}
                 </div>
               </div>

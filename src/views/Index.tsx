@@ -695,7 +695,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           className="absolute pointer-events-none px-4 md:px-6 container mx-auto left-0 right-0"
           style={{ top: "82px", zIndex: 4, opacity: 0, transform: "translateY(30px)" }}
         >
-          <span className="tag-pill text-xs md:text-sm font-bold uppercase tracking-widest">
+          <span className="text-xs md:text-sm font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block" style={{ background: "#9B1B1B", color: "#fff" }}>
             {t.home.tagline}
           </span>
         </div>

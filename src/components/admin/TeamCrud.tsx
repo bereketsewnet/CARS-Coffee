@@ -26,20 +26,27 @@ import {
   SubmitBtn,
 } from "./CrudHelpers";
 
+const ROLES = [
+  "Principal Investigator",
+  "Co-Investigator",
+  "PhD Researcher",
+  "MSc Researcher",
+] as const;
+
 function deriveCategory(role: string): string {
-  const r = role.toLowerCase();
-  if (r.includes("principal")) return "PI";
-  if (r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Supervisor";
-  if (r.includes("phd") || r.includes("candidate") || r.includes("researcher")) return "PhD";
-  return "Research Assistant";
+  const r = role.toLowerCase().trim();
+  if (r === "principal investigator" || r.includes("principal")) return "Principal Investigator";
+  if (r === "co-investigator" || r.includes("co-invest") || r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Investigator";
+  if (r === "phd researcher" || r.includes("phd") || r.includes("candidate")) return "PhD Researcher";
+  return "MSc Researcher";
 }
 
-const CATEGORY_ORDER = ["PI", "Co-Supervisor", "PhD", "Research Assistant"] as const;
+const CATEGORY_ORDER = ["Principal Investigator", "Co-Investigator", "PhD Researcher", "MSc Researcher"] as const;
 const CATEGORY_LABELS: Record<string, string> = {
-  "PI":                 "Principal Investigators",
-  "Co-Supervisor":      "Co-Supervisors",
-  "PhD":                "PhD Candidates",
-  "Research Assistant": "Research Assistants",
+  "Principal Investigator": "Principal Investigators",
+  "Co-Investigator":        "Co-Investigators",
+  "PhD Researcher":         "PhD Researchers",
+  "MSc Researcher":         "MSc Researchers",
 };
 
 export default function TeamCrud({ items: initial, pillars = [] }: { items: TeamMember[]; pillars?: { pillar: string; title: string }[] }) {
@@ -357,14 +364,17 @@ export default function TeamCrud({ items: initial, pillars = [] }: { items: Team
                 />
               </Field>
             </div>
-            <Field label="Role / Title" required>
-              <input
+            <Field label="Role" required>
+              <select
                 name="role"
-                defaultValue={editing?.role ?? ""}
+                defaultValue={editing ? deriveCategory(editing.role) : "Principal Investigator"}
                 required
-                className={inputCls}
-                placeholder="Principal Investigator"
-              />
+                className={selectCls}
+              >
+                {ROLES.map((r) => (
+                  <option key={r} value={r}>{r}</option>
+                ))}
+              </select>
             </Field>
             <Field label="Institution" required>
               <input

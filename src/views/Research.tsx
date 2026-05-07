@@ -39,8 +39,7 @@ const BASE_PILLARS = [
     id: "soil",
     icon: Leaf,
     image: "/assets/research-soil.webp",
-    accentColor: "text-leaf-bright",
-    tagClass: "",
+    color: "#9B1B1B",        // red
     title: "Valorization & Specialty Coffee",
   },
   {
@@ -48,17 +47,15 @@ const BASE_PILLARS = [
     id: "waste",
     icon: Recycle,
     image: "/assets/research-waste.webp",
-    accentColor: "text-coffee-light",
-    tagClass: "tag-coffee",
-    title: "Agro-Energy & Earth Care",
+    color: "#4ade80",        // green
+    title: "Circular Agro-Energy & Earth Care",
   },
   {
     key: "SOCIO_ECONOMIC",
     id: "socio",
     icon: Users,
     image: "/assets/research-socio.webp",
-    accentColor: "text-leaf-bright",
-    tagClass: "",
+    color: "#F97316",        // orange
     title: "Bio-Extracted Innovation",
   },
 ] as const;
@@ -69,13 +66,14 @@ interface PillarCardProps {
   pillar: typeof BASE_PILLARS[number] & { tag: string; tagline: string; title: string };
   topics: { title: string; desc: string }[];
   pubLines: string[];
-  emptyState?: boolean; // true when DB is connected but no projects for this pillar yet
+  emptyState?: boolean;
 }
 
 function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCardProps & { layman: string }) {
   const [showLayman, setShowLayman] = useState(false);
   const { t } = useLanguage();
   const Icon = pillar.icon;
+  const c = pillar.color;
 
   return (
     <section id={pillar.id} className="py-20 scroll-mt-24">
@@ -83,10 +81,15 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
         <div className="grid md:grid-cols-2 gap-16 items-start">
           {/* Left – content */}
           <div>
-            <span className={`tag-pill mb-4 inline-block ${pillar.tagClass}`}>{pillar.tag}</span>
+            <span
+              className="mb-4 inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
+              style={{ background: `${c}22`, color: c, border: `1px solid ${c}55` }}
+            >
+              {pillar.tag}
+            </span>
             <h2 className="font-serif text-4xl font-bold mb-2 flex items-center gap-2">
-              <Icon className={`w-8 h-8 ${pillar.accentColor}`} />
-              {pillar.title}
+              <Icon className="w-8 h-8" style={{ color: c }} />
+              <span style={{ color: c }}>{pillar.title}</span>
             </h2>
             <p className="text-muted-foreground mb-8">{pillar.tagline}</p>
 
@@ -232,7 +235,12 @@ export default function Research({
           {/* Pillar nav anchors */}
           <div className="flex flex-wrap gap-3 mt-6">
             {PILLARS.map((p) => (
-              <a key={p.id} href={`#${p.id}`} className={`tag-pill hover:bg-leaf/30 transition-colors ${p.tagClass}`}>
+              <a
+                key={p.id}
+                href={`#${p.id}`}
+                className="text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full transition-all"
+                style={{ background: `${p.color}22`, color: p.color, border: `1px solid ${p.color}55` }}
+              >
                 {p.title}
               </a>
             ))}
