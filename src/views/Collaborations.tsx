@@ -118,7 +118,7 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
       <section className="py-20 bg-charcoal-mid relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/assets/page-bg/team.webp')" }}
+          style={{ backgroundImage: "url('/assets/page-bg/Coordinators.webp')" }}
         />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)" }} />
         <div className="container mx-auto relative z-10">

@@ -50,7 +50,7 @@ const FilmstripGrid = memo(({
               if (isDraggingRef.current) return;
               setCurrentIndex(actualIndex);
             }}
-            className="thumb-item flex-shrink-0 w-36 h-20 rounded-lg overflow-hidden relative cursor-pointer transition-all duration-300 opacity-50 saturate-50 hover:opacity-100"
+            className="thumb-item flex-shrink-0 w-40 h-24 rounded-lg overflow-hidden relative cursor-pointer transition-all duration-300 opacity-50 saturate-50 hover:opacity-100"
           >
             <img src={img.url} alt="thumb" loading="lazy" className="w-full h-full object-cover pointer-events-none select-none" />
           </div>
@@ -221,19 +221,36 @@ export default function GalleryPage() {
       </section>
 
       <section className="px-4 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 max-w-7xl mx-auto w-full h-auto lg:h-[70vh]">
-        
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 max-w-6xl mx-auto w-full h-auto lg:h-[72vh]">
+
         {/* LEFT PANE (Visuals + Filmstrip Container) */}
-        <main className="w-full lg:w-3/4 flex flex-col h-[50vh] lg:h-full relative rounded-2xl overflow-hidden glass-card shadow-card bg-charcoal-mid/40 border border-border">
+        <main className="w-full lg:w-[76%] flex flex-col h-[52vh] lg:h-full relative rounded-2xl overflow-hidden glass-card shadow-card bg-charcoal-mid/40 border border-border">
           
-          {/* Viewport (Top 75%) */}
+          {/* Viewport — full-bleed cover image, no dead space */}
           <div
             ref={viewportRef}
-            className="flex-1 w-full h-full relative flex items-center justify-center p-4 lg:p-12 overflow-hidden z-10"
-            style={{ perspective: "1200px" }}
+            className="flex-1 w-full relative overflow-hidden z-10"
+            style={{
+              transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+              transition: tilt.x === 0 && tilt.y === 0 ? "transform 0.6s ease" : "transform 0.1s ease",
+              willChange: "transform",
+            }}
             onMouseMove={(e) => { setIsMainHovered(true); handleViewportMouseMove(e); }}
             onMouseLeave={handleViewportMouseLeave}
           >
+            {/* Full-bleed image */}
+            <Image
+              src={currentImage.url}
+              alt={currentImage.title}
+              fill
+              className="object-cover transition-opacity duration-700"
+              priority
+            />
+
+            {/* Soft vignette so arrows stay readable */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none" />
+
             {/* Prev arrow */}
             <button
               onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)}
@@ -250,44 +267,25 @@ export default function GalleryPage() {
             >
               <ChevronRight className="w-5 h-5" />
             </button>
-            <div 
-              className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl bg-black/60 border border-border"
-              style={{
-                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale3d(1.02,1.02,1.02)`,
-                transition: tilt.x === 0 && tilt.y === 0 ? "transform 0.6s ease" : "transform 0.1s ease",
-                willChange: "transform"
-              }}
-            >
-              {/* Constrained Blurred Background Fill - Note: Removed 'key' prop to prevent unmount frame drops */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center blur-xl opacity-40 scale-105 transition-all duration-700"
-                style={{ backgroundImage: `url(${currentImage.url})` }}
-              />
-              
-              {/* Main Crisp Image Layer - Note: Removed 'key' prop to prevent unmount frame drops */}
-              <Image 
-                src={currentImage.url} 
-                alt={currentImage.title} 
-                fill 
-                className="object-contain transition-opacity duration-700 z-10 relative drop-shadow-xl"
-                priority
-              />
+
+            {/* Image counter badge */}
+            <div className="absolute bottom-4 left-4 z-20 font-mono text-xs text-white/70 bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+              <span className="text-white font-semibold">{currentIndex + 1}</span>
+              <span className="mx-1 opacity-50">/</span>
+              {images.length} {t.gallery.records}
             </div>
           </div>
 
-          {/* Filmstrip (Bottom 25%) */}
-          <footer 
-            className="h-40 w-full bg-charcoal-light/10 border-t border-border p-4 flex flex-col justify-center relative z-20 backdrop-blur-sm"
+          {/* Filmstrip */}
+          <footer
+            className="h-36 w-full bg-charcoal-light/10 border-t border-border px-4 pt-3 pb-2 flex flex-col justify-center relative z-20 backdrop-blur-sm"
             onMouseEnter={() => setIsFilmstripHovered(true)}
             onMouseLeave={() => {
               setIsFilmstripHovered(false);
               handleMouseUpOrLeave();
             }}
           >
-            <div className="flex justify-between items-end mb-3 px-2">
-              <span className="text-xs font-mono text-muted-foreground tracking-widest leading-none">
-                <span className="text-foreground">{currentIndex + 1}</span> / {images.length} {t.gallery.records}
-              </span>
+            <div className="flex justify-end items-center mb-2 px-1">
               <span className={`text-[10px] font-mono flex items-center gap-2 ${isFilmstripHovered || isMainHovered ? "text-muted-foreground" : "text-leaf-bright"} uppercase tracking-wider`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${isFilmstripHovered || isMainHovered ? "bg-muted-foreground" : "bg-leaf-bright animate-pulse"}`} />
                 {isFilmstripHovered || isMainHovered ? t.gallery.syncPaused : t.gallery.syncActive}
