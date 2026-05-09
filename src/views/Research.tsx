@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { Leaf, Recycle, Users, ChevronDown, ChevronUp, BookOpen, FlaskConical } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import type { ResearchProject, Publication } from "../../generated/prisma-client";
+import type { Publication } from "../../generated/prisma-client";
+
+type ResearchMember = { id: string; name: string; role: string | null };
+type ResearchProject = { id: string; pillar: string; title: string; description: string | null; members?: ResearchMember[] };
 
 // ── Static fallback data ─────────────────────────────────────────────────────
 
@@ -33,38 +36,43 @@ function formatPub(p: Publication): string {
 
 // ── Pillar config (decorative / structural) ──────────────────────────────────
 
+// Decorative slots — icon/color/image assigned by position, not by DB key
+const PILLAR_DECORATION = [
+  { id: "soil",  icon: Leaf,    image: "/assets/research-soil.webp",  color: "#9B1B1B" },
+  { id: "waste", icon: Recycle, image: "/assets/research-waste.webp", color: "#4ade80" },
+  { id: "socio", icon: Users,   image: "/assets/research-socio.webp", color: "#F97316" },
+];
+
+// Static fallback pillars (used only when DB has no pillar rows at all)
 const BASE_PILLARS = [
-  {
-    key: "SOIL_HEALTH",
-    id: "soil",
-    icon: Leaf,
-    image: "/assets/research-soil.webp",
-    color: "#9B1B1B",        // red
-    title: "Valorization & Specialty Coffee",
-  },
-  {
-    key: "WASTE_VALORIZATION",
-    id: "waste",
-    icon: Recycle,
-    image: "/assets/research-waste.webp",
-    color: "#4ade80",        // green
-    title: "Circular Agro-Energy & Earth Care",
-  },
-  {
-    key: "SOCIO_ECONOMIC",
-    id: "socio",
-    icon: Users,
-    image: "/assets/research-socio.webp",
-    color: "#F97316",        // orange
-    title: "Bio-Extracted Innovation",
-  },
-] as const;
+  { key: "SOIL_HEALTH",        title: "Valorization & Specialty Coffee" },
+  { key: "WASTE_VALORIZATION", title: "Circular Agro-Energy & Earth Care" },
+  { key: "SOCIO_ECONOMIC",     title: "Bio-Extracted Innovation" },
+];
 
 // ── PillarCard ────────────────────────────────────────────────────────────────
 
+interface TopicItem {
+  title: string;
+  desc: string;
+  members?: ResearchMember[];
+}
+
+interface PillarSection {
+  key: string;
+  id: string;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  image: string;
+  color: string;
+  title: string;
+  tag: string;
+  tagline: string;
+  layman: string;
+}
+
 interface PillarCardProps {
-  pillar: typeof BASE_PILLARS[number] & { tag: string; tagline: string; title: string };
-  topics: { title: string; desc: string }[];
+  pillar: PillarSection;
+  topics: TopicItem[];
   pubLines: string[];
   emptyState?: boolean;
 }
@@ -108,6 +116,21 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
                   <div key={topic.title} className="glass-card rounded-xl p-5 border border-border">
                     <h4 className="font-serif font-semibold text-base mb-2">{topic.title}</h4>
                     <p className="text-muted-foreground text-sm leading-relaxed">{topic.desc}</p>
+                    {topic.members && topic.members.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-border/30">
+                        <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                          <Users className="w-3 h-3" /> Researchers
+                        </p>
+                        <ul className="space-y-1">
+                          {topic.members.map((m) => (
+                            <li key={m.id} className="text-xs text-muted-foreground">
+                              {m.name}
+                              {m.role && <span className="text-muted-foreground/60"> — {m.role}</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 ))
               )}
@@ -179,18 +202,43 @@ export default function Research({
 }) {
   const { t } = useLanguage();
 
-    const PILLARS = BASE_PILLARS.map((base, i) => {
-    const dbPillar = pillarContents?.find(p => p.pillar === base.key);
-    return {
-      ...base,
-      title: dbPillar?.title || base.title,
-      tag: (i === 0 ? t.research.p1 : i === 1 ? t.research.p2 : t.research.p3),
-      tagline: dbPillar?.tagline || (i === 0 ? t.research.soilTag : i === 1 ? t.research.wasteTag : t.research.socioTag),
-      layman: dbPillar?.laymanDesc || (i === 0 ? t.research.laymanSoil : i === 1 ? t.research.laymanWaste : t.research.laymanSocio)
-    }
-  });
+  const STATIC_TAGS = [t.research.p1, t.research.p2, t.research.p3];
+  const STATIC_TAGLINES = [t.research.soilTag, t.research.wasteTag, t.research.socioTag];
+  const STATIC_LAYMAN = [t.research.laymanSoil, t.research.laymanWaste, t.research.laymanSocio];
 
-  const STATIC_TOPICS: Record<string, { title: string; desc: string }[]> = {
+  // Build pillar sections from DB when available, otherwise fall back to hardcoded BASE_PILLARS.
+  // KEY POINT: use the DB pillar.pillar string as the key so project/publication filtering works.
+  const PILLARS: PillarSection[] = (pillarContents && pillarContents.length > 0)
+    ? pillarContents.map((dbPillar, i) => {
+        const dec = PILLAR_DECORATION[i % PILLAR_DECORATION.length];
+        return {
+          key: dbPillar.pillar,           // actual DB key — must match ResearchProject.pillar
+          id: dec.id,
+          icon: dec.icon,
+          image: dec.image,
+          color: dec.color,
+          title: dbPillar.title,
+          tag: STATIC_TAGS[i] ?? t.research.p1,
+          tagline: dbPillar.tagline || STATIC_TAGLINES[i] || "",
+          layman: dbPillar.laymanDesc || STATIC_LAYMAN[i] || "",
+        };
+      })
+    : BASE_PILLARS.map((base, i) => {
+        const dec = PILLAR_DECORATION[i];
+        return {
+          key: base.key,
+          id: dec.id,
+          icon: dec.icon,
+          image: dec.image,
+          color: dec.color,
+          title: base.title,
+          tag: STATIC_TAGS[i] ?? t.research.p1,
+          tagline: STATIC_TAGLINES[i] ?? "",
+          layman: STATIC_LAYMAN[i] ?? "",
+        };
+      });
+
+  const STATIC_TOPICS: Record<string, TopicItem[]> = {
     SOIL_HEALTH: [
       { title: t.research.t1, desc: t.research.d1 },
       { title: t.research.t2, desc: t.research.d2 },
@@ -208,22 +256,16 @@ export default function Research({
     ],
   };
 
-  const LAYMAN: Record<string, string> = {
-    SOIL_HEALTH: t.research.laymanSoil,
-    WASTE_VALORIZATION: t.research.laymanWaste,
-    SOCIO_ECONOMIC: t.research.laymanSocio,
-  };
-
   return (
     <div className="min-h-screen pt-24">
       {/* Hero */}
       <section className="py-20 bg-charcoal-mid relative overflow-hidden">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/assets/page-bg/research.webp')" }}
-        />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
+        <div className="absolute inset-y-0 right-0 w-3/5 xl:w-2/3 flex items-center justify-end">
+          <img src="/assets/page-bg/research.webp" alt="" className="h-full w-full object-contain object-right" />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(15,10,5,0.45)" }} />
+          <div className="absolute inset-y-0 left-0 w-2/5 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,0.6) 50%, transparent 100%)" }} />
+        </div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
           <span className="tag-pill mb-4 inline-block">{t.research.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
@@ -257,13 +299,12 @@ export default function Research({
           ? projects.filter((pr) => pr.pillar === pillar.key)
           : null;
 
-        const dbTopics: { title: string; desc: string }[] | null =
+        const dbTopics: TopicItem[] | null =
           pillarProjects && pillarProjects.length > 0
             ? pillarProjects.map((pr) => ({
                 title: pr.title,
-                desc:
-                  pr.description ||
-                  "Detailed description for this project has not yet been published.",
+                desc: pr.description || "Detailed description for this project has not yet been published.",
+                members: pr.members ?? [],
               }))
             : pillarProjects !== null
             ? null  // DB available but no projects for this pillar → empty state
@@ -274,12 +315,13 @@ export default function Research({
         const pillarPubs = pubAvailable
           ? publications.filter((pub) => pub.pillar === pillar.key)
           : null;
+        const staticPubFallback = STATIC_PUBS[pillar.key] ?? [];
         const dbPubs =
           pillarPubs && pillarPubs.length > 0
             ? pillarPubs.map(formatPub)
             : pillarPubs !== null
-            ? []  // DB available but no publications for this pillar
-            : STATIC_PUBS[pillar.key]; // DB unavailable → static fallback
+            ? []                  // DB available but no publications for this pillar
+            : staticPubFallback;  // DB unavailable → static fallback
 
         return (
           <PillarCard

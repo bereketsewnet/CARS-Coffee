@@ -1,8 +1,13 @@
 "use client";
 
-import { Quote, Users, Briefcase, TrendingUp, Handshake } from "lucide-react";
+import { Quote, Users, Briefcase, TrendingUp, Handshake, Leaf, Target, Globe } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { ImpactMetric } from "../../generated/prisma-client";
+import type { LucideIcon } from "lucide-react";
+
+const AREA_ICON_MAP: Record<string, LucideIcon> = {
+  Users, Briefcase, TrendingUp, Handshake, Leaf, Target, Globe,
+};
 import dynamic from "next/dynamic";
 import PartnersSection from "@/components/PartnersSection/PartnersSection";
 
@@ -15,7 +20,18 @@ const ProjectMap = dynamic(() => import("@/components/ProjectMap"), {
 
 type MetricDisplay = { value: string; label: string; sub: string };
 
-export default function Impact({ metrics: dbMetrics, partners = [] }: { metrics?: ImpactMetric[], partners?: any[] }) {
+
+export default function Impact({
+  metrics: dbMetrics,
+  partners = [],
+  impactSection = null,
+  impactAreas = [],
+}: {
+  metrics?: ImpactMetric[];
+  partners?: any[];
+  impactSection?: { tag: string; title: string } | null;
+  impactAreas?: any[];
+}) {
   const { t } = useLanguage();
 
   const staticMetrics: MetricDisplay[] = [
@@ -45,12 +61,12 @@ export default function Impact({ metrics: dbMetrics, partners = [] }: { metrics?
   return (
     <div className="min-h-screen pt-24">
       <section className="py-20 bg-charcoal-mid relative overflow-hidden">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/assets/page-bg/impact.webp')" }}
-        />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)' }} />
+        <div className="absolute inset-y-0 right-0 w-3/5 xl:w-2/3 flex items-center justify-end">
+          <img src="/assets/page-bg/impact.webp" alt="" className="h-full w-full object-contain object-right" />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(15,10,5,0.45)" }} />
+          <div className="absolute inset-y-0 left-0 w-2/5 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,0.6) 50%, transparent 100%)" }} />
+        </div>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
           <span className="tag-pill mb-4 inline-block">{t.impact.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
@@ -81,63 +97,38 @@ export default function Impact({ metrics: dbMetrics, partners = [] }: { metrics?
       </section>
 
       {/* Socioeconomic Impact */}
-      <section className="py-20 border-t border-border">
-        <div className="container mx-auto">
-          <div className="text-center mb-14">
-            <span className="tag-pill mb-4 inline-block">Socioeconomic Transformation</span>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold">Cultivating Community & Equitable Growth</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
-              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
-                <Users className="w-6 h-6" />
+      {(() => {
+        const sectionTag   = impactSection?.tag   ?? "Socioeconomic Transformation";
+        const sectionTitle = impactSection?.title ?? "Cultivating Community & Equitable Growth";
+        const areas = impactAreas;
+        if (areas.length === 0) return null;
+        return (
+          <section className="py-20 border-t border-border">
+            <div className="container mx-auto">
+              <div className="text-center mb-14">
+                <span className="tag-pill mb-4 inline-block">{sectionTag}</span>
+                <h2 className="font-serif text-4xl md:text-5xl font-bold">{sectionTitle}</h2>
               </div>
-              <div>
-                <h3 className="font-serif text-xl font-semibold mb-2">Women’s Economic Empowerment & Cooperatives</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Integrating women into leadership roles within local cooperatives and ensuring equitable access to new bio-product revenue streams.
-                </p>
-              </div>
-            </div>
-            
-            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
-              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
-                <Briefcase className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl font-semibold mb-2">Green Job Creation & Skill Diversification</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Training youth and farmers in biorefinery operations, composting, and advanced processing techniques to build a resilient workforce.
-                </p>
-              </div>
-            </div>
-
-            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
-              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
-                <TrendingUp className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl font-semibold mb-2">Maximizing Revenue Per Coffee Tree</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Transforming what was once considered waste into valuable secondary products, directly increasing net farm income.
-                </p>
+              <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                {areas.map((area) => {
+                  const Icon = AREA_ICON_MAP[area.icon] ?? Users;
+                  return (
+                    <div key={area.id} className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
+                      <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-xl font-semibold mb-2">{area.title}</h3>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{area.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-
-            <div className="glass-card p-6 rounded-xl border border-border flex gap-4 items-start">
-              <div className="bg-leaf-bright/10 p-3 rounded-lg text-leaf-bright shrink-0">
-                <Handshake className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl font-semibold mb-2">Fostering Inclusive Stakeholder Partnerships</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Building strong collaborations between universities, local government, cooperatives, and commercial partners to sustain the circular model.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        );
+      })()}
 
       {/* Testimonials */}
       <section className="py-20 bg-charcoal-mid">

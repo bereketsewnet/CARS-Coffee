@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_noStore as noStore } from "next/cache";
 import prisma from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -12,26 +13,26 @@ export const metadata: Metadata = {
 };
 
 export default async function ImpactPage() {
+  noStore();
   if (DB_DISABLED) {
     return <Impact metrics={[]} partners={[]} />;
   }
 
   let metrics: Awaited<ReturnType<typeof prisma.impactMetric.findMany>> = [];
   let partners: any[] = [];
+  let impactSection: any = null;
+  let impactAreas: any[] = [];
 
   try {
-    [metrics, partners] = await Promise.all([
-      prisma.impactMetric.findMany({
-        orderBy: { createdAt: "asc" },
-      }),
-      prisma.partner.findMany({
-        where: { active: true },
-        orderBy: { order: "asc" },
-      })
+    [metrics, partners, impactSection, impactAreas] = await Promise.all([
+      prisma.impactMetric.findMany({ orderBy: { createdAt: "asc" } }),
+      prisma.partner.findMany({ where: { active: true }, orderBy: { order: "asc" } }),
+      prisma.impactSection.findFirst(),
+      prisma.impactArea.findMany({ orderBy: { order: "asc" } }),
     ]);
   } catch (error) {
     console.error("Failed to load impact page data from database", error);
   }
 
-  return <Impact metrics={metrics} partners={partners} />;
+  return <Impact metrics={metrics} partners={partners} impactSection={impactSection} impactAreas={impactAreas} />;
 }

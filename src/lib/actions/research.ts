@@ -47,10 +47,10 @@ export async function updateResearchProject(
         title: form.get("title") as string,
         pillar: form.get("pillar") as string,
         status: form.get("status") as any,
-        lead: (form.get("lead") as string) || undefined,
-        description: (form.get("description") as string) || undefined,
-        startDate: form.get("startDate") ? new Date(form.get("startDate") as string) : undefined,
-        endDate: form.get("endDate") ? new Date(form.get("endDate") as string) : undefined,
+        lead: (form.get("lead") as string) || null,
+        description: (form.get("description") as string) || null,
+        startDate: form.get("startDate") ? new Date(form.get("startDate") as string) : null,
+        endDate: form.get("endDate") ? new Date(form.get("endDate") as string) : null,
       },
     });
     revalidatePath("/admin/research");
@@ -123,4 +123,55 @@ export async function deletePillarContent(id: string): Promise<ResearchFormState
     console.error(e);
     return { error: 'Failed to delete pillar. Ensure no dependencies remain.' };
   }
+}
+
+// ── Research Topic Members ────────────────────────────────────────────────────
+
+export async function createResearchTopicMember(projectId: string, form: FormData): Promise<ResearchFormState> {
+  await requireAdmin();
+  try {
+    const name = form.get("name") as string;
+    if (!name) return { error: "Name is required." };
+    await prisma.researchTopicMember.create({
+      data: {
+        projectId,
+        name,
+        role: (form.get("role") as string) || undefined,
+        order: Number(form.get("order") || 0),
+      },
+    });
+    revalidatePath("/admin/research");
+    revalidatePath("/research");
+    return { success: true };
+  } catch (e: any) {
+    console.error(e);
+    return { error: e.message || "Failed to create researcher." };
+  }
+}
+
+export async function updateResearchTopicMember(id: string, form: FormData): Promise<ResearchFormState> {
+  await requireAdmin();
+  try {
+    await prisma.researchTopicMember.update({
+      where: { id },
+      data: {
+        name: form.get("name") as string,
+        role: (form.get("role") as string) || null,
+        order: Number(form.get("order") || 0),
+      },
+    });
+    revalidatePath("/admin/research");
+    revalidatePath("/research");
+    return { success: true };
+  } catch (e: any) {
+    console.error(e);
+    return { error: e.message || "Failed to update researcher." };
+  }
+}
+
+export async function deleteResearchTopicMember(id: string): Promise<void> {
+  await requireAdmin();
+  await prisma.researchTopicMember.delete({ where: { id } });
+  revalidatePath("/admin/research");
+  revalidatePath("/research");
 }

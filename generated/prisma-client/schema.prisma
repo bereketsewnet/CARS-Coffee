@@ -135,16 +135,29 @@ enum NewsEventStatus {
 // ─── Research projects ────────────────────────────────────────────────────────
 
 model ResearchProject {
-  id          String         @id @default(cuid())
+  id          String                @id @default(cuid())
   title       String
   pillar      String
-  status      ResearchStatus @default(ACTIVE)
+  status      ResearchStatus        @default(ACTIVE)
   lead        String?
-  description String?        @db.Text
+  description String?               @db.Text
   startDate   DateTime?
   endDate     DateTime?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  order       Int                   @default(0)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  members     ResearchTopicMember[]
+}
+
+model ResearchTopicMember {
+  id        String          @id @default(cuid())
+  name      String
+  role      String?
+  projectId String
+  project   ResearchProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  order     Int             @default(0)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
 
 model PillarContent {
@@ -235,7 +248,54 @@ enum CollaboratorCategory {
   OTHER
 }
 
+// ─── Project content (goals & work packages) ─────────────────────────────────
+
+model ProjectInfo {
+  id           String   @id @default(cuid())
+  vlirTitle    String   @default("What is VLIR-UOS?")
+  vlirP1       String   @db.Text
+  vlirP2       String   @db.Text
+  problemTitle String   @default("The Problem")
+  problemList  String   @db.Text // newline-separated bullet points
+  updatedAt    DateTime @updatedAt
+}
+
+model ProjectGoal {
+  id        String   @id @default(cuid())
+  text      String   @db.Text
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WorkPackage {
+  id        String   @id @default(cuid())
+  wpId      String
+  title     String
+  lead      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // ─── Impact metrics ───────────────────────────────────────────────────────────
+
+model ImpactSection {
+  id        String   @id @default(cuid())
+  tag       String   @default("Socioeconomic Transformation")
+  title     String   @default("Cultivating Community & Equitable Growth")
+  updatedAt DateTime @updatedAt
+}
+
+model ImpactArea {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  icon        String   @default("Users")
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 
 model ImpactMetric {
   id        String   @id @default(cuid())

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { unstable_noStore as noStore } from "next/cache";
 import prisma from "@/lib/prisma";
-import type { ResearchProject, Publication } from "../../../../generated/prisma-client";
+import type { Publication } from "../../../../generated/prisma-client";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ResearchPage() {
+  noStore();
   if (DB_DISABLED) {
     // DB explicitly disabled — use static fallback (pass undefined)
     return <Research />;
@@ -21,15 +23,16 @@ export default async function ResearchPage() {
 
   // null = DB unavailable (error), [] = DB connected but empty
     let pillarContents: any[] | null = null;
-  let projects: ResearchProject[] | null = null;
+  let projects: any[] | null = null;
   let publications: Publication[] | null = null;
 
   try {
     [pillarContents, projects, publications] = await Promise.all([
-      prisma.pillarContent.findMany({}), 
+      prisma.pillarContent.findMany({}),
       prisma.researchProject.findMany({
         where: { status: { not: "PAUSED" } },
-        orderBy: { createdAt: "asc" },
+        orderBy: { order: "asc" },
+        include: { members: { orderBy: { order: "asc" } } },
       }),
       prisma.publication.findMany({
         where: { status: "PUBLISHED", pillar: { not: null } },

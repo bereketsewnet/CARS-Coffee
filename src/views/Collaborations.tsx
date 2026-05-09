@@ -5,7 +5,7 @@ import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon, Building2 } from
 import type { Collaborator } from "../../generated/prisma-client";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const CATEGORY_ORDER = ["GOVERNMENT", "SPONSOR", "NGO", "ACADEMIC", "INDUSTRY", "OTHER"];
+const ROLE_ORDER = ["Executive Dean", "Vice Executive Dean", "CTBE-CARES-Support"];
 
 const COLORS = ["gradient-green", "gradient-coffee"];
 
@@ -124,21 +124,47 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
     OTHER:      t.coordinators.catOther,
   };
 
-  const groups = CATEGORY_ORDER.map((cat) => ({
-    cat,
-    label: CATEGORY_LABELS[cat],
-    members: (collaborators ?? []).filter((c) => c.category === cat && c.active),
+  const active = (collaborators ?? []).filter((c) => c.active);
+
+  const groups = ROLE_ORDER.map((role) => ({
+    role,
+    members: active
+      .filter((c) => c.role === role)
+      .sort((a, b) => a.order - b.order),
   })).filter((g) => g.members.length > 0);
+
+  // Collaborators with no matching role go into a catch-all group
+  const ungrouped = active
+    .filter((c) => !ROLE_ORDER.includes(c.role ?? ""))
+    .sort((a, b) => a.order - b.order);
 
   return (
     <div className="min-h-screen pt-24">
       {/* Hero */}
       <section className="py-20 bg-charcoal-mid relative overflow-hidden">
+        {/* Image pinned to the right, fully visible, not cropped */}
+        <div className="absolute inset-y-0 right-0 w-3/5 xl:w-2/3 flex items-center justify-end">
+          <img
+            src="/assets/page-bg/Coordinators.webp"
+            alt=""
+            className="h-full w-full object-contain object-right"
+          />
+          {/* Medium brown overlay on entire image */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: "rgba(15,10,5,0.45)" }}
+          />
+          {/* Left-edge blend into dark background */}
+          <div
+            className="absolute inset-y-0 left-0 w-2/5 pointer-events-none"
+            style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,0.6) 50%, transparent 100%)" }}
+          />
+        </div>
+        {/* Main left-to-right shadow covering the text area */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/assets/page-bg/Coordinators.webp')" }}
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }}
         />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(15,12,8,0.97) 0%, rgba(15,12,8,0.97) 55%, rgba(15,12,8,0.5) 80%, rgba(15,12,8,0.05) 100%)" }} />
         <div className="container mx-auto relative z-10">
           <span className="tag-pill mb-4 inline-block">{t.coordinators.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
@@ -153,24 +179,39 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
       {/* Content */}
       <div className="py-20">
         <div className="container mx-auto space-y-16">
-          {groups.length === 0 ? (
+          {groups.length === 0 && ungrouped.length === 0 ? (
             <p className="text-center text-muted-foreground py-24 text-lg">
               {t.coordinators.comingSoon}
             </p>
           ) : (
-            groups.map((g) => (
-              <div key={g.cat}>
-                <h2 className="font-serif text-2xl font-bold mb-8 flex items-center gap-3">
-                  <span className="w-8 h-1 rounded-full bg-leaf inline-block" />
-                  {g.label}
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {g.members.map((c, i) => (
-                    <CollaboratorCard key={c.id} c={c} idx={i} categoryLabel={CATEGORY_LABELS[c.category] ?? c.category} />
-                  ))}
+            <>
+              {groups.map((g) => (
+                <div key={g.role}>
+                  <h2 className="font-serif text-2xl font-bold mb-8 flex items-center gap-3">
+                    <span className="w-8 h-1 rounded-full bg-leaf inline-block" />
+                    {g.role}
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {g.members.map((c, i) => (
+                      <CollaboratorCard key={c.id} c={c} idx={i} categoryLabel={CATEGORY_LABELS[c.category] ?? c.category} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+              {ungrouped.length > 0 && (
+                <div>
+                  <h2 className="font-serif text-2xl font-bold mb-8 flex items-center gap-3">
+                    <span className="w-8 h-1 rounded-full bg-leaf inline-block" />
+                    Other Coordinators
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {ungrouped.map((c, i) => (
+                      <CollaboratorCard key={c.id} c={c} idx={i} categoryLabel={CATEGORY_LABELS[c.category] ?? c.category} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

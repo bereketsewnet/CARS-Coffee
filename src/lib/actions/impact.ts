@@ -66,3 +66,80 @@ export async function deleteImpactMetric(id: string): Promise<void> {
   revalidatePath("/admin/impact");
   revalidatePath("/impact");
 }
+
+// ── Socioeconomic Section Header ──────────────────────────────────────────────
+
+export async function upsertImpactSection(form: FormData): Promise<ImpactFormState> {
+  await requireAdmin();
+  try {
+    const existing = await prisma.impactSection.findFirst();
+    const data = {
+      tag: (form.get("tag") as string) || "Socioeconomic Transformation",
+      title: (form.get("title") as string) || "Cultivating Community & Equitable Growth",
+    };
+    if (existing) {
+      await prisma.impactSection.update({ where: { id: existing.id }, data });
+    } else {
+      await prisma.impactSection.create({ data });
+    }
+    revalidatePath("/admin/impact");
+    revalidatePath("/impact");
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { error: "Failed to save section header." };
+  }
+}
+
+// ── Impact Area cards ─────────────────────────────────────────────────────────
+
+export async function createImpactArea(form: FormData): Promise<ImpactFormState> {
+  await requireAdmin();
+  try {
+    if (!form.get("title") || !form.get("description")) {
+      return { error: "Title and description are required." };
+    }
+    await prisma.impactArea.create({
+      data: {
+        title: form.get("title") as string,
+        description: form.get("description") as string,
+        icon: (form.get("icon") as string) || "Users",
+        order: Number(form.get("order") || 0),
+      },
+    });
+    revalidatePath("/admin/impact");
+    revalidatePath("/impact");
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { error: "Failed to create area." };
+  }
+}
+
+export async function updateImpactArea(id: string, form: FormData): Promise<ImpactFormState> {
+  await requireAdmin();
+  try {
+    await prisma.impactArea.update({
+      where: { id },
+      data: {
+        title: form.get("title") as string,
+        description: form.get("description") as string,
+        icon: (form.get("icon") as string) || "Users",
+        order: Number(form.get("order") || 0),
+      },
+    });
+    revalidatePath("/admin/impact");
+    revalidatePath("/impact");
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { error: "Failed to update area." };
+  }
+}
+
+export async function deleteImpactArea(id: string): Promise<void> {
+  await requireAdmin();
+  await prisma.impactArea.delete({ where: { id } });
+  revalidatePath("/admin/impact");
+  revalidatePath("/impact");
+}

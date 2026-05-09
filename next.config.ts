@@ -31,6 +31,13 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // Disable client-side router cache for dynamic routes so that navigating
+  // to public pages always gets a fresh server render (not a cached snapshot).
+  experimental: {
+    staleTimes: {
+      dynamic: 0,
+    },
+  },
   turbopack: {
     // Force Turbopack to treat this directory as the workspace root
     root: __dirname,

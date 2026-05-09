@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_noStore as noStore } from "next/cache";
 import prisma from "@/lib/prisma";
 import type { TeamMember as DbMember } from "../../../../generated/prisma-client";
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TeamPage() {
+  noStore();
   if (DB_DISABLED) {
     return <Team />;
   }

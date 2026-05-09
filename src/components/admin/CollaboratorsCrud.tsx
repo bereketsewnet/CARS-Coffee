@@ -27,6 +27,12 @@ const CATEGORY_LABELS: Record<string, string> = {
   OTHER:      "Other",
 };
 
+const ROLE_OPTIONS = [
+  "Executive Dean",
+  "Vice Executive Dean",
+  "CTBE-CARES-Support",
+];
+
 export default function CollaboratorsCrud({ items: initial }: { items: Collaborator[] }) {
   const router = useRouter();
   const [items, setItems] = useState(initial);
@@ -227,7 +233,12 @@ export default function CollaboratorsCrud({ items: initial }: { items: Collabora
               </Field>
             </div>
             <Field label="Role / Title">
-              <input name="role" defaultValue={editing?.role ?? ""} className={inputCls} placeholder="Director General" />
+              <select name="role" defaultValue={editing?.role ?? ""} className={selectCls}>
+                <option value="">— Select role —</option>
+                {ROLE_OPTIONS.map((r) => (
+                  <option key={r} value={r}>{r}</option>
+                ))}
+              </select>
             </Field>
             <Field label="Organisation">
               <input name="organisation" defaultValue={editing?.organisation ?? ""} className={inputCls} placeholder="Ministry of Agriculture" />

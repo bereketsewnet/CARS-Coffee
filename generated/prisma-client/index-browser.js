@@ -201,6 +201,17 @@ exports.Prisma.ResearchProjectScalarFieldEnum = {
   description: 'description',
   startDate: 'startDate',
   endDate: 'endDate',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ResearchTopicMemberScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  role: 'role',
+  projectId: 'projectId',
+  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -265,6 +276,51 @@ exports.Prisma.CollaboratorScalarFieldEnum = {
   instagram: 'instagram',
   website: 'website',
   active: 'active',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectInfoScalarFieldEnum = {
+  id: 'id',
+  vlirTitle: 'vlirTitle',
+  vlirP1: 'vlirP1',
+  vlirP2: 'vlirP2',
+  problemTitle: 'problemTitle',
+  problemList: 'problemList',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectGoalScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WorkPackageScalarFieldEnum = {
+  id: 'id',
+  wpId: 'wpId',
+  title: 'title',
+  lead: 'lead',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ImpactSectionScalarFieldEnum = {
+  id: 'id',
+  tag: 'tag',
+  title: 'title',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ImpactAreaScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  icon: 'icon',
   order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -367,6 +423,13 @@ exports.Prisma.ResearchProjectOrderByRelevanceFieldEnum = {
   description: 'description'
 };
 
+exports.Prisma.ResearchTopicMemberOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  role: 'role',
+  projectId: 'projectId'
+};
+
 exports.Prisma.PillarContentOrderByRelevanceFieldEnum = {
   id: 'id',
   pillar: 'pillar',
@@ -414,6 +477,40 @@ exports.Prisma.CollaboratorOrderByRelevanceFieldEnum = {
   twitter: 'twitter',
   instagram: 'instagram',
   website: 'website'
+};
+
+exports.Prisma.ProjectInfoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  vlirTitle: 'vlirTitle',
+  vlirP1: 'vlirP1',
+  vlirP2: 'vlirP2',
+  problemTitle: 'problemTitle',
+  problemList: 'problemList'
+};
+
+exports.Prisma.ProjectGoalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  text: 'text'
+};
+
+exports.Prisma.WorkPackageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  wpId: 'wpId',
+  title: 'title',
+  lead: 'lead'
+};
+
+exports.Prisma.ImpactSectionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  tag: 'tag',
+  title: 'title'
+};
+
+exports.Prisma.ImpactAreaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  icon: 'icon'
 };
 
 exports.Prisma.ImpactMetricOrderByRelevanceFieldEnum = {
@@ -503,11 +600,17 @@ exports.Prisma.ModelName = {
   TeamMember: 'TeamMember',
   NewsEvent: 'NewsEvent',
   ResearchProject: 'ResearchProject',
+  ResearchTopicMember: 'ResearchTopicMember',
   PillarContent: 'PillarContent',
   ContactMessage: 'ContactMessage',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',
   Collaborator: 'Collaborator',
+  ProjectInfo: 'ProjectInfo',
+  ProjectGoal: 'ProjectGoal',
+  WorkPackage: 'WorkPackage',
+  ImpactSection: 'ImpactSection',
+  ImpactArea: 'ImpactArea',
   ImpactMetric: 'ImpactMetric',
   SiteContactInfo: 'SiteContactInfo'
 };

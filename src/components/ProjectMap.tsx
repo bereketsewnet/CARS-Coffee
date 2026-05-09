@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 
 // ── Location data ────────────────────────────────────────────────────────────
 
-type SiteType = "farm" | "lab" | "processing" | "partner";
+type SiteType = "farm" | "lab" | "processing" | "belgium" | "partner";
 
 interface ProjectSite {
   id: string;
@@ -21,58 +21,58 @@ interface ProjectSite {
 
 const projectSites: ProjectSite[] = [
   {
+    id: "sidama-ka",
+    name: "Sidama-KA PLC",
+    type: "farm",
+    lat: 6.83,
+    lng: 38.42,
+    description: "Farm / field site. Coffee cherry collection and primary processing for circular waste trials.",
+    country: "Ethiopia",
+  },
+  {
     id: "yirgacheffe",
-    name: "Yirgacheffe Coffee Zone",
+    name: "Yirgacheffe – Hafurisa Cooperative Society",
     type: "farm",
     lat: 6.15,
     lng: 38.2,
-    description: "Primary field site. Pilot composting and circular processing trials with Yirgacheffe Cooperative.",
+    description: "Primary field site. Pilot composting and circular processing trials with Hafurisa Cooperative Society.",
     country: "Ethiopia",
   },
   {
-    id: "kaffa",
-    name: "Kaffa Zone – Biochar Trials",
-    type: "farm",
-    lat: 7.33,
-    lng: 36.0,
-    description: "18-month longitudinal biochar/compost soil fertility trial across smallholder farms.",
-    country: "Ethiopia",
-  },
-  {
-    id: "jimma",
-    name: "Jimma University Research Station",
+    id: "cares-biolab",
+    name: "CARES BioLab, CTBE-AAU",
     type: "lab",
-    lat: 7.67,
-    lng: 36.83,
-    description: "Soil analysis laboratory partner. Coffee husk biochar characterization and soil microbiome studies.",
+    lat: 9.048,
+    lng: 38.766,
+    description: "Room No. 205, 2nd Floor, Samsung Building, CTBE-AAU. Biochar characterisation and soil analysis.",
     country: "Ethiopia",
   },
   {
-    id: "sidama",
-    name: "Sidama Zone – Socio-Economic Study",
+    id: "life-agro",
+    name: "Life Agro PLC",
     type: "processing",
-    lat: 6.83,
-    lng: 38.42,
-    description: "Gender & income impact survey site. Cooperative integration for circular practices at washing stations.",
-    country: "Ethiopia",
-  },
-  {
-    id: "aau",
-    name: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)",
-    type: "lab",
-    lat: 9.045,
-    lng: 38.763,
-    description: "South partner institution. Leads WP3, WP4. Environmental engineering and socio-economic research.",
+    lat: 9.02,
+    lng: 38.79,
+    description: "Processing station, Gurd Shola, Ethiopia. Coffee by-product valorisation and circular processing trials.",
     country: "Ethiopia",
   },
   {
     id: "antwerp",
-    name: "University of Antwerp",
-    type: "partner",
+    name: "Bioscience Engineering, University of Antwerp",
+    type: "belgium",
     lat: 51.22,
     lng: 4.4,
-    description: "North partner and project coordinator. Circular bioeconomy expertise and VLIR-UOS programme lead.",
+    description: "Groenenborgerlaan 171, 2020 UAntwerpen, BELGIUM. North partner and project coordinator. Circular bioeconomy expertise and VLIR-UOS programme lead.",
     country: "Belgium",
+  },
+  {
+    id: "ctbe-aau",
+    name: "Chemical and Bioengineering, CTBE-AAU",
+    type: "partner",
+    lat: 9.042,
+    lng: 38.76,
+    description: "King George VI St. PO Box 385, CTBE-AAU, ETHIOPIA. South partner institution. Leads WP3, WP4. Environmental engineering and socio-economic research.",
+    country: "Ethiopia",
   },
 ];
 
@@ -82,6 +82,7 @@ const COLOR_MAP: Record<SiteType, string> = {
   farm: "#4ade80",       // leaf green
   lab: "#60a5fa",        // blue
   processing: "#fb923c", // orange
+  belgium: "#f59e0b",    // amber/gold
   partner: "#c084fc",    // purple
 };
 
@@ -89,6 +90,7 @@ const LABEL_MAP: Record<SiteType, string> = {
   farm: "☕ Farm / Field Site",
   lab: "🔬 Research Lab",
   processing: "⚙️ Processing Station",
+  belgium: "🏛 Belgium University",
   partner: "🏛 Partner University",
 };
 
@@ -146,8 +148,8 @@ export default function ProjectMap() {
       {/* Map */}
       <div className="rounded-2xl overflow-hidden border border-border shadow-card" style={{ height: 480 }}>
         {mounted && <MapContainer
-          center={[8.5, 38.5]}
-          zoom={6}
+          center={[28, 22]}
+          zoom={3}
           style={{ height: "100%", width: "100%" }}
           zoomControl={false}
           scrollWheelZoom={false}
