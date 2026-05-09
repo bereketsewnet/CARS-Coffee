@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Leaf, Recycle, Users, ChevronDown, ChevronUp } from "lucide-react";
 
-const soilImg = "/assets/soil-research.jpg";
-const wasteImg = "/assets/waste-research.jpg";
-const socioImg = "/assets/socio-economic.jpg";
+const soilImg = "/assets/soil-research.png";
+const wasteImg = "/assets/waste-research.png";
+const socioImg = "/assets/socio-economic.png";
 
 const pillars = [
   {

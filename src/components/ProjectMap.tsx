@@ -58,7 +58,7 @@ const projectSites: ProjectSite[] = [
   },
   {
     id: "aau",
-    name: "Addis Ababa University (AAU)",
+    name: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)",
     type: "lab",
     lat: 9.045,
     lng: 38.763,

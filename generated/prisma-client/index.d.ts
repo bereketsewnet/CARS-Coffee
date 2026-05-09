@@ -13615,6 +13615,8 @@ export namespace Prisma {
     generalEmail: string | null
     researchEmail: string | null
     mediaEmail: string | null
+    primaryPhone: string | null
+    secondaryPhone: string | null
     northLocation: string | null
     southLocation: string | null
     linkedin: string | null
@@ -13632,6 +13634,8 @@ export namespace Prisma {
     generalEmail: string | null
     researchEmail: string | null
     mediaEmail: string | null
+    primaryPhone: string | null
+    secondaryPhone: string | null
     northLocation: string | null
     southLocation: string | null
     linkedin: string | null
@@ -13649,6 +13653,8 @@ export namespace Prisma {
     generalEmail: number
     researchEmail: number
     mediaEmail: number
+    primaryPhone: number
+    secondaryPhone: number
     northLocation: number
     southLocation: number
     linkedin: number
@@ -13668,6 +13674,8 @@ export namespace Prisma {
     generalEmail?: true
     researchEmail?: true
     mediaEmail?: true
+    primaryPhone?: true
+    secondaryPhone?: true
     northLocation?: true
     southLocation?: true
     linkedin?: true
@@ -13685,6 +13693,8 @@ export namespace Prisma {
     generalEmail?: true
     researchEmail?: true
     mediaEmail?: true
+    primaryPhone?: true
+    secondaryPhone?: true
     northLocation?: true
     southLocation?: true
     linkedin?: true
@@ -13702,6 +13712,8 @@ export namespace Prisma {
     generalEmail?: true
     researchEmail?: true
     mediaEmail?: true
+    primaryPhone?: true
+    secondaryPhone?: true
     northLocation?: true
     southLocation?: true
     linkedin?: true
@@ -13792,6 +13804,8 @@ export namespace Prisma {
     generalEmail: string | null
     researchEmail: string | null
     mediaEmail: string | null
+    primaryPhone: string | null
+    secondaryPhone: string | null
     northLocation: string | null
     southLocation: string | null
     linkedin: string | null
@@ -13826,6 +13840,8 @@ export namespace Prisma {
     generalEmail?: boolean
     researchEmail?: boolean
     mediaEmail?: boolean
+    primaryPhone?: boolean
+    secondaryPhone?: boolean
     northLocation?: boolean
     southLocation?: boolean
     linkedin?: boolean
@@ -13845,6 +13861,8 @@ export namespace Prisma {
     generalEmail?: boolean
     researchEmail?: boolean
     mediaEmail?: boolean
+    primaryPhone?: boolean
+    secondaryPhone?: boolean
     northLocation?: boolean
     southLocation?: boolean
     linkedin?: boolean
@@ -13857,7 +13875,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type SiteContactInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "generalEmail" | "researchEmail" | "mediaEmail" | "northLocation" | "southLocation" | "linkedin" | "youtube" | "twitter" | "facebook" | "instagram" | "tiktok" | "website" | "updatedAt", ExtArgs["result"]["siteContactInfo"]>
+  export type SiteContactInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "generalEmail" | "researchEmail" | "mediaEmail" | "primaryPhone" | "secondaryPhone" | "northLocation" | "southLocation" | "linkedin" | "youtube" | "twitter" | "facebook" | "instagram" | "tiktok" | "website" | "updatedAt", ExtArgs["result"]["siteContactInfo"]>
 
   export type $SiteContactInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SiteContactInfo"
@@ -13867,6 +13885,8 @@ export namespace Prisma {
       generalEmail: string | null
       researchEmail: string | null
       mediaEmail: string | null
+      primaryPhone: string | null
+      secondaryPhone: string | null
       northLocation: string | null
       southLocation: string | null
       linkedin: string | null
@@ -14250,6 +14270,8 @@ export namespace Prisma {
     readonly generalEmail: FieldRef<"SiteContactInfo", 'String'>
     readonly researchEmail: FieldRef<"SiteContactInfo", 'String'>
     readonly mediaEmail: FieldRef<"SiteContactInfo", 'String'>
+    readonly primaryPhone: FieldRef<"SiteContactInfo", 'String'>
+    readonly secondaryPhone: FieldRef<"SiteContactInfo", 'String'>
     readonly northLocation: FieldRef<"SiteContactInfo", 'String'>
     readonly southLocation: FieldRef<"SiteContactInfo", 'String'>
     readonly linkedin: FieldRef<"SiteContactInfo", 'String'>
@@ -14799,6 +14821,8 @@ export namespace Prisma {
     generalEmail: 'generalEmail',
     researchEmail: 'researchEmail',
     mediaEmail: 'mediaEmail',
+    primaryPhone: 'primaryPhone',
+    secondaryPhone: 'secondaryPhone',
     northLocation: 'northLocation',
     southLocation: 'southLocation',
     linkedin: 'linkedin',
@@ -14985,6 +15009,8 @@ export namespace Prisma {
     generalEmail: 'generalEmail',
     researchEmail: 'researchEmail',
     mediaEmail: 'mediaEmail',
+    primaryPhone: 'primaryPhone',
+    secondaryPhone: 'secondaryPhone',
     northLocation: 'northLocation',
     southLocation: 'southLocation',
     linkedin: 'linkedin',
@@ -16061,6 +16087,8 @@ export namespace Prisma {
     generalEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
     researchEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
     mediaEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    primaryPhone?: StringNullableFilter<"SiteContactInfo"> | string | null
+    secondaryPhone?: StringNullableFilter<"SiteContactInfo"> | string | null
     northLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
     southLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
     linkedin?: StringNullableFilter<"SiteContactInfo"> | string | null
@@ -16078,6 +16106,8 @@ export namespace Prisma {
     generalEmail?: SortOrderInput | SortOrder
     researchEmail?: SortOrderInput | SortOrder
     mediaEmail?: SortOrderInput | SortOrder
+    primaryPhone?: SortOrderInput | SortOrder
+    secondaryPhone?: SortOrderInput | SortOrder
     northLocation?: SortOrderInput | SortOrder
     southLocation?: SortOrderInput | SortOrder
     linkedin?: SortOrderInput | SortOrder
@@ -16099,6 +16129,8 @@ export namespace Prisma {
     generalEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
     researchEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
     mediaEmail?: StringNullableFilter<"SiteContactInfo"> | string | null
+    primaryPhone?: StringNullableFilter<"SiteContactInfo"> | string | null
+    secondaryPhone?: StringNullableFilter<"SiteContactInfo"> | string | null
     northLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
     southLocation?: StringNullableFilter<"SiteContactInfo"> | string | null
     linkedin?: StringNullableFilter<"SiteContactInfo"> | string | null
@@ -16116,6 +16148,8 @@ export namespace Prisma {
     generalEmail?: SortOrderInput | SortOrder
     researchEmail?: SortOrderInput | SortOrder
     mediaEmail?: SortOrderInput | SortOrder
+    primaryPhone?: SortOrderInput | SortOrder
+    secondaryPhone?: SortOrderInput | SortOrder
     northLocation?: SortOrderInput | SortOrder
     southLocation?: SortOrderInput | SortOrder
     linkedin?: SortOrderInput | SortOrder
@@ -16139,6 +16173,8 @@ export namespace Prisma {
     generalEmail?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     researchEmail?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     mediaEmail?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    primaryPhone?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
+    secondaryPhone?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     northLocation?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     southLocation?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
     linkedin?: StringNullableWithAggregatesFilter<"SiteContactInfo"> | string | null
@@ -17265,6 +17301,8 @@ export namespace Prisma {
     generalEmail?: string | null
     researchEmail?: string | null
     mediaEmail?: string | null
+    primaryPhone?: string | null
+    secondaryPhone?: string | null
     northLocation?: string | null
     southLocation?: string | null
     linkedin?: string | null
@@ -17282,6 +17320,8 @@ export namespace Prisma {
     generalEmail?: string | null
     researchEmail?: string | null
     mediaEmail?: string | null
+    primaryPhone?: string | null
+    secondaryPhone?: string | null
     northLocation?: string | null
     southLocation?: string | null
     linkedin?: string | null
@@ -17299,6 +17339,8 @@ export namespace Prisma {
     generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
     researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
     mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
     northLocation?: NullableStringFieldUpdateOperationsInput | string | null
     southLocation?: NullableStringFieldUpdateOperationsInput | string | null
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17316,6 +17358,8 @@ export namespace Prisma {
     generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
     researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
     mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
     northLocation?: NullableStringFieldUpdateOperationsInput | string | null
     southLocation?: NullableStringFieldUpdateOperationsInput | string | null
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17333,6 +17377,8 @@ export namespace Prisma {
     generalEmail?: string | null
     researchEmail?: string | null
     mediaEmail?: string | null
+    primaryPhone?: string | null
+    secondaryPhone?: string | null
     northLocation?: string | null
     southLocation?: string | null
     linkedin?: string | null
@@ -17350,6 +17396,8 @@ export namespace Prisma {
     generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
     researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
     mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
     northLocation?: NullableStringFieldUpdateOperationsInput | string | null
     southLocation?: NullableStringFieldUpdateOperationsInput | string | null
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17367,6 +17415,8 @@ export namespace Prisma {
     generalEmail?: NullableStringFieldUpdateOperationsInput | string | null
     researchEmail?: NullableStringFieldUpdateOperationsInput | string | null
     mediaEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    secondaryPhone?: NullableStringFieldUpdateOperationsInput | string | null
     northLocation?: NullableStringFieldUpdateOperationsInput | string | null
     southLocation?: NullableStringFieldUpdateOperationsInput | string | null
     linkedin?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18271,6 +18321,8 @@ export namespace Prisma {
     generalEmail?: SortOrder
     researchEmail?: SortOrder
     mediaEmail?: SortOrder
+    primaryPhone?: SortOrder
+    secondaryPhone?: SortOrder
     northLocation?: SortOrder
     southLocation?: SortOrder
     linkedin?: SortOrder
@@ -18288,6 +18340,8 @@ export namespace Prisma {
     generalEmail?: SortOrder
     researchEmail?: SortOrder
     mediaEmail?: SortOrder
+    primaryPhone?: SortOrder
+    secondaryPhone?: SortOrder
     northLocation?: SortOrder
     southLocation?: SortOrder
     linkedin?: SortOrder
@@ -18305,6 +18359,8 @@ export namespace Prisma {
     generalEmail?: SortOrder
     researchEmail?: SortOrder
     mediaEmail?: SortOrder
+    primaryPhone?: SortOrder
+    secondaryPhone?: SortOrder
     northLocation?: SortOrder
     southLocation?: SortOrder
     linkedin?: SortOrder

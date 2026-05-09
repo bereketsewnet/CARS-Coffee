@@ -13,6 +13,8 @@ export async function upsertSiteContactInfo(formData: FormData) {
     generalEmail:   (formData.get("generalEmail")   as string) || null,
     researchEmail:  (formData.get("researchEmail")  as string) || null,
     mediaEmail:     (formData.get("mediaEmail")     as string) || null,
+    primaryPhone:   (formData.get("primaryPhone")   as string) || null,
+    secondaryPhone: (formData.get("secondaryPhone") as string) || null,
     northLocation:  (formData.get("northLocation")  as string) || null,
     southLocation:  (formData.get("southLocation")  as string) || null,
     linkedin:       (formData.get("linkedin")       as string) || null,

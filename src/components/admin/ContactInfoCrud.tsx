@@ -4,7 +4,7 @@ import { useState, useTransition, useEffect } from "react";
 import { upsertSiteContactInfo } from "@/lib/actions/siteContact";
 import type { SiteContactInfo } from "../../../generated/prisma-client";
 import {
-  Mail, MapPin, Linkedin, Youtube, Instagram, Globe,
+  Mail, MapPin, Phone, Linkedin, Youtube, Instagram, Globe,
   Save, CheckCircle, Loader2, Music2, Facebook,
 } from "lucide-react";
 
@@ -113,15 +113,28 @@ export default function ContactInfoCrud({ info }: Props) {
         </div>
       </div>
 
+      {/* Phone numbers */}
+      <div className="glass-card rounded-2xl p-6 border border-border space-y-4">
+        <h2 className="font-serif font-bold text-lg flex items-center gap-2">
+          <Phone className="w-5 h-5 text-leaf-bright" /> Phone Numbers
+        </h2>
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Field label="Primary Phone" name="primaryPhone" icon={Phone} type="tel"
+            defaultValue={v("primaryPhone", "")} placeholder="+251 11 000 0000" />
+          <Field label="Secondary Phone" name="secondaryPhone" icon={Phone} type="tel"
+            defaultValue={v("secondaryPhone", "")} placeholder="+32 3 000 0000" />
+        </div>
+      </div>
+
       {/* Locations */}
       <div className="glass-card rounded-2xl p-6 border border-border space-y-4">
         <h2 className="font-serif font-bold text-lg flex items-center gap-2">
           <MapPin className="w-5 h-5 text-leaf-bright" /> Office Locations
         </h2>
         <div className="grid sm:grid-cols-2 gap-4">
-          <TextAreaField label="University of Antwerp (North)" name="northLocation" icon={MapPin}
+          <TextAreaField label="University of Antwerp" name="northLocation" icon={MapPin}
             defaultValue={v("northLocation", "Prinsstraat 13, 2000 Antwerp, Belgium")} />
-          <TextAreaField label="Addis Ababa University (South)" name="southLocation" icon={MapPin}
+          <TextAreaField label="CTBE-AAU" name="southLocation" icon={MapPin}
             defaultValue={v("southLocation", "King George VI Street, Addis Ababa, Ethiopia")} />
         </div>
       </div>

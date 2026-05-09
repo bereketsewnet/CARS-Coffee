@@ -217,7 +217,7 @@ export const translations: Record<Lang, Translations> = {
       heroTitle1: "The",
       heroTitle2: "Circular Coffee",
       heroTitle3: "Project",
-      heroDesc: "A 4-year north–south cooperative research programme funded by VLIR-UOS, connecting the University of Antwerp and Addis Ababa University to close the coffee value chain loop in Ethiopia.",
+      heroDesc: "A 4-year north–south cooperative research programme funded by VLIR-UOS, connecting the University of Antwerp and College of Technology and Built Environment, Addis Ababa University (CTBE-AAU) to close the coffee value chain loop in Ethiopia.",
       vlirSub: "VLIR-UOS Cooperation",
       vlirTitle: "What is VLIR-UOS?",
       vlirP1: "VLIR-UOS (Flemish Interuniversity Council – University Development Cooperation) supports partnerships between Flemish universities and institutions in the Global South. These \"Institutional University Cooperation\" projects build lasting academic and research capacity.",

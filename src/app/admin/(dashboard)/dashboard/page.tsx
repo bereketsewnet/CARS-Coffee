@@ -31,7 +31,7 @@ const recentActivity = [
   },
   {
     type: "event",
-    title: "AAU Symposium scheduled for March 15",
+    title: "CTBE-AAU Symposium scheduled for March 15",
     time: "Yesterday",
     status: "pending",
     icon: Calendar,

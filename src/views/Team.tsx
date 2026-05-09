@@ -71,7 +71,7 @@ const staticTeam: TeamMember[] = [
   {
     name: "Prof. Dr. Tigist Alemu",
     title: "Principal Investigator (South)",
-    institution: "Addis Ababa University",
+    institution: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)",
     focus: "Soil Science & Agroecology",
     role: "Principal Investigator",
     initials: "TA",
@@ -101,7 +101,7 @@ const staticTeam: TeamMember[] = [
   {
     name: "Selamawit Tadesse",
     title: "PhD Researcher",
-    institution: "AAU / UA Antwerp",
+    institution: "CTBE-AAU / UA Antwerp",
     focus: "Coffee Husk Compost Trials",
     role: "PhD Researcher",
     initials: "ST",
@@ -111,7 +111,7 @@ const staticTeam: TeamMember[] = [
   {
     name: "Robel Getachew",
     title: "PhD Researcher",
-    institution: "Addis Ababa University",
+    institution: "CTBE-AAU / UA Antwerp",
     focus: "Anaerobic Digestion Systems",
     role: "PhD Researcher",
     initials: "RG",
@@ -121,7 +121,7 @@ const staticTeam: TeamMember[] = [
   {
     name: "Amina Desta",
     title: "PhD Researcher",
-    institution: "AAU / IFPRI",
+    institution: "CTBE-AAU / IFPRI",
     focus: "Gender & Value Chain Analysis",
     role: "PhD Researcher",
     initials: "AD",

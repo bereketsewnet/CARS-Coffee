@@ -10,9 +10,9 @@ export default function TheProject() {
 
   const workPackages = [
     { id: "WP1", title: t.project.wpTitles[0], color: "tag-coffee", lead: "UA Antwerp" },
-    { id: "WP2", title: t.project.wpTitles[1], color: "tag-pill", lead: "AAU & UA" },
-    { id: "WP3", title: t.project.wpTitles[2], color: "tag-pill", lead: "AAU" },
-    { id: "WP4", title: t.project.wpTitles[3], color: "tag-pill", lead: "AAU & IFPRI" },
+    { id: "WP2", title: t.project.wpTitles[1], color: "tag-pill", lead: "CTBE-AAU & UA" },
+    { id: "WP3", title: t.project.wpTitles[2], color: "tag-pill", lead: "CTBE-AAU" },
+    { id: "WP4", title: t.project.wpTitles[3], color: "tag-pill", lead: "CTBE-AAU & IFPRI" },
     { id: "WP5", title: t.project.wpTitles[4], color: "tag-coffee", lead: "All Partners" },
   ];
 

@@ -246,6 +246,10 @@ model SiteContactInfo {
   researchEmail   String?
   mediaEmail      String?
 
+  // Phone numbers
+  primaryPhone    String?
+  secondaryPhone  String?
+
   // Locations
   northLocation   String? @db.Text   // e.g. "Prinsstraat 13, 2000 Antwerp, Belgium"
   southLocation   String? @db.Text   // e.g. "King George VI Street, Addis Ababa, Ethiopia"

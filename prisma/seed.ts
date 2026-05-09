@@ -32,9 +32,9 @@ async function main() {
   const team = [
     { name: "Dr. Elias Tadesse", role: "Principal Investigator", institution: "Jimma University", country: "Ethiopia", pillar: "SOIL_HEALTH" as const },
     { name: "Prof. Jonas Van der Berg", role: "Senior Researcher", institution: "Ghent University", country: "Belgium", pillar: "WASTE_VALORIZATION" as const },
-    { name: "Dr. Fatuma Mekonnen", role: "Social Scientist", institution: "Addis Ababa University", country: "Ethiopia", pillar: "SOCIO_ECONOMIC" as const },
+    { name: "Dr. Fatuma Mekonnen", role: "Social Scientist", institution: "CTBE-AAU", country: "Ethiopia", pillar: "SOCIO_ECONOMIC" as const },
     { name: "Ana De Smedt", role: "PhD Researcher", institution: "Ghent University", country: "Belgium", pillar: "SOCIO_ECONOMIC" as const },
-    { name: "Dr. Mohammed Ahmed", role: "Environmental Engineer", institution: "Addis Ababa University", country: "Ethiopia", pillar: "WASTE_VALORIZATION" as const, active: false },
+    { name: "Dr. Mohammed Ahmed", role: "Environmental Engineer", institution: "CTBE-AAU", country: "Ethiopia", pillar: "WASTE_VALORIZATION" as const, active: false },
     { name: "Lena Fischer", role: "MSc Student", institution: "KU Leuven", country: "Belgium", pillar: "SOIL_HEALTH" as const },
   ];
   for (const m of team) {

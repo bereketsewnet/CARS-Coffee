@@ -201,14 +201,14 @@ export default function Contact() {
               <div className="space-y-4 text-sm text-muted-foreground">
                 <div>
                   <p className="font-semibold text-foreground">
-                    University of Antwerp (North)
+                    University of Antwerp
                   </p>
                   <p>Prinsstraat 13, 2000 Antwerp, Belgium</p>
                 </div>
                 <div className="section-divider" />
                 <div>
                   <p className="font-semibold text-foreground">
-                    Addis Ababa University (South)
+                    College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)
                   </p>
                   <p>King George VI Street, Addis Ababa, Ethiopia</p>
                 </div>

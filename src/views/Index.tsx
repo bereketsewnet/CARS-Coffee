@@ -71,12 +71,12 @@ const FALLBACK_TEAM_PREVIEW_MEMBERS: TeamPreviewMember[] = [
   {
     name: "Prof. Dr. Tigist Alemu",
     role: "Principal Investigator (South)",
-    institution: "Addis Ababa University",
+    institution: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)",
   },
   {
     name: "Selamawit Tadesse",
     role: "PhD Candidate",
-    institution: "AAU / UA Antwerp",
+    institution: "CTBE-AAU / UA Antwerp",
   },
   {
     name: "Thomas Claeys",
@@ -663,7 +663,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
         >
           {[
             { src: "/assets/VLIRUOS.jpg",                alt: "VLIR-UOS" },
-            { src: "/assets/ADDIS ABABA UNIVERSITY.jpg", alt: "Addis Ababa University" },
+            { src: "/assets/ADDIS ABABA UNIVERSITY.jpg", alt: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)" },
             { src: "/assets/UNIVERSITY OF ANTWERP.jpg",  alt: "University of Antwerp" },
           ].map((logo) => (
             <div
@@ -797,9 +797,9 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
 }
 
 // ── Static assets ─────────────────────────────────────────────────────────────
-const soilImg = "/assets/soil-research.jpg";
-const wasteImg = "/assets/waste-research.jpg";
-const socioImg = "/assets/socio-economic.jpg";
+const soilImg = "/assets/soil-research.png";
+const wasteImg = "/assets/waste-research.png";
+const socioImg = "/assets/socio-economic.png";
 
 function HeroCounter({ target, suffix, label }: { target: number; suffix: string; label: string }) {
   const [count, setCount] = useState(0);
@@ -951,7 +951,7 @@ const STATIC_NEWS = [
   {
     id: "2",
     date: "Oct 2024",
-    title: "Circular Coffee Team Presents at AAU International Symposium",
+    title: "Circular Coffee Team Presents at CTBE-AAU International Symposium",
     tag: "Event",
     image: null,
     excerpt:
@@ -1319,12 +1319,12 @@ export default function Index({
                 key={member.name}
                 className="stagger-item glass-card rounded-2xl overflow-hidden border border-border pillar-hover group flex flex-col"
               >
-                <Link href="/team" className="aspect-[4/3] w-full bg-card/50 overflow-hidden block">
+                <Link href="/team" className="aspect-square w-full bg-card/50 overflow-hidden block">
                   {member.imageUrl ? (
                     <img
                       src={member.imageUrl}
                       alt={member.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full gradient-green flex items-center justify-center transition-transform duration-700 group-hover:scale-105">

@@ -19,7 +19,7 @@ const posts = [
   },
   {
     id: 2,
-    title: "Circular Coffee Team Presents at AAU International Symposium",
+    title: "Circular Coffee Team Presents at CTBE-AAU International Symposium",
     date: "2024-10-03",
     category: "Event" as Category,
     excerpt:

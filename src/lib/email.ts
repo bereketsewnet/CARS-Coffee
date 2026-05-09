@@ -64,7 +64,7 @@ function layout(title: string, body: string): string {
     ${body}
   </div>
   <div class="footer">
-    © ${new Date().getFullYear()} Circular Coffee CARES · University of Antwerp &amp; Addis Ababa University<br/>
+    © ${new Date().getFullYear()} Circular Coffee CARES · University of Antwerp &amp; College of Technology and Built Environment, Addis Ababa University<br/>
     <a href="https://circularcoffee.org">circularcoffee.org</a> · <a href="mailto:info@circularcoffee.org">info@circularcoffee.org</a>
   </div>
 </div>

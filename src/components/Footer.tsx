@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin, ExternalLink, Linkedin, Youtube, Instagram, Globe, Music2, Facebook } from "lucide-react";
+import { Mail, MapPin, Phone, ExternalLink, Linkedin, Youtube, Instagram, Globe, Music2, Facebook } from "lucide-react";
 
 function XIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
@@ -56,20 +56,28 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <Image
-                src="/assets/CARES LOGO.png"
-                alt="CARES Logo"
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-full object-cover"
-              />
-              <div>
-                <span className="font-serif font-bold text-lg leading-none block">
-                  CARES
-                </span>
-                <span className="text-xs text-leaf-bright tracking-wide">
-                  Circular Economy Research
-                </span>
+              <div className="w-24 h-24 rounded-xl bg-[#1a2e1a] border border-leaf-bright/30 overflow-hidden shrink-0 shadow-glow flex items-center justify-center">
+                <Image
+                  src="/assets/header logo.jpg"
+                  alt="CARES Logo"
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex flex-col gap-0.5">
+                {[
+                  { first: "C", rest: "OFFEE" },
+                  { first: "A", rest: "DVANCEMENT" },
+                  { first: "R", rest: "ESILIENCE" },
+                  { first: "E", rest: "QUITY" },
+                  { first: "S", rest: "USTAINABILITY" },
+                ].map(({ first, rest }) => (
+                  <span key={first} className="text-[13px] font-bold tracking-wider leading-tight">
+                    <span style={{ color: "#D4AF37" }}>{first}</span>
+                    <span className="text-leaf-bright">{rest}</span>
+                  </span>
+                ))}
               </div>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -150,12 +158,34 @@ export function Footer() {
                   {generalEmail}
                 </a>
               </li>
+              {info?.primaryPhone && (
+                <li className="flex items-start gap-2 text-muted-foreground">
+                  <Phone className="w-4 h-4 mt-0.5 text-leaf-bright shrink-0" />
+                  <a href={`tel:${info.primaryPhone}`} className="hover:text-leaf-bright transition-colors">
+                    {info.primaryPhone}
+                  </a>
+                </li>
+              )}
+              {info?.secondaryPhone && (
+                <li className="flex items-start gap-2 text-muted-foreground">
+                  <Phone className="w-4 h-4 mt-0.5 text-leaf-bright shrink-0" />
+                  <a href={`tel:${info.secondaryPhone}`} className="hover:text-leaf-bright transition-colors">
+                    {info.secondaryPhone}
+                  </a>
+                </li>
+              )}
               <li className="flex items-start gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4 mt-0.5 text-leaf-bright shrink-0" />
-                <span>
-                  University of Antwerp &<br />
-                  AAU, Addis Ababa
-                </span>
+                <ul className="space-y-1.5">
+                  <li className="flex items-start gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-leaf-bright mt-1.5 shrink-0" />
+                    <span>College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-leaf-bright mt-1.5 shrink-0" />
+                    <span>University of Antwerp - Belgium</span>
+                  </li>
+                </ul>
               </li>
             </ul>
 
@@ -188,7 +218,7 @@ export function Footer() {
                   Partners
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">AAU</span>
+                  <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">CTBE-AAU</span>
                   <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">UA Antwerp</span>
                   <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">VLIR-UOS</span>
                 </div>

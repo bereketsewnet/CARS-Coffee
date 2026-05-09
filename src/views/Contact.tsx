@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useEffect } from "react";
 import {
-  Mail, MapPin, Send, CheckCircle, Loader2,
+  Mail, MapPin, Phone, Send, CheckCircle, Loader2,
   Linkedin, Youtube, Twitter, Instagram, Globe, Music2,
 } from "lucide-react";
 import { submitContactForm } from "@/lib/actions/contact";
@@ -222,6 +222,39 @@ export default function Contact() {
               </div>
             </div>
 
+            {/* Phone numbers */}
+            {(info?.primaryPhone || info?.secondaryPhone) && (
+              <div className="glass-card rounded-2xl p-6 border border-border">
+                <h3 className="font-serif font-bold text-lg mb-4 flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-leaf-bright" /> Phone
+                </h3>
+                <div className="space-y-3">
+                  {info?.primaryPhone && (
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-leaf-bright shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Primary</p>
+                        <a href={`tel:${info.primaryPhone}`} className="text-sm hover:text-leaf-bright transition-colors">
+                          {info.primaryPhone}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                  {info?.secondaryPhone && (
+                    <div className="flex items-center gap-3">
+                      <Phone className="w-4 h-4 text-leaf-bright shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Secondary</p>
+                        <a href={`tel:${info.secondaryPhone}`} className="text-sm hover:text-leaf-bright transition-colors">
+                          {info.secondaryPhone}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Locations */}
             <div className="glass-card rounded-2xl p-6 border border-border">
               <h3 className="font-serif font-bold text-lg mb-4 flex items-center gap-2">
@@ -229,12 +262,12 @@ export default function Contact() {
               </h3>
               <div className="space-y-4 text-sm text-muted-foreground">
                 <div>
-                  <p className="font-semibold text-foreground">University of Antwerp (North)</p>
+                  <p className="font-semibold text-foreground">University of Antwerp</p>
                   <p>{northLocation}</p>
                 </div>
                 <div className="section-divider" />
                 <div>
-                  <p className="font-semibold text-foreground">Addis Ababa University (South)</p>
+                  <p className="font-semibold text-foreground">CTBE-AAU</p>
                   <p>{southLocation}</p>
                 </div>
               </div>

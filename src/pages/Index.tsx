@@ -132,9 +132,9 @@ function CanvasHero() {
 }
 
 // ── Static section data ───────────────────────────────────────────────────────
-const soilImg = "/assets/soil-research.jpg";
-const wasteImg = "/assets/waste-research.jpg";
-const socioImg = "/assets/socio-economic.jpg";
+const soilImg = "/assets/soil-research.png";
+const wasteImg = "/assets/waste-research.png";
+const socioImg = "/assets/socio-economic.png";
 
 function CounterStat({
   target,
@@ -228,7 +228,7 @@ const news = [
   },
   {
     date: "Oct 2024",
-    title: "Circular Coffee Team Presents at AAU International Symposium",
+    title: "Circular Coffee Team Presents at CTBE-AAU International Symposium",
     tag: "Event",
   },
   {
@@ -292,7 +292,7 @@ export default function Index() {
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-2 shadow-lg">
               <img
                 src="/assets/ADDIS ABABA UNIVERSITY.jpg"
-                alt="Addis Ababa University"
+                alt="College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)"
                 className="h-10 w-auto object-contain"
               />
             </div>
@@ -371,7 +371,7 @@ export default function Index() {
               rivers and degrade soils. The Circular Coffee project brings
               together researchers from{" "}
               <strong className="text-foreground">
-                AAU (Addis Ababa University)
+              College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)
               </strong>{" "}
               and the{" "}
               <strong className="text-foreground">University of Antwerp</strong>{" "}
@@ -527,7 +527,7 @@ export default function Index() {
             <div className="glass-card rounded-2xl p-4 border border-border flex flex-col items-center gap-2 hover:border-leaf-bright/30 transition-all duration-200">
               <img
                 src="/assets/ADDIS ABABA UNIVERSITY.jpg"
-                alt="Addis Ababa University"
+                alt="College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)"
                 className="h-12 w-auto object-contain"
               />
               <span className="text-xs text-muted-foreground font-medium">AAU</span>
