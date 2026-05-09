@@ -15,21 +15,23 @@ export const metadata: Metadata = {
 export default async function LibraryPage() {
   noStore();
   if (DB_DISABLED) {
-    return <Library publications={[]} />;
+    return <Library publications={[]} pillarContents={[]} />;
   }
 
-  let publications: Awaited<
-    ReturnType<typeof prisma.publication.findMany>
-  > = [];
+  let publications: Awaited<ReturnType<typeof prisma.publication.findMany>> = [];
+  let pillarContents: Awaited<ReturnType<typeof prisma.pillarContent.findMany>> = [];
 
   try {
-    publications = await prisma.publication.findMany({
-      where: { status: "PUBLISHED" },
-      orderBy: [{ year: "desc" }, { createdAt: "desc" }],
-    });
+    [publications, pillarContents] = await Promise.all([
+      prisma.publication.findMany({
+        where: { status: "PUBLISHED" },
+        orderBy: [{ year: "desc" }, { createdAt: "desc" }],
+      }),
+      prisma.pillarContent.findMany({}),
+    ]);
   } catch (error) {
     console.error("Failed to load library page data from database", error);
   }
 
-  return <Library publications={publications} />;
+  return <Library publications={publications} pillarContents={pillarContents} />;
 }

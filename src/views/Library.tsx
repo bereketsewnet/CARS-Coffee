@@ -15,15 +15,7 @@ import {
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { Publication as DbPub } from "../../generated/prisma-client";
 
-type PubType =
-  | "All"
-  | "Journal"
-  | "Policy Brief"
-  | "Manual"
-  | "Poster"
-  | "Conference"
-  | "Report";
-type Pillar = "All" | "Soil Health" | "Waste Valorization" | "Socio-Economic";
+type PubType = "All" | "Journal" | "Policy Brief" | "Manual" | "Poster" | "Conference" | "Report";
 
 const TYPE_MAP: Record<string, PubType> = {
   JOURNAL: "Journal",
@@ -32,11 +24,6 @@ const TYPE_MAP: Record<string, PubType> = {
   CONFERENCE: "Conference",
   REPORT: "Report",
 };
-const PILLAR_MAP: Record<string, Pillar> = {
-  SOIL_HEALTH: "Soil Health",
-  WASTE_VALORIZATION: "Waste Valorization",
-  SOCIO_ECONOMIC: "Socio-Economic",
-};
 
 type PubRow = {
   id: string;
@@ -44,9 +31,8 @@ type PubRow = {
   authors: string;
   year: number;
   type: PubType;
-  pillar: Pillar | null;
+  pillar: string | null;
   doi: string | null;
-  journal: string | null;
   url: string | null;
   pdfUrl: string | null;
 };
@@ -58,112 +44,12 @@ function dbToPubRow(p: DbPub): PubRow {
     authors: p.authors,
     year: p.year,
     type: TYPE_MAP[p.type] ?? "Journal",
-    pillar: p.pillar ? (PILLAR_MAP[p.pillar] ?? null) : null,
+    pillar: p.pillar ?? null,
     doi: p.doi,
-    journal: null,
     url: p.url,
     pdfUrl: (p as any).pdfUrl ?? null,
   };
 }
-
-const staticPublications: PubRow[] = [
-  {
-    id: "s1",
-    title: "Compost Amendment Effect on Soil Carbon in Ethiopian Coffee Farms",
-    authors: "Tadesse S., De Moor J., Alemu T.",
-    year: 2023,
-    type: "Journal",
-    pillar: "Soil Health",
-    doi: "10.1234/soil.2023",
-    journal: "Agriculture, Ecosystems & Environment",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s2",
-    title: "Biochar Yield Optimization from Coffee Husk Pyrolysis",
-    authors: "Claeys T., Verheyden L.",
-    year: 2024,
-    type: "Journal",
-    pillar: "Soil Health",
-    doi: "10.1234/bio.2024",
-    journal: "Bioresource Technology",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s3",
-    title: "Anaerobic Digestion of Coffee Pulp in Small-Scale Digesters",
-    authors: "Getachew R., De Moor J.",
-    year: 2024,
-    type: "Journal",
-    pillar: "Waste Valorization",
-    doi: "10.1234/dig.2024",
-    journal: "Waste Management",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s4",
-    title: "Constructed Wetland Performance for Coffee Wastewater",
-    authors: "Muijs K., Lemma B.",
-    year: 2023,
-    type: "Journal",
-    pillar: "Waste Valorization",
-    doi: "10.1234/wet.2023",
-    journal: "Water Research",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s5",
-    title: "Income Effects of Circular Practices on Sidama Coffee Farmers",
-    authors: "Desta A., Bekele M.",
-    year: 2024,
-    type: "Journal",
-    pillar: "Socio-Economic",
-    doi: "10.1234/inc.2024",
-    journal: "World Development",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s6",
-    title: "Circular Coffee: A Policy Framework for Ethiopian Cooperatives",
-    authors: "Circular Coffee Project Team",
-    year: 2023,
-    type: "Policy Brief",
-    pillar: "Socio-Economic",
-    doi: null,
-    journal: "VLIR-UOS Publication",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s7",
-    title: "Farmer's Guide to Coffee Husk Composting",
-    authors: "Alemu T., Tadesse S.",
-    year: 2024,
-    type: "Manual",
-    pillar: "Soil Health",
-    doi: null,
-    journal: "Extension Manual",
-    url: null,
-    pdfUrl: null,
-  },
-  {
-    id: "s8",
-    title: "Gender Dimensions of Coffee Value Chain Innovation in Ethiopia",
-    authors: "Claeys T., Desta A.",
-    year: 2023,
-    type: "Journal",
-    pillar: "Socio-Economic",
-    doi: "10.1234/gen.2023",
-    journal: "Gender, Place & Culture",
-    url: null,
-    pdfUrl: null,
-  },
-];
 
 const typeIcon = {
   Journal: BookOpen,
@@ -176,15 +62,23 @@ const typeIcon = {
 
 export default function Library({
   publications: dbPublications,
+  pillarContents = [],
 }: {
   publications?: DbPub[];
+  pillarContents?: Array<{ pillar: string; title: string }>;
 }) {
   const { t } = useLanguage();
 
-  const publications: PubRow[] =
-    dbPublications && dbPublications.length > 0
-      ? dbPublications.map(dbToPubRow)
-      : staticPublications;
+  const publications: PubRow[] = (dbPublications ?? []).map(dbToPubRow);
+
+  // Map DB pillar key → display title (e.g. "SOIL1234" → "Soil Health & Biochar")
+  const pillarLabelMap: Record<string, string> = Object.fromEntries(
+    pillarContents.map((pc) => [pc.pillar, pc.title])
+  );
+  function pillarLabel(key: string | null) {
+    if (!key) return null;
+    return pillarLabelMap[key] ?? key;
+  }
 
   const typeLabels: Record<PubType, string> = {
     All: t.library.types.all,
@@ -196,28 +90,17 @@ export default function Library({
     Report: t.library.types.report,
   };
 
-  const pillarLabels: Record<Pillar, string> = {
-    All: t.library.pillars.all,
-    "Soil Health": t.library.pillars.soil,
-    "Waste Valorization": t.library.pillars.waste,
-    "Socio-Economic": t.library.pillars.socio,
-  };
-
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<PubType>("All");
-  const [pillarFilter, setPillarFilter] = useState<Pillar>("All");
+  const [pillarFilter, setPillarFilter] = useState<string>("All");
   const [yearFilter, setYearFilter] = useState("All");
 
   const filtered = publications.filter((p) => {
     const q = query.toLowerCase();
-    const matchesQuery =
-      !q ||
-      p.title.toLowerCase().includes(q) ||
-      p.authors.toLowerCase().includes(q);
+    const matchesQuery = !q || p.title.toLowerCase().includes(q) || p.authors.toLowerCase().includes(q);
     const matchesType = typeFilter === "All" || p.type === typeFilter;
     const matchesPillar = pillarFilter === "All" || p.pillar === pillarFilter;
-    const matchesYear =
-      yearFilter === "All" || p.year.toString() === yearFilter;
+    const matchesYear = yearFilter === "All" || p.year.toString() === yearFilter;
     return matchesQuery && matchesType && matchesPillar && matchesYear;
   });
 
@@ -227,28 +110,25 @@ export default function Library({
     setCurrentPage(1);
   }, [query, typeFilter, pillarFilter, yearFilter]);
   const pageCount = Math.ceil(filtered.length / PAGE_SIZE) || 1;
-  const paged = filtered.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
-  );
+  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const types: PubType[] = [
     "All",
-    ...(Array.from(
-      new Set(publications.map((p) => p.type)),
-    ).sort() as PubType[]),
+    ...(Array.from(new Set(publications.map((p) => p.type))).sort() as PubType[]),
   ];
-  const pillars: Pillar[] = [
-    "All",
-    "Soil Health",
-    "Waste Valorization",
-    "Socio-Economic",
-  ];
+
+  // Build pillar filter options from actual DB publication pillar values, in pillarContents order
+  const pubPillarKeys = new Set(publications.map((p) => p.pillar).filter(Boolean) as string[]);
+  const orderedPillarKeys = pillarContents
+    .map((pc) => pc.pillar)
+    .filter((k) => pubPillarKeys.has(k));
+  // Include any pillar keys in publications not covered by pillarContents
+  const extraKeys = [...pubPillarKeys].filter((k) => !orderedPillarKeys.includes(k));
+  const allPillarKeys = ["All", ...orderedPillarKeys, ...extraKeys];
+
   const years = [
     "All",
-    ...Array.from(new Set(publications.map((p) => p.year.toString()))).sort(
-      (a, b) => Number(b) - Number(a),
-    ),
+    ...Array.from(new Set(publications.map((p) => p.year.toString()))).sort((a, b) => Number(b) - Number(a)),
   ];
 
   return (
@@ -302,22 +182,24 @@ export default function Library({
                   ))}
                 </div>
               </div>
-              <div>
-                <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">
-                  Research Pillar
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {pillars.map((p) => (
-                    <button
-                      key={p}
-                      onClick={() => setPillarFilter(p)}
-                      className={`text-xs px-3 py-1.5 rounded-full transition-colors ${pillarFilter === p ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
-                    >
-                      {pillarLabels[p]}
-                    </button>
-                  ))}
+              {allPillarKeys.length > 1 && (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">
+                    Research Pillar
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {allPillarKeys.map((k) => (
+                      <button
+                        key={k}
+                        onClick={() => setPillarFilter(k)}
+                        className={`text-xs px-3 py-1.5 rounded-full transition-colors ${pillarFilter === k ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+                      >
+                        {k === "All" ? t.library.pillars.all : (pillarLabelMap[k] ?? k)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <p className="text-xs text-muted-foreground mb-2 uppercase tracking-widest">
                   Year
@@ -358,7 +240,7 @@ export default function Library({
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        {pub.pillar && <span className="tag-pill text-xs">{pillarLabels[pub.pillar]}</span>}
+                        {pub.pillar && <span className="tag-pill text-xs">{pillarLabel(pub.pillar)}</span>}
                         <span className="tag-pill tag-coffee text-xs">
                           {typeLabels[pub.type]}
                         </span>
