@@ -2,23 +2,48 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Calendar, Tag, ArrowRight, ChevronLeft, ChevronRight, Microscope, Handshake, Newspaper } from "lucide-react";
+import { Calendar, Tag, ArrowRight, ChevronLeft, ChevronRight, Microscope, Handshake, Newspaper, Leaf } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { NewsEvent as DbNewsEvent } from "../../generated/prisma-client";
 
-type Category =
-  | "All"
-  | "Academic and capacity building"
-  | "Fieldwork and societal uptake"
-  | "Governance and Partnership News"
-  | "Administrative and call updates";
 type Timing = "all" | "upcoming" | "past";
+
+type NewsTag =
+  | "ACADEMIC_AND_CAPACITY"
+  | "FIELDWORK_AND_SOCIETAL"
+  | "GOVERNANCE_AND_PARTNERSHIP"
+  | "ADMINISTRATIVE"
+  | "OPEN_CALLS";
+
+const TAG_LABELS: Record<string, string> = {
+  ACADEMIC_AND_CAPACITY: "Academic & Capacity Building",
+  FIELDWORK_AND_SOCIETAL: "Fieldwork & Societal Uptake",
+  GOVERNANCE_AND_PARTNERSHIP: "Governance & Partnership",
+  ADMINISTRATIVE: "Administrative Updates",
+  OPEN_CALLS: "Open Calls & Opportunities",
+};
+
+const TAG_FILTER_OPTIONS: { value: NewsTag | null; label: string }[] = [
+  { value: null, label: "All" },
+  { value: "ACADEMIC_AND_CAPACITY", label: "Academic & Capacity" },
+  { value: "FIELDWORK_AND_SOCIETAL", label: "Fieldwork & Societal" },
+  { value: "GOVERNANCE_AND_PARTNERSHIP", label: "Governance & Partnership" },
+  { value: "ADMINISTRATIVE", label: "Administrative" },
+  { value: "OPEN_CALLS", label: "Open Calls" },
+];
+
+const TYPE_LABELS: Record<string, string> = {
+  FIELD_NEWS: "Field News",
+  ACADEMIC_NEWS: "Academic News",
+  EVENT: "Event",
+};
 
 type PostItem = {
   id: string;
   title: string;
   date: string;
-  category: Category;
+  type: string;
+  tag: string | null;
   excerpt: string | null;
   upcoming: boolean;
   image: string | null;
@@ -32,23 +57,35 @@ function dbToPost(item: DbNewsEvent): PostItem {
       item.date instanceof Date
         ? item.date.toISOString().split("T")[0]
         : String(item.date),
-    category: item.type === "EVENT" ? "Fieldwork and societal uptake" : "Academic and capacity building",
+    type: item.type,
+    tag: (item as any).tag ?? null,
     excerpt: item.excerpt,
     upcoming: item.status === "UPCOMING",
     image: item.imageUrl ?? null,
   };
 }
 
-
-
-const categoryColors: Record<string, string> = {
-  All: "",
-  Research: "tag-pill",
-  Event: "tag-coffee",
-  Partnership: "tag-pill",
-  Policy: "tag-coffee",
-  News: "tag-pill",
-};
+function typeTheme(type: string) {
+  if (type === "EVENT") return {
+    color: "text-amber-500",
+    bg: "bg-amber-500/10",
+    hoverGlow: "group-hover:bg-amber-500/5",
+    Icon: Calendar,
+  };
+  if (type === "ACADEMIC_NEWS") return {
+    color: "text-blue-400",
+    bg: "bg-blue-400/10",
+    hoverGlow: "group-hover:bg-blue-400/5",
+    Icon: Microscope,
+  };
+  // FIELD_NEWS default
+  return {
+    color: "text-leaf-bright",
+    bg: "bg-leaf-bright/10",
+    hoverGlow: "group-hover:bg-leaf-bright/5",
+    Icon: Leaf,
+  };
+}
 
 export default function NewsEvents({
   items: dbItems,
@@ -59,28 +96,21 @@ export default function NewsEvents({
 
   const posts: PostItem[] = (dbItems ?? []).map(dbToPost);
 
-  const categories: Category[] = [
-    "All",
-    "Academic and capacity building",
-    "Fieldwork and societal uptake",
-    "Governance and Partnership News",
-    "Administrative and call updates",
-  ];
-  const [cat, setCat] = useState<Category>("All");
+  const [selectedTag, setSelectedTag] = useState<NewsTag | null>(null);
   const [timing, setTiming] = useState<Timing>("all");
 
   const filtered = posts.filter((p) => {
-    const matchCat = cat === "All" || p.category === cat;
+    const matchTag = selectedTag === null || p.tag === selectedTag;
     const matchTiming =
       timing === "all" || (timing === "upcoming" ? p.upcoming : !p.upcoming);
-    return matchCat && matchTiming;
+    return matchTag && matchTiming;
   });
 
   const PAGE_SIZE = 9;
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     setCurrentPage(1);
-  }, [cat, timing]);
+  }, [selectedTag, timing]);
   const pageCount = Math.ceil(filtered.length / PAGE_SIZE) || 1;
   const paged = filtered.slice(
     (currentPage - 1) * PAGE_SIZE,
@@ -110,7 +140,8 @@ export default function NewsEvents({
       <section className="py-20">
         <div className="container mx-auto">
           {/* Filters */}
-          <div className="flex flex-wrap gap-4 items-center mb-10">
+          <div className="flex flex-col gap-4 mb-10">
+            {/* Timing filter */}
             <div className="flex gap-2">
               {(["all", "upcoming", "past"] as Timing[]).map((tim) => (
                 <button
@@ -122,55 +153,25 @@ export default function NewsEvents({
                 </button>
               ))}
             </div>
-            <div className="h-5 w-px bg-border hidden sm:block" />
+
+            {/* Tag filter */}
             <div className="flex flex-wrap gap-2">
-              {categories.map((c) => {
-                return (
-                  <button
-                    key={c}
-                    onClick={() => setCat(c)}
-                    className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full transition-colors ${cat === c ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
-                  >
-                    <Tag className="w-3 h-3" /> {c}
-                  </button>
-                );
-              })}
+              {TAG_FILTER_OPTIONS.map(({ value, label }) => (
+                <button
+                  key={label}
+                  onClick={() => setSelectedTag(value)}
+                  className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-full transition-colors ${selectedTag === value ? "bg-leaf text-secondary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}
+                >
+                  <Tag className="w-3 h-3" /> {label}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Posts grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {paged.map((post) => {
-              const isEvent = post.category === "Fieldwork and societal uptake";
-              const isPartnership = post.category === "Governance and Partnership News";
-              const isResearch = post.category === "Academic and capacity building";
-
-              const themeColor = isEvent
-                ? "text-amber-500"
-                : isPartnership
-                  ? "text-blue-400"
-                  : isResearch
-                    ? "text-leaf-bright"
-                    : "text-purple-400"; // default for News/Policy
-
-              const themeBg = isEvent
-                ? "bg-amber-500/10"
-                : isPartnership
-                  ? "bg-blue-400/10"
-                  : isResearch
-                    ? "bg-leaf-bright/10"
-                    : "bg-purple-400/10";
-
-              const themeHoverGlow = isEvent
-                ? "group-hover:bg-amber-500/5"
-                : isPartnership
-                  ? "group-hover:bg-blue-400/5"
-                  : isResearch
-                    ? "group-hover:bg-leaf-bright/5"
-                    : "group-hover:bg-purple-400/5";
-
-              // Icon logic
-              const Icon = isEvent ? Calendar : isPartnership ? Handshake : isResearch ? Microscope : Newspaper;
+              const { color, bg, hoverGlow, Icon } = typeTheme(post.type);
 
               return (
                 <Link
@@ -179,7 +180,7 @@ export default function NewsEvents({
                   className="group flex flex-col p-8 rounded-3xl bg-charcoal border border-border hover:border-border/80 shadow-sm transition-all duration-500 relative overflow-hidden h-full"
                 >
                   {/* Subtle top interior glow on hover */}
-                  <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${themeHoverGlow} to-transparent opacity-0 transition-opacity duration-500 pointer-events-none`} />
+                  <div className={`absolute top-0 inset-x-0 h-32 bg-gradient-to-b ${hoverGlow} to-transparent opacity-0 transition-opacity duration-500 pointer-events-none`} />
 
                   {/* Optional faded background image if an image exists */}
                   {post.image && (
@@ -189,14 +190,14 @@ export default function NewsEvents({
                   )}
 
                   <div className="relative z-10 flex flex-col h-full">
-                    {/* Header: Icon + Tag */}
+                    {/* Header: Icon + Type + Date */}
                     <div className="flex items-center gap-4 mb-8">
-                      <div className={`w-12 h-12 rounded-full ${themeBg} flex items-center justify-center shrink-0`}>
-                        <Icon className={`w-5 h-5 ${themeColor}`} strokeWidth={2.5} />
+                      <div className={`w-12 h-12 rounded-full ${bg} flex items-center justify-center shrink-0`}>
+                        <Icon className={`w-5 h-5 ${color}`} strokeWidth={2.5} />
                       </div>
                       <div>
-                        <span className={`block text-sm font-bold tracking-wide ${themeColor}`}>
-                          {post.category}
+                        <span className={`block text-sm font-bold tracking-wide ${color}`}>
+                          {TYPE_LABELS[post.type] ?? post.type}
                         </span>
                         <div className="flex gap-2 items-center mt-0.5">
                           <span className="block text-xs text-muted-foreground uppercase tracking-wider">
@@ -216,6 +217,13 @@ export default function NewsEvents({
                       {post.title}
                     </h3>
 
+                    {/* Tag pill */}
+                    {post.tag && (
+                      <span className="inline-block mb-4 text-xs px-2.5 py-1 rounded-full bg-muted border border-border text-muted-foreground w-fit">
+                        {TAG_LABELS[post.tag] ?? post.tag}
+                      </span>
+                    )}
+
                     {/* Excerpt */}
                     {post.excerpt && (
                       <p className="text-muted-foreground text-sm leading-relaxed mb-10 line-clamp-3 font-sans">
@@ -225,7 +233,7 @@ export default function NewsEvents({
 
                     {/* Footer / Read More linked text */}
                     <div className="mt-auto pt-6 border-t border-border">
-                      <div className={`flex items-center gap-2 text-sm font-bold tracking-wide ${themeColor}`}>
+                      <div className={`flex items-center gap-2 text-sm font-bold tracking-wide ${color}`}>
                         Read More
                         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </div>

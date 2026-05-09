@@ -14,6 +14,9 @@ export async function createNewsEvent(
     if (!form.get("title") || !form.get("date")) {
       return { error: "Title and date are required." };
     }
+    if (!form.get("tag")) {
+      return { error: "Tag is required." };
+    }
     await prisma.newsEvent.create({
       data: {
         title: form.get("title") as string,
@@ -24,6 +27,9 @@ export async function createNewsEvent(
         content: (form.get("content") as string) || undefined,
         location: (form.get("location") as string) || undefined,
         imageUrl: (form.get("imageUrl") as string) || undefined,
+        tag: (form.get("tag") as any) || undefined,
+        featured: form.get("featured") === "true",
+        featuredOrder: form.get("featuredOrder") ? Number(form.get("featuredOrder")) : null,
       },
     });
     revalidatePath("/admin/news");
@@ -54,6 +60,9 @@ export async function updateNewsEvent(
         content: (form.get("content") as string) || undefined,
         location: (form.get("location") as string) || undefined,
         imageUrl: (form.get("imageUrl") as string) || null,
+        tag: (form.get("tag") as any) || null,
+        featured: form.get("featured") === "true",
+        featuredOrder: form.get("featuredOrder") ? Number(form.get("featuredOrder")) : null,
       },
     });
     revalidatePath("/admin/news");
@@ -71,5 +80,19 @@ export async function deleteNewsEvent(id: string): Promise<void> {
   await prisma.newsEvent.delete({ where: { id } });
   revalidatePath("/admin/news");
   revalidatePath("/news");
+  revalidatePath("/");
+}
+
+export async function setFeaturedNews(
+  id: string,
+  featured: boolean,
+  featuredOrder: number | null,
+): Promise<void> {
+  await requireAdmin();
+  await prisma.newsEvent.update({
+    where: { id },
+    data: { featured, featuredOrder },
+  });
+  revalidatePath("/admin/news");
   revalidatePath("/");
 }

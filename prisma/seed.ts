@@ -82,9 +82,9 @@ async function main() {
   // ── News & events ─────────────────────────────────────────────────────────
   const news = [
     { title: "Field visit to Sidama coffee cooperatives", type: "EVENT" as const, date: new Date("2025-03-15"), status: "UPCOMING" as const, excerpt: "Joint field visit by Ethiopian and Belgian teams to assess biochar trial outcomes." },
-    { title: "New publication: Biochar yield optimization", type: "NEWS" as const, date: new Date("2025-02-28"), status: "PUBLISHED" as const, excerpt: "Our latest journal article has been accepted in the Journal of Cleaner Production." },
+    { title: "New publication: Biochar yield optimization", type: "ACADEMIC_NEWS" as const, date: new Date("2025-02-28"), status: "PUBLISHED" as const, excerpt: "Our latest journal article has been accepted in the Journal of Cleaner Production." },
     { title: "Annual project consortium meeting — Ghent", type: "EVENT" as const, date: new Date("2025-02-10"), status: "PAST" as const, excerpt: "Annual review of progress across all three research pillars." },
-    { title: "Circular Coffee featured in VLIR-UOS newsletter", type: "NEWS" as const, date: new Date("2025-01-20"), status: "PUBLISHED" as const, excerpt: "The project was highlighted as a model for North-South research cooperation." },
+    { title: "Circular Coffee featured in VLIR-UOS newsletter", type: "FIELD_NEWS" as const, date: new Date("2025-01-20"), status: "PUBLISHED" as const, excerpt: "The project was highlighted as a model for North-South research cooperation." },
     { title: "Training workshop on composting — Jimma", type: "EVENT" as const, date: new Date("2024-11-05"), status: "PAST" as const, excerpt: "Hands-on training for 40 smallholder farmers on composting techniques." },
   ];
   for (const n of news) {

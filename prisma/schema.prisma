@@ -95,22 +95,34 @@ model TeamMember {
 // ─── News & Events ────────────────────────────────────────────────────────────
 
 model NewsEvent {
-  id        String          @id @default(cuid())
-  title     String
-  type      NewsEventType
-  date      DateTime
-  status    NewsEventStatus @default(DRAFT)
-  excerpt   String?         @db.Text
-  content   String?         @db.Text
-  location  String?         @db.Text
-  imageUrl  String?         @db.Text
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  id            String          @id @default(cuid())
+  title         String
+  type          NewsEventType
+  date          DateTime
+  status        NewsEventStatus @default(DRAFT)
+  excerpt       String?         @db.Text
+  content       String?         @db.Text
+  location      String?         @db.Text
+  imageUrl      String?         @db.Text
+  tag           NewsEventTag?
+  featured      Boolean         @default(false)
+  featuredOrder Int?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
 
 enum NewsEventType {
-  NEWS
+  FIELD_NEWS
+  ACADEMIC_NEWS
   EVENT
+}
+
+enum NewsEventTag {
+  ACADEMIC_AND_CAPACITY
+  FIELDWORK_AND_SOCIETAL
+  GOVERNANCE_AND_PARTNERSHIP
+  ADMINISTRATIVE
+  OPEN_CALLS
 }
 
 enum NewsEventStatus {

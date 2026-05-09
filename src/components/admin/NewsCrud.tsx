@@ -8,12 +8,14 @@ import {
   ImagePlus,
   X,
   Loader2,
+  Star,
 } from "lucide-react";
 import type { NewsEvent } from "../../../generated/prisma-client";
 import {
   createNewsEvent,
   updateNewsEvent,
   deleteNewsEvent,
+  setFeaturedNews,
 } from "@/lib/actions/news";
 import {
   Field,
@@ -22,7 +24,6 @@ import {
   textareaCls,
   CrudModal,
   ConfirmDeleteDialog,
-  SubmitBtn,
 } from "./CrudHelpers";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -38,10 +39,80 @@ const STATUS_LABELS: Record<string, string> = {
   DRAFT: "Draft",
 };
 
+const TYPE_LABELS: Record<string, string> = {
+  FIELD_NEWS: "Field News",
+  ACADEMIC_NEWS: "Academic News",
+  EVENT: "Event",
+};
+
+const TAG_LABELS: Record<string, string> = {
+  ACADEMIC_AND_CAPACITY: "Academic & capacity building",
+  FIELDWORK_AND_SOCIETAL: "Fieldwork & societal uptake",
+  GOVERNANCE_AND_PARTNERSHIP: "Governance & Partnership",
+  ADMINISTRATIVE: "Administrative updates",
+  OPEN_CALLS: "Open calls & opportunities",
+};
+
 function toDateInput(d: Date | string | null | undefined): string {
   if (!d) return "";
   const dt = d instanceof Date ? d : new Date(d);
   return dt.toISOString().split("T")[0];
+}
+
+function FeaturedControl({ item, featuredCount, onToggle, onOrder }: {
+  item: NewsEvent;
+  featuredCount: number;
+  onToggle: (id: string, featured: boolean) => void;
+  onOrder: (id: string, order: number) => void;
+}) {
+  const [pending, startTransition] = useTransition();
+  const isFeatured = (item as any).featured as boolean;
+  const featuredOrder = (item as any).featuredOrder as number | null;
+  const canFeature = isFeatured || featuredCount < 3;
+
+  function handleToggle() {
+    startTransition(async () => {
+      const newFeatured = !isFeatured;
+      const newOrder = newFeatured ? (featuredOrder ?? featuredCount + 1) : null;
+      await setFeaturedNews(item.id, newFeatured, newOrder);
+      onToggle(item.id, newFeatured);
+    });
+  }
+
+  function handleOrderChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const val = Number(e.target.value);
+    startTransition(async () => {
+      await setFeaturedNews(item.id, true, val);
+      onOrder(item.id, val);
+    });
+  }
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <button
+        onClick={handleToggle}
+        disabled={pending || (!isFeatured && !canFeature)}
+        title={isFeatured ? "Unpin from home page" : canFeature ? "Pin to home page" : "Max 3 items pinned"}
+        className={`transition-colors disabled:opacity-40 ${isFeatured ? "text-amber-400 hover:text-amber-300" : "text-muted-foreground hover:text-amber-400"}`}
+      >
+        {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : (
+          <Star className={`w-3.5 h-3.5 ${isFeatured ? "fill-amber-400" : ""}`} />
+        )}
+      </button>
+      {isFeatured && (
+        <select
+          value={featuredOrder ?? 1}
+          onChange={handleOrderChange}
+          disabled={pending}
+          className="text-[10px] bg-muted border border-border rounded px-1 py-0.5 text-muted-foreground"
+        >
+          <option value={1}>1st</option>
+          <option value={2}>2nd</option>
+          <option value={3}>3rd</option>
+        </select>
+      )}
+    </div>
+  );
 }
 
 export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
@@ -63,6 +134,8 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
   React.useEffect(() => {
     setItems(initial);
   }, [initial]);
+
+  const featuredCount = items.filter((i) => (i as any).featured).length;
 
   function openAdd() {
     setEditing(null);
@@ -154,6 +227,22 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
     });
   }
 
+  function handleFeaturedToggle(id: string, featured: boolean) {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, featured } as any : item
+      )
+    );
+  }
+
+  function handleFeaturedOrder(id: string, order: number) {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, featuredOrder: order } as any : item
+      )
+    );
+  }
+
   const upcoming = items.filter((i) => i.status === "UPCOMING").length;
   const published = items.filter((i) => i.status === "PUBLISHED").length;
   const drafts = items.filter((i) => i.status === "DRAFT").length;
@@ -178,6 +267,14 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
         ))}
       </div>
 
+      {/* Featured indicator */}
+      {featuredCount > 0 && (
+        <p className="text-xs text-amber-400 flex items-center gap-1.5">
+          <Star className="w-3 h-3 fill-amber-400" />
+          {featuredCount}/3 items pinned to home page "Latest Updates"
+        </p>
+      )}
+
       {/* Add button */}
       <div className="flex justify-end">
         <button
@@ -198,13 +295,18 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
                     <span
                       className={`text-xs px-2 py-0.5 rounded-full border font-medium ${STATUS_COLORS[item.status] ?? STATUS_COLORS.DRAFT}`}
                     >
                       {STATUS_LABELS[item.status] ?? item.status}
                     </span>
-                    <span className="tag-pill text-xs">{item.type}</span>
+                    <span className="tag-pill text-xs">{TYPE_LABELS[item.type] ?? item.type}</span>
+                    {(item as any).tag && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-muted border border-border text-muted-foreground">
+                        {TAG_LABELS[(item as any).tag] ?? (item as any).tag}
+                      </span>
+                    )}
                   </div>
                   <p className="font-medium text-foreground">{item.title}</p>
                   <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
@@ -217,6 +319,12 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
                     <span>{item.date.toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center gap-2 justify-end">
+                    <FeaturedControl
+                      item={item}
+                      featuredCount={featuredCount}
+                      onToggle={handleFeaturedToggle}
+                      onOrder={handleFeaturedOrder}
+                    />
                     <button
                       onClick={() => openEdit(item)}
                       className="text-muted-foreground hover:text-foreground transition-colors"
@@ -263,12 +371,13 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
             <Field label="Type" required>
               <select
                 name="type"
-                defaultValue={editing?.type ?? "NEWS"}
+                defaultValue={editing?.type ?? "FIELD_NEWS"}
                 required
                 className={selectCls}
               >
-                <option value="NEWS">News</option>
-                <option value="EVENT">Event</option>
+                {Object.entries(TYPE_LABELS).map(([v, l]) => (
+                  <option key={v} value={v}>{l}</option>
+                ))}
               </select>
             </Field>
             <Field label="Status" required>
@@ -285,6 +394,21 @@ export default function NewsCrud({ items: initial }: { items: NewsEvent[] }) {
                 ))}
               </select>
             </Field>
+            <div className="sm:col-span-2">
+              <Field label="Tag" required>
+                <select
+                  name="tag"
+                  defaultValue={(editing as any)?.tag ?? ""}
+                  required
+                  className={selectCls}
+                >
+                  <option value="" disabled>Select a tag…</option>
+                  {Object.entries(TAG_LABELS).map(([v, l]) => (
+                    <option key={v} value={v}>{l}</option>
+                  ))}
+                </select>
+              </Field>
+            </div>
             <Field label="Date" required>
               <input
                 name="date"

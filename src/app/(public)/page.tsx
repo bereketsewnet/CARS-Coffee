@@ -23,9 +23,16 @@ export default async function HomePage() {
         orderBy: [{ order: "asc" }, { name: "asc" }],
       }),
       prisma.newsEvent.findMany({
-        where: { status: { not: "DRAFT" } },
-        orderBy: { date: "desc" },
+        where: { status: { not: "DRAFT" }, featured: true },
+        orderBy: { featuredOrder: "asc" },
         take: 3,
+      }).then(async (featured) => {
+        if (featured.length > 0) return featured;
+        return prisma.newsEvent.findMany({
+          where: { status: { not: "DRAFT" } },
+          orderBy: { date: "desc" },
+          take: 3,
+        });
       }),
       prisma.impactMetric.findMany({
         orderBy: { createdAt: "asc" },

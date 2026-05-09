@@ -112,11 +112,23 @@ export type PublicationStatus = (typeof PublicationStatus)[keyof typeof Publicat
 
 
 export const NewsEventType: {
-  NEWS: 'NEWS',
+  FIELD_NEWS: 'FIELD_NEWS',
+  ACADEMIC_NEWS: 'ACADEMIC_NEWS',
   EVENT: 'EVENT'
 };
 
 export type NewsEventType = (typeof NewsEventType)[keyof typeof NewsEventType]
+
+
+export const NewsEventTag: {
+  ACADEMIC_AND_CAPACITY: 'ACADEMIC_AND_CAPACITY',
+  FIELDWORK_AND_SOCIETAL: 'FIELDWORK_AND_SOCIETAL',
+  GOVERNANCE_AND_PARTNERSHIP: 'GOVERNANCE_AND_PARTNERSHIP',
+  ADMINISTRATIVE: 'ADMINISTRATIVE',
+  OPEN_CALLS: 'OPEN_CALLS'
+};
+
+export type NewsEventTag = (typeof NewsEventTag)[keyof typeof NewsEventTag]
 
 
 export const NewsEventStatus: {
@@ -166,6 +178,10 @@ export const PublicationStatus: typeof $Enums.PublicationStatus
 export type NewsEventType = $Enums.NewsEventType
 
 export const NewsEventType: typeof $Enums.NewsEventType
+
+export type NewsEventTag = $Enums.NewsEventTag
+
+export const NewsEventTag: typeof $Enums.NewsEventTag
 
 export type NewsEventStatus = $Enums.NewsEventStatus
 
@@ -5979,8 +5995,18 @@ export namespace Prisma {
 
   export type AggregateNewsEvent = {
     _count: NewsEventCountAggregateOutputType | null
+    _avg: NewsEventAvgAggregateOutputType | null
+    _sum: NewsEventSumAggregateOutputType | null
     _min: NewsEventMinAggregateOutputType | null
     _max: NewsEventMaxAggregateOutputType | null
+  }
+
+  export type NewsEventAvgAggregateOutputType = {
+    featuredOrder: number | null
+  }
+
+  export type NewsEventSumAggregateOutputType = {
+    featuredOrder: number | null
   }
 
   export type NewsEventMinAggregateOutputType = {
@@ -5993,6 +6019,9 @@ export namespace Prisma {
     content: string | null
     location: string | null
     imageUrl: string | null
+    tag: $Enums.NewsEventTag | null
+    featured: boolean | null
+    featuredOrder: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6007,6 +6036,9 @@ export namespace Prisma {
     content: string | null
     location: string | null
     imageUrl: string | null
+    tag: $Enums.NewsEventTag | null
+    featured: boolean | null
+    featuredOrder: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6021,11 +6053,22 @@ export namespace Prisma {
     content: number
     location: number
     imageUrl: number
+    tag: number
+    featured: number
+    featuredOrder: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
+
+  export type NewsEventAvgAggregateInputType = {
+    featuredOrder?: true
+  }
+
+  export type NewsEventSumAggregateInputType = {
+    featuredOrder?: true
+  }
 
   export type NewsEventMinAggregateInputType = {
     id?: true
@@ -6037,6 +6080,9 @@ export namespace Prisma {
     content?: true
     location?: true
     imageUrl?: true
+    tag?: true
+    featured?: true
+    featuredOrder?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6051,6 +6097,9 @@ export namespace Prisma {
     content?: true
     location?: true
     imageUrl?: true
+    tag?: true
+    featured?: true
+    featuredOrder?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6065,6 +6114,9 @@ export namespace Prisma {
     content?: true
     location?: true
     imageUrl?: true
+    tag?: true
+    featured?: true
+    featuredOrder?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6108,6 +6160,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: NewsEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NewsEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: NewsEventMinAggregateInputType
@@ -6138,6 +6202,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: NewsEventCountAggregateInputType | true
+    _avg?: NewsEventAvgAggregateInputType
+    _sum?: NewsEventSumAggregateInputType
     _min?: NewsEventMinAggregateInputType
     _max?: NewsEventMaxAggregateInputType
   }
@@ -6152,9 +6218,14 @@ export namespace Prisma {
     content: string | null
     location: string | null
     imageUrl: string | null
+    tag: $Enums.NewsEventTag | null
+    featured: boolean
+    featuredOrder: number | null
     createdAt: Date
     updatedAt: Date
     _count: NewsEventCountAggregateOutputType | null
+    _avg: NewsEventAvgAggregateOutputType | null
+    _sum: NewsEventSumAggregateOutputType | null
     _min: NewsEventMinAggregateOutputType | null
     _max: NewsEventMaxAggregateOutputType | null
   }
@@ -6183,6 +6254,9 @@ export namespace Prisma {
     content?: boolean
     location?: boolean
     imageUrl?: boolean
+    tag?: boolean
+    featured?: boolean
+    featuredOrder?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["newsEvent"]>
@@ -6199,11 +6273,14 @@ export namespace Prisma {
     content?: boolean
     location?: boolean
     imageUrl?: boolean
+    tag?: boolean
+    featured?: boolean
+    featuredOrder?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type NewsEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "date" | "status" | "excerpt" | "content" | "location" | "imageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["newsEvent"]>
+  export type NewsEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "date" | "status" | "excerpt" | "content" | "location" | "imageUrl" | "tag" | "featured" | "featuredOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["newsEvent"]>
 
   export type $NewsEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "NewsEvent"
@@ -6218,6 +6295,9 @@ export namespace Prisma {
       content: string | null
       location: string | null
       imageUrl: string | null
+      tag: $Enums.NewsEventTag | null
+      featured: boolean
+      featuredOrder: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["newsEvent"]>
@@ -6598,6 +6678,9 @@ export namespace Prisma {
     readonly content: FieldRef<"NewsEvent", 'String'>
     readonly location: FieldRef<"NewsEvent", 'String'>
     readonly imageUrl: FieldRef<"NewsEvent", 'String'>
+    readonly tag: FieldRef<"NewsEvent", 'NewsEventTag'>
+    readonly featured: FieldRef<"NewsEvent", 'Boolean'>
+    readonly featuredOrder: FieldRef<"NewsEvent", 'Int'>
     readonly createdAt: FieldRef<"NewsEvent", 'DateTime'>
     readonly updatedAt: FieldRef<"NewsEvent", 'DateTime'>
   }
@@ -14699,6 +14782,9 @@ export namespace Prisma {
     content: 'content',
     location: 'location',
     imageUrl: 'imageUrl',
+    tag: 'tag',
+    featured: 'featured',
+    featuredOrder: 'featuredOrder',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -15094,6 +15180,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'NewsEventTag'
+   */
+  export type EnumNewsEventTagFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsEventTag'>
+    
+
+
+  /**
    * Reference to a field of type 'ResearchStatus'
    */
   export type EnumResearchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResearchStatus'>
@@ -15467,6 +15560,9 @@ export namespace Prisma {
     content?: StringNullableFilter<"NewsEvent"> | string | null
     location?: StringNullableFilter<"NewsEvent"> | string | null
     imageUrl?: StringNullableFilter<"NewsEvent"> | string | null
+    tag?: EnumNewsEventTagNullableFilter<"NewsEvent"> | $Enums.NewsEventTag | null
+    featured?: BoolFilter<"NewsEvent"> | boolean
+    featuredOrder?: IntNullableFilter<"NewsEvent"> | number | null
     createdAt?: DateTimeFilter<"NewsEvent"> | Date | string
     updatedAt?: DateTimeFilter<"NewsEvent"> | Date | string
   }
@@ -15481,6 +15577,9 @@ export namespace Prisma {
     content?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    tag?: SortOrderInput | SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _relevance?: NewsEventOrderByRelevanceInput
@@ -15499,6 +15598,9 @@ export namespace Prisma {
     content?: StringNullableFilter<"NewsEvent"> | string | null
     location?: StringNullableFilter<"NewsEvent"> | string | null
     imageUrl?: StringNullableFilter<"NewsEvent"> | string | null
+    tag?: EnumNewsEventTagNullableFilter<"NewsEvent"> | $Enums.NewsEventTag | null
+    featured?: BoolFilter<"NewsEvent"> | boolean
+    featuredOrder?: IntNullableFilter<"NewsEvent"> | number | null
     createdAt?: DateTimeFilter<"NewsEvent"> | Date | string
     updatedAt?: DateTimeFilter<"NewsEvent"> | Date | string
   }, "id">
@@ -15513,11 +15615,16 @@ export namespace Prisma {
     content?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    tag?: SortOrderInput | SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: NewsEventCountOrderByAggregateInput
+    _avg?: NewsEventAvgOrderByAggregateInput
     _max?: NewsEventMaxOrderByAggregateInput
     _min?: NewsEventMinOrderByAggregateInput
+    _sum?: NewsEventSumOrderByAggregateInput
   }
 
   export type NewsEventScalarWhereWithAggregatesInput = {
@@ -15533,6 +15640,9 @@ export namespace Prisma {
     content?: StringNullableWithAggregatesFilter<"NewsEvent"> | string | null
     location?: StringNullableWithAggregatesFilter<"NewsEvent"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"NewsEvent"> | string | null
+    tag?: EnumNewsEventTagNullableWithAggregatesFilter<"NewsEvent"> | $Enums.NewsEventTag | null
+    featured?: BoolWithAggregatesFilter<"NewsEvent"> | boolean
+    featuredOrder?: IntNullableWithAggregatesFilter<"NewsEvent"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"NewsEvent"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"NewsEvent"> | Date | string
   }
@@ -16585,6 +16695,9 @@ export namespace Prisma {
     content?: string | null
     location?: string | null
     imageUrl?: string | null
+    tag?: $Enums.NewsEventTag | null
+    featured?: boolean
+    featuredOrder?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16599,6 +16712,9 @@ export namespace Prisma {
     content?: string | null
     location?: string | null
     imageUrl?: string | null
+    tag?: $Enums.NewsEventTag | null
+    featured?: boolean
+    featuredOrder?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16613,6 +16729,9 @@ export namespace Prisma {
     content?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tag?: NullableEnumNewsEventTagFieldUpdateOperationsInput | $Enums.NewsEventTag | null
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16627,6 +16746,9 @@ export namespace Prisma {
     content?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tag?: NullableEnumNewsEventTagFieldUpdateOperationsInput | $Enums.NewsEventTag | null
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16641,6 +16763,9 @@ export namespace Prisma {
     content?: string | null
     location?: string | null
     imageUrl?: string | null
+    tag?: $Enums.NewsEventTag | null
+    featured?: boolean
+    featuredOrder?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16655,6 +16780,9 @@ export namespace Prisma {
     content?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tag?: NullableEnumNewsEventTagFieldUpdateOperationsInput | $Enums.NewsEventTag | null
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16669,6 +16797,9 @@ export namespace Prisma {
     content?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tag?: NullableEnumNewsEventTagFieldUpdateOperationsInput | $Enums.NewsEventTag | null
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17850,6 +17981,24 @@ export namespace Prisma {
     not?: NestedEnumNewsEventStatusFilter<$PrismaModel> | $Enums.NewsEventStatus
   }
 
+  export type EnumNewsEventTagNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsEventTag | EnumNewsEventTagFieldRefInput<$PrismaModel> | null
+    in?: $Enums.NewsEventTag[] | null
+    notIn?: $Enums.NewsEventTag[] | null
+    not?: NestedEnumNewsEventTagNullableFilter<$PrismaModel> | $Enums.NewsEventTag | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NewsEventOrderByRelevanceInput = {
     fields: NewsEventOrderByRelevanceFieldEnum | NewsEventOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -17866,8 +18015,15 @@ export namespace Prisma {
     content?: SortOrder
     location?: SortOrder
     imageUrl?: SortOrder
+    tag?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type NewsEventAvgOrderByAggregateInput = {
+    featuredOrder?: SortOrder
   }
 
   export type NewsEventMaxOrderByAggregateInput = {
@@ -17880,6 +18036,9 @@ export namespace Prisma {
     content?: SortOrder
     location?: SortOrder
     imageUrl?: SortOrder
+    tag?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -17894,8 +18053,15 @@ export namespace Prisma {
     content?: SortOrder
     location?: SortOrder
     imageUrl?: SortOrder
+    tag?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type NewsEventSumOrderByAggregateInput = {
+    featuredOrder?: SortOrder
   }
 
   export type EnumNewsEventTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -17916,6 +18082,32 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumNewsEventStatusFilter<$PrismaModel>
     _max?: NestedEnumNewsEventStatusFilter<$PrismaModel>
+  }
+
+  export type EnumNewsEventTagNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsEventTag | EnumNewsEventTagFieldRefInput<$PrismaModel> | null
+    in?: $Enums.NewsEventTag[] | null
+    notIn?: $Enums.NewsEventTag[] | null
+    not?: NestedEnumNewsEventTagNullableWithAggregatesFilter<$PrismaModel> | $Enums.NewsEventTag | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
+    _max?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumResearchStatusFilter<$PrismaModel = never> = {
@@ -18473,6 +18665,18 @@ export namespace Prisma {
     set?: $Enums.NewsEventStatus
   }
 
+  export type NullableEnumNewsEventTagFieldUpdateOperationsInput = {
+    set?: $Enums.NewsEventTag | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type EnumResearchStatusFieldUpdateOperationsInput = {
     set?: $Enums.ResearchStatus
   }
@@ -18703,6 +18907,13 @@ export namespace Prisma {
     not?: NestedEnumNewsEventStatusFilter<$PrismaModel> | $Enums.NewsEventStatus
   }
 
+  export type NestedEnumNewsEventTagNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsEventTag | EnumNewsEventTagFieldRefInput<$PrismaModel> | null
+    in?: $Enums.NewsEventTag[] | null
+    notIn?: $Enums.NewsEventTag[] | null
+    not?: NestedEnumNewsEventTagNullableFilter<$PrismaModel> | $Enums.NewsEventTag | null
+  }
+
   export type NestedEnumNewsEventTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.NewsEventType | EnumNewsEventTypeFieldRefInput<$PrismaModel>
     in?: $Enums.NewsEventType[]
@@ -18721,6 +18932,43 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumNewsEventStatusFilter<$PrismaModel>
     _max?: NestedEnumNewsEventStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNewsEventTagNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsEventTag | EnumNewsEventTagFieldRefInput<$PrismaModel> | null
+    in?: $Enums.NewsEventTag[] | null
+    notIn?: $Enums.NewsEventTag[] | null
+    not?: NestedEnumNewsEventTagNullableWithAggregatesFilter<$PrismaModel> | $Enums.NewsEventTag | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
+    _max?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumResearchStatusFilter<$PrismaModel = never> = {

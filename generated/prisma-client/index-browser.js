@@ -185,6 +185,9 @@ exports.Prisma.NewsEventScalarFieldEnum = {
   content: 'content',
   location: 'location',
   imageUrl: 'imageUrl',
+  tag: 'tag',
+  featured: 'featured',
+  featuredOrder: 'featuredOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -458,7 +461,8 @@ exports.PublicationStatus = exports.$Enums.PublicationStatus = {
 };
 
 exports.NewsEventType = exports.$Enums.NewsEventType = {
-  NEWS: 'NEWS',
+  FIELD_NEWS: 'FIELD_NEWS',
+  ACADEMIC_NEWS: 'ACADEMIC_NEWS',
   EVENT: 'EVENT'
 };
 
@@ -467,6 +471,14 @@ exports.NewsEventStatus = exports.$Enums.NewsEventStatus = {
   UPCOMING: 'UPCOMING',
   PUBLISHED: 'PUBLISHED',
   PAST: 'PAST'
+};
+
+exports.NewsEventTag = exports.$Enums.NewsEventTag = {
+  ACADEMIC_AND_CAPACITY: 'ACADEMIC_AND_CAPACITY',
+  FIELDWORK_AND_SOCIETAL: 'FIELDWORK_AND_SOCIETAL',
+  GOVERNANCE_AND_PARTNERSHIP: 'GOVERNANCE_AND_PARTNERSHIP',
+  ADMINISTRATIVE: 'ADMINISTRATIVE',
+  OPEN_CALLS: 'OPEN_CALLS'
 };
 
 exports.ResearchStatus = exports.$Enums.ResearchStatus = {
