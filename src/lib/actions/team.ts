@@ -87,3 +87,17 @@ export async function deleteTeamMember(id: string): Promise<void> {
   revalidatePath("/admin/team");
   revalidatePath("/team");
 }
+
+export async function setFeaturedTeamMember(
+  id: string,
+  featured: boolean,
+  featuredOrder: number | null
+): Promise<void> {
+  await requireAdmin();
+  await prisma.teamMember.update({
+    where: { id },
+    data: { featured, featuredOrder: featured ? featuredOrder : null },
+  });
+  revalidatePath("/admin/team");
+  revalidatePath("/");
+}

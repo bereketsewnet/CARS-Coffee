@@ -5,7 +5,7 @@ import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon } from "lucide-re
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { TeamMember as DbMember } from "../../generated/prisma-client";
 
-type RoleCategory = "Principal Investigator" | "Co-Investigator" | "PhD Researcher" | "MSc Researcher";
+type RoleCategory = "Principal Investigator" | "Co-Investigator" | "Senior Researcher" | "PhD Researcher" | "MSc Researcher";
 
 interface TeamMember {
   name: string;
@@ -29,6 +29,7 @@ function deriveCategory(role: string): RoleCategory {
   const r = role.toLowerCase().trim();
   if (r === "principal investigator" || r.includes("principal")) return "Principal Investigator";
   if (r === "co-investigator" || r.includes("co-invest") || r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Investigator";
+  if (r === "senior researcher" || r.includes("senior")) return "Senior Researcher";
   if (r === "phd researcher" || r.includes("phd") || r.includes("candidate")) return "PhD Researcher";
   return "MSc Researcher";
 }
@@ -140,7 +141,7 @@ const staticTeam: TeamMember[] = [
   },
 ];
 
-const roleOrder: RoleCategory[] = ["Principal Investigator", "Co-Investigator", "PhD Researcher", "MSc Researcher"];
+const roleOrder: RoleCategory[] = ["Principal Investigator", "Co-Investigator", "Senior Researcher", "PhD Researcher", "MSc Researcher"];
 
 function MemberCard({ member }: { member: TeamMember }) {
   const [expanded, setExpanded] = useState(false);
@@ -230,6 +231,7 @@ export default function Team({ members: dbMembers }: { members?: DbMember[] | nu
   const roleLabels: Record<RoleCategory, string> = {
     "Principal Investigator": t.team.pi,
     "Co-Investigator":        t.team.coSupervise,
+    "Senior Researcher":      t.team.seniorResearcher,
     "PhD Researcher":         t.team.phd,
     "MSc Researcher":         t.team.ra,
   };

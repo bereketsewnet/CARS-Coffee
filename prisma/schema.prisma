@@ -86,10 +86,12 @@ model TeamMember {
   twitter     String?  @db.Text
   instagram   String?  @db.Text
   website     String?  @db.Text
-  active      Boolean  @default(true)
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  active        Boolean  @default(true)
+  order         Int      @default(0)
+  featured      Boolean  @default(false)
+  featuredOrder Int?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 // ─── News & Events ────────────────────────────────────────────────────────────
@@ -248,16 +250,57 @@ enum CollaboratorCategory {
   OTHER
 }
 
+// ─── Home page hero content ───────────────────────────────────────────────────
+
+model HomeContent {
+  id              String   @id @default(cuid())
+  heroTitle1      String   @default("Beyond the Bean: Empowering")
+  heroTitle2      String   @default("Communities Through Coffee Innovation")
+  heroSubtitle    String   @default("We turn coffee waste into wealth. Our project empowers local farmers and women's cooperatives in Sidama and Yirgacheffe by creating green energy, bio-pesticides, and premium cosmetics—proving that zero-waste agriculture leads to thriving communities.") @db.Text
+  impactTitle     String   @default("Delivering")
+  impactTitleBold String   @default(" Circular Impact")
+  stat1Value      Int      @default(3)
+  stat1Suffix     String   @default("")
+  stat1Label      String   @default("Research Pillars")
+  stat2Value      Int      @default(2)
+  stat2Suffix     String   @default("")
+  stat2Label      String   @default("Countries")
+  stat3Value      Int      @default(5)
+  stat3Suffix     String   @default("+")
+  stat3Label      String   @default("Years Impact")
+  updatedAt       DateTime @updatedAt
+}
+
 // ─── Project content (goals & work packages) ─────────────────────────────────
 
 model ProjectInfo {
   id           String   @id @default(cuid())
+  heroTitle    String   @default("The Circular Coffee Project")
+  heroSubtitle String   @default("A 4-year north–south cooperative research programme funded by VLIR-UOS, bringing together expertise from Belgium and Ethiopia to build a circular coffee economy.") @db.Text
   vlirTitle    String   @default("What is VLIR-UOS?")
   vlirP1       String   @db.Text
+  vlirP2Title  String   @default("What is CARES?")
   vlirP2       String   @db.Text
-  problemTitle String   @default("The Problem")
-  problemList  String   @db.Text  // newline-separated bullet points
   updatedAt    DateTime @updatedAt
+}
+
+model ProjectProblemGroup {
+  id        String                 @id @default(cuid())
+  title     String
+  order     Int                    @default(0)
+  bullets   ProjectProblemBullet[]
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+}
+
+model ProjectProblemBullet {
+  id        String              @id @default(cuid())
+  text      String              @db.Text
+  order     Int                 @default(0)
+  groupId   String
+  group     ProjectProblemGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
 }
 
 model ProjectGoal {

@@ -386,8 +386,16 @@ function SectionParticles({ particles }: { particles: Particle[] }) {
   );
 }
 
+type HomeContent = {
+  heroTitle1: string; heroTitle2: string; heroSubtitle: string;
+  impactTitle: string; impactTitleBold: string;
+  stat1Value: number; stat1Suffix: string; stat1Label: string;
+  stat2Value: number; stat2Suffix: string; stat2Label: string;
+  stat3Value: number; stat3Suffix: string; stat3Label: string;
+};
+
 // ── Scroll-Driven Hero Section ───────────────────────────────────────────────────
-function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
+function HeroSection({ t, homeContent }: { t: Record<string, Record<string, string>>; homeContent: HomeContent | null }) {
   // Refs for GSAP targets
   const sectionRef = useRef<HTMLDivElement>(null);   // outer 300vh scroll track
   const stickyRef = useRef<HTMLDivElement>(null);    // sticky 100vh viewport
@@ -668,7 +676,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
           ].map((logo) => (
             <div
               key={logo.alt}
-              className="w-14 h-14 rounded-xl bg-white border border-white/60 shadow-lg overflow-hidden flex items-center justify-center p-1"
+              className="w-20 h-20 rounded-xl bg-white border border-white/60 shadow-lg overflow-hidden flex items-center justify-center p-1.5"
             >
               <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain" draggable={false} />
             </div>
@@ -713,7 +721,8 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
                 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug mb-3 md:mb-4"
                 style={{ opacity: 0, transform: "translateY(30px)", letterSpacing: "0.05em" }}
               >
-                {t.home.heroTitle1} {t.home.heroTitle2}
+                {homeContent?.heroTitle1 ?? t.home.heroTitle1}{" "}
+                {homeContent?.heroTitle2 ?? t.home.heroTitle2}
                 <br className="hidden md:block" />
                 <span className="text-gradient-green text-xl sm:text-3xl md:text-4xl lg:text-5xl block mt-1">CARES</span>
               </h1>
@@ -722,7 +731,7 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
                 className="text-sm md:text-base text-muted-foreground leading-relaxed mb-5 md:mb-7 max-w-xl"
                 style={{ opacity: 0, transform: "translateY(30px)" }}
               >
-                {t.home.heroSubtitle}
+                {homeContent?.heroSubtitle ?? t.home.heroSubtitle}
               </p>
               <div ref={btnsRef} className="pointer-events-auto flex flex-wrap gap-3 md:gap-4 mt-6 md:mt-8" style={{ opacity: 0, transform: "translateY(30px)" }}>
                 <Link
@@ -761,8 +770,8 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
               className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 md:mb-8"
               style={{ opacity: 0, transform: "translateY(120px)" }}
             >
-              {t.home.heroImpactTitle}<br className="hidden md:block" />
-              <span className="text-gradient-green">{t.home.heroImpactTitleBold}</span>
+              {homeContent?.impactTitle ?? t.home.heroImpactTitle}<br className="hidden md:block" />
+              <span className="text-gradient-green">{homeContent?.impactTitleBold ?? t.home.heroImpactTitleBold}</span>
             </h2>
             {/* Stats: tightly packed flex on desktop, grid on mobile */}
             <div
@@ -771,13 +780,13 @@ function HeroSection({ t }: { t: Record<string, Record<string, string>> }) {
               style={{ opacity: 0, transform: "translateY(120px)" }}
             >
               <div>
-                <HeroCounter target={3} suffix="" label={t.home.statPillars} />
+                <HeroCounter target={homeContent?.stat1Value ?? 3} suffix={homeContent?.stat1Suffix ?? ""} label={homeContent?.stat1Label ?? t.home.statPillars} />
               </div>
               <div className="border-l border-border pl-4 md:pl-8">
-                <HeroCounter target={2} suffix="" label={t.home.statCountries} />
+                <HeroCounter target={homeContent?.stat2Value ?? 2} suffix={homeContent?.stat2Suffix ?? ""} label={homeContent?.stat2Label ?? t.home.statCountries} />
               </div>
               <div className="border-l border-border pl-4 md:pl-8">
-                <HeroCounter target={5} suffix="+" label={t.home.statYears} />
+                <HeroCounter target={homeContent?.stat3Value ?? 5} suffix={homeContent?.stat3Suffix ?? "+"} label={homeContent?.stat3Label ?? t.home.statYears} />
               </div>
             </div>
           </div>
@@ -989,11 +998,13 @@ export default function Index({
   latestNews,
   impactMetrics,
   teamPreview,
+  homeContent = null,
 }: {
   partners?: Partner[];
   latestNews?: NewsSnippet[];
   impactMetrics?: ImpactMetric[];
   teamPreview?: TeamPreviewMember[];
+  homeContent?: HomeContent | null;
 }) {
   const { t } = useLanguage();
 
@@ -1050,7 +1061,7 @@ export default function Index({
     <div className="min-h-screen">
       <ParticleKeyframes />
       {/* Hero — scroll-scrubbed 3D canvas + two-state text */}
-      <HeroSection t={t as unknown as Record<string, Record<string, string>>} />
+      <HeroSection t={t as unknown as Record<string, Record<string, string>>} homeContent={homeContent} />
 
       {/* Mission */}
       <section id="mission" className="py-24 relative overflow-hidden">

@@ -83,9 +83,10 @@ export function Footer() {
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t.footer.tagline}
             </p>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               <span className="tag-pill">VLIR-UOS</span>
               <span className="tag-pill tag-coffee">Ethiopia</span>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ backgroundColor: "#D4AF3722", color: "#D4AF37", border: "1px solid #D4AF3755" }}>Belgium</span>
             </div>
           </div>
 

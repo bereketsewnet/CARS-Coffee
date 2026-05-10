@@ -9,12 +9,14 @@ import {
   ImageIcon,
   X,
   Loader2,
+  Star,
 } from "lucide-react";
 import type { TeamMember } from "../../../generated/prisma-client";
 import {
   createTeamMember,
   updateTeamMember,
   deleteTeamMember,
+  setFeaturedTeamMember,
 } from "@/lib/actions/team";
 import {
   Field,
@@ -29,6 +31,7 @@ import {
 const ROLES = [
   "Principal Investigator",
   "Co-Investigator",
+  "Senior Researcher",
   "PhD Researcher",
   "MSc Researcher",
 ] as const;
@@ -37,17 +40,76 @@ function deriveCategory(role: string): string {
   const r = role.toLowerCase().trim();
   if (r === "principal investigator" || r.includes("principal")) return "Principal Investigator";
   if (r === "co-investigator" || r.includes("co-invest") || r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Investigator";
+  if (r === "senior researcher" || r.includes("senior")) return "Senior Researcher";
   if (r === "phd researcher" || r.includes("phd") || r.includes("candidate")) return "PhD Researcher";
   return "MSc Researcher";
 }
 
-const CATEGORY_ORDER = ["Principal Investigator", "Co-Investigator", "PhD Researcher", "MSc Researcher"] as const;
+const CATEGORY_ORDER = ["Principal Investigator", "Co-Investigator", "Senior Researcher", "PhD Researcher", "MSc Researcher"] as const;
 const CATEGORY_LABELS: Record<string, string> = {
   "Principal Investigator": "Principal Investigators",
   "Co-Investigator":        "Co-Investigators",
+  "Senior Researcher":      "Senior Researchers",
   "PhD Researcher":         "PhD Researchers",
   "MSc Researcher":         "MSc Researchers",
 };
+
+function FeaturedControl({ item, featuredCount, onToggle, onOrder }: {
+  item: TeamMember;
+  featuredCount: number;
+  onToggle: (id: string, featured: boolean) => void;
+  onOrder: (id: string, order: number) => void;
+}) {
+  const [pending, startTransition] = useTransition();
+  const isFeatured = (item as any).featured as boolean;
+  const featuredOrder = (item as any).featuredOrder as number | null;
+  const canFeature = isFeatured || featuredCount < 4;
+
+  function handleToggle() {
+    startTransition(async () => {
+      const newFeatured = !isFeatured;
+      const newOrder = newFeatured ? (featuredOrder ?? featuredCount + 1) : null;
+      await setFeaturedTeamMember(item.id, newFeatured, newOrder);
+      onToggle(item.id, newFeatured);
+    });
+  }
+
+  function handleOrderChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const val = Number(e.target.value);
+    startTransition(async () => {
+      await setFeaturedTeamMember(item.id, true, val);
+      onOrder(item.id, val);
+    });
+  }
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <button
+        onClick={handleToggle}
+        disabled={pending || (!isFeatured && !canFeature)}
+        title={isFeatured ? "Remove from home page" : canFeature ? "Pin to home page (max 4)" : "Max 4 members pinned"}
+        className={`transition-colors disabled:opacity-40 ${isFeatured ? "text-amber-400 hover:text-amber-300" : "text-muted-foreground hover:text-amber-400"}`}
+      >
+        {pending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : (
+          <Star className={`w-3.5 h-3.5 ${isFeatured ? "fill-amber-400" : ""}`} />
+        )}
+      </button>
+      {isFeatured && (
+        <select
+          value={featuredOrder ?? 1}
+          onChange={handleOrderChange}
+          disabled={pending}
+          className="text-[10px] bg-muted border border-border rounded px-1 py-0.5 text-muted-foreground"
+        >
+          <option value={1}>1st</option>
+          <option value={2}>2nd</option>
+          <option value={3}>3rd</option>
+          <option value={4}>4th</option>
+        </select>
+      )}
+    </div>
+  );
+}
 
 export default function TeamCrud({ items: initial, pillars = [] }: { items: TeamMember[]; pillars?: { pillar: string; title: string }[] }) {
   const router = useRouter();
@@ -69,6 +131,20 @@ export default function TeamCrud({ items: initial, pillars = [] }: { items: Team
   React.useEffect(() => {
     setItems(initial);
   }, [initial]);
+
+  const featuredCount = items.filter((m) => (m as any).featured).length;
+
+  function handleFeaturedToggle(id: string, featured: boolean) {
+    setItems((prev) =>
+      prev.map((m) => m.id === id ? { ...m, featured, featuredOrder: featured ? (m as any).featuredOrder ?? featuredCount + 1 : null } as any : m)
+    );
+  }
+
+  function handleFeaturedOrder(id: string, order: number) {
+    setItems((prev) =>
+      prev.map((m) => m.id === id ? { ...m, featuredOrder: order } as any : m)
+    );
+  }
 
   function openAdd() {
     setEditing(null);
@@ -244,6 +320,12 @@ export default function TeamCrud({ items: initial, pillars = [] }: { items: Team
                         )}
                       </div>
                       <div className="flex items-center gap-1.5">
+                        <FeaturedControl
+                          item={m}
+                          featuredCount={featuredCount}
+                          onToggle={handleFeaturedToggle}
+                          onOrder={handleFeaturedOrder}
+                        />
                         <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${m.active ? "text-leaf-bright bg-leaf/10 border-leaf/20" : "text-muted-foreground bg-muted border-border"}`}>
                           {m.active ? "Active" : "Inactive"}
                         </span>

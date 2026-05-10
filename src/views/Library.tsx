@@ -259,11 +259,6 @@ export default function Library({
                       <p className="text-xs text-muted-foreground">
                         {pub.authors}
                       </p>
-                      {pub.journal && (
-                        <p className="text-xs text-muted-foreground/70 italic mt-0.5">
-                          {pub.journal}
-                        </p>
-                      )}
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       {externalHref && (

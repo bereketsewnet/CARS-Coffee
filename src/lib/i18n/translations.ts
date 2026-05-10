@@ -46,6 +46,7 @@ export interface Translations {
     heroDesc: string;
     pi: string;
     coSupervise: string;
+    seniorResearcher: string;
     phd: string;
     ra: string;
   };
@@ -267,6 +268,7 @@ export const translations: Record<Lang, Translations> = {
       heroDesc: "A multidisciplinary team spanning soil science, environmental engineering, economics, and gender studies from Ethiopia and Belgium.",
       pi: "Principal Investigators",
       coSupervise: "Co-Investigators",
+      seniorResearcher: "Senior Researchers",
       phd: "PhD Researchers",
       ra: "MSc Researchers",
     },
@@ -504,6 +506,7 @@ export const translations: Record<Lang, Translations> = {
       heroDesc: "ከኢትዮጵያ እና ከቤልጂየም በግብርና አፈር ሳይንስ፣ አካባቢ ምህንድስና፣ ኢኮኖሚክስ እና የፆታ ጥናት የተውጣጣ ሁለገብ ቡድን።",
       pi: "ዋና ተመራማሪዎች",
       coSupervise: "ተባባሪ ተመራማሪዎች",
+      seniorResearcher: "ከፍተኛ ተመራማሪዎች",
       phd: "የፒኤችዲ ተመራማሪዎች",
       ra: "የኤምኤስሲ ተመራማሪዎች",
     },

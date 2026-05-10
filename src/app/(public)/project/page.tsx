@@ -9,14 +9,19 @@ export default async function ProjectPage() {
   let info = null;
   let goals: { id: string; text: string; order: number }[] = [];
   let workPackages: { id: string; wpId: string; title: string; lead: string; order: number }[] = [];
+  let problemGroups: { id: string; title: string; order: number; bullets: { id: string; text: string; order: number }[] }[] = [];
   try {
-    [info, goals, workPackages] = await Promise.all([
+    [info, goals, workPackages, problemGroups] = await Promise.all([
       prisma.projectInfo.findFirst(),
       prisma.projectGoal.findMany({ orderBy: { order: "asc" } }),
       prisma.workPackage.findMany({ orderBy: { order: "asc" } }),
+      prisma.projectProblemGroup.findMany({
+        orderBy: { order: "asc" },
+        include: { bullets: { orderBy: { order: "asc" } } },
+      }),
     ]);
   } catch {
     // DB unavailable — views will use static fallback
   }
-  return <TheProject info={info} goals={goals} workPackages={workPackages} />;
+  return <TheProject info={info} goals={goals} workPackages={workPackages} problemGroups={problemGroups} />;
 }

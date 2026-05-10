@@ -68,7 +68,7 @@ export function Navbar() {
             <span className="font-serif font-bold text-2xl leading-none block" style={{ color: "#D4AF37" }}>
               CARES
             </span>
-            <span className="text-sm tracking-wide text-leaf-bright">
+            <span className="text-sm tracking-wide font-bold text-leaf-bright">
               Circular Economy Research
             </span>
           </div>

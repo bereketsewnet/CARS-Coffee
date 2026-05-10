@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useTransition, useEffect } from "react";
-import { Plus, Pencil, Trash2, Target, GitBranch, Loader2, BookOpen, Save, CheckCircle } from "lucide-react";
-import type { ProjectGoal, WorkPackage, ProjectInfo } from "../../../generated/prisma-client";
+import { Plus, Pencil, Trash2, Target, GitBranch, Loader2, BookOpen, Save, CheckCircle, X } from "lucide-react";
+import type { ProjectGoal, WorkPackage, ProjectInfo, ProjectProblemGroup, ProjectProblemBullet } from "../../../generated/prisma-client";
 import {
   upsertProjectInfo,
+  upsertProblemGroup, deleteProblemGroup,
   createProjectGoal, updateProjectGoal, deleteProjectGoal,
   createWorkPackage, updateWorkPackage, deleteWorkPackage,
 } from "@/lib/actions/project";
@@ -11,15 +12,7 @@ import {
   Field, inputCls, selectCls, textareaCls, CrudModal, ConfirmDeleteDialog,
 } from "./CrudHelpers";
 
-// ── VLIR-UOS Info section ─────────────────────────────────────────────────────
-
-const STATIC_PROBLEM_LIST = [
-  "Ethiopia produces ~400,000 tons of coffee waste annually",
-  "Coffee husk & pulp pollute rivers and degrade farm soils",
-  "Smallholder farmers lose an estimated 30% of potential income",
-  "No integrated circular economy model exists at farm level",
-  "Limited access to research-backed composting and valorization techniques",
-].join("\n");
+// ── Project Info section ──────────────────────────────────────────────────────
 
 function ProjectInfoForm({ info }: { info: ProjectInfo | null }) {
   const [pending, startTransition] = useTransition();
@@ -44,53 +37,65 @@ function ProjectInfoForm({ info }: { info: ProjectInfo | null }) {
   return (
     <div className="glass-card rounded-2xl border border-border p-6 space-y-4">
       <h2 className="font-serif font-bold text-lg flex items-center gap-2">
-        <BookOpen className="w-5 h-5 text-leaf-bright" /> VLIR-UOS Section
+        <BookOpen className="w-5 h-5 text-leaf-bright" /> Page Content
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Field label="Section title">
-          <input
-            name="vlirTitle"
-            defaultValue={info?.vlirTitle ?? "What is VLIR-UOS?"}
-            className={inputCls}
-            placeholder="What is VLIR-UOS?"
-          />
-        </Field>
-        <Field label="First paragraph">
-          <textarea
-            name="vlirP1"
-            rows={4}
-            defaultValue={info?.vlirP1 ?? "VLIR-UOS (Flemish Interuniversity Council – University Development Cooperation) supports partnerships between Flemish universities and institutions in the Global South. These \"Institutional University Cooperation\" projects build lasting academic and research capacity."}
-            className={textareaCls}
-          />
-        </Field>
-        <Field label="Second paragraph">
-          <textarea
-            name="vlirP2"
-            rows={3}
-            defaultValue={info?.vlirP2 ?? "The Circular Coffee project is part of this framework, bringing together expertise in agronomy, food science, environmental engineering, and development economics."}
-            className={textareaCls}
-          />
-        </Field>
-        <div className="border-t border-border/50 pt-4 space-y-4">
-          <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Problem Statement</p>
-          <Field label="Problem box title">
+        <div className="border-b border-border/50 pb-4 space-y-4">
+          <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">Hero Section</p>
+          <Field label="Hero title">
             <input
-              name="problemTitle"
-              defaultValue={info?.problemTitle ?? "The Problem"}
+              name="heroTitle"
+              defaultValue={info?.heroTitle ?? "The Circular Coffee Project"}
               className={inputCls}
-              placeholder="The Problem"
+              placeholder="The Circular Coffee Project"
             />
           </Field>
-          <Field label="Problem bullets (one per line)">
+          <Field label="Hero subtitle">
             <textarea
-              name="problemList"
-              rows={6}
-              defaultValue={info?.problemList ?? STATIC_PROBLEM_LIST}
+              name="heroSubtitle"
+              rows={3}
+              defaultValue={info?.heroSubtitle ?? "A 4-year north–south cooperative research programme funded by VLIR-UOS, bringing together expertise from Belgium and Ethiopia to build a circular coffee economy."}
               className={textareaCls}
-              placeholder={"One bullet per line…"}
             />
           </Field>
         </div>
+
+        <div className="space-y-4">
+          <p className="text-xs text-muted-foreground font-medium uppercase tracking-widest">VLIR-UOS Section</p>
+          <Field label="Section title (paragraph 1)">
+            <input
+              name="vlirTitle"
+              defaultValue={info?.vlirTitle ?? "What is VLIR-UOS?"}
+              className={inputCls}
+              placeholder="What is VLIR-UOS?"
+            />
+          </Field>
+          <Field label="First paragraph">
+            <textarea
+              name="vlirP1"
+              rows={4}
+              defaultValue={info?.vlirP1 ?? "VLIR-UOS (Flemish Interuniversity Council – University Development Cooperation) supports partnerships between Flemish universities and institutions in the Global South. These \"Institutional University Cooperation\" projects build lasting academic and research capacity."}
+              className={textareaCls}
+            />
+          </Field>
+          <Field label="Section title (paragraph 2)">
+            <input
+              name="vlirP2Title"
+              defaultValue={info?.vlirP2Title ?? "What is CARES?"}
+              className={inputCls}
+              placeholder="What is CARES?"
+            />
+          </Field>
+          <Field label="Second paragraph">
+            <textarea
+              name="vlirP2"
+              rows={3}
+              defaultValue={info?.vlirP2 ?? "The Circular Coffee project is part of this framework, bringing together expertise in agronomy, food science, environmental engineering, and development economics."}
+              className={textareaCls}
+            />
+          </Field>
+        </div>
+
         {error && <p className="text-xs text-rose-400">{error}</p>}
         <div className="flex items-center gap-4">
           <button
@@ -108,6 +113,210 @@ function ProjectInfoForm({ info }: { info: ProjectInfo | null }) {
           )}
         </div>
       </form>
+    </div>
+  );
+}
+
+// ── Problem Groups section ────────────────────────────────────────────────────
+
+type BulletRow = { id?: string; text: string };
+type GroupDraft = {
+  id: string | null;
+  title: string;
+  order: number;
+  bullets: BulletRow[];
+  saved: boolean;
+  saving: boolean;
+  error: string | null;
+};
+
+type DBGroup = ProjectProblemGroup & { bullets: ProjectProblemBullet[] };
+
+function ProblemGroupsCrud({ groups: initial }: { groups: DBGroup[] }) {
+  const [groups, setGroups] = useState<GroupDraft[]>(() =>
+    initial.map((g) => ({
+      id: g.id,
+      title: g.title,
+      order: g.order,
+      bullets: g.bullets.sort((a, b) => a.order - b.order).map((b) => ({ id: b.id, text: b.text })),
+      saved: false,
+      saving: false,
+      error: null,
+    }))
+  );
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [deletePending, startDeleteTransition] = useTransition();
+
+  useEffect(() => {
+    setGroups(
+      initial.map((g) => ({
+        id: g.id,
+        title: g.title,
+        order: g.order,
+        bullets: g.bullets.sort((a, b) => a.order - b.order).map((b) => ({ id: b.id, text: b.text })),
+        saved: false,
+        saving: false,
+        error: null,
+      }))
+    );
+  }, [initial]);
+
+  function addGroup() {
+    setGroups((prev) => [
+      ...prev,
+      { id: null, title: "", order: prev.length, bullets: [{ text: "" }], saved: false, saving: false, error: null },
+    ]);
+  }
+
+  function removeGroup(idx: number) {
+    const g = groups[idx];
+    if (g.id) {
+      setDeleteTarget(g.id);
+    } else {
+      setGroups((prev) => prev.filter((_, i) => i !== idx));
+    }
+  }
+
+  function confirmDelete() {
+    if (!deleteTarget) return;
+    startDeleteTransition(async () => {
+      await deleteProblemGroup(deleteTarget);
+      setDeleteTarget(null);
+    });
+  }
+
+  function updateTitle(idx: number, value: string) {
+    setGroups((prev) => prev.map((g, i) => i === idx ? { ...g, title: value } : g));
+  }
+
+  function addBullet(idx: number) {
+    setGroups((prev) => prev.map((g, i) => i === idx ? { ...g, bullets: [...g.bullets, { text: "" }] } : g));
+  }
+
+  function updateBullet(gIdx: number, bIdx: number, value: string) {
+    setGroups((prev) => prev.map((g, i) => {
+      if (i !== gIdx) return g;
+      return { ...g, bullets: g.bullets.map((b, j) => j === bIdx ? { ...b, text: value } : b) };
+    }));
+  }
+
+  function removeBullet(gIdx: number, bIdx: number) {
+    setGroups((prev) => prev.map((g, i) => {
+      if (i !== gIdx) return g;
+      return { ...g, bullets: g.bullets.filter((_, j) => j !== bIdx) };
+    }));
+  }
+
+  function saveGroup(idx: number) {
+    const g = groups[idx];
+    setGroups((prev) => prev.map((gr, i) => i === idx ? { ...gr, saving: true, error: null, saved: false } : gr));
+    const fd = new FormData();
+    if (g.id) fd.set("id", g.id);
+    fd.set("title", g.title);
+    g.bullets.forEach((b, i) => fd.set(`bullet_${i}`, b.text));
+    upsertProblemGroup(fd).then((res) => {
+      if (res?.error) {
+        setGroups((prev) => prev.map((gr, i) => i === idx ? { ...gr, saving: false, error: res.error! } : gr));
+      } else {
+        setGroups((prev) => prev.map((gr, i) => i === idx ? { ...gr, saving: false, saved: true } : gr));
+        setTimeout(() => setGroups((prev) => prev.map((gr, i) => i === idx ? { ...gr, saved: false } : gr)), 3000);
+      }
+    });
+  }
+
+  return (
+    <div className="glass-card rounded-2xl border border-border p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="font-serif font-bold text-lg flex items-center gap-2">
+          <span className="w-6 h-6 rounded-full bg-destructive/20 flex items-center justify-center text-destructive text-xs">!</span>
+          Problem Statement Groups
+        </h2>
+        <button
+          onClick={addGroup}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-colors text-xs font-semibold"
+        >
+          <Plus className="w-3.5 h-3.5" /> Add Group
+        </button>
+      </div>
+
+      {groups.length === 0 && (
+        <p className="text-center py-6 text-sm text-muted-foreground">No groups yet. Click "Add Group" to create one.</p>
+      )}
+
+      <div className="space-y-4">
+        {groups.map((g, gIdx) => (
+          <div key={gIdx} className="border border-border/60 rounded-xl p-4 space-y-3 bg-muted/20">
+            <div className="flex items-center justify-between gap-3">
+              <input
+                type="text"
+                value={g.title}
+                onChange={(e) => updateTitle(gIdx, e.target.value)}
+                placeholder="Group title (e.g. Environmental Impact)"
+                className={inputCls + " flex-1 font-semibold"}
+              />
+              <button
+                onClick={() => removeGroup(gIdx)}
+                className="text-muted-foreground hover:text-rose-400 transition-colors shrink-0"
+                title="Delete group"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-2 pl-2">
+              {g.bullets.map((b, bIdx) => (
+                <div key={bIdx} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-destructive mt-3 shrink-0" />
+                  <input
+                    type="text"
+                    value={b.text}
+                    onChange={(e) => updateBullet(gIdx, bIdx, e.target.value)}
+                    placeholder={`Bullet point ${bIdx + 1}`}
+                    className={inputCls + " flex-1 text-sm"}
+                  />
+                  <button
+                    onClick={() => removeBullet(gIdx, bIdx)}
+                    className="text-muted-foreground hover:text-rose-400 transition-colors mt-2 shrink-0"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() => addBullet(gIdx)}
+                className="flex items-center gap-1 text-xs text-muted-foreground hover:text-leaf-bright transition-colors mt-1"
+              >
+                <Plus className="w-3 h-3" /> Add bullet
+              </button>
+            </div>
+
+            {g.error && <p className="text-xs text-rose-400">{g.error}</p>}
+            <div className="flex items-center gap-3 pt-1">
+              <button
+                onClick={() => saveGroup(gIdx)}
+                disabled={g.saving}
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-colors text-xs font-semibold disabled:opacity-50"
+              >
+                {g.saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+                {g.saving ? "Saving…" : "Save Group"}
+              </button>
+              {g.saved && (
+                <span className="flex items-center gap-1 text-leaf-bright text-xs font-medium">
+                  <CheckCircle className="w-3.5 h-3.5" /> Saved!
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <ConfirmDeleteDialog
+        open={deleteTarget !== null}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={confirmDelete}
+        label="this problem group and all its bullets"
+        pending={deletePending}
+      />
     </div>
   );
 }
@@ -354,15 +563,17 @@ export default function ProjectCrud({
   info,
   goals,
   workPackages,
+  problemGroups,
 }: {
   info: ProjectInfo | null;
   goals: ProjectGoal[];
   workPackages: WorkPackage[];
+  problemGroups: DBGroup[];
 }) {
   return (
     <div className="space-y-8">
-      {/* VLIR-UOS editable section */}
       <ProjectInfoForm info={info} />
+      <ProblemGroupsCrud groups={problemGroups} />
 
       {/* Circular Economy Model — read-only info */}
       <div className="glass-card rounded-2xl border border-border p-6">

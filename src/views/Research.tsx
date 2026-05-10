@@ -77,17 +77,48 @@ interface PillarCardProps {
   emptyState?: boolean;
 }
 
+
+const LEFT_TOPIC_LIMIT = 5;
+
+function TopicCard({ topic }: { topic: TopicItem }) {
+  return (
+    <div className="glass-card rounded-xl p-5 border border-border">
+      <h4 className="font-serif font-semibold text-base mb-2">{topic.title}</h4>
+      <p className="text-muted-foreground text-sm leading-relaxed">{topic.desc}</p>
+      {topic.members && topic.members.length > 0 && (
+        <div className="mt-3 pt-3 border-t border-border/30">
+          <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mb-2 flex items-center gap-1.5">
+            <Users className="w-3 h-3" /> Researchers
+          </p>
+          <ul className="space-y-1">
+            {topic.members.map((m) => (
+              <li key={m.id} className="text-xs text-muted-foreground">
+                {m.name}
+                {m.role && <span className="text-muted-foreground/60"> — {m.role}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCardProps & { layman: string }) {
   const [showLayman, setShowLayman] = useState(false);
   const { t } = useLanguage();
   const Icon = pillar.icon;
   const c = pillar.color;
 
+  const leftTopics  = topics.slice(0, LEFT_TOPIC_LIMIT);
+  const rightTopics = topics.slice(LEFT_TOPIC_LIMIT);
+
   return (
     <section id={pillar.id} className="py-20 scroll-mt-24">
       <div className="container mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-start">
-          {/* Left – content */}
+
+          {/* ── Left column ── */}
           <div>
             <span
               className="mb-4 inline-block text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full"
@@ -101,10 +132,9 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
             </h2>
             <p className="text-muted-foreground mb-8">{pillar.tagline}</p>
 
-            {/* Topics */}
+            {/* First 5 topics */}
             <div className="space-y-5">
               {emptyState ? (
-                /* DB connected but no projects added for this pillar yet */
                 <div className="glass-card rounded-xl p-5 border border-dashed border-border text-center">
                   <FlaskConical className="w-6 h-6 mx-auto mb-2 text-muted-foreground opacity-50" />
                   <p className="text-muted-foreground text-sm">
@@ -112,27 +142,7 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
                   </p>
                 </div>
               ) : (
-                topics.map((topic) => (
-                  <div key={topic.title} className="glass-card rounded-xl p-5 border border-border">
-                    <h4 className="font-serif font-semibold text-base mb-2">{topic.title}</h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{topic.desc}</p>
-                    {topic.members && topic.members.length > 0 && (
-                      <div className="mt-3 pt-3 border-t border-border/30">
-                        <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                          <Users className="w-3 h-3" /> Researchers
-                        </p>
-                        <ul className="space-y-1">
-                          {topic.members.map((m) => (
-                            <li key={m.id} className="text-xs text-muted-foreground">
-                              {m.name}
-                              {m.role && <span className="text-muted-foreground/60"> — {m.role}</span>}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                ))
+                leftTopics.map((topic) => <TopicCard key={topic.title} topic={topic} />)
               )}
             </div>
 
@@ -152,13 +162,15 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
             )}
           </div>
 
-          {/* Right – image + publications */}
-          <div>
-            <div className="relative rounded-2xl overflow-hidden shadow-elevated mb-6">
-              <img src={pillar.image} alt={pillar.title} className="w-full h-72 object-cover" />
+          {/* ── Right column ── */}
+          <div className="flex flex-col gap-5">
+            {/* Descriptive image */}
+            <div className="relative rounded-2xl overflow-hidden shadow-elevated">
+              <img src={pillar.image} alt={pillar.title} className="w-full h-64 object-cover" />
               <div className="absolute inset-0 bg-charcoal/40" />
             </div>
 
+            {/* Related publications */}
             {pubLines.length > 0 && (
               <div className="glass-card rounded-xl p-5 border border-border">
                 <h4 className="font-serif font-semibold text-sm uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
@@ -176,7 +188,11 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
                 </ul>
               </div>
             )}
+
+            {/* Overflow topic cards (6th, 7th, 8th …) */}
+            {rightTopics.map((topic) => <TopicCard key={topic.title} topic={topic} />)}
           </div>
+
         </div>
       </div>
       <div className="container mx-auto mt-16">
@@ -193,9 +209,6 @@ export default function Research({
   publications,
   pillarContents,
 }: {
-  // null  = DB unavailable (error/disabled) – show full static fallback
-  // []    = DB connected but no records yet – show DB-driven empty state per pillar
-  // [...] = DB data – show real projects
   projects?: ResearchProject[] | null;
   publications?: Publication[] | null;
   pillarContents?: any[] | null;
@@ -327,10 +340,10 @@ export default function Research({
           <PillarCard
             key={pillar.key}
             pillar={pillar}
-            topics={dbTopics ?? []}          // null → [] triggers empty-state in PillarCard
+            topics={dbTopics ?? []}
             pubLines={dbPubs}
             layman={pillar.layman}
-            emptyState={dbTopics === null}   // true when DB up but pillar has no projects
+            emptyState={dbTopics === null}
           />
         );
       })}

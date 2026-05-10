@@ -5,31 +5,75 @@ import { requireAdmin } from "./guard";
 
 const revalidateAll = () => { revalidatePath("/admin/project"); revalidatePath("/project"); };
 
-// ── Project Info (VLIR-UOS section) ──────────────────────────────────────────
+// ── Project Info ──────────────────────────────────────────────────────────────
 
 export async function upsertProjectInfo(form: FormData) {
   await requireAdmin();
+  const heroTitle    = (form.get("heroTitle")    as string)?.trim();
+  const heroSubtitle = (form.get("heroSubtitle") as string)?.trim();
   const vlirTitle    = (form.get("vlirTitle")    as string)?.trim();
   const vlirP1       = (form.get("vlirP1")       as string)?.trim();
+  const vlirP2Title  = (form.get("vlirP2Title")  as string)?.trim();
   const vlirP2       = (form.get("vlirP2")       as string)?.trim();
-  const problemTitle = (form.get("problemTitle") as string)?.trim();
-  const problemList  = (form.get("problemList")  as string)?.trim();
-  if (!vlirTitle || !vlirP1 || !vlirP2 || !problemTitle || !problemList) {
-    return { error: "All fields are required." };
+  if (!vlirTitle || !vlirP1 || !vlirP2) {
+    return { error: "Title and both paragraphs are required." };
   }
+  const data = { heroTitle, heroSubtitle, vlirTitle, vlirP1, vlirP2Title, vlirP2 };
   const existing = await prisma.projectInfo.findFirst();
   if (existing) {
-    await prisma.projectInfo.update({
-      where: { id: existing.id },
-      data: { vlirTitle, vlirP1, vlirP2, problemTitle, problemList },
+    await prisma.projectInfo.update({ where: { id: existing.id }, data });
+  } else {
+    await prisma.projectInfo.create({ data: data as any });
+  }
+  revalidateAll();
+  return { success: true };
+}
+
+// ── Problem Groups ────────────────────────────────────────────────────────────
+
+export async function upsertProblemGroup(form: FormData) {
+  await requireAdmin();
+  const id    = (form.get("id")    as string) || null;
+  const title = (form.get("title") as string)?.trim();
+  if (!title) return { error: "Group title is required." };
+
+  const bullets: string[] = [];
+  let i = 0;
+  while (form.get(`bullet_${i}`) !== null) {
+    const text = (form.get(`bullet_${i}`) as string)?.trim();
+    if (text) bullets.push(text);
+    i++;
+  }
+
+  if (id) {
+    await prisma.projectProblemGroup.update({
+      where: { id },
+      data: {
+        title,
+        bullets: {
+          deleteMany: {},
+          create: bullets.map((text, order) => ({ text, order })),
+        },
+      },
     });
   } else {
-    await prisma.projectInfo.create({
-      data: { vlirTitle, vlirP1, vlirP2, problemTitle, problemList },
+    const max = await prisma.projectProblemGroup.aggregate({ _max: { order: true } });
+    await prisma.projectProblemGroup.create({
+      data: {
+        title,
+        order: (max._max.order ?? 0) + 1,
+        bullets: { create: bullets.map((text, order) => ({ text, order })) },
+      },
     });
   }
   revalidateAll();
   return { success: true };
+}
+
+export async function deleteProblemGroup(id: string) {
+  await requireAdmin();
+  await prisma.projectProblemGroup.delete({ where: { id } });
+  revalidateAll();
 }
 
 // ── Project Goals ─────────────────────────────────────────────────────────────

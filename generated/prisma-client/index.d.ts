@@ -74,10 +74,25 @@ export type Partner = $Result.DefaultSelection<Prisma.$PartnerPayload>
  */
 export type Collaborator = $Result.DefaultSelection<Prisma.$CollaboratorPayload>
 /**
+ * Model HomeContent
+ * 
+ */
+export type HomeContent = $Result.DefaultSelection<Prisma.$HomeContentPayload>
+/**
  * Model ProjectInfo
  * 
  */
 export type ProjectInfo = $Result.DefaultSelection<Prisma.$ProjectInfoPayload>
+/**
+ * Model ProjectProblemGroup
+ * 
+ */
+export type ProjectProblemGroup = $Result.DefaultSelection<Prisma.$ProjectProblemGroupPayload>
+/**
+ * Model ProjectProblemBullet
+ * 
+ */
+export type ProjectProblemBullet = $Result.DefaultSelection<Prisma.$ProjectProblemBulletPayload>
 /**
  * Model ProjectGoal
  * 
@@ -467,6 +482,16 @@ export class PrismaClient<
   get collaborator(): Prisma.CollaboratorDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.homeContent`: Exposes CRUD operations for the **HomeContent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HomeContents
+    * const homeContents = await prisma.homeContent.findMany()
+    * ```
+    */
+  get homeContent(): Prisma.HomeContentDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.projectInfo`: Exposes CRUD operations for the **ProjectInfo** model.
     * Example usage:
     * ```ts
@@ -475,6 +500,26 @@ export class PrismaClient<
     * ```
     */
   get projectInfo(): Prisma.ProjectInfoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectProblemGroup`: Exposes CRUD operations for the **ProjectProblemGroup** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectProblemGroups
+    * const projectProblemGroups = await prisma.projectProblemGroup.findMany()
+    * ```
+    */
+  get projectProblemGroup(): Prisma.ProjectProblemGroupDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectProblemBullet`: Exposes CRUD operations for the **ProjectProblemBullet** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectProblemBullets
+    * const projectProblemBullets = await prisma.projectProblemBullet.findMany()
+    * ```
+    */
+  get projectProblemBullet(): Prisma.ProjectProblemBulletDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.projectGoal`: Exposes CRUD operations for the **ProjectGoal** model.
@@ -981,7 +1026,10 @@ export namespace Prisma {
     NewsletterSubscriber: 'NewsletterSubscriber',
     Partner: 'Partner',
     Collaborator: 'Collaborator',
+    HomeContent: 'HomeContent',
     ProjectInfo: 'ProjectInfo',
+    ProjectProblemGroup: 'ProjectProblemGroup',
+    ProjectProblemBullet: 'ProjectProblemBullet',
     ProjectGoal: 'ProjectGoal',
     WorkPackage: 'WorkPackage',
     ImpactSection: 'ImpactSection',
@@ -1003,7 +1051,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "researchTopicMember" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "collaborator" | "projectInfo" | "projectGoal" | "workPackage" | "impactSection" | "impactArea" | "impactMetric" | "siteContactInfo"
+      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "researchTopicMember" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "collaborator" | "homeContent" | "projectInfo" | "projectProblemGroup" | "projectProblemBullet" | "projectGoal" | "workPackage" | "impactSection" | "impactArea" | "impactMetric" | "siteContactInfo"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1799,6 +1847,72 @@ export namespace Prisma {
           }
         }
       }
+      HomeContent: {
+        payload: Prisma.$HomeContentPayload<ExtArgs>
+        fields: Prisma.HomeContentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HomeContentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HomeContentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>
+          }
+          findFirst: {
+            args: Prisma.HomeContentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HomeContentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>
+          }
+          findMany: {
+            args: Prisma.HomeContentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>[]
+          }
+          create: {
+            args: Prisma.HomeContentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>
+          }
+          createMany: {
+            args: Prisma.HomeContentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.HomeContentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>
+          }
+          update: {
+            args: Prisma.HomeContentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>
+          }
+          deleteMany: {
+            args: Prisma.HomeContentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HomeContentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.HomeContentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HomeContentPayload>
+          }
+          aggregate: {
+            args: Prisma.HomeContentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHomeContent>
+          }
+          groupBy: {
+            args: Prisma.HomeContentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HomeContentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HomeContentCountArgs<ExtArgs>
+            result: $Utils.Optional<HomeContentCountAggregateOutputType> | number
+          }
+        }
+      }
       ProjectInfo: {
         payload: Prisma.$ProjectInfoPayload<ExtArgs>
         fields: Prisma.ProjectInfoFieldRefs
@@ -1862,6 +1976,138 @@ export namespace Prisma {
           count: {
             args: Prisma.ProjectInfoCountArgs<ExtArgs>
             result: $Utils.Optional<ProjectInfoCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProjectProblemGroup: {
+        payload: Prisma.$ProjectProblemGroupPayload<ExtArgs>
+        fields: Prisma.ProjectProblemGroupFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectProblemGroupFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectProblemGroupFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectProblemGroupFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectProblemGroupFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectProblemGroupFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectProblemGroupCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectProblemGroupCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProjectProblemGroupDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>
+          }
+          update: {
+            args: Prisma.ProjectProblemGroupUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectProblemGroupDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectProblemGroupUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProjectProblemGroupUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemGroupPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectProblemGroupAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectProblemGroup>
+          }
+          groupBy: {
+            args: Prisma.ProjectProblemGroupGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectProblemGroupGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectProblemGroupCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectProblemGroupCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProjectProblemBullet: {
+        payload: Prisma.$ProjectProblemBulletPayload<ExtArgs>
+        fields: Prisma.ProjectProblemBulletFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectProblemBulletFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectProblemBulletFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectProblemBulletFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectProblemBulletFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectProblemBulletFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectProblemBulletCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectProblemBulletCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProjectProblemBulletDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>
+          }
+          update: {
+            args: Prisma.ProjectProblemBulletUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectProblemBulletDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectProblemBulletUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProjectProblemBulletUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectProblemBulletPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectProblemBulletAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectProblemBullet>
+          }
+          groupBy: {
+            args: Prisma.ProjectProblemBulletGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectProblemBulletGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectProblemBulletCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectProblemBulletCountAggregateOutputType> | number
           }
         }
       }
@@ -2381,7 +2627,10 @@ export namespace Prisma {
     newsletterSubscriber?: NewsletterSubscriberOmit
     partner?: PartnerOmit
     collaborator?: CollaboratorOmit
+    homeContent?: HomeContentOmit
     projectInfo?: ProjectInfoOmit
+    projectProblemGroup?: ProjectProblemGroupOmit
+    projectProblemBullet?: ProjectProblemBulletOmit
     projectGoal?: ProjectGoalOmit
     workPackage?: WorkPackageOmit
     impactSection?: ImpactSectionOmit
@@ -2522,6 +2771,37 @@ export namespace Prisma {
    */
   export type ResearchProjectCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResearchTopicMemberWhereInput
+  }
+
+
+  /**
+   * Count Type ProjectProblemGroupCountOutputType
+   */
+
+  export type ProjectProblemGroupCountOutputType = {
+    bullets: number
+  }
+
+  export type ProjectProblemGroupCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bullets?: boolean | ProjectProblemGroupCountOutputTypeCountBulletsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProjectProblemGroupCountOutputType without action
+   */
+  export type ProjectProblemGroupCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroupCountOutputType
+     */
+    select?: ProjectProblemGroupCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProjectProblemGroupCountOutputType without action
+   */
+  export type ProjectProblemGroupCountOutputTypeCountBulletsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectProblemBulletWhereInput
   }
 
 
@@ -5479,10 +5759,12 @@ export namespace Prisma {
 
   export type TeamMemberAvgAggregateOutputType = {
     order: number | null
+    featuredOrder: number | null
   }
 
   export type TeamMemberSumAggregateOutputType = {
     order: number | null
+    featuredOrder: number | null
   }
 
   export type TeamMemberMinAggregateOutputType = {
@@ -5501,6 +5783,8 @@ export namespace Prisma {
     website: string | null
     active: boolean | null
     order: number | null
+    featured: boolean | null
+    featuredOrder: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5521,6 +5805,8 @@ export namespace Prisma {
     website: string | null
     active: boolean | null
     order: number | null
+    featured: boolean | null
+    featuredOrder: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5541,6 +5827,8 @@ export namespace Prisma {
     website: number
     active: number
     order: number
+    featured: number
+    featuredOrder: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5549,10 +5837,12 @@ export namespace Prisma {
 
   export type TeamMemberAvgAggregateInputType = {
     order?: true
+    featuredOrder?: true
   }
 
   export type TeamMemberSumAggregateInputType = {
     order?: true
+    featuredOrder?: true
   }
 
   export type TeamMemberMinAggregateInputType = {
@@ -5571,6 +5861,8 @@ export namespace Prisma {
     website?: true
     active?: true
     order?: true
+    featured?: true
+    featuredOrder?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5591,6 +5883,8 @@ export namespace Prisma {
     website?: true
     active?: true
     order?: true
+    featured?: true
+    featuredOrder?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5611,6 +5905,8 @@ export namespace Prisma {
     website?: true
     active?: true
     order?: true
+    featured?: true
+    featuredOrder?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -5718,6 +6014,8 @@ export namespace Prisma {
     website: string | null
     active: boolean
     order: number
+    featured: boolean
+    featuredOrder: number | null
     createdAt: Date
     updatedAt: Date
     _count: TeamMemberCountAggregateOutputType | null
@@ -5757,6 +6055,8 @@ export namespace Prisma {
     website?: boolean
     active?: boolean
     order?: boolean
+    featured?: boolean
+    featuredOrder?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["teamMember"]>
@@ -5779,11 +6079,13 @@ export namespace Prisma {
     website?: boolean
     active?: boolean
     order?: boolean
+    featured?: boolean
+    featuredOrder?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "institution" | "country" | "pillar" | "bio" | "email" | "imageUrl" | "linkedin" | "twitter" | "instagram" | "website" | "active" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "role" | "institution" | "country" | "pillar" | "bio" | "email" | "imageUrl" | "linkedin" | "twitter" | "instagram" | "website" | "active" | "order" | "featured" | "featuredOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
 
   export type $TeamMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamMember"
@@ -5804,6 +6106,8 @@ export namespace Prisma {
       website: string | null
       active: boolean
       order: number
+      featured: boolean
+      featuredOrder: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["teamMember"]>
@@ -6190,6 +6494,8 @@ export namespace Prisma {
     readonly website: FieldRef<"TeamMember", 'String'>
     readonly active: FieldRef<"TeamMember", 'Boolean'>
     readonly order: FieldRef<"TeamMember", 'Int'>
+    readonly featured: FieldRef<"TeamMember", 'Boolean'>
+    readonly featuredOrder: FieldRef<"TeamMember", 'Int'>
     readonly createdAt: FieldRef<"TeamMember", 'DateTime'>
     readonly updatedAt: FieldRef<"TeamMember", 'DateTime'>
   }
@@ -14367,6 +14673,1056 @@ export namespace Prisma {
 
 
   /**
+   * Model HomeContent
+   */
+
+  export type AggregateHomeContent = {
+    _count: HomeContentCountAggregateOutputType | null
+    _avg: HomeContentAvgAggregateOutputType | null
+    _sum: HomeContentSumAggregateOutputType | null
+    _min: HomeContentMinAggregateOutputType | null
+    _max: HomeContentMaxAggregateOutputType | null
+  }
+
+  export type HomeContentAvgAggregateOutputType = {
+    stat1Value: number | null
+    stat2Value: number | null
+    stat3Value: number | null
+  }
+
+  export type HomeContentSumAggregateOutputType = {
+    stat1Value: number | null
+    stat2Value: number | null
+    stat3Value: number | null
+  }
+
+  export type HomeContentMinAggregateOutputType = {
+    id: string | null
+    heroTitle1: string | null
+    heroTitle2: string | null
+    heroSubtitle: string | null
+    impactTitle: string | null
+    impactTitleBold: string | null
+    stat1Value: number | null
+    stat1Suffix: string | null
+    stat1Label: string | null
+    stat2Value: number | null
+    stat2Suffix: string | null
+    stat2Label: string | null
+    stat3Value: number | null
+    stat3Suffix: string | null
+    stat3Label: string | null
+    updatedAt: Date | null
+  }
+
+  export type HomeContentMaxAggregateOutputType = {
+    id: string | null
+    heroTitle1: string | null
+    heroTitle2: string | null
+    heroSubtitle: string | null
+    impactTitle: string | null
+    impactTitleBold: string | null
+    stat1Value: number | null
+    stat1Suffix: string | null
+    stat1Label: string | null
+    stat2Value: number | null
+    stat2Suffix: string | null
+    stat2Label: string | null
+    stat3Value: number | null
+    stat3Suffix: string | null
+    stat3Label: string | null
+    updatedAt: Date | null
+  }
+
+  export type HomeContentCountAggregateOutputType = {
+    id: number
+    heroTitle1: number
+    heroTitle2: number
+    heroSubtitle: number
+    impactTitle: number
+    impactTitleBold: number
+    stat1Value: number
+    stat1Suffix: number
+    stat1Label: number
+    stat2Value: number
+    stat2Suffix: number
+    stat2Label: number
+    stat3Value: number
+    stat3Suffix: number
+    stat3Label: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HomeContentAvgAggregateInputType = {
+    stat1Value?: true
+    stat2Value?: true
+    stat3Value?: true
+  }
+
+  export type HomeContentSumAggregateInputType = {
+    stat1Value?: true
+    stat2Value?: true
+    stat3Value?: true
+  }
+
+  export type HomeContentMinAggregateInputType = {
+    id?: true
+    heroTitle1?: true
+    heroTitle2?: true
+    heroSubtitle?: true
+    impactTitle?: true
+    impactTitleBold?: true
+    stat1Value?: true
+    stat1Suffix?: true
+    stat1Label?: true
+    stat2Value?: true
+    stat2Suffix?: true
+    stat2Label?: true
+    stat3Value?: true
+    stat3Suffix?: true
+    stat3Label?: true
+    updatedAt?: true
+  }
+
+  export type HomeContentMaxAggregateInputType = {
+    id?: true
+    heroTitle1?: true
+    heroTitle2?: true
+    heroSubtitle?: true
+    impactTitle?: true
+    impactTitleBold?: true
+    stat1Value?: true
+    stat1Suffix?: true
+    stat1Label?: true
+    stat2Value?: true
+    stat2Suffix?: true
+    stat2Label?: true
+    stat3Value?: true
+    stat3Suffix?: true
+    stat3Label?: true
+    updatedAt?: true
+  }
+
+  export type HomeContentCountAggregateInputType = {
+    id?: true
+    heroTitle1?: true
+    heroTitle2?: true
+    heroSubtitle?: true
+    impactTitle?: true
+    impactTitleBold?: true
+    stat1Value?: true
+    stat1Suffix?: true
+    stat1Label?: true
+    stat2Value?: true
+    stat2Suffix?: true
+    stat2Label?: true
+    stat3Value?: true
+    stat3Suffix?: true
+    stat3Label?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HomeContentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HomeContent to aggregate.
+     */
+    where?: HomeContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomeContents to fetch.
+     */
+    orderBy?: HomeContentOrderByWithRelationInput | HomeContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HomeContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomeContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomeContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HomeContents
+    **/
+    _count?: true | HomeContentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HomeContentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HomeContentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HomeContentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HomeContentMaxAggregateInputType
+  }
+
+  export type GetHomeContentAggregateType<T extends HomeContentAggregateArgs> = {
+        [P in keyof T & keyof AggregateHomeContent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHomeContent[P]>
+      : GetScalarType<T[P], AggregateHomeContent[P]>
+  }
+
+
+
+
+  export type HomeContentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HomeContentWhereInput
+    orderBy?: HomeContentOrderByWithAggregationInput | HomeContentOrderByWithAggregationInput[]
+    by: HomeContentScalarFieldEnum[] | HomeContentScalarFieldEnum
+    having?: HomeContentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HomeContentCountAggregateInputType | true
+    _avg?: HomeContentAvgAggregateInputType
+    _sum?: HomeContentSumAggregateInputType
+    _min?: HomeContentMinAggregateInputType
+    _max?: HomeContentMaxAggregateInputType
+  }
+
+  export type HomeContentGroupByOutputType = {
+    id: string
+    heroTitle1: string
+    heroTitle2: string
+    heroSubtitle: string
+    impactTitle: string
+    impactTitleBold: string
+    stat1Value: number
+    stat1Suffix: string
+    stat1Label: string
+    stat2Value: number
+    stat2Suffix: string
+    stat2Label: string
+    stat3Value: number
+    stat3Suffix: string
+    stat3Label: string
+    updatedAt: Date
+    _count: HomeContentCountAggregateOutputType | null
+    _avg: HomeContentAvgAggregateOutputType | null
+    _sum: HomeContentSumAggregateOutputType | null
+    _min: HomeContentMinAggregateOutputType | null
+    _max: HomeContentMaxAggregateOutputType | null
+  }
+
+  type GetHomeContentGroupByPayload<T extends HomeContentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HomeContentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HomeContentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HomeContentGroupByOutputType[P]>
+            : GetScalarType<T[P], HomeContentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HomeContentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    heroTitle1?: boolean
+    heroTitle2?: boolean
+    heroSubtitle?: boolean
+    impactTitle?: boolean
+    impactTitleBold?: boolean
+    stat1Value?: boolean
+    stat1Suffix?: boolean
+    stat1Label?: boolean
+    stat2Value?: boolean
+    stat2Suffix?: boolean
+    stat2Label?: boolean
+    stat3Value?: boolean
+    stat3Suffix?: boolean
+    stat3Label?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["homeContent"]>
+
+
+
+  export type HomeContentSelectScalar = {
+    id?: boolean
+    heroTitle1?: boolean
+    heroTitle2?: boolean
+    heroSubtitle?: boolean
+    impactTitle?: boolean
+    impactTitleBold?: boolean
+    stat1Value?: boolean
+    stat1Suffix?: boolean
+    stat1Label?: boolean
+    stat2Value?: boolean
+    stat2Suffix?: boolean
+    stat2Label?: boolean
+    stat3Value?: boolean
+    stat3Suffix?: boolean
+    stat3Label?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HomeContentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "heroTitle1" | "heroTitle2" | "heroSubtitle" | "impactTitle" | "impactTitleBold" | "stat1Value" | "stat1Suffix" | "stat1Label" | "stat2Value" | "stat2Suffix" | "stat2Label" | "stat3Value" | "stat3Suffix" | "stat3Label" | "updatedAt", ExtArgs["result"]["homeContent"]>
+
+  export type $HomeContentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HomeContent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      heroTitle1: string
+      heroTitle2: string
+      heroSubtitle: string
+      impactTitle: string
+      impactTitleBold: string
+      stat1Value: number
+      stat1Suffix: string
+      stat1Label: string
+      stat2Value: number
+      stat2Suffix: string
+      stat2Label: string
+      stat3Value: number
+      stat3Suffix: string
+      stat3Label: string
+      updatedAt: Date
+    }, ExtArgs["result"]["homeContent"]>
+    composites: {}
+  }
+
+  type HomeContentGetPayload<S extends boolean | null | undefined | HomeContentDefaultArgs> = $Result.GetResult<Prisma.$HomeContentPayload, S>
+
+  type HomeContentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HomeContentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HomeContentCountAggregateInputType | true
+    }
+
+  export interface HomeContentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HomeContent'], meta: { name: 'HomeContent' } }
+    /**
+     * Find zero or one HomeContent that matches the filter.
+     * @param {HomeContentFindUniqueArgs} args - Arguments to find a HomeContent
+     * @example
+     * // Get one HomeContent
+     * const homeContent = await prisma.homeContent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HomeContentFindUniqueArgs>(args: SelectSubset<T, HomeContentFindUniqueArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HomeContent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HomeContentFindUniqueOrThrowArgs} args - Arguments to find a HomeContent
+     * @example
+     * // Get one HomeContent
+     * const homeContent = await prisma.homeContent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HomeContentFindUniqueOrThrowArgs>(args: SelectSubset<T, HomeContentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HomeContent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentFindFirstArgs} args - Arguments to find a HomeContent
+     * @example
+     * // Get one HomeContent
+     * const homeContent = await prisma.homeContent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HomeContentFindFirstArgs>(args?: SelectSubset<T, HomeContentFindFirstArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HomeContent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentFindFirstOrThrowArgs} args - Arguments to find a HomeContent
+     * @example
+     * // Get one HomeContent
+     * const homeContent = await prisma.homeContent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HomeContentFindFirstOrThrowArgs>(args?: SelectSubset<T, HomeContentFindFirstOrThrowArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HomeContents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HomeContents
+     * const homeContents = await prisma.homeContent.findMany()
+     * 
+     * // Get first 10 HomeContents
+     * const homeContents = await prisma.homeContent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const homeContentWithIdOnly = await prisma.homeContent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HomeContentFindManyArgs>(args?: SelectSubset<T, HomeContentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HomeContent.
+     * @param {HomeContentCreateArgs} args - Arguments to create a HomeContent.
+     * @example
+     * // Create one HomeContent
+     * const HomeContent = await prisma.homeContent.create({
+     *   data: {
+     *     // ... data to create a HomeContent
+     *   }
+     * })
+     * 
+     */
+    create<T extends HomeContentCreateArgs>(args: SelectSubset<T, HomeContentCreateArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HomeContents.
+     * @param {HomeContentCreateManyArgs} args - Arguments to create many HomeContents.
+     * @example
+     * // Create many HomeContents
+     * const homeContent = await prisma.homeContent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HomeContentCreateManyArgs>(args?: SelectSubset<T, HomeContentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a HomeContent.
+     * @param {HomeContentDeleteArgs} args - Arguments to delete one HomeContent.
+     * @example
+     * // Delete one HomeContent
+     * const HomeContent = await prisma.homeContent.delete({
+     *   where: {
+     *     // ... filter to delete one HomeContent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HomeContentDeleteArgs>(args: SelectSubset<T, HomeContentDeleteArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HomeContent.
+     * @param {HomeContentUpdateArgs} args - Arguments to update one HomeContent.
+     * @example
+     * // Update one HomeContent
+     * const homeContent = await prisma.homeContent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HomeContentUpdateArgs>(args: SelectSubset<T, HomeContentUpdateArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HomeContents.
+     * @param {HomeContentDeleteManyArgs} args - Arguments to filter HomeContents to delete.
+     * @example
+     * // Delete a few HomeContents
+     * const { count } = await prisma.homeContent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HomeContentDeleteManyArgs>(args?: SelectSubset<T, HomeContentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HomeContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HomeContents
+     * const homeContent = await prisma.homeContent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HomeContentUpdateManyArgs>(args: SelectSubset<T, HomeContentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one HomeContent.
+     * @param {HomeContentUpsertArgs} args - Arguments to update or create a HomeContent.
+     * @example
+     * // Update or create a HomeContent
+     * const homeContent = await prisma.homeContent.upsert({
+     *   create: {
+     *     // ... data to create a HomeContent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HomeContent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HomeContentUpsertArgs>(args: SelectSubset<T, HomeContentUpsertArgs<ExtArgs>>): Prisma__HomeContentClient<$Result.GetResult<Prisma.$HomeContentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HomeContents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentCountArgs} args - Arguments to filter HomeContents to count.
+     * @example
+     * // Count the number of HomeContents
+     * const count = await prisma.homeContent.count({
+     *   where: {
+     *     // ... the filter for the HomeContents we want to count
+     *   }
+     * })
+    **/
+    count<T extends HomeContentCountArgs>(
+      args?: Subset<T, HomeContentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HomeContentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HomeContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HomeContentAggregateArgs>(args: Subset<T, HomeContentAggregateArgs>): Prisma.PrismaPromise<GetHomeContentAggregateType<T>>
+
+    /**
+     * Group by HomeContent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HomeContentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HomeContentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HomeContentGroupByArgs['orderBy'] }
+        : { orderBy?: HomeContentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HomeContentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHomeContentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HomeContent model
+   */
+  readonly fields: HomeContentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HomeContent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HomeContentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HomeContent model
+   */
+  interface HomeContentFieldRefs {
+    readonly id: FieldRef<"HomeContent", 'String'>
+    readonly heroTitle1: FieldRef<"HomeContent", 'String'>
+    readonly heroTitle2: FieldRef<"HomeContent", 'String'>
+    readonly heroSubtitle: FieldRef<"HomeContent", 'String'>
+    readonly impactTitle: FieldRef<"HomeContent", 'String'>
+    readonly impactTitleBold: FieldRef<"HomeContent", 'String'>
+    readonly stat1Value: FieldRef<"HomeContent", 'Int'>
+    readonly stat1Suffix: FieldRef<"HomeContent", 'String'>
+    readonly stat1Label: FieldRef<"HomeContent", 'String'>
+    readonly stat2Value: FieldRef<"HomeContent", 'Int'>
+    readonly stat2Suffix: FieldRef<"HomeContent", 'String'>
+    readonly stat2Label: FieldRef<"HomeContent", 'String'>
+    readonly stat3Value: FieldRef<"HomeContent", 'Int'>
+    readonly stat3Suffix: FieldRef<"HomeContent", 'String'>
+    readonly stat3Label: FieldRef<"HomeContent", 'String'>
+    readonly updatedAt: FieldRef<"HomeContent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HomeContent findUnique
+   */
+  export type HomeContentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * Filter, which HomeContent to fetch.
+     */
+    where: HomeContentWhereUniqueInput
+  }
+
+  /**
+   * HomeContent findUniqueOrThrow
+   */
+  export type HomeContentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * Filter, which HomeContent to fetch.
+     */
+    where: HomeContentWhereUniqueInput
+  }
+
+  /**
+   * HomeContent findFirst
+   */
+  export type HomeContentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * Filter, which HomeContent to fetch.
+     */
+    where?: HomeContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomeContents to fetch.
+     */
+    orderBy?: HomeContentOrderByWithRelationInput | HomeContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HomeContents.
+     */
+    cursor?: HomeContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomeContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomeContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HomeContents.
+     */
+    distinct?: HomeContentScalarFieldEnum | HomeContentScalarFieldEnum[]
+  }
+
+  /**
+   * HomeContent findFirstOrThrow
+   */
+  export type HomeContentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * Filter, which HomeContent to fetch.
+     */
+    where?: HomeContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomeContents to fetch.
+     */
+    orderBy?: HomeContentOrderByWithRelationInput | HomeContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HomeContents.
+     */
+    cursor?: HomeContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomeContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomeContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HomeContents.
+     */
+    distinct?: HomeContentScalarFieldEnum | HomeContentScalarFieldEnum[]
+  }
+
+  /**
+   * HomeContent findMany
+   */
+  export type HomeContentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * Filter, which HomeContents to fetch.
+     */
+    where?: HomeContentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HomeContents to fetch.
+     */
+    orderBy?: HomeContentOrderByWithRelationInput | HomeContentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HomeContents.
+     */
+    cursor?: HomeContentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HomeContents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HomeContents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HomeContents.
+     */
+    distinct?: HomeContentScalarFieldEnum | HomeContentScalarFieldEnum[]
+  }
+
+  /**
+   * HomeContent create
+   */
+  export type HomeContentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a HomeContent.
+     */
+    data: XOR<HomeContentCreateInput, HomeContentUncheckedCreateInput>
+  }
+
+  /**
+   * HomeContent createMany
+   */
+  export type HomeContentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HomeContents.
+     */
+    data: HomeContentCreateManyInput | HomeContentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HomeContent update
+   */
+  export type HomeContentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a HomeContent.
+     */
+    data: XOR<HomeContentUpdateInput, HomeContentUncheckedUpdateInput>
+    /**
+     * Choose, which HomeContent to update.
+     */
+    where: HomeContentWhereUniqueInput
+  }
+
+  /**
+   * HomeContent updateMany
+   */
+  export type HomeContentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HomeContents.
+     */
+    data: XOR<HomeContentUpdateManyMutationInput, HomeContentUncheckedUpdateManyInput>
+    /**
+     * Filter which HomeContents to update
+     */
+    where?: HomeContentWhereInput
+    /**
+     * Limit how many HomeContents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HomeContent upsert
+   */
+  export type HomeContentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the HomeContent to update in case it exists.
+     */
+    where: HomeContentWhereUniqueInput
+    /**
+     * In case the HomeContent found by the `where` argument doesn't exist, create a new HomeContent with this data.
+     */
+    create: XOR<HomeContentCreateInput, HomeContentUncheckedCreateInput>
+    /**
+     * In case the HomeContent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HomeContentUpdateInput, HomeContentUncheckedUpdateInput>
+  }
+
+  /**
+   * HomeContent delete
+   */
+  export type HomeContentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+    /**
+     * Filter which HomeContent to delete.
+     */
+    where: HomeContentWhereUniqueInput
+  }
+
+  /**
+   * HomeContent deleteMany
+   */
+  export type HomeContentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HomeContents to delete
+     */
+    where?: HomeContentWhereInput
+    /**
+     * Limit how many HomeContents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HomeContent without action
+   */
+  export type HomeContentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HomeContent
+     */
+    select?: HomeContentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HomeContent
+     */
+    omit?: HomeContentOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model ProjectInfo
    */
 
@@ -14378,31 +15734,34 @@ export namespace Prisma {
 
   export type ProjectInfoMinAggregateOutputType = {
     id: string | null
+    heroTitle: string | null
+    heroSubtitle: string | null
     vlirTitle: string | null
     vlirP1: string | null
+    vlirP2Title: string | null
     vlirP2: string | null
-    problemTitle: string | null
-    problemList: string | null
     updatedAt: Date | null
   }
 
   export type ProjectInfoMaxAggregateOutputType = {
     id: string | null
+    heroTitle: string | null
+    heroSubtitle: string | null
     vlirTitle: string | null
     vlirP1: string | null
+    vlirP2Title: string | null
     vlirP2: string | null
-    problemTitle: string | null
-    problemList: string | null
     updatedAt: Date | null
   }
 
   export type ProjectInfoCountAggregateOutputType = {
     id: number
+    heroTitle: number
+    heroSubtitle: number
     vlirTitle: number
     vlirP1: number
+    vlirP2Title: number
     vlirP2: number
-    problemTitle: number
-    problemList: number
     updatedAt: number
     _all: number
   }
@@ -14410,31 +15769,34 @@ export namespace Prisma {
 
   export type ProjectInfoMinAggregateInputType = {
     id?: true
+    heroTitle?: true
+    heroSubtitle?: true
     vlirTitle?: true
     vlirP1?: true
+    vlirP2Title?: true
     vlirP2?: true
-    problemTitle?: true
-    problemList?: true
     updatedAt?: true
   }
 
   export type ProjectInfoMaxAggregateInputType = {
     id?: true
+    heroTitle?: true
+    heroSubtitle?: true
     vlirTitle?: true
     vlirP1?: true
+    vlirP2Title?: true
     vlirP2?: true
-    problemTitle?: true
-    problemList?: true
     updatedAt?: true
   }
 
   export type ProjectInfoCountAggregateInputType = {
     id?: true
+    heroTitle?: true
+    heroSubtitle?: true
     vlirTitle?: true
     vlirP1?: true
+    vlirP2Title?: true
     vlirP2?: true
-    problemTitle?: true
-    problemList?: true
     updatedAt?: true
     _all?: true
   }
@@ -14513,11 +15875,12 @@ export namespace Prisma {
 
   export type ProjectInfoGroupByOutputType = {
     id: string
+    heroTitle: string
+    heroSubtitle: string
     vlirTitle: string
     vlirP1: string
+    vlirP2Title: string
     vlirP2: string
-    problemTitle: string
-    problemList: string
     updatedAt: Date
     _count: ProjectInfoCountAggregateOutputType | null
     _min: ProjectInfoMinAggregateOutputType | null
@@ -14540,11 +15903,12 @@ export namespace Prisma {
 
   export type ProjectInfoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    heroTitle?: boolean
+    heroSubtitle?: boolean
     vlirTitle?: boolean
     vlirP1?: boolean
+    vlirP2Title?: boolean
     vlirP2?: boolean
-    problemTitle?: boolean
-    problemList?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["projectInfo"]>
 
@@ -14552,26 +15916,28 @@ export namespace Prisma {
 
   export type ProjectInfoSelectScalar = {
     id?: boolean
+    heroTitle?: boolean
+    heroSubtitle?: boolean
     vlirTitle?: boolean
     vlirP1?: boolean
+    vlirP2Title?: boolean
     vlirP2?: boolean
-    problemTitle?: boolean
-    problemList?: boolean
     updatedAt?: boolean
   }
 
-  export type ProjectInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "vlirTitle" | "vlirP1" | "vlirP2" | "problemTitle" | "problemList" | "updatedAt", ExtArgs["result"]["projectInfo"]>
+  export type ProjectInfoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "heroTitle" | "heroSubtitle" | "vlirTitle" | "vlirP1" | "vlirP2Title" | "vlirP2" | "updatedAt", ExtArgs["result"]["projectInfo"]>
 
   export type $ProjectInfoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ProjectInfo"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      heroTitle: string
+      heroSubtitle: string
       vlirTitle: string
       vlirP1: string
+      vlirP2Title: string
       vlirP2: string
-      problemTitle: string
-      problemList: string
       updatedAt: Date
     }, ExtArgs["result"]["projectInfo"]>
     composites: {}
@@ -14943,11 +16309,12 @@ export namespace Prisma {
    */
   interface ProjectInfoFieldRefs {
     readonly id: FieldRef<"ProjectInfo", 'String'>
+    readonly heroTitle: FieldRef<"ProjectInfo", 'String'>
+    readonly heroSubtitle: FieldRef<"ProjectInfo", 'String'>
     readonly vlirTitle: FieldRef<"ProjectInfo", 'String'>
     readonly vlirP1: FieldRef<"ProjectInfo", 'String'>
+    readonly vlirP2Title: FieldRef<"ProjectInfo", 'String'>
     readonly vlirP2: FieldRef<"ProjectInfo", 'String'>
-    readonly problemTitle: FieldRef<"ProjectInfo", 'String'>
-    readonly problemList: FieldRef<"ProjectInfo", 'String'>
     readonly updatedAt: FieldRef<"ProjectInfo", 'DateTime'>
   }
     
@@ -15272,6 +16639,1979 @@ export namespace Prisma {
      * Omit specific fields from the ProjectInfo
      */
     omit?: ProjectInfoOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectProblemGroup
+   */
+
+  export type AggregateProjectProblemGroup = {
+    _count: ProjectProblemGroupCountAggregateOutputType | null
+    _avg: ProjectProblemGroupAvgAggregateOutputType | null
+    _sum: ProjectProblemGroupSumAggregateOutputType | null
+    _min: ProjectProblemGroupMinAggregateOutputType | null
+    _max: ProjectProblemGroupMaxAggregateOutputType | null
+  }
+
+  export type ProjectProblemGroupAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type ProjectProblemGroupSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type ProjectProblemGroupMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectProblemGroupMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    order: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectProblemGroupCountAggregateOutputType = {
+    id: number
+    title: number
+    order: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProjectProblemGroupAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type ProjectProblemGroupSumAggregateInputType = {
+    order?: true
+  }
+
+  export type ProjectProblemGroupMinAggregateInputType = {
+    id?: true
+    title?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProjectProblemGroupMaxAggregateInputType = {
+    id?: true
+    title?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProjectProblemGroupCountAggregateInputType = {
+    id?: true
+    title?: true
+    order?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProjectProblemGroupAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectProblemGroup to aggregate.
+     */
+    where?: ProjectProblemGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemGroups to fetch.
+     */
+    orderBy?: ProjectProblemGroupOrderByWithRelationInput | ProjectProblemGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectProblemGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectProblemGroups
+    **/
+    _count?: true | ProjectProblemGroupCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectProblemGroupAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectProblemGroupSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectProblemGroupMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectProblemGroupMaxAggregateInputType
+  }
+
+  export type GetProjectProblemGroupAggregateType<T extends ProjectProblemGroupAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectProblemGroup]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectProblemGroup[P]>
+      : GetScalarType<T[P], AggregateProjectProblemGroup[P]>
+  }
+
+
+
+
+  export type ProjectProblemGroupGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectProblemGroupWhereInput
+    orderBy?: ProjectProblemGroupOrderByWithAggregationInput | ProjectProblemGroupOrderByWithAggregationInput[]
+    by: ProjectProblemGroupScalarFieldEnum[] | ProjectProblemGroupScalarFieldEnum
+    having?: ProjectProblemGroupScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectProblemGroupCountAggregateInputType | true
+    _avg?: ProjectProblemGroupAvgAggregateInputType
+    _sum?: ProjectProblemGroupSumAggregateInputType
+    _min?: ProjectProblemGroupMinAggregateInputType
+    _max?: ProjectProblemGroupMaxAggregateInputType
+  }
+
+  export type ProjectProblemGroupGroupByOutputType = {
+    id: string
+    title: string
+    order: number
+    createdAt: Date
+    updatedAt: Date
+    _count: ProjectProblemGroupCountAggregateOutputType | null
+    _avg: ProjectProblemGroupAvgAggregateOutputType | null
+    _sum: ProjectProblemGroupSumAggregateOutputType | null
+    _min: ProjectProblemGroupMinAggregateOutputType | null
+    _max: ProjectProblemGroupMaxAggregateOutputType | null
+  }
+
+  type GetProjectProblemGroupGroupByPayload<T extends ProjectProblemGroupGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectProblemGroupGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectProblemGroupGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectProblemGroupGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectProblemGroupGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectProblemGroupSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    bullets?: boolean | ProjectProblemGroup$bulletsArgs<ExtArgs>
+    _count?: boolean | ProjectProblemGroupCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectProblemGroup"]>
+
+
+
+  export type ProjectProblemGroupSelectScalar = {
+    id?: boolean
+    title?: boolean
+    order?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProjectProblemGroupOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "order" | "createdAt" | "updatedAt", ExtArgs["result"]["projectProblemGroup"]>
+  export type ProjectProblemGroupInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bullets?: boolean | ProjectProblemGroup$bulletsArgs<ExtArgs>
+    _count?: boolean | ProjectProblemGroupCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ProjectProblemGroupPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectProblemGroup"
+    objects: {
+      bullets: Prisma.$ProjectProblemBulletPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      order: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["projectProblemGroup"]>
+    composites: {}
+  }
+
+  type ProjectProblemGroupGetPayload<S extends boolean | null | undefined | ProjectProblemGroupDefaultArgs> = $Result.GetResult<Prisma.$ProjectProblemGroupPayload, S>
+
+  type ProjectProblemGroupCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectProblemGroupFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectProblemGroupCountAggregateInputType | true
+    }
+
+  export interface ProjectProblemGroupDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectProblemGroup'], meta: { name: 'ProjectProblemGroup' } }
+    /**
+     * Find zero or one ProjectProblemGroup that matches the filter.
+     * @param {ProjectProblemGroupFindUniqueArgs} args - Arguments to find a ProjectProblemGroup
+     * @example
+     * // Get one ProjectProblemGroup
+     * const projectProblemGroup = await prisma.projectProblemGroup.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectProblemGroupFindUniqueArgs>(args: SelectSubset<T, ProjectProblemGroupFindUniqueArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectProblemGroup that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectProblemGroupFindUniqueOrThrowArgs} args - Arguments to find a ProjectProblemGroup
+     * @example
+     * // Get one ProjectProblemGroup
+     * const projectProblemGroup = await prisma.projectProblemGroup.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectProblemGroupFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectProblemGroupFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectProblemGroup that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupFindFirstArgs} args - Arguments to find a ProjectProblemGroup
+     * @example
+     * // Get one ProjectProblemGroup
+     * const projectProblemGroup = await prisma.projectProblemGroup.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectProblemGroupFindFirstArgs>(args?: SelectSubset<T, ProjectProblemGroupFindFirstArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectProblemGroup that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupFindFirstOrThrowArgs} args - Arguments to find a ProjectProblemGroup
+     * @example
+     * // Get one ProjectProblemGroup
+     * const projectProblemGroup = await prisma.projectProblemGroup.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectProblemGroupFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectProblemGroupFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectProblemGroups that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectProblemGroups
+     * const projectProblemGroups = await prisma.projectProblemGroup.findMany()
+     * 
+     * // Get first 10 ProjectProblemGroups
+     * const projectProblemGroups = await prisma.projectProblemGroup.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectProblemGroupWithIdOnly = await prisma.projectProblemGroup.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectProblemGroupFindManyArgs>(args?: SelectSubset<T, ProjectProblemGroupFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectProblemGroup.
+     * @param {ProjectProblemGroupCreateArgs} args - Arguments to create a ProjectProblemGroup.
+     * @example
+     * // Create one ProjectProblemGroup
+     * const ProjectProblemGroup = await prisma.projectProblemGroup.create({
+     *   data: {
+     *     // ... data to create a ProjectProblemGroup
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectProblemGroupCreateArgs>(args: SelectSubset<T, ProjectProblemGroupCreateArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectProblemGroups.
+     * @param {ProjectProblemGroupCreateManyArgs} args - Arguments to create many ProjectProblemGroups.
+     * @example
+     * // Create many ProjectProblemGroups
+     * const projectProblemGroup = await prisma.projectProblemGroup.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectProblemGroupCreateManyArgs>(args?: SelectSubset<T, ProjectProblemGroupCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ProjectProblemGroup.
+     * @param {ProjectProblemGroupDeleteArgs} args - Arguments to delete one ProjectProblemGroup.
+     * @example
+     * // Delete one ProjectProblemGroup
+     * const ProjectProblemGroup = await prisma.projectProblemGroup.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectProblemGroup
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectProblemGroupDeleteArgs>(args: SelectSubset<T, ProjectProblemGroupDeleteArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectProblemGroup.
+     * @param {ProjectProblemGroupUpdateArgs} args - Arguments to update one ProjectProblemGroup.
+     * @example
+     * // Update one ProjectProblemGroup
+     * const projectProblemGroup = await prisma.projectProblemGroup.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectProblemGroupUpdateArgs>(args: SelectSubset<T, ProjectProblemGroupUpdateArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectProblemGroups.
+     * @param {ProjectProblemGroupDeleteManyArgs} args - Arguments to filter ProjectProblemGroups to delete.
+     * @example
+     * // Delete a few ProjectProblemGroups
+     * const { count } = await prisma.projectProblemGroup.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectProblemGroupDeleteManyArgs>(args?: SelectSubset<T, ProjectProblemGroupDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectProblemGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectProblemGroups
+     * const projectProblemGroup = await prisma.projectProblemGroup.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectProblemGroupUpdateManyArgs>(args: SelectSubset<T, ProjectProblemGroupUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ProjectProblemGroup.
+     * @param {ProjectProblemGroupUpsertArgs} args - Arguments to update or create a ProjectProblemGroup.
+     * @example
+     * // Update or create a ProjectProblemGroup
+     * const projectProblemGroup = await prisma.projectProblemGroup.upsert({
+     *   create: {
+     *     // ... data to create a ProjectProblemGroup
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectProblemGroup we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectProblemGroupUpsertArgs>(args: SelectSubset<T, ProjectProblemGroupUpsertArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectProblemGroups.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupCountArgs} args - Arguments to filter ProjectProblemGroups to count.
+     * @example
+     * // Count the number of ProjectProblemGroups
+     * const count = await prisma.projectProblemGroup.count({
+     *   where: {
+     *     // ... the filter for the ProjectProblemGroups we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectProblemGroupCountArgs>(
+      args?: Subset<T, ProjectProblemGroupCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectProblemGroupCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectProblemGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectProblemGroupAggregateArgs>(args: Subset<T, ProjectProblemGroupAggregateArgs>): Prisma.PrismaPromise<GetProjectProblemGroupAggregateType<T>>
+
+    /**
+     * Group by ProjectProblemGroup.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemGroupGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectProblemGroupGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectProblemGroupGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectProblemGroupGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectProblemGroupGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectProblemGroupGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectProblemGroup model
+   */
+  readonly fields: ProjectProblemGroupFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectProblemGroup.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectProblemGroupClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bullets<T extends ProjectProblemGroup$bulletsArgs<ExtArgs> = {}>(args?: Subset<T, ProjectProblemGroup$bulletsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectProblemGroup model
+   */
+  interface ProjectProblemGroupFieldRefs {
+    readonly id: FieldRef<"ProjectProblemGroup", 'String'>
+    readonly title: FieldRef<"ProjectProblemGroup", 'String'>
+    readonly order: FieldRef<"ProjectProblemGroup", 'Int'>
+    readonly createdAt: FieldRef<"ProjectProblemGroup", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProjectProblemGroup", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectProblemGroup findUnique
+   */
+  export type ProjectProblemGroupFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemGroup to fetch.
+     */
+    where: ProjectProblemGroupWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemGroup findUniqueOrThrow
+   */
+  export type ProjectProblemGroupFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemGroup to fetch.
+     */
+    where: ProjectProblemGroupWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemGroup findFirst
+   */
+  export type ProjectProblemGroupFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemGroup to fetch.
+     */
+    where?: ProjectProblemGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemGroups to fetch.
+     */
+    orderBy?: ProjectProblemGroupOrderByWithRelationInput | ProjectProblemGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectProblemGroups.
+     */
+    cursor?: ProjectProblemGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectProblemGroups.
+     */
+    distinct?: ProjectProblemGroupScalarFieldEnum | ProjectProblemGroupScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemGroup findFirstOrThrow
+   */
+  export type ProjectProblemGroupFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemGroup to fetch.
+     */
+    where?: ProjectProblemGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemGroups to fetch.
+     */
+    orderBy?: ProjectProblemGroupOrderByWithRelationInput | ProjectProblemGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectProblemGroups.
+     */
+    cursor?: ProjectProblemGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectProblemGroups.
+     */
+    distinct?: ProjectProblemGroupScalarFieldEnum | ProjectProblemGroupScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemGroup findMany
+   */
+  export type ProjectProblemGroupFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemGroups to fetch.
+     */
+    where?: ProjectProblemGroupWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemGroups to fetch.
+     */
+    orderBy?: ProjectProblemGroupOrderByWithRelationInput | ProjectProblemGroupOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectProblemGroups.
+     */
+    cursor?: ProjectProblemGroupWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemGroups from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemGroups.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectProblemGroups.
+     */
+    distinct?: ProjectProblemGroupScalarFieldEnum | ProjectProblemGroupScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemGroup create
+   */
+  export type ProjectProblemGroupCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectProblemGroup.
+     */
+    data: XOR<ProjectProblemGroupCreateInput, ProjectProblemGroupUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectProblemGroup createMany
+   */
+  export type ProjectProblemGroupCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectProblemGroups.
+     */
+    data: ProjectProblemGroupCreateManyInput | ProjectProblemGroupCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectProblemGroup update
+   */
+  export type ProjectProblemGroupUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectProblemGroup.
+     */
+    data: XOR<ProjectProblemGroupUpdateInput, ProjectProblemGroupUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectProblemGroup to update.
+     */
+    where: ProjectProblemGroupWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemGroup updateMany
+   */
+  export type ProjectProblemGroupUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectProblemGroups.
+     */
+    data: XOR<ProjectProblemGroupUpdateManyMutationInput, ProjectProblemGroupUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectProblemGroups to update
+     */
+    where?: ProjectProblemGroupWhereInput
+    /**
+     * Limit how many ProjectProblemGroups to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectProblemGroup upsert
+   */
+  export type ProjectProblemGroupUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectProblemGroup to update in case it exists.
+     */
+    where: ProjectProblemGroupWhereUniqueInput
+    /**
+     * In case the ProjectProblemGroup found by the `where` argument doesn't exist, create a new ProjectProblemGroup with this data.
+     */
+    create: XOR<ProjectProblemGroupCreateInput, ProjectProblemGroupUncheckedCreateInput>
+    /**
+     * In case the ProjectProblemGroup was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectProblemGroupUpdateInput, ProjectProblemGroupUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectProblemGroup delete
+   */
+  export type ProjectProblemGroupDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+    /**
+     * Filter which ProjectProblemGroup to delete.
+     */
+    where: ProjectProblemGroupWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemGroup deleteMany
+   */
+  export type ProjectProblemGroupDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectProblemGroups to delete
+     */
+    where?: ProjectProblemGroupWhereInput
+    /**
+     * Limit how many ProjectProblemGroups to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectProblemGroup.bullets
+   */
+  export type ProjectProblemGroup$bulletsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    where?: ProjectProblemBulletWhereInput
+    orderBy?: ProjectProblemBulletOrderByWithRelationInput | ProjectProblemBulletOrderByWithRelationInput[]
+    cursor?: ProjectProblemBulletWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectProblemBulletScalarFieldEnum | ProjectProblemBulletScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemGroup without action
+   */
+  export type ProjectProblemGroupDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemGroup
+     */
+    select?: ProjectProblemGroupSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemGroup
+     */
+    omit?: ProjectProblemGroupOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemGroupInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProjectProblemBullet
+   */
+
+  export type AggregateProjectProblemBullet = {
+    _count: ProjectProblemBulletCountAggregateOutputType | null
+    _avg: ProjectProblemBulletAvgAggregateOutputType | null
+    _sum: ProjectProblemBulletSumAggregateOutputType | null
+    _min: ProjectProblemBulletMinAggregateOutputType | null
+    _max: ProjectProblemBulletMaxAggregateOutputType | null
+  }
+
+  export type ProjectProblemBulletAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type ProjectProblemBulletSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type ProjectProblemBulletMinAggregateOutputType = {
+    id: string | null
+    text: string | null
+    order: number | null
+    groupId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectProblemBulletMaxAggregateOutputType = {
+    id: string | null
+    text: string | null
+    order: number | null
+    groupId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProjectProblemBulletCountAggregateOutputType = {
+    id: number
+    text: number
+    order: number
+    groupId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProjectProblemBulletAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type ProjectProblemBulletSumAggregateInputType = {
+    order?: true
+  }
+
+  export type ProjectProblemBulletMinAggregateInputType = {
+    id?: true
+    text?: true
+    order?: true
+    groupId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProjectProblemBulletMaxAggregateInputType = {
+    id?: true
+    text?: true
+    order?: true
+    groupId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProjectProblemBulletCountAggregateInputType = {
+    id?: true
+    text?: true
+    order?: true
+    groupId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProjectProblemBulletAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectProblemBullet to aggregate.
+     */
+    where?: ProjectProblemBulletWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemBullets to fetch.
+     */
+    orderBy?: ProjectProblemBulletOrderByWithRelationInput | ProjectProblemBulletOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectProblemBulletWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemBullets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemBullets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectProblemBullets
+    **/
+    _count?: true | ProjectProblemBulletCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectProblemBulletAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectProblemBulletSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectProblemBulletMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectProblemBulletMaxAggregateInputType
+  }
+
+  export type GetProjectProblemBulletAggregateType<T extends ProjectProblemBulletAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectProblemBullet]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectProblemBullet[P]>
+      : GetScalarType<T[P], AggregateProjectProblemBullet[P]>
+  }
+
+
+
+
+  export type ProjectProblemBulletGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectProblemBulletWhereInput
+    orderBy?: ProjectProblemBulletOrderByWithAggregationInput | ProjectProblemBulletOrderByWithAggregationInput[]
+    by: ProjectProblemBulletScalarFieldEnum[] | ProjectProblemBulletScalarFieldEnum
+    having?: ProjectProblemBulletScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectProblemBulletCountAggregateInputType | true
+    _avg?: ProjectProblemBulletAvgAggregateInputType
+    _sum?: ProjectProblemBulletSumAggregateInputType
+    _min?: ProjectProblemBulletMinAggregateInputType
+    _max?: ProjectProblemBulletMaxAggregateInputType
+  }
+
+  export type ProjectProblemBulletGroupByOutputType = {
+    id: string
+    text: string
+    order: number
+    groupId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ProjectProblemBulletCountAggregateOutputType | null
+    _avg: ProjectProblemBulletAvgAggregateOutputType | null
+    _sum: ProjectProblemBulletSumAggregateOutputType | null
+    _min: ProjectProblemBulletMinAggregateOutputType | null
+    _max: ProjectProblemBulletMaxAggregateOutputType | null
+  }
+
+  type GetProjectProblemBulletGroupByPayload<T extends ProjectProblemBulletGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectProblemBulletGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectProblemBulletGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectProblemBulletGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectProblemBulletGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectProblemBulletSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    text?: boolean
+    order?: boolean
+    groupId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    group?: boolean | ProjectProblemGroupDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectProblemBullet"]>
+
+
+
+  export type ProjectProblemBulletSelectScalar = {
+    id?: boolean
+    text?: boolean
+    order?: boolean
+    groupId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProjectProblemBulletOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "order" | "groupId" | "createdAt" | "updatedAt", ExtArgs["result"]["projectProblemBullet"]>
+  export type ProjectProblemBulletInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    group?: boolean | ProjectProblemGroupDefaultArgs<ExtArgs>
+  }
+
+  export type $ProjectProblemBulletPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectProblemBullet"
+    objects: {
+      group: Prisma.$ProjectProblemGroupPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      text: string
+      order: number
+      groupId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["projectProblemBullet"]>
+    composites: {}
+  }
+
+  type ProjectProblemBulletGetPayload<S extends boolean | null | undefined | ProjectProblemBulletDefaultArgs> = $Result.GetResult<Prisma.$ProjectProblemBulletPayload, S>
+
+  type ProjectProblemBulletCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectProblemBulletFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectProblemBulletCountAggregateInputType | true
+    }
+
+  export interface ProjectProblemBulletDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectProblemBullet'], meta: { name: 'ProjectProblemBullet' } }
+    /**
+     * Find zero or one ProjectProblemBullet that matches the filter.
+     * @param {ProjectProblemBulletFindUniqueArgs} args - Arguments to find a ProjectProblemBullet
+     * @example
+     * // Get one ProjectProblemBullet
+     * const projectProblemBullet = await prisma.projectProblemBullet.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectProblemBulletFindUniqueArgs>(args: SelectSubset<T, ProjectProblemBulletFindUniqueArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectProblemBullet that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectProblemBulletFindUniqueOrThrowArgs} args - Arguments to find a ProjectProblemBullet
+     * @example
+     * // Get one ProjectProblemBullet
+     * const projectProblemBullet = await prisma.projectProblemBullet.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectProblemBulletFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectProblemBulletFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectProblemBullet that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletFindFirstArgs} args - Arguments to find a ProjectProblemBullet
+     * @example
+     * // Get one ProjectProblemBullet
+     * const projectProblemBullet = await prisma.projectProblemBullet.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectProblemBulletFindFirstArgs>(args?: SelectSubset<T, ProjectProblemBulletFindFirstArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectProblemBullet that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletFindFirstOrThrowArgs} args - Arguments to find a ProjectProblemBullet
+     * @example
+     * // Get one ProjectProblemBullet
+     * const projectProblemBullet = await prisma.projectProblemBullet.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectProblemBulletFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectProblemBulletFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectProblemBullets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectProblemBullets
+     * const projectProblemBullets = await prisma.projectProblemBullet.findMany()
+     * 
+     * // Get first 10 ProjectProblemBullets
+     * const projectProblemBullets = await prisma.projectProblemBullet.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectProblemBulletWithIdOnly = await prisma.projectProblemBullet.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectProblemBulletFindManyArgs>(args?: SelectSubset<T, ProjectProblemBulletFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectProblemBullet.
+     * @param {ProjectProblemBulletCreateArgs} args - Arguments to create a ProjectProblemBullet.
+     * @example
+     * // Create one ProjectProblemBullet
+     * const ProjectProblemBullet = await prisma.projectProblemBullet.create({
+     *   data: {
+     *     // ... data to create a ProjectProblemBullet
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectProblemBulletCreateArgs>(args: SelectSubset<T, ProjectProblemBulletCreateArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectProblemBullets.
+     * @param {ProjectProblemBulletCreateManyArgs} args - Arguments to create many ProjectProblemBullets.
+     * @example
+     * // Create many ProjectProblemBullets
+     * const projectProblemBullet = await prisma.projectProblemBullet.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectProblemBulletCreateManyArgs>(args?: SelectSubset<T, ProjectProblemBulletCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ProjectProblemBullet.
+     * @param {ProjectProblemBulletDeleteArgs} args - Arguments to delete one ProjectProblemBullet.
+     * @example
+     * // Delete one ProjectProblemBullet
+     * const ProjectProblemBullet = await prisma.projectProblemBullet.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectProblemBullet
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectProblemBulletDeleteArgs>(args: SelectSubset<T, ProjectProblemBulletDeleteArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectProblemBullet.
+     * @param {ProjectProblemBulletUpdateArgs} args - Arguments to update one ProjectProblemBullet.
+     * @example
+     * // Update one ProjectProblemBullet
+     * const projectProblemBullet = await prisma.projectProblemBullet.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectProblemBulletUpdateArgs>(args: SelectSubset<T, ProjectProblemBulletUpdateArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectProblemBullets.
+     * @param {ProjectProblemBulletDeleteManyArgs} args - Arguments to filter ProjectProblemBullets to delete.
+     * @example
+     * // Delete a few ProjectProblemBullets
+     * const { count } = await prisma.projectProblemBullet.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectProblemBulletDeleteManyArgs>(args?: SelectSubset<T, ProjectProblemBulletDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectProblemBullets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectProblemBullets
+     * const projectProblemBullet = await prisma.projectProblemBullet.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectProblemBulletUpdateManyArgs>(args: SelectSubset<T, ProjectProblemBulletUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ProjectProblemBullet.
+     * @param {ProjectProblemBulletUpsertArgs} args - Arguments to update or create a ProjectProblemBullet.
+     * @example
+     * // Update or create a ProjectProblemBullet
+     * const projectProblemBullet = await prisma.projectProblemBullet.upsert({
+     *   create: {
+     *     // ... data to create a ProjectProblemBullet
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectProblemBullet we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectProblemBulletUpsertArgs>(args: SelectSubset<T, ProjectProblemBulletUpsertArgs<ExtArgs>>): Prisma__ProjectProblemBulletClient<$Result.GetResult<Prisma.$ProjectProblemBulletPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectProblemBullets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletCountArgs} args - Arguments to filter ProjectProblemBullets to count.
+     * @example
+     * // Count the number of ProjectProblemBullets
+     * const count = await prisma.projectProblemBullet.count({
+     *   where: {
+     *     // ... the filter for the ProjectProblemBullets we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectProblemBulletCountArgs>(
+      args?: Subset<T, ProjectProblemBulletCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectProblemBulletCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectProblemBullet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectProblemBulletAggregateArgs>(args: Subset<T, ProjectProblemBulletAggregateArgs>): Prisma.PrismaPromise<GetProjectProblemBulletAggregateType<T>>
+
+    /**
+     * Group by ProjectProblemBullet.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectProblemBulletGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectProblemBulletGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectProblemBulletGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectProblemBulletGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectProblemBulletGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectProblemBulletGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectProblemBullet model
+   */
+  readonly fields: ProjectProblemBulletFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectProblemBullet.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectProblemBulletClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    group<T extends ProjectProblemGroupDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectProblemGroupDefaultArgs<ExtArgs>>): Prisma__ProjectProblemGroupClient<$Result.GetResult<Prisma.$ProjectProblemGroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectProblemBullet model
+   */
+  interface ProjectProblemBulletFieldRefs {
+    readonly id: FieldRef<"ProjectProblemBullet", 'String'>
+    readonly text: FieldRef<"ProjectProblemBullet", 'String'>
+    readonly order: FieldRef<"ProjectProblemBullet", 'Int'>
+    readonly groupId: FieldRef<"ProjectProblemBullet", 'String'>
+    readonly createdAt: FieldRef<"ProjectProblemBullet", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProjectProblemBullet", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectProblemBullet findUnique
+   */
+  export type ProjectProblemBulletFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemBullet to fetch.
+     */
+    where: ProjectProblemBulletWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemBullet findUniqueOrThrow
+   */
+  export type ProjectProblemBulletFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemBullet to fetch.
+     */
+    where: ProjectProblemBulletWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemBullet findFirst
+   */
+  export type ProjectProblemBulletFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemBullet to fetch.
+     */
+    where?: ProjectProblemBulletWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemBullets to fetch.
+     */
+    orderBy?: ProjectProblemBulletOrderByWithRelationInput | ProjectProblemBulletOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectProblemBullets.
+     */
+    cursor?: ProjectProblemBulletWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemBullets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemBullets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectProblemBullets.
+     */
+    distinct?: ProjectProblemBulletScalarFieldEnum | ProjectProblemBulletScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemBullet findFirstOrThrow
+   */
+  export type ProjectProblemBulletFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemBullet to fetch.
+     */
+    where?: ProjectProblemBulletWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemBullets to fetch.
+     */
+    orderBy?: ProjectProblemBulletOrderByWithRelationInput | ProjectProblemBulletOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectProblemBullets.
+     */
+    cursor?: ProjectProblemBulletWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemBullets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemBullets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectProblemBullets.
+     */
+    distinct?: ProjectProblemBulletScalarFieldEnum | ProjectProblemBulletScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemBullet findMany
+   */
+  export type ProjectProblemBulletFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectProblemBullets to fetch.
+     */
+    where?: ProjectProblemBulletWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectProblemBullets to fetch.
+     */
+    orderBy?: ProjectProblemBulletOrderByWithRelationInput | ProjectProblemBulletOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectProblemBullets.
+     */
+    cursor?: ProjectProblemBulletWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectProblemBullets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectProblemBullets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectProblemBullets.
+     */
+    distinct?: ProjectProblemBulletScalarFieldEnum | ProjectProblemBulletScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectProblemBullet create
+   */
+  export type ProjectProblemBulletCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectProblemBullet.
+     */
+    data: XOR<ProjectProblemBulletCreateInput, ProjectProblemBulletUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectProblemBullet createMany
+   */
+  export type ProjectProblemBulletCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectProblemBullets.
+     */
+    data: ProjectProblemBulletCreateManyInput | ProjectProblemBulletCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectProblemBullet update
+   */
+  export type ProjectProblemBulletUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectProblemBullet.
+     */
+    data: XOR<ProjectProblemBulletUpdateInput, ProjectProblemBulletUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectProblemBullet to update.
+     */
+    where: ProjectProblemBulletWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemBullet updateMany
+   */
+  export type ProjectProblemBulletUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectProblemBullets.
+     */
+    data: XOR<ProjectProblemBulletUpdateManyMutationInput, ProjectProblemBulletUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectProblemBullets to update
+     */
+    where?: ProjectProblemBulletWhereInput
+    /**
+     * Limit how many ProjectProblemBullets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectProblemBullet upsert
+   */
+  export type ProjectProblemBulletUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectProblemBullet to update in case it exists.
+     */
+    where: ProjectProblemBulletWhereUniqueInput
+    /**
+     * In case the ProjectProblemBullet found by the `where` argument doesn't exist, create a new ProjectProblemBullet with this data.
+     */
+    create: XOR<ProjectProblemBulletCreateInput, ProjectProblemBulletUncheckedCreateInput>
+    /**
+     * In case the ProjectProblemBullet was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectProblemBulletUpdateInput, ProjectProblemBulletUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectProblemBullet delete
+   */
+  export type ProjectProblemBulletDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
+    /**
+     * Filter which ProjectProblemBullet to delete.
+     */
+    where: ProjectProblemBulletWhereUniqueInput
+  }
+
+  /**
+   * ProjectProblemBullet deleteMany
+   */
+  export type ProjectProblemBulletDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectProblemBullets to delete
+     */
+    where?: ProjectProblemBulletWhereInput
+    /**
+     * Limit how many ProjectProblemBullets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectProblemBullet without action
+   */
+  export type ProjectProblemBulletDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectProblemBullet
+     */
+    select?: ProjectProblemBulletSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectProblemBullet
+     */
+    omit?: ProjectProblemBulletOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectProblemBulletInclude<ExtArgs> | null
   }
 
 
@@ -20994,6 +24334,8 @@ export namespace Prisma {
     website: 'website',
     active: 'active',
     order: 'order',
+    featured: 'featured',
+    featuredOrder: 'featuredOrder',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -21131,17 +24473,63 @@ export namespace Prisma {
   export type CollaboratorScalarFieldEnum = (typeof CollaboratorScalarFieldEnum)[keyof typeof CollaboratorScalarFieldEnum]
 
 
+  export const HomeContentScalarFieldEnum: {
+    id: 'id',
+    heroTitle1: 'heroTitle1',
+    heroTitle2: 'heroTitle2',
+    heroSubtitle: 'heroSubtitle',
+    impactTitle: 'impactTitle',
+    impactTitleBold: 'impactTitleBold',
+    stat1Value: 'stat1Value',
+    stat1Suffix: 'stat1Suffix',
+    stat1Label: 'stat1Label',
+    stat2Value: 'stat2Value',
+    stat2Suffix: 'stat2Suffix',
+    stat2Label: 'stat2Label',
+    stat3Value: 'stat3Value',
+    stat3Suffix: 'stat3Suffix',
+    stat3Label: 'stat3Label',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HomeContentScalarFieldEnum = (typeof HomeContentScalarFieldEnum)[keyof typeof HomeContentScalarFieldEnum]
+
+
   export const ProjectInfoScalarFieldEnum: {
     id: 'id',
+    heroTitle: 'heroTitle',
+    heroSubtitle: 'heroSubtitle',
     vlirTitle: 'vlirTitle',
     vlirP1: 'vlirP1',
+    vlirP2Title: 'vlirP2Title',
     vlirP2: 'vlirP2',
-    problemTitle: 'problemTitle',
-    problemList: 'problemList',
     updatedAt: 'updatedAt'
   };
 
   export type ProjectInfoScalarFieldEnum = (typeof ProjectInfoScalarFieldEnum)[keyof typeof ProjectInfoScalarFieldEnum]
+
+
+  export const ProjectProblemGroupScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    order: 'order',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProjectProblemGroupScalarFieldEnum = (typeof ProjectProblemGroupScalarFieldEnum)[keyof typeof ProjectProblemGroupScalarFieldEnum]
+
+
+  export const ProjectProblemBulletScalarFieldEnum: {
+    id: 'id',
+    text: 'text',
+    order: 'order',
+    groupId: 'groupId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProjectProblemBulletScalarFieldEnum = (typeof ProjectProblemBulletScalarFieldEnum)[keyof typeof ProjectProblemBulletScalarFieldEnum]
 
 
   export const ProjectGoalScalarFieldEnum: {
@@ -21392,16 +24780,52 @@ export namespace Prisma {
   export type CollaboratorOrderByRelevanceFieldEnum = (typeof CollaboratorOrderByRelevanceFieldEnum)[keyof typeof CollaboratorOrderByRelevanceFieldEnum]
 
 
+  export const HomeContentOrderByRelevanceFieldEnum: {
+    id: 'id',
+    heroTitle1: 'heroTitle1',
+    heroTitle2: 'heroTitle2',
+    heroSubtitle: 'heroSubtitle',
+    impactTitle: 'impactTitle',
+    impactTitleBold: 'impactTitleBold',
+    stat1Suffix: 'stat1Suffix',
+    stat1Label: 'stat1Label',
+    stat2Suffix: 'stat2Suffix',
+    stat2Label: 'stat2Label',
+    stat3Suffix: 'stat3Suffix',
+    stat3Label: 'stat3Label'
+  };
+
+  export type HomeContentOrderByRelevanceFieldEnum = (typeof HomeContentOrderByRelevanceFieldEnum)[keyof typeof HomeContentOrderByRelevanceFieldEnum]
+
+
   export const ProjectInfoOrderByRelevanceFieldEnum: {
     id: 'id',
+    heroTitle: 'heroTitle',
+    heroSubtitle: 'heroSubtitle',
     vlirTitle: 'vlirTitle',
     vlirP1: 'vlirP1',
-    vlirP2: 'vlirP2',
-    problemTitle: 'problemTitle',
-    problemList: 'problemList'
+    vlirP2Title: 'vlirP2Title',
+    vlirP2: 'vlirP2'
   };
 
   export type ProjectInfoOrderByRelevanceFieldEnum = (typeof ProjectInfoOrderByRelevanceFieldEnum)[keyof typeof ProjectInfoOrderByRelevanceFieldEnum]
+
+
+  export const ProjectProblemGroupOrderByRelevanceFieldEnum: {
+    id: 'id',
+    title: 'title'
+  };
+
+  export type ProjectProblemGroupOrderByRelevanceFieldEnum = (typeof ProjectProblemGroupOrderByRelevanceFieldEnum)[keyof typeof ProjectProblemGroupOrderByRelevanceFieldEnum]
+
+
+  export const ProjectProblemBulletOrderByRelevanceFieldEnum: {
+    id: 'id',
+    text: 'text',
+    groupId: 'groupId'
+  };
+
+  export type ProjectProblemBulletOrderByRelevanceFieldEnum = (typeof ProjectProblemBulletOrderByRelevanceFieldEnum)[keyof typeof ProjectProblemBulletOrderByRelevanceFieldEnum]
 
 
   export const ProjectGoalOrderByRelevanceFieldEnum: {
@@ -21813,6 +25237,8 @@ export namespace Prisma {
     website?: StringNullableFilter<"TeamMember"> | string | null
     active?: BoolFilter<"TeamMember"> | boolean
     order?: IntFilter<"TeamMember"> | number
+    featured?: BoolFilter<"TeamMember"> | boolean
+    featuredOrder?: IntNullableFilter<"TeamMember"> | number | null
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }
@@ -21833,6 +25259,8 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     active?: SortOrder
     order?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _relevance?: TeamMemberOrderByRelevanceInput
@@ -21857,6 +25285,8 @@ export namespace Prisma {
     website?: StringNullableFilter<"TeamMember"> | string | null
     active?: BoolFilter<"TeamMember"> | boolean
     order?: IntFilter<"TeamMember"> | number
+    featured?: BoolFilter<"TeamMember"> | boolean
+    featuredOrder?: IntNullableFilter<"TeamMember"> | number | null
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }, "id">
@@ -21877,6 +25307,8 @@ export namespace Prisma {
     website?: SortOrderInput | SortOrder
     active?: SortOrder
     order?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TeamMemberCountOrderByAggregateInput
@@ -21905,6 +25337,8 @@ export namespace Prisma {
     website?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     active?: BoolWithAggregatesFilter<"TeamMember"> | boolean
     order?: IntWithAggregatesFilter<"TeamMember"> | number
+    featured?: BoolWithAggregatesFilter<"TeamMember"> | boolean
+    featuredOrder?: IntNullableWithAggregatesFilter<"TeamMember"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
   }
@@ -22559,26 +25993,138 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Collaborator"> | Date | string
   }
 
+  export type HomeContentWhereInput = {
+    AND?: HomeContentWhereInput | HomeContentWhereInput[]
+    OR?: HomeContentWhereInput[]
+    NOT?: HomeContentWhereInput | HomeContentWhereInput[]
+    id?: StringFilter<"HomeContent"> | string
+    heroTitle1?: StringFilter<"HomeContent"> | string
+    heroTitle2?: StringFilter<"HomeContent"> | string
+    heroSubtitle?: StringFilter<"HomeContent"> | string
+    impactTitle?: StringFilter<"HomeContent"> | string
+    impactTitleBold?: StringFilter<"HomeContent"> | string
+    stat1Value?: IntFilter<"HomeContent"> | number
+    stat1Suffix?: StringFilter<"HomeContent"> | string
+    stat1Label?: StringFilter<"HomeContent"> | string
+    stat2Value?: IntFilter<"HomeContent"> | number
+    stat2Suffix?: StringFilter<"HomeContent"> | string
+    stat2Label?: StringFilter<"HomeContent"> | string
+    stat3Value?: IntFilter<"HomeContent"> | number
+    stat3Suffix?: StringFilter<"HomeContent"> | string
+    stat3Label?: StringFilter<"HomeContent"> | string
+    updatedAt?: DateTimeFilter<"HomeContent"> | Date | string
+  }
+
+  export type HomeContentOrderByWithRelationInput = {
+    id?: SortOrder
+    heroTitle1?: SortOrder
+    heroTitle2?: SortOrder
+    heroSubtitle?: SortOrder
+    impactTitle?: SortOrder
+    impactTitleBold?: SortOrder
+    stat1Value?: SortOrder
+    stat1Suffix?: SortOrder
+    stat1Label?: SortOrder
+    stat2Value?: SortOrder
+    stat2Suffix?: SortOrder
+    stat2Label?: SortOrder
+    stat3Value?: SortOrder
+    stat3Suffix?: SortOrder
+    stat3Label?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: HomeContentOrderByRelevanceInput
+  }
+
+  export type HomeContentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HomeContentWhereInput | HomeContentWhereInput[]
+    OR?: HomeContentWhereInput[]
+    NOT?: HomeContentWhereInput | HomeContentWhereInput[]
+    heroTitle1?: StringFilter<"HomeContent"> | string
+    heroTitle2?: StringFilter<"HomeContent"> | string
+    heroSubtitle?: StringFilter<"HomeContent"> | string
+    impactTitle?: StringFilter<"HomeContent"> | string
+    impactTitleBold?: StringFilter<"HomeContent"> | string
+    stat1Value?: IntFilter<"HomeContent"> | number
+    stat1Suffix?: StringFilter<"HomeContent"> | string
+    stat1Label?: StringFilter<"HomeContent"> | string
+    stat2Value?: IntFilter<"HomeContent"> | number
+    stat2Suffix?: StringFilter<"HomeContent"> | string
+    stat2Label?: StringFilter<"HomeContent"> | string
+    stat3Value?: IntFilter<"HomeContent"> | number
+    stat3Suffix?: StringFilter<"HomeContent"> | string
+    stat3Label?: StringFilter<"HomeContent"> | string
+    updatedAt?: DateTimeFilter<"HomeContent"> | Date | string
+  }, "id">
+
+  export type HomeContentOrderByWithAggregationInput = {
+    id?: SortOrder
+    heroTitle1?: SortOrder
+    heroTitle2?: SortOrder
+    heroSubtitle?: SortOrder
+    impactTitle?: SortOrder
+    impactTitleBold?: SortOrder
+    stat1Value?: SortOrder
+    stat1Suffix?: SortOrder
+    stat1Label?: SortOrder
+    stat2Value?: SortOrder
+    stat2Suffix?: SortOrder
+    stat2Label?: SortOrder
+    stat3Value?: SortOrder
+    stat3Suffix?: SortOrder
+    stat3Label?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HomeContentCountOrderByAggregateInput
+    _avg?: HomeContentAvgOrderByAggregateInput
+    _max?: HomeContentMaxOrderByAggregateInput
+    _min?: HomeContentMinOrderByAggregateInput
+    _sum?: HomeContentSumOrderByAggregateInput
+  }
+
+  export type HomeContentScalarWhereWithAggregatesInput = {
+    AND?: HomeContentScalarWhereWithAggregatesInput | HomeContentScalarWhereWithAggregatesInput[]
+    OR?: HomeContentScalarWhereWithAggregatesInput[]
+    NOT?: HomeContentScalarWhereWithAggregatesInput | HomeContentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HomeContent"> | string
+    heroTitle1?: StringWithAggregatesFilter<"HomeContent"> | string
+    heroTitle2?: StringWithAggregatesFilter<"HomeContent"> | string
+    heroSubtitle?: StringWithAggregatesFilter<"HomeContent"> | string
+    impactTitle?: StringWithAggregatesFilter<"HomeContent"> | string
+    impactTitleBold?: StringWithAggregatesFilter<"HomeContent"> | string
+    stat1Value?: IntWithAggregatesFilter<"HomeContent"> | number
+    stat1Suffix?: StringWithAggregatesFilter<"HomeContent"> | string
+    stat1Label?: StringWithAggregatesFilter<"HomeContent"> | string
+    stat2Value?: IntWithAggregatesFilter<"HomeContent"> | number
+    stat2Suffix?: StringWithAggregatesFilter<"HomeContent"> | string
+    stat2Label?: StringWithAggregatesFilter<"HomeContent"> | string
+    stat3Value?: IntWithAggregatesFilter<"HomeContent"> | number
+    stat3Suffix?: StringWithAggregatesFilter<"HomeContent"> | string
+    stat3Label?: StringWithAggregatesFilter<"HomeContent"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HomeContent"> | Date | string
+  }
+
   export type ProjectInfoWhereInput = {
     AND?: ProjectInfoWhereInput | ProjectInfoWhereInput[]
     OR?: ProjectInfoWhereInput[]
     NOT?: ProjectInfoWhereInput | ProjectInfoWhereInput[]
     id?: StringFilter<"ProjectInfo"> | string
+    heroTitle?: StringFilter<"ProjectInfo"> | string
+    heroSubtitle?: StringFilter<"ProjectInfo"> | string
     vlirTitle?: StringFilter<"ProjectInfo"> | string
     vlirP1?: StringFilter<"ProjectInfo"> | string
+    vlirP2Title?: StringFilter<"ProjectInfo"> | string
     vlirP2?: StringFilter<"ProjectInfo"> | string
-    problemTitle?: StringFilter<"ProjectInfo"> | string
-    problemList?: StringFilter<"ProjectInfo"> | string
     updatedAt?: DateTimeFilter<"ProjectInfo"> | Date | string
   }
 
   export type ProjectInfoOrderByWithRelationInput = {
     id?: SortOrder
+    heroTitle?: SortOrder
+    heroSubtitle?: SortOrder
     vlirTitle?: SortOrder
     vlirP1?: SortOrder
+    vlirP2Title?: SortOrder
     vlirP2?: SortOrder
-    problemTitle?: SortOrder
-    problemList?: SortOrder
     updatedAt?: SortOrder
     _relevance?: ProjectInfoOrderByRelevanceInput
   }
@@ -22588,21 +26134,23 @@ export namespace Prisma {
     AND?: ProjectInfoWhereInput | ProjectInfoWhereInput[]
     OR?: ProjectInfoWhereInput[]
     NOT?: ProjectInfoWhereInput | ProjectInfoWhereInput[]
+    heroTitle?: StringFilter<"ProjectInfo"> | string
+    heroSubtitle?: StringFilter<"ProjectInfo"> | string
     vlirTitle?: StringFilter<"ProjectInfo"> | string
     vlirP1?: StringFilter<"ProjectInfo"> | string
+    vlirP2Title?: StringFilter<"ProjectInfo"> | string
     vlirP2?: StringFilter<"ProjectInfo"> | string
-    problemTitle?: StringFilter<"ProjectInfo"> | string
-    problemList?: StringFilter<"ProjectInfo"> | string
     updatedAt?: DateTimeFilter<"ProjectInfo"> | Date | string
   }, "id">
 
   export type ProjectInfoOrderByWithAggregationInput = {
     id?: SortOrder
+    heroTitle?: SortOrder
+    heroSubtitle?: SortOrder
     vlirTitle?: SortOrder
     vlirP1?: SortOrder
+    vlirP2Title?: SortOrder
     vlirP2?: SortOrder
-    problemTitle?: SortOrder
-    problemList?: SortOrder
     updatedAt?: SortOrder
     _count?: ProjectInfoCountOrderByAggregateInput
     _max?: ProjectInfoMaxOrderByAggregateInput
@@ -22614,12 +26162,134 @@ export namespace Prisma {
     OR?: ProjectInfoScalarWhereWithAggregatesInput[]
     NOT?: ProjectInfoScalarWhereWithAggregatesInput | ProjectInfoScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ProjectInfo"> | string
+    heroTitle?: StringWithAggregatesFilter<"ProjectInfo"> | string
+    heroSubtitle?: StringWithAggregatesFilter<"ProjectInfo"> | string
     vlirTitle?: StringWithAggregatesFilter<"ProjectInfo"> | string
     vlirP1?: StringWithAggregatesFilter<"ProjectInfo"> | string
+    vlirP2Title?: StringWithAggregatesFilter<"ProjectInfo"> | string
     vlirP2?: StringWithAggregatesFilter<"ProjectInfo"> | string
-    problemTitle?: StringWithAggregatesFilter<"ProjectInfo"> | string
-    problemList?: StringWithAggregatesFilter<"ProjectInfo"> | string
     updatedAt?: DateTimeWithAggregatesFilter<"ProjectInfo"> | Date | string
+  }
+
+  export type ProjectProblemGroupWhereInput = {
+    AND?: ProjectProblemGroupWhereInput | ProjectProblemGroupWhereInput[]
+    OR?: ProjectProblemGroupWhereInput[]
+    NOT?: ProjectProblemGroupWhereInput | ProjectProblemGroupWhereInput[]
+    id?: StringFilter<"ProjectProblemGroup"> | string
+    title?: StringFilter<"ProjectProblemGroup"> | string
+    order?: IntFilter<"ProjectProblemGroup"> | number
+    createdAt?: DateTimeFilter<"ProjectProblemGroup"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectProblemGroup"> | Date | string
+    bullets?: ProjectProblemBulletListRelationFilter
+  }
+
+  export type ProjectProblemGroupOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    bullets?: ProjectProblemBulletOrderByRelationAggregateInput
+    _relevance?: ProjectProblemGroupOrderByRelevanceInput
+  }
+
+  export type ProjectProblemGroupWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProjectProblemGroupWhereInput | ProjectProblemGroupWhereInput[]
+    OR?: ProjectProblemGroupWhereInput[]
+    NOT?: ProjectProblemGroupWhereInput | ProjectProblemGroupWhereInput[]
+    title?: StringFilter<"ProjectProblemGroup"> | string
+    order?: IntFilter<"ProjectProblemGroup"> | number
+    createdAt?: DateTimeFilter<"ProjectProblemGroup"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectProblemGroup"> | Date | string
+    bullets?: ProjectProblemBulletListRelationFilter
+  }, "id">
+
+  export type ProjectProblemGroupOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProjectProblemGroupCountOrderByAggregateInput
+    _avg?: ProjectProblemGroupAvgOrderByAggregateInput
+    _max?: ProjectProblemGroupMaxOrderByAggregateInput
+    _min?: ProjectProblemGroupMinOrderByAggregateInput
+    _sum?: ProjectProblemGroupSumOrderByAggregateInput
+  }
+
+  export type ProjectProblemGroupScalarWhereWithAggregatesInput = {
+    AND?: ProjectProblemGroupScalarWhereWithAggregatesInput | ProjectProblemGroupScalarWhereWithAggregatesInput[]
+    OR?: ProjectProblemGroupScalarWhereWithAggregatesInput[]
+    NOT?: ProjectProblemGroupScalarWhereWithAggregatesInput | ProjectProblemGroupScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectProblemGroup"> | string
+    title?: StringWithAggregatesFilter<"ProjectProblemGroup"> | string
+    order?: IntWithAggregatesFilter<"ProjectProblemGroup"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ProjectProblemGroup"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProjectProblemGroup"> | Date | string
+  }
+
+  export type ProjectProblemBulletWhereInput = {
+    AND?: ProjectProblemBulletWhereInput | ProjectProblemBulletWhereInput[]
+    OR?: ProjectProblemBulletWhereInput[]
+    NOT?: ProjectProblemBulletWhereInput | ProjectProblemBulletWhereInput[]
+    id?: StringFilter<"ProjectProblemBullet"> | string
+    text?: StringFilter<"ProjectProblemBullet"> | string
+    order?: IntFilter<"ProjectProblemBullet"> | number
+    groupId?: StringFilter<"ProjectProblemBullet"> | string
+    createdAt?: DateTimeFilter<"ProjectProblemBullet"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectProblemBullet"> | Date | string
+    group?: XOR<ProjectProblemGroupScalarRelationFilter, ProjectProblemGroupWhereInput>
+  }
+
+  export type ProjectProblemBulletOrderByWithRelationInput = {
+    id?: SortOrder
+    text?: SortOrder
+    order?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    group?: ProjectProblemGroupOrderByWithRelationInput
+    _relevance?: ProjectProblemBulletOrderByRelevanceInput
+  }
+
+  export type ProjectProblemBulletWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProjectProblemBulletWhereInput | ProjectProblemBulletWhereInput[]
+    OR?: ProjectProblemBulletWhereInput[]
+    NOT?: ProjectProblemBulletWhereInput | ProjectProblemBulletWhereInput[]
+    text?: StringFilter<"ProjectProblemBullet"> | string
+    order?: IntFilter<"ProjectProblemBullet"> | number
+    groupId?: StringFilter<"ProjectProblemBullet"> | string
+    createdAt?: DateTimeFilter<"ProjectProblemBullet"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectProblemBullet"> | Date | string
+    group?: XOR<ProjectProblemGroupScalarRelationFilter, ProjectProblemGroupWhereInput>
+  }, "id">
+
+  export type ProjectProblemBulletOrderByWithAggregationInput = {
+    id?: SortOrder
+    text?: SortOrder
+    order?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProjectProblemBulletCountOrderByAggregateInput
+    _avg?: ProjectProblemBulletAvgOrderByAggregateInput
+    _max?: ProjectProblemBulletMaxOrderByAggregateInput
+    _min?: ProjectProblemBulletMinOrderByAggregateInput
+    _sum?: ProjectProblemBulletSumOrderByAggregateInput
+  }
+
+  export type ProjectProblemBulletScalarWhereWithAggregatesInput = {
+    AND?: ProjectProblemBulletScalarWhereWithAggregatesInput | ProjectProblemBulletScalarWhereWithAggregatesInput[]
+    OR?: ProjectProblemBulletScalarWhereWithAggregatesInput[]
+    NOT?: ProjectProblemBulletScalarWhereWithAggregatesInput | ProjectProblemBulletScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectProblemBullet"> | string
+    text?: StringWithAggregatesFilter<"ProjectProblemBullet"> | string
+    order?: IntWithAggregatesFilter<"ProjectProblemBullet"> | number
+    groupId?: StringWithAggregatesFilter<"ProjectProblemBullet"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ProjectProblemBullet"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProjectProblemBullet"> | Date | string
   }
 
   export type ProjectGoalWhereInput = {
@@ -23297,6 +26967,8 @@ export namespace Prisma {
     website?: string | null
     active?: boolean
     order?: number
+    featured?: boolean
+    featuredOrder?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23317,6 +26989,8 @@ export namespace Prisma {
     website?: string | null
     active?: boolean
     order?: number
+    featured?: boolean
+    featuredOrder?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23337,6 +27011,8 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     order?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23357,6 +27033,8 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     order?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23377,6 +27055,8 @@ export namespace Prisma {
     website?: string | null
     active?: boolean
     order?: number
+    featured?: boolean
+    featuredOrder?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -23397,6 +27077,8 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     order?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23417,6 +27099,8 @@ export namespace Prisma {
     website?: NullableStringFieldUpdateOperationsInput | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
     order?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
+    featuredOrder?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -24166,73 +27850,335 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type HomeContentCreateInput = {
+    id?: string
+    heroTitle1?: string
+    heroTitle2?: string
+    heroSubtitle?: string
+    impactTitle?: string
+    impactTitleBold?: string
+    stat1Value?: number
+    stat1Suffix?: string
+    stat1Label?: string
+    stat2Value?: number
+    stat2Suffix?: string
+    stat2Label?: string
+    stat3Value?: number
+    stat3Suffix?: string
+    stat3Label?: string
+    updatedAt?: Date | string
+  }
+
+  export type HomeContentUncheckedCreateInput = {
+    id?: string
+    heroTitle1?: string
+    heroTitle2?: string
+    heroSubtitle?: string
+    impactTitle?: string
+    impactTitleBold?: string
+    stat1Value?: number
+    stat1Suffix?: string
+    stat1Label?: string
+    stat2Value?: number
+    stat2Suffix?: string
+    stat2Label?: string
+    stat3Value?: number
+    stat3Suffix?: string
+    stat3Label?: string
+    updatedAt?: Date | string
+  }
+
+  export type HomeContentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    heroTitle1?: StringFieldUpdateOperationsInput | string
+    heroTitle2?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
+    impactTitle?: StringFieldUpdateOperationsInput | string
+    impactTitleBold?: StringFieldUpdateOperationsInput | string
+    stat1Value?: IntFieldUpdateOperationsInput | number
+    stat1Suffix?: StringFieldUpdateOperationsInput | string
+    stat1Label?: StringFieldUpdateOperationsInput | string
+    stat2Value?: IntFieldUpdateOperationsInput | number
+    stat2Suffix?: StringFieldUpdateOperationsInput | string
+    stat2Label?: StringFieldUpdateOperationsInput | string
+    stat3Value?: IntFieldUpdateOperationsInput | number
+    stat3Suffix?: StringFieldUpdateOperationsInput | string
+    stat3Label?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HomeContentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    heroTitle1?: StringFieldUpdateOperationsInput | string
+    heroTitle2?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
+    impactTitle?: StringFieldUpdateOperationsInput | string
+    impactTitleBold?: StringFieldUpdateOperationsInput | string
+    stat1Value?: IntFieldUpdateOperationsInput | number
+    stat1Suffix?: StringFieldUpdateOperationsInput | string
+    stat1Label?: StringFieldUpdateOperationsInput | string
+    stat2Value?: IntFieldUpdateOperationsInput | number
+    stat2Suffix?: StringFieldUpdateOperationsInput | string
+    stat2Label?: StringFieldUpdateOperationsInput | string
+    stat3Value?: IntFieldUpdateOperationsInput | number
+    stat3Suffix?: StringFieldUpdateOperationsInput | string
+    stat3Label?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HomeContentCreateManyInput = {
+    id?: string
+    heroTitle1?: string
+    heroTitle2?: string
+    heroSubtitle?: string
+    impactTitle?: string
+    impactTitleBold?: string
+    stat1Value?: number
+    stat1Suffix?: string
+    stat1Label?: string
+    stat2Value?: number
+    stat2Suffix?: string
+    stat2Label?: string
+    stat3Value?: number
+    stat3Suffix?: string
+    stat3Label?: string
+    updatedAt?: Date | string
+  }
+
+  export type HomeContentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    heroTitle1?: StringFieldUpdateOperationsInput | string
+    heroTitle2?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
+    impactTitle?: StringFieldUpdateOperationsInput | string
+    impactTitleBold?: StringFieldUpdateOperationsInput | string
+    stat1Value?: IntFieldUpdateOperationsInput | number
+    stat1Suffix?: StringFieldUpdateOperationsInput | string
+    stat1Label?: StringFieldUpdateOperationsInput | string
+    stat2Value?: IntFieldUpdateOperationsInput | number
+    stat2Suffix?: StringFieldUpdateOperationsInput | string
+    stat2Label?: StringFieldUpdateOperationsInput | string
+    stat3Value?: IntFieldUpdateOperationsInput | number
+    stat3Suffix?: StringFieldUpdateOperationsInput | string
+    stat3Label?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HomeContentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    heroTitle1?: StringFieldUpdateOperationsInput | string
+    heroTitle2?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
+    impactTitle?: StringFieldUpdateOperationsInput | string
+    impactTitleBold?: StringFieldUpdateOperationsInput | string
+    stat1Value?: IntFieldUpdateOperationsInput | number
+    stat1Suffix?: StringFieldUpdateOperationsInput | string
+    stat1Label?: StringFieldUpdateOperationsInput | string
+    stat2Value?: IntFieldUpdateOperationsInput | number
+    stat2Suffix?: StringFieldUpdateOperationsInput | string
+    stat2Label?: StringFieldUpdateOperationsInput | string
+    stat3Value?: IntFieldUpdateOperationsInput | number
+    stat3Suffix?: StringFieldUpdateOperationsInput | string
+    stat3Label?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ProjectInfoCreateInput = {
     id?: string
+    heroTitle?: string
+    heroSubtitle?: string
     vlirTitle?: string
     vlirP1: string
+    vlirP2Title?: string
     vlirP2: string
-    problemTitle?: string
-    problemList: string
     updatedAt?: Date | string
   }
 
   export type ProjectInfoUncheckedCreateInput = {
     id?: string
+    heroTitle?: string
+    heroSubtitle?: string
     vlirTitle?: string
     vlirP1: string
+    vlirP2Title?: string
     vlirP2: string
-    problemTitle?: string
-    problemList: string
     updatedAt?: Date | string
   }
 
   export type ProjectInfoUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
     vlirTitle?: StringFieldUpdateOperationsInput | string
     vlirP1?: StringFieldUpdateOperationsInput | string
+    vlirP2Title?: StringFieldUpdateOperationsInput | string
     vlirP2?: StringFieldUpdateOperationsInput | string
-    problemTitle?: StringFieldUpdateOperationsInput | string
-    problemList?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectInfoUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
     vlirTitle?: StringFieldUpdateOperationsInput | string
     vlirP1?: StringFieldUpdateOperationsInput | string
+    vlirP2Title?: StringFieldUpdateOperationsInput | string
     vlirP2?: StringFieldUpdateOperationsInput | string
-    problemTitle?: StringFieldUpdateOperationsInput | string
-    problemList?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectInfoCreateManyInput = {
     id?: string
+    heroTitle?: string
+    heroSubtitle?: string
     vlirTitle?: string
     vlirP1: string
+    vlirP2Title?: string
     vlirP2: string
-    problemTitle?: string
-    problemList: string
     updatedAt?: Date | string
   }
 
   export type ProjectInfoUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
     vlirTitle?: StringFieldUpdateOperationsInput | string
     vlirP1?: StringFieldUpdateOperationsInput | string
+    vlirP2Title?: StringFieldUpdateOperationsInput | string
     vlirP2?: StringFieldUpdateOperationsInput | string
-    problemTitle?: StringFieldUpdateOperationsInput | string
-    problemList?: StringFieldUpdateOperationsInput | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ProjectInfoUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    heroTitle?: StringFieldUpdateOperationsInput | string
+    heroSubtitle?: StringFieldUpdateOperationsInput | string
     vlirTitle?: StringFieldUpdateOperationsInput | string
     vlirP1?: StringFieldUpdateOperationsInput | string
+    vlirP2Title?: StringFieldUpdateOperationsInput | string
     vlirP2?: StringFieldUpdateOperationsInput | string
-    problemTitle?: StringFieldUpdateOperationsInput | string
-    problemList?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemGroupCreateInput = {
+    id?: string
+    title: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bullets?: ProjectProblemBulletCreateNestedManyWithoutGroupInput
+  }
+
+  export type ProjectProblemGroupUncheckedCreateInput = {
+    id?: string
+    title: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    bullets?: ProjectProblemBulletUncheckedCreateNestedManyWithoutGroupInput
+  }
+
+  export type ProjectProblemGroupUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bullets?: ProjectProblemBulletUpdateManyWithoutGroupNestedInput
+  }
+
+  export type ProjectProblemGroupUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bullets?: ProjectProblemBulletUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type ProjectProblemGroupCreateManyInput = {
+    id?: string
+    title: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemGroupUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemGroupUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemBulletCreateInput = {
+    id?: string
+    text: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    group: ProjectProblemGroupCreateNestedOneWithoutBulletsInput
+  }
+
+  export type ProjectProblemBulletUncheckedCreateInput = {
+    id?: string
+    text: string
+    order?: number
+    groupId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemBulletUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: ProjectProblemGroupUpdateOneRequiredWithoutBulletsNestedInput
+  }
+
+  export type ProjectProblemBulletUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    groupId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemBulletCreateManyInput = {
+    id?: string
+    text: string
+    order?: number
+    groupId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemBulletUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemBulletUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    groupId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25024,6 +28970,17 @@ export namespace Prisma {
     _max?: NestedEnumPublicationStatusFilter<$PrismaModel>
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type TeamMemberOrderByRelevanceInput = {
     fields: TeamMemberOrderByRelevanceFieldEnum | TeamMemberOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -25046,12 +29003,15 @@ export namespace Prisma {
     website?: SortOrder
     active?: SortOrder
     order?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TeamMemberAvgOrderByAggregateInput = {
     order?: SortOrder
+    featuredOrder?: SortOrder
   }
 
   export type TeamMemberMaxOrderByAggregateInput = {
@@ -25070,6 +29030,8 @@ export namespace Prisma {
     website?: SortOrder
     active?: SortOrder
     order?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -25090,12 +29052,31 @@ export namespace Prisma {
     website?: SortOrder
     active?: SortOrder
     order?: SortOrder
+    featured?: SortOrder
+    featuredOrder?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type TeamMemberSumOrderByAggregateInput = {
     order?: SortOrder
+    featuredOrder?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumNewsEventTypeFilter<$PrismaModel = never> = {
@@ -25117,17 +29098,6 @@ export namespace Prisma {
     in?: $Enums.NewsEventTag[] | null
     notIn?: $Enums.NewsEventTag[] | null
     not?: NestedEnumNewsEventTagNullableFilter<$PrismaModel> | $Enums.NewsEventTag | null
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NewsEventOrderByRelevanceInput = {
@@ -25223,22 +29193,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
     _max?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumResearchStatusFilter<$PrismaModel = never> = {
@@ -25656,6 +29610,81 @@ export namespace Prisma {
     _max?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
   }
 
+  export type HomeContentOrderByRelevanceInput = {
+    fields: HomeContentOrderByRelevanceFieldEnum | HomeContentOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type HomeContentCountOrderByAggregateInput = {
+    id?: SortOrder
+    heroTitle1?: SortOrder
+    heroTitle2?: SortOrder
+    heroSubtitle?: SortOrder
+    impactTitle?: SortOrder
+    impactTitleBold?: SortOrder
+    stat1Value?: SortOrder
+    stat1Suffix?: SortOrder
+    stat1Label?: SortOrder
+    stat2Value?: SortOrder
+    stat2Suffix?: SortOrder
+    stat2Label?: SortOrder
+    stat3Value?: SortOrder
+    stat3Suffix?: SortOrder
+    stat3Label?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HomeContentAvgOrderByAggregateInput = {
+    stat1Value?: SortOrder
+    stat2Value?: SortOrder
+    stat3Value?: SortOrder
+  }
+
+  export type HomeContentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    heroTitle1?: SortOrder
+    heroTitle2?: SortOrder
+    heroSubtitle?: SortOrder
+    impactTitle?: SortOrder
+    impactTitleBold?: SortOrder
+    stat1Value?: SortOrder
+    stat1Suffix?: SortOrder
+    stat1Label?: SortOrder
+    stat2Value?: SortOrder
+    stat2Suffix?: SortOrder
+    stat2Label?: SortOrder
+    stat3Value?: SortOrder
+    stat3Suffix?: SortOrder
+    stat3Label?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HomeContentMinOrderByAggregateInput = {
+    id?: SortOrder
+    heroTitle1?: SortOrder
+    heroTitle2?: SortOrder
+    heroSubtitle?: SortOrder
+    impactTitle?: SortOrder
+    impactTitleBold?: SortOrder
+    stat1Value?: SortOrder
+    stat1Suffix?: SortOrder
+    stat1Label?: SortOrder
+    stat2Value?: SortOrder
+    stat2Suffix?: SortOrder
+    stat2Label?: SortOrder
+    stat3Value?: SortOrder
+    stat3Suffix?: SortOrder
+    stat3Label?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HomeContentSumOrderByAggregateInput = {
+    stat1Value?: SortOrder
+    stat2Value?: SortOrder
+    stat3Value?: SortOrder
+  }
+
   export type ProjectInfoOrderByRelevanceInput = {
     fields: ProjectInfoOrderByRelevanceFieldEnum | ProjectInfoOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -25664,32 +29693,129 @@ export namespace Prisma {
 
   export type ProjectInfoCountOrderByAggregateInput = {
     id?: SortOrder
+    heroTitle?: SortOrder
+    heroSubtitle?: SortOrder
     vlirTitle?: SortOrder
     vlirP1?: SortOrder
+    vlirP2Title?: SortOrder
     vlirP2?: SortOrder
-    problemTitle?: SortOrder
-    problemList?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ProjectInfoMaxOrderByAggregateInput = {
     id?: SortOrder
+    heroTitle?: SortOrder
+    heroSubtitle?: SortOrder
     vlirTitle?: SortOrder
     vlirP1?: SortOrder
+    vlirP2Title?: SortOrder
     vlirP2?: SortOrder
-    problemTitle?: SortOrder
-    problemList?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ProjectInfoMinOrderByAggregateInput = {
     id?: SortOrder
+    heroTitle?: SortOrder
+    heroSubtitle?: SortOrder
     vlirTitle?: SortOrder
     vlirP1?: SortOrder
+    vlirP2Title?: SortOrder
     vlirP2?: SortOrder
-    problemTitle?: SortOrder
-    problemList?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemBulletListRelationFilter = {
+    every?: ProjectProblemBulletWhereInput
+    some?: ProjectProblemBulletWhereInput
+    none?: ProjectProblemBulletWhereInput
+  }
+
+  export type ProjectProblemBulletOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProjectProblemGroupOrderByRelevanceInput = {
+    fields: ProjectProblemGroupOrderByRelevanceFieldEnum | ProjectProblemGroupOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ProjectProblemGroupCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemGroupAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type ProjectProblemGroupMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemGroupMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    order?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemGroupSumOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type ProjectProblemGroupScalarRelationFilter = {
+    is?: ProjectProblemGroupWhereInput
+    isNot?: ProjectProblemGroupWhereInput
+  }
+
+  export type ProjectProblemBulletOrderByRelevanceInput = {
+    fields: ProjectProblemBulletOrderByRelevanceFieldEnum | ProjectProblemBulletOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ProjectProblemBulletCountOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    order?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemBulletAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type ProjectProblemBulletMaxOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    order?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemBulletMinOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    order?: SortOrder
+    groupId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProjectProblemBulletSumOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type ProjectGoalOrderByRelevanceInput = {
@@ -26047,6 +30173,14 @@ export namespace Prisma {
     set?: $Enums.PublicationStatus
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type EnumNewsEventTypeFieldUpdateOperationsInput = {
     set?: $Enums.NewsEventType
   }
@@ -26057,14 +30191,6 @@ export namespace Prisma {
 
   export type NullableEnumNewsEventTagFieldUpdateOperationsInput = {
     set?: $Enums.NewsEventTag | null
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type ResearchTopicMemberCreateNestedManyWithoutProjectInput = {
@@ -26133,6 +30259,62 @@ export namespace Prisma {
 
   export type EnumCollaboratorCategoryFieldUpdateOperationsInput = {
     set?: $Enums.CollaboratorCategory
+  }
+
+  export type ProjectProblemBulletCreateNestedManyWithoutGroupInput = {
+    create?: XOR<ProjectProblemBulletCreateWithoutGroupInput, ProjectProblemBulletUncheckedCreateWithoutGroupInput> | ProjectProblemBulletCreateWithoutGroupInput[] | ProjectProblemBulletUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: ProjectProblemBulletCreateOrConnectWithoutGroupInput | ProjectProblemBulletCreateOrConnectWithoutGroupInput[]
+    createMany?: ProjectProblemBulletCreateManyGroupInputEnvelope
+    connect?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+  }
+
+  export type ProjectProblemBulletUncheckedCreateNestedManyWithoutGroupInput = {
+    create?: XOR<ProjectProblemBulletCreateWithoutGroupInput, ProjectProblemBulletUncheckedCreateWithoutGroupInput> | ProjectProblemBulletCreateWithoutGroupInput[] | ProjectProblemBulletUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: ProjectProblemBulletCreateOrConnectWithoutGroupInput | ProjectProblemBulletCreateOrConnectWithoutGroupInput[]
+    createMany?: ProjectProblemBulletCreateManyGroupInputEnvelope
+    connect?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+  }
+
+  export type ProjectProblemBulletUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<ProjectProblemBulletCreateWithoutGroupInput, ProjectProblemBulletUncheckedCreateWithoutGroupInput> | ProjectProblemBulletCreateWithoutGroupInput[] | ProjectProblemBulletUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: ProjectProblemBulletCreateOrConnectWithoutGroupInput | ProjectProblemBulletCreateOrConnectWithoutGroupInput[]
+    upsert?: ProjectProblemBulletUpsertWithWhereUniqueWithoutGroupInput | ProjectProblemBulletUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: ProjectProblemBulletCreateManyGroupInputEnvelope
+    set?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    disconnect?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    delete?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    connect?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    update?: ProjectProblemBulletUpdateWithWhereUniqueWithoutGroupInput | ProjectProblemBulletUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: ProjectProblemBulletUpdateManyWithWhereWithoutGroupInput | ProjectProblemBulletUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: ProjectProblemBulletScalarWhereInput | ProjectProblemBulletScalarWhereInput[]
+  }
+
+  export type ProjectProblemBulletUncheckedUpdateManyWithoutGroupNestedInput = {
+    create?: XOR<ProjectProblemBulletCreateWithoutGroupInput, ProjectProblemBulletUncheckedCreateWithoutGroupInput> | ProjectProblemBulletCreateWithoutGroupInput[] | ProjectProblemBulletUncheckedCreateWithoutGroupInput[]
+    connectOrCreate?: ProjectProblemBulletCreateOrConnectWithoutGroupInput | ProjectProblemBulletCreateOrConnectWithoutGroupInput[]
+    upsert?: ProjectProblemBulletUpsertWithWhereUniqueWithoutGroupInput | ProjectProblemBulletUpsertWithWhereUniqueWithoutGroupInput[]
+    createMany?: ProjectProblemBulletCreateManyGroupInputEnvelope
+    set?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    disconnect?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    delete?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    connect?: ProjectProblemBulletWhereUniqueInput | ProjectProblemBulletWhereUniqueInput[]
+    update?: ProjectProblemBulletUpdateWithWhereUniqueWithoutGroupInput | ProjectProblemBulletUpdateWithWhereUniqueWithoutGroupInput[]
+    updateMany?: ProjectProblemBulletUpdateManyWithWhereWithoutGroupInput | ProjectProblemBulletUpdateManyWithWhereWithoutGroupInput[]
+    deleteMany?: ProjectProblemBulletScalarWhereInput | ProjectProblemBulletScalarWhereInput[]
+  }
+
+  export type ProjectProblemGroupCreateNestedOneWithoutBulletsInput = {
+    create?: XOR<ProjectProblemGroupCreateWithoutBulletsInput, ProjectProblemGroupUncheckedCreateWithoutBulletsInput>
+    connectOrCreate?: ProjectProblemGroupCreateOrConnectWithoutBulletsInput
+    connect?: ProjectProblemGroupWhereUniqueInput
+  }
+
+  export type ProjectProblemGroupUpdateOneRequiredWithoutBulletsNestedInput = {
+    create?: XOR<ProjectProblemGroupCreateWithoutBulletsInput, ProjectProblemGroupUncheckedCreateWithoutBulletsInput>
+    connectOrCreate?: ProjectProblemGroupCreateOrConnectWithoutBulletsInput
+    upsert?: ProjectProblemGroupUpsertWithoutBulletsInput
+    connect?: ProjectProblemGroupWhereUniqueInput
+    update?: XOR<XOR<ProjectProblemGroupUpdateToOneWithWhereWithoutBulletsInput, ProjectProblemGroupUpdateWithoutBulletsInput>, ProjectProblemGroupUncheckedUpdateWithoutBulletsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -26339,6 +30521,33 @@ export namespace Prisma {
     _max?: NestedEnumPublicationStatusFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumNewsEventTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.NewsEventType | EnumNewsEventTypeFieldRefInput<$PrismaModel>
     in?: $Enums.NewsEventType[]
@@ -26388,33 +30597,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
     _max?: NestedEnumNewsEventTagNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumResearchStatusFilter<$PrismaModel = never> = {
@@ -26715,6 +30897,108 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProjectProblemBulletCreateWithoutGroupInput = {
+    id?: string
+    text: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemBulletUncheckedCreateWithoutGroupInput = {
+    id?: string
+    text: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemBulletCreateOrConnectWithoutGroupInput = {
+    where: ProjectProblemBulletWhereUniqueInput
+    create: XOR<ProjectProblemBulletCreateWithoutGroupInput, ProjectProblemBulletUncheckedCreateWithoutGroupInput>
+  }
+
+  export type ProjectProblemBulletCreateManyGroupInputEnvelope = {
+    data: ProjectProblemBulletCreateManyGroupInput | ProjectProblemBulletCreateManyGroupInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProjectProblemBulletUpsertWithWhereUniqueWithoutGroupInput = {
+    where: ProjectProblemBulletWhereUniqueInput
+    update: XOR<ProjectProblemBulletUpdateWithoutGroupInput, ProjectProblemBulletUncheckedUpdateWithoutGroupInput>
+    create: XOR<ProjectProblemBulletCreateWithoutGroupInput, ProjectProblemBulletUncheckedCreateWithoutGroupInput>
+  }
+
+  export type ProjectProblemBulletUpdateWithWhereUniqueWithoutGroupInput = {
+    where: ProjectProblemBulletWhereUniqueInput
+    data: XOR<ProjectProblemBulletUpdateWithoutGroupInput, ProjectProblemBulletUncheckedUpdateWithoutGroupInput>
+  }
+
+  export type ProjectProblemBulletUpdateManyWithWhereWithoutGroupInput = {
+    where: ProjectProblemBulletScalarWhereInput
+    data: XOR<ProjectProblemBulletUpdateManyMutationInput, ProjectProblemBulletUncheckedUpdateManyWithoutGroupInput>
+  }
+
+  export type ProjectProblemBulletScalarWhereInput = {
+    AND?: ProjectProblemBulletScalarWhereInput | ProjectProblemBulletScalarWhereInput[]
+    OR?: ProjectProblemBulletScalarWhereInput[]
+    NOT?: ProjectProblemBulletScalarWhereInput | ProjectProblemBulletScalarWhereInput[]
+    id?: StringFilter<"ProjectProblemBullet"> | string
+    text?: StringFilter<"ProjectProblemBullet"> | string
+    order?: IntFilter<"ProjectProblemBullet"> | number
+    groupId?: StringFilter<"ProjectProblemBullet"> | string
+    createdAt?: DateTimeFilter<"ProjectProblemBullet"> | Date | string
+    updatedAt?: DateTimeFilter<"ProjectProblemBullet"> | Date | string
+  }
+
+  export type ProjectProblemGroupCreateWithoutBulletsInput = {
+    id?: string
+    title: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemGroupUncheckedCreateWithoutBulletsInput = {
+    id?: string
+    title: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemGroupCreateOrConnectWithoutBulletsInput = {
+    where: ProjectProblemGroupWhereUniqueInput
+    create: XOR<ProjectProblemGroupCreateWithoutBulletsInput, ProjectProblemGroupUncheckedCreateWithoutBulletsInput>
+  }
+
+  export type ProjectProblemGroupUpsertWithoutBulletsInput = {
+    update: XOR<ProjectProblemGroupUpdateWithoutBulletsInput, ProjectProblemGroupUncheckedUpdateWithoutBulletsInput>
+    create: XOR<ProjectProblemGroupCreateWithoutBulletsInput, ProjectProblemGroupUncheckedCreateWithoutBulletsInput>
+    where?: ProjectProblemGroupWhereInput
+  }
+
+  export type ProjectProblemGroupUpdateToOneWithWhereWithoutBulletsInput = {
+    where?: ProjectProblemGroupWhereInput
+    data: XOR<ProjectProblemGroupUpdateWithoutBulletsInput, ProjectProblemGroupUncheckedUpdateWithoutBulletsInput>
+  }
+
+  export type ProjectProblemGroupUpdateWithoutBulletsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemGroupUncheckedUpdateWithoutBulletsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PasswordResetTokenCreateManyUserInput = {
     id?: string
     token: string
@@ -26778,6 +31062,38 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: NullableStringFieldUpdateOperationsInput | string | null
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemBulletCreateManyGroupInput = {
+    id?: string
+    text: string
+    order?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectProblemBulletUpdateWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemBulletUncheckedUpdateWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectProblemBulletUncheckedUpdateManyWithoutGroupInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

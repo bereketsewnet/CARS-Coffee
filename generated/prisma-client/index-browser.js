@@ -171,6 +171,8 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   website: 'website',
   active: 'active',
   order: 'order',
+  featured: 'featured',
+  featuredOrder: 'featuredOrder',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -281,13 +283,50 @@ exports.Prisma.CollaboratorScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.HomeContentScalarFieldEnum = {
+  id: 'id',
+  heroTitle1: 'heroTitle1',
+  heroTitle2: 'heroTitle2',
+  heroSubtitle: 'heroSubtitle',
+  impactTitle: 'impactTitle',
+  impactTitleBold: 'impactTitleBold',
+  stat1Value: 'stat1Value',
+  stat1Suffix: 'stat1Suffix',
+  stat1Label: 'stat1Label',
+  stat2Value: 'stat2Value',
+  stat2Suffix: 'stat2Suffix',
+  stat2Label: 'stat2Label',
+  stat3Value: 'stat3Value',
+  stat3Suffix: 'stat3Suffix',
+  stat3Label: 'stat3Label',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ProjectInfoScalarFieldEnum = {
   id: 'id',
+  heroTitle: 'heroTitle',
+  heroSubtitle: 'heroSubtitle',
   vlirTitle: 'vlirTitle',
   vlirP1: 'vlirP1',
+  vlirP2Title: 'vlirP2Title',
   vlirP2: 'vlirP2',
-  problemTitle: 'problemTitle',
-  problemList: 'problemList',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectProblemGroupScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectProblemBulletScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  order: 'order',
+  groupId: 'groupId',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
@@ -479,13 +518,40 @@ exports.Prisma.CollaboratorOrderByRelevanceFieldEnum = {
   website: 'website'
 };
 
+exports.Prisma.HomeContentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  heroTitle1: 'heroTitle1',
+  heroTitle2: 'heroTitle2',
+  heroSubtitle: 'heroSubtitle',
+  impactTitle: 'impactTitle',
+  impactTitleBold: 'impactTitleBold',
+  stat1Suffix: 'stat1Suffix',
+  stat1Label: 'stat1Label',
+  stat2Suffix: 'stat2Suffix',
+  stat2Label: 'stat2Label',
+  stat3Suffix: 'stat3Suffix',
+  stat3Label: 'stat3Label'
+};
+
 exports.Prisma.ProjectInfoOrderByRelevanceFieldEnum = {
   id: 'id',
+  heroTitle: 'heroTitle',
+  heroSubtitle: 'heroSubtitle',
   vlirTitle: 'vlirTitle',
   vlirP1: 'vlirP1',
-  vlirP2: 'vlirP2',
-  problemTitle: 'problemTitle',
-  problemList: 'problemList'
+  vlirP2Title: 'vlirP2Title',
+  vlirP2: 'vlirP2'
+};
+
+exports.Prisma.ProjectProblemGroupOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title'
+};
+
+exports.Prisma.ProjectProblemBulletOrderByRelevanceFieldEnum = {
+  id: 'id',
+  text: 'text',
+  groupId: 'groupId'
 };
 
 exports.Prisma.ProjectGoalOrderByRelevanceFieldEnum = {
@@ -606,7 +672,10 @@ exports.Prisma.ModelName = {
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',
   Collaborator: 'Collaborator',
+  HomeContent: 'HomeContent',
   ProjectInfo: 'ProjectInfo',
+  ProjectProblemGroup: 'ProjectProblemGroup',
+  ProjectProblemBullet: 'ProjectProblemBullet',
   ProjectGoal: 'ProjectGoal',
   WorkPackage: 'WorkPackage',
   ImpactSection: 'ImpactSection',
