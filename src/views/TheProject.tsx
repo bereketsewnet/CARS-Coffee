@@ -5,8 +5,8 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const FRAMEWORK_STEPS = [
   { step: "01", label: "Bean Harvest",                          icon: "☕" },
-  { step: "02", label: "Specialty Coffee Advanced Processing",   icon: "♻" },
-  { step: "03", label: "Circular Agro-Energy & Earth Care",      icon: "🌿" },
+  { step: "02", label: "Specialty Coffee Advanced Processing",   icon: "🍒" },
+  { step: "03", label: "Circular Agro-Energy & Earth Care",      icon: "🌍" },
   { step: "04", label: "Bio-Extracted Innovation Products",      icon: "🧪" },
   { step: "05", label: "Soil Enrichment",                        icon: "🌱" },
   { step: "06", label: "Better Crops",                           icon: "🌾" },
@@ -129,14 +129,13 @@ export default function TheProject({
         <div className="container mx-auto grid md:grid-cols-2 gap-16 items-start">
           <div>
             <span className="tag-pill mb-4 inline-block">{t.project.vlirSub}</span>
-            <h2 className="font-serif text-3xl font-bold mb-5">{projectInfo.vlirTitle}</h2>
+            <h2 className="font-serif text-3xl font-bold mb-5" style={{ color: "#D4AF37" }}>{projectInfo.vlirTitle}</h2>
             <p className="text-muted-foreground leading-relaxed mb-6">{projectInfo.vlirP1}</p>
-            <h3 className="font-serif text-2xl font-bold mb-3">{projectInfo.vlirP2Title}</h3>
+            <h3 className="font-serif text-3xl font-bold mb-3" style={{ color: "#4ade80" }}>{projectInfo.vlirP2Title}</h3>
             <p className="text-muted-foreground leading-relaxed">{projectInfo.vlirP2}</p>
           </div>
           <div className="glass-card rounded-2xl p-8 border border-border">
-            <h3 className="font-serif text-xl font-bold mb-5 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center text-destructive text-sm">!</span>
+            <h3 className="font-serif text-3xl font-bold mb-5" style={{ color: "#ef4444" }}>
               The Problem
             </h3>
             <div className="space-y-5">
@@ -165,7 +164,7 @@ export default function TheProject({
         <div className="container mx-auto">
           <div className="text-center mb-14">
             <span className="tag-pill mb-4 inline-block">{t.project.frameworkSub}</span>
-            <h2 className="font-serif text-4xl font-bold">{t.project.frameworkTitle}</h2>
+            <h2 className="font-serif text-4xl font-bold" style={{ color: "#3b82f6" }}>{t.project.frameworkTitle}</h2>
           </div>
           <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -193,8 +192,8 @@ export default function TheProject({
         <div className="container mx-auto grid md:grid-cols-2 gap-16">
           <div>
             <span className="tag-pill mb-4 inline-block">{t.project.objSub}</span>
-            <h2 className="font-serif text-3xl font-bold mb-6">
-              <Target className="inline w-7 h-7 mr-2 text-leaf-bright" />
+            <h2 className="font-serif text-3xl font-bold mb-6" style={{ color: "#f97316" }}>
+              <Target className="inline w-7 h-7 mr-2" style={{ color: "#f97316" }} />
               {t.project.objTitle}
             </h2>
             <ul className="space-y-4">
@@ -209,14 +208,14 @@ export default function TheProject({
 
           <div>
             <span className="tag-pill tag-coffee mb-4 inline-block">{t.project.structSub}</span>
-            <h2 className="font-serif text-3xl font-bold mb-6">
-              <GitBranch className="inline w-7 h-7 mr-2 text-coffee-light" />
+            <h2 className="font-serif text-3xl font-bold mb-6" style={{ color: "#ec4899" }}>
+              <GitBranch className="inline w-7 h-7 mr-2" style={{ color: "#ec4899" }} />
               {t.project.structTitle}
             </h2>
             <div className="space-y-3">
               {workPkgs.map((wp) => (
                 <div key={wp.wpId} className="glass-card rounded-xl p-4 border border-border flex items-center gap-4">
-                  <span className="tag-coffee font-mono text-xs shrink-0">{wp.wpId}</span>
+                  <span className="font-mono text-xs font-bold shrink-0 px-2 py-1 rounded" style={{ color: "#ec4899", backgroundColor: "#ec489922", border: "1px solid #ec489955" }}>{wp.wpId}</span>
                   <div className="flex-1">
                     <p className="font-semibold text-sm text-foreground">{wp.title}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{t.project.lead} {wp.lead}</p>

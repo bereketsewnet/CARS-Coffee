@@ -670,15 +670,15 @@ function HeroSection({ t, homeContent }: { t: Record<string, Record<string, stri
           style={{ position: "absolute", top: "6rem", right: "2rem", zIndex: 10 }}
         >
           {[
-            { src: "/assets/VLIRUOS.jpg",                alt: "VLIR-UOS" },
-            { src: "/assets/ADDIS ABABA UNIVERSITY.jpg", alt: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)" },
-            { src: "/assets/UNIVERSITY OF ANTWERP.jpg",  alt: "University of Antwerp" },
+            { src: "/assets/VLIRUOS.jpg",                alt: "VLIR-UOS",            scale: "scale-[1.2]" },
+            { src: "/assets/ADDIS ABABA UNIVERSITY.jpg", alt: "College of Technology and Built Environment, Addis Ababa University (CTBE-AAU)", scale: "scale-[1.2]" },
+            { src: "/assets/UNIVERSITY OF ANTWERP.jpg",  alt: "University of Antwerp", scale: "scale-[1.05]" },
           ].map((logo) => (
             <div
               key={logo.alt}
-              className="w-20 h-20 rounded-xl bg-white border border-white/60 shadow-lg overflow-hidden flex items-center justify-center p-1.5"
+              className="w-20 h-20 rounded-xl bg-white border border-white/60 shadow-lg overflow-hidden flex items-center justify-center"
             >
-              <img src={logo.src} alt={logo.alt} className="w-full h-full object-contain" draggable={false} />
+              <img src={logo.src} alt={logo.alt} className={`w-full h-full object-contain ${logo.scale}`} draggable={false} />
             </div>
           ))}
         </div>

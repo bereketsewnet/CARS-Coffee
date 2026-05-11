@@ -273,9 +273,9 @@ export const translations: Record<Lang, Translations> = {
       ra: "MSc Researchers",
     },
     coordinators: {
-      heroSub: "CTBE-Coordinations",
+      heroSub: "CTBE-Coordination",
       heroTitle1: "Our",
-      heroTitle2: "CTBE-Coordinations",
+      heroTitle2: "CTBE-Coordination",
       heroDesc: "Government officials, sponsors, civil society partners, and supporters who make the CARES mission possible.",
       comingSoon: "Coordinator profiles are coming soon.",
       catGov: "Government Officials",

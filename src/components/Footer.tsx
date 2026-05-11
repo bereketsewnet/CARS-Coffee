@@ -85,7 +85,7 @@ export function Footer() {
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="tag-pill">VLIR-UOS</span>
-              <span className="tag-pill tag-coffee">Ethiopia</span>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ backgroundColor: "#cc000022", color: "#ef4444", border: "1px solid #ef444455" }}>Ethiopia</span>
               <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ backgroundColor: "#D4AF3722", color: "#D4AF37", border: "1px solid #D4AF3755" }}>Belgium</span>
             </div>
           </div>
@@ -231,16 +231,17 @@ export function Footer() {
         <div className="section-divider my-8" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} CARES Project. VLIR-UOS Cooperation Programme.</p>
+          <p style={{ color: "#4ade80" }}>© {new Date().getFullYear()} CARES Project. VLIR-UOS Cooperation Programme.</p>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <p>{t.footer.fundeBy}</p>
+            <p style={{ color: "#D4AF37" }}>{t.footer.fundeBy}</p>
             <p>
               {t.footer.developedBy}{" "}
               <a
                 href="https://wubsites.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-leaf-bright hover:underline transition-colors"
+                style={{ color: "#D4AF37" }}
+                className="hover:underline transition-colors"
               >
                 Wubsites
               </a>

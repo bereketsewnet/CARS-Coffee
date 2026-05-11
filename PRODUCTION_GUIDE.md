@@ -39,7 +39,7 @@ npm run build
 **Do NOT include:**
 
 - `node_modules/` (will be reinstalled on server)
-- `.vscode/`, `.git/`, `.DS_Store`, `*.log`, or any local/editor files
+- `.vscode/`, `.git/`, `.DS_Store`, `*.log`, `.claude` or any local/editor files
 
 ---
 
