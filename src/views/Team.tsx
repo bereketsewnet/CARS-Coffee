@@ -225,7 +225,9 @@ function MemberCard({ member }: { member: TeamMember }) {
   );
 }
 
-export default function Team({ members: dbMembers }: { members?: DbMember[] | null }) {
+type HeadingProp = { tag: string; title: string; subtitle: string } | null;
+
+export default function Team({ members: dbMembers, heading }: { members?: DbMember[] | null; heading?: HeadingProp }) {
   const { t } = useLanguage();
 
   const roleLabels: Record<RoleCategory, string> = {
@@ -255,12 +257,12 @@ export default function Team({ members: dbMembers }: { members?: DbMember[] | nu
         </div>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">{t.team.heroSub}</span>
+          <span className="tag-pill mb-4 inline-block">{heading?.tag ?? t.team.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            {t.team.heroTitle1} <span className="text-gradient-green">{t.team.heroTitle2}</span>
+            {heading ? heading.title : <>{t.team.heroTitle1} <span className="text-gradient-green">{t.team.heroTitle2}</span></>}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            {t.team.heroDesc}
+            {heading?.subtitle ?? t.team.heroDesc}
           </p>
         </div>
       </section>

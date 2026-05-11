@@ -25,9 +25,10 @@ export default async function ResearchPage() {
     let pillarContents: any[] | null = null;
   let projects: any[] | null = null;
   let publications: Publication[] | null = null;
+  let heading = null;
 
   try {
-    [pillarContents, projects, publications] = await Promise.all([
+    [pillarContents, projects, publications, heading] = await Promise.all([
       prisma.pillarContent.findMany({}),
       prisma.researchProject.findMany({
         where: { status: { not: "PAUSED" } },
@@ -38,12 +39,12 @@ export default async function ResearchPage() {
         where: { status: "PUBLISHED", pillar: { not: null } },
         orderBy: { year: "desc" },
       }),
+      prisma.pageHeading.findUnique({ where: { page: "research" } }),
     ]);
   } catch (error) {
     console.error("[ResearchPage] DB fetch failed — falling back to static data", error);
-    // Leave projects/publications as null so Research.tsx shows static fallback
   }
 
-  return <Research projects={projects} publications={publications} pillarContents={pillarContents} />;
+  return <Research projects={projects} publications={publications} pillarContents={pillarContents} heading={heading} />;
 }
 

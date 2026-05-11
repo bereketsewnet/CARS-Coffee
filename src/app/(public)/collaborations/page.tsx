@@ -19,14 +19,18 @@ export default async function CollaborationsPage() {
   }
 
   let collaborators = null;
+  let heading = null;
   try {
-    collaborators = await prisma.collaborator.findMany({
-      where: { active: true },
-      orderBy: [{ order: "asc" }, { name: "asc" }],
-    });
+    [collaborators, heading] = await Promise.all([
+      prisma.collaborator.findMany({
+        where: { active: true },
+        orderBy: [{ order: "asc" }, { name: "asc" }],
+      }),
+      prisma.pageHeading.findUnique({ where: { page: "collaborations" } }),
+    ]);
   } catch (error) {
     console.error("[CollaborationsPage] DB fetch failed", error);
   }
 
-  return <Collaborations collaborators={collaborators} />;
+  return <Collaborations collaborators={collaborators} heading={heading} />;
 }

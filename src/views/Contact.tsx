@@ -21,7 +21,9 @@ const SOCIAL_ICONS: Record<string, { icon: React.ElementType; label: string; col
   website:   { icon: Globe,     label: "Website",    color: "#4ade80" },
 };
 
-export default function Contact() {
+type HeadingProp = { tag: string; title: string; subtitle: string } | null;
+
+export default function Contact({ heading }: { heading?: HeadingProp } = {}) {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -106,11 +108,11 @@ export default function Contact() {
         </div>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">{t.contact.heroSub}</span>
+          <span className="tag-pill mb-4 inline-block">{heading?.tag ?? t.contact.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            {t.contact.heroTitle1} <span className="text-gradient-green">{t.contact.heroTitle2}</span>
+            {heading ? heading.title : <>{t.contact.heroTitle1} <span className="text-gradient-green">{t.contact.heroTitle2}</span></>}
           </h1>
-          <p className="text-muted-foreground text-lg max-w-2xl">{t.contact.heroDesc}</p>
+          <p className="text-muted-foreground text-lg max-w-2xl">{heading?.subtitle ?? t.contact.heroDesc}</p>
         </div>
       </section>
 

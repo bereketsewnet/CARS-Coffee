@@ -20,15 +20,17 @@ import {
   Phone,
   Target,
   Home,
+  Heading,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const navItems = [
-  { label: "Dashboard",   href: "/admin/dashboard",   icon: LayoutDashboard },
-  { label: "Home Page",   href: "/admin/home",        icon: Home },
-  { label: "The Project",   href: "/admin/project",      icon: Target },
+  { label: "Dashboard",      href: "/admin/dashboard",  icon: LayoutDashboard },
+  { label: "Home Page",      href: "/admin/home",       icon: Home },
+  { label: "Page Headings",  href: "/admin/headings",   icon: Heading },
+  { label: "The Project",    href: "/admin/project",    icon: Target },
   { label: "Research",     href: "/admin/research",     icon: Beaker },
   { label: "Team",          href: "/admin/team",            icon: Users },
   { label: "Coordinators",   href: "/admin/collaborations",  icon: Handshake },

@@ -22,15 +22,19 @@ export default async function TeamPage() {
 
   // null = DB unavailable, [] = DB connected but no active members
   let members: DbMember[] | null = null;
+  let heading = null;
 
   try {
-    members = await prisma.teamMember.findMany({
-      where: { active: true },
-      orderBy: [{ order: "asc" }, { name: "asc" }],
-    });
+    [members, heading] = await Promise.all([
+      prisma.teamMember.findMany({
+        where: { active: true },
+        orderBy: [{ order: "asc" }, { name: "asc" }],
+      }),
+      prisma.pageHeading.findUnique({ where: { page: "team" } }),
+    ]);
   } catch (error) {
     console.error("[TeamPage] DB fetch failed — falling back to static data", error);
   }
 
-  return <Team members={members} />;
+  return <Team members={members} heading={heading} />;
 }

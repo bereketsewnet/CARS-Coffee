@@ -20,18 +20,20 @@ export default async function LibraryPage() {
 
   let publications: Awaited<ReturnType<typeof prisma.publication.findMany>> = [];
   let pillarContents: Awaited<ReturnType<typeof prisma.pillarContent.findMany>> = [];
+  let heading = null;
 
   try {
-    [publications, pillarContents] = await Promise.all([
+    [publications, pillarContents, heading] = await Promise.all([
       prisma.publication.findMany({
         where: { status: "PUBLISHED" },
         orderBy: [{ year: "desc" }, { createdAt: "desc" }],
       }),
       prisma.pillarContent.findMany({}),
+      prisma.pageHeading.findUnique({ where: { page: "library" } }),
     ]);
   } catch (error) {
     console.error("Failed to load library page data from database", error);
   }
 
-  return <Library publications={publications} pillarContents={pillarContents} />;
+  return <Library publications={publications} pillarContents={pillarContents} heading={heading} />;
 }

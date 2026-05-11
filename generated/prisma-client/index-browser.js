@@ -283,6 +283,15 @@ exports.Prisma.CollaboratorScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PageHeadingScalarFieldEnum = {
+  id: 'id',
+  page: 'page',
+  tag: 'tag',
+  title: 'title',
+  subtitle: 'subtitle',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.HomeContentScalarFieldEnum = {
   id: 'id',
   heroTitle1: 'heroTitle1',
@@ -518,6 +527,14 @@ exports.Prisma.CollaboratorOrderByRelevanceFieldEnum = {
   website: 'website'
 };
 
+exports.Prisma.PageHeadingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  page: 'page',
+  tag: 'tag',
+  title: 'title',
+  subtitle: 'subtitle'
+};
+
 exports.Prisma.HomeContentOrderByRelevanceFieldEnum = {
   id: 'id',
   heroTitle1: 'heroTitle1',
@@ -672,6 +689,7 @@ exports.Prisma.ModelName = {
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',
   Collaborator: 'Collaborator',
+  PageHeading: 'PageHeading',
   HomeContent: 'HomeContent',
   ProjectInfo: 'ProjectInfo',
   ProjectProblemGroup: 'ProjectProblemGroup',

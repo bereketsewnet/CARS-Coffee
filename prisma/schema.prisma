@@ -250,6 +250,17 @@ enum CollaboratorCategory {
   OTHER
 }
 
+// ─── Page hero headings ───────────────────────────────────────────────────────
+
+model PageHeading {
+  id        String   @id @default(cuid())
+  page      String   @unique  // project | research | team | collaborations | impact | library | news | gallery | contact
+  tag       String
+  title     String
+  subtitle  String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
 // ─── Home page hero content ───────────────────────────────────────────────────
 
 model HomeContent {

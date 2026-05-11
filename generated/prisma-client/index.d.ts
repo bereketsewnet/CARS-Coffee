@@ -74,6 +74,11 @@ export type Partner = $Result.DefaultSelection<Prisma.$PartnerPayload>
  */
 export type Collaborator = $Result.DefaultSelection<Prisma.$CollaboratorPayload>
 /**
+ * Model PageHeading
+ * 
+ */
+export type PageHeading = $Result.DefaultSelection<Prisma.$PageHeadingPayload>
+/**
  * Model HomeContent
  * 
  */
@@ -480,6 +485,16 @@ export class PrismaClient<
     * ```
     */
   get collaborator(): Prisma.CollaboratorDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pageHeading`: Exposes CRUD operations for the **PageHeading** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PageHeadings
+    * const pageHeadings = await prisma.pageHeading.findMany()
+    * ```
+    */
+  get pageHeading(): Prisma.PageHeadingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.homeContent`: Exposes CRUD operations for the **HomeContent** model.
@@ -1026,6 +1041,7 @@ export namespace Prisma {
     NewsletterSubscriber: 'NewsletterSubscriber',
     Partner: 'Partner',
     Collaborator: 'Collaborator',
+    PageHeading: 'PageHeading',
     HomeContent: 'HomeContent',
     ProjectInfo: 'ProjectInfo',
     ProjectProblemGroup: 'ProjectProblemGroup',
@@ -1051,7 +1067,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "researchTopicMember" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "collaborator" | "homeContent" | "projectInfo" | "projectProblemGroup" | "projectProblemBullet" | "projectGoal" | "workPackage" | "impactSection" | "impactArea" | "impactMetric" | "siteContactInfo"
+      modelProps: "user" | "passwordResetToken" | "publication" | "teamMember" | "newsEvent" | "researchProject" | "researchTopicMember" | "pillarContent" | "contactMessage" | "newsletterSubscriber" | "partner" | "collaborator" | "pageHeading" | "homeContent" | "projectInfo" | "projectProblemGroup" | "projectProblemBullet" | "projectGoal" | "workPackage" | "impactSection" | "impactArea" | "impactMetric" | "siteContactInfo"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1847,6 +1863,72 @@ export namespace Prisma {
           }
         }
       }
+      PageHeading: {
+        payload: Prisma.$PageHeadingPayload<ExtArgs>
+        fields: Prisma.PageHeadingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PageHeadingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PageHeadingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>
+          }
+          findFirst: {
+            args: Prisma.PageHeadingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PageHeadingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>
+          }
+          findMany: {
+            args: Prisma.PageHeadingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>[]
+          }
+          create: {
+            args: Prisma.PageHeadingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>
+          }
+          createMany: {
+            args: Prisma.PageHeadingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PageHeadingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>
+          }
+          update: {
+            args: Prisma.PageHeadingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>
+          }
+          deleteMany: {
+            args: Prisma.PageHeadingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PageHeadingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PageHeadingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PageHeadingPayload>
+          }
+          aggregate: {
+            args: Prisma.PageHeadingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePageHeading>
+          }
+          groupBy: {
+            args: Prisma.PageHeadingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PageHeadingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PageHeadingCountArgs<ExtArgs>
+            result: $Utils.Optional<PageHeadingCountAggregateOutputType> | number
+          }
+        }
+      }
       HomeContent: {
         payload: Prisma.$HomeContentPayload<ExtArgs>
         fields: Prisma.HomeContentFieldRefs
@@ -2627,6 +2709,7 @@ export namespace Prisma {
     newsletterSubscriber?: NewsletterSubscriberOmit
     partner?: PartnerOmit
     collaborator?: CollaboratorOmit
+    pageHeading?: PageHeadingOmit
     homeContent?: HomeContentOmit
     projectInfo?: ProjectInfoOmit
     projectProblemGroup?: ProjectProblemGroupOmit
@@ -14673,6 +14756,904 @@ export namespace Prisma {
 
 
   /**
+   * Model PageHeading
+   */
+
+  export type AggregatePageHeading = {
+    _count: PageHeadingCountAggregateOutputType | null
+    _min: PageHeadingMinAggregateOutputType | null
+    _max: PageHeadingMaxAggregateOutputType | null
+  }
+
+  export type PageHeadingMinAggregateOutputType = {
+    id: string | null
+    page: string | null
+    tag: string | null
+    title: string | null
+    subtitle: string | null
+    updatedAt: Date | null
+  }
+
+  export type PageHeadingMaxAggregateOutputType = {
+    id: string | null
+    page: string | null
+    tag: string | null
+    title: string | null
+    subtitle: string | null
+    updatedAt: Date | null
+  }
+
+  export type PageHeadingCountAggregateOutputType = {
+    id: number
+    page: number
+    tag: number
+    title: number
+    subtitle: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PageHeadingMinAggregateInputType = {
+    id?: true
+    page?: true
+    tag?: true
+    title?: true
+    subtitle?: true
+    updatedAt?: true
+  }
+
+  export type PageHeadingMaxAggregateInputType = {
+    id?: true
+    page?: true
+    tag?: true
+    title?: true
+    subtitle?: true
+    updatedAt?: true
+  }
+
+  export type PageHeadingCountAggregateInputType = {
+    id?: true
+    page?: true
+    tag?: true
+    title?: true
+    subtitle?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PageHeadingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PageHeading to aggregate.
+     */
+    where?: PageHeadingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageHeadings to fetch.
+     */
+    orderBy?: PageHeadingOrderByWithRelationInput | PageHeadingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PageHeadingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageHeadings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageHeadings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PageHeadings
+    **/
+    _count?: true | PageHeadingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PageHeadingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PageHeadingMaxAggregateInputType
+  }
+
+  export type GetPageHeadingAggregateType<T extends PageHeadingAggregateArgs> = {
+        [P in keyof T & keyof AggregatePageHeading]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePageHeading[P]>
+      : GetScalarType<T[P], AggregatePageHeading[P]>
+  }
+
+
+
+
+  export type PageHeadingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PageHeadingWhereInput
+    orderBy?: PageHeadingOrderByWithAggregationInput | PageHeadingOrderByWithAggregationInput[]
+    by: PageHeadingScalarFieldEnum[] | PageHeadingScalarFieldEnum
+    having?: PageHeadingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PageHeadingCountAggregateInputType | true
+    _min?: PageHeadingMinAggregateInputType
+    _max?: PageHeadingMaxAggregateInputType
+  }
+
+  export type PageHeadingGroupByOutputType = {
+    id: string
+    page: string
+    tag: string
+    title: string
+    subtitle: string
+    updatedAt: Date
+    _count: PageHeadingCountAggregateOutputType | null
+    _min: PageHeadingMinAggregateOutputType | null
+    _max: PageHeadingMaxAggregateOutputType | null
+  }
+
+  type GetPageHeadingGroupByPayload<T extends PageHeadingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PageHeadingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PageHeadingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PageHeadingGroupByOutputType[P]>
+            : GetScalarType<T[P], PageHeadingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PageHeadingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    page?: boolean
+    tag?: boolean
+    title?: boolean
+    subtitle?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["pageHeading"]>
+
+
+
+  export type PageHeadingSelectScalar = {
+    id?: boolean
+    page?: boolean
+    tag?: boolean
+    title?: boolean
+    subtitle?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PageHeadingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "page" | "tag" | "title" | "subtitle" | "updatedAt", ExtArgs["result"]["pageHeading"]>
+
+  export type $PageHeadingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PageHeading"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      page: string
+      tag: string
+      title: string
+      subtitle: string
+      updatedAt: Date
+    }, ExtArgs["result"]["pageHeading"]>
+    composites: {}
+  }
+
+  type PageHeadingGetPayload<S extends boolean | null | undefined | PageHeadingDefaultArgs> = $Result.GetResult<Prisma.$PageHeadingPayload, S>
+
+  type PageHeadingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PageHeadingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PageHeadingCountAggregateInputType | true
+    }
+
+  export interface PageHeadingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PageHeading'], meta: { name: 'PageHeading' } }
+    /**
+     * Find zero or one PageHeading that matches the filter.
+     * @param {PageHeadingFindUniqueArgs} args - Arguments to find a PageHeading
+     * @example
+     * // Get one PageHeading
+     * const pageHeading = await prisma.pageHeading.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PageHeadingFindUniqueArgs>(args: SelectSubset<T, PageHeadingFindUniqueArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PageHeading that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PageHeadingFindUniqueOrThrowArgs} args - Arguments to find a PageHeading
+     * @example
+     * // Get one PageHeading
+     * const pageHeading = await prisma.pageHeading.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PageHeadingFindUniqueOrThrowArgs>(args: SelectSubset<T, PageHeadingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PageHeading that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingFindFirstArgs} args - Arguments to find a PageHeading
+     * @example
+     * // Get one PageHeading
+     * const pageHeading = await prisma.pageHeading.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PageHeadingFindFirstArgs>(args?: SelectSubset<T, PageHeadingFindFirstArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PageHeading that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingFindFirstOrThrowArgs} args - Arguments to find a PageHeading
+     * @example
+     * // Get one PageHeading
+     * const pageHeading = await prisma.pageHeading.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PageHeadingFindFirstOrThrowArgs>(args?: SelectSubset<T, PageHeadingFindFirstOrThrowArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PageHeadings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PageHeadings
+     * const pageHeadings = await prisma.pageHeading.findMany()
+     * 
+     * // Get first 10 PageHeadings
+     * const pageHeadings = await prisma.pageHeading.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pageHeadingWithIdOnly = await prisma.pageHeading.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PageHeadingFindManyArgs>(args?: SelectSubset<T, PageHeadingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PageHeading.
+     * @param {PageHeadingCreateArgs} args - Arguments to create a PageHeading.
+     * @example
+     * // Create one PageHeading
+     * const PageHeading = await prisma.pageHeading.create({
+     *   data: {
+     *     // ... data to create a PageHeading
+     *   }
+     * })
+     * 
+     */
+    create<T extends PageHeadingCreateArgs>(args: SelectSubset<T, PageHeadingCreateArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PageHeadings.
+     * @param {PageHeadingCreateManyArgs} args - Arguments to create many PageHeadings.
+     * @example
+     * // Create many PageHeadings
+     * const pageHeading = await prisma.pageHeading.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PageHeadingCreateManyArgs>(args?: SelectSubset<T, PageHeadingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PageHeading.
+     * @param {PageHeadingDeleteArgs} args - Arguments to delete one PageHeading.
+     * @example
+     * // Delete one PageHeading
+     * const PageHeading = await prisma.pageHeading.delete({
+     *   where: {
+     *     // ... filter to delete one PageHeading
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PageHeadingDeleteArgs>(args: SelectSubset<T, PageHeadingDeleteArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PageHeading.
+     * @param {PageHeadingUpdateArgs} args - Arguments to update one PageHeading.
+     * @example
+     * // Update one PageHeading
+     * const pageHeading = await prisma.pageHeading.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PageHeadingUpdateArgs>(args: SelectSubset<T, PageHeadingUpdateArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PageHeadings.
+     * @param {PageHeadingDeleteManyArgs} args - Arguments to filter PageHeadings to delete.
+     * @example
+     * // Delete a few PageHeadings
+     * const { count } = await prisma.pageHeading.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PageHeadingDeleteManyArgs>(args?: SelectSubset<T, PageHeadingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PageHeadings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PageHeadings
+     * const pageHeading = await prisma.pageHeading.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PageHeadingUpdateManyArgs>(args: SelectSubset<T, PageHeadingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PageHeading.
+     * @param {PageHeadingUpsertArgs} args - Arguments to update or create a PageHeading.
+     * @example
+     * // Update or create a PageHeading
+     * const pageHeading = await prisma.pageHeading.upsert({
+     *   create: {
+     *     // ... data to create a PageHeading
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PageHeading we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PageHeadingUpsertArgs>(args: SelectSubset<T, PageHeadingUpsertArgs<ExtArgs>>): Prisma__PageHeadingClient<$Result.GetResult<Prisma.$PageHeadingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PageHeadings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingCountArgs} args - Arguments to filter PageHeadings to count.
+     * @example
+     * // Count the number of PageHeadings
+     * const count = await prisma.pageHeading.count({
+     *   where: {
+     *     // ... the filter for the PageHeadings we want to count
+     *   }
+     * })
+    **/
+    count<T extends PageHeadingCountArgs>(
+      args?: Subset<T, PageHeadingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PageHeadingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PageHeading.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PageHeadingAggregateArgs>(args: Subset<T, PageHeadingAggregateArgs>): Prisma.PrismaPromise<GetPageHeadingAggregateType<T>>
+
+    /**
+     * Group by PageHeading.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PageHeadingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PageHeadingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PageHeadingGroupByArgs['orderBy'] }
+        : { orderBy?: PageHeadingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PageHeadingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPageHeadingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PageHeading model
+   */
+  readonly fields: PageHeadingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PageHeading.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PageHeadingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PageHeading model
+   */
+  interface PageHeadingFieldRefs {
+    readonly id: FieldRef<"PageHeading", 'String'>
+    readonly page: FieldRef<"PageHeading", 'String'>
+    readonly tag: FieldRef<"PageHeading", 'String'>
+    readonly title: FieldRef<"PageHeading", 'String'>
+    readonly subtitle: FieldRef<"PageHeading", 'String'>
+    readonly updatedAt: FieldRef<"PageHeading", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PageHeading findUnique
+   */
+  export type PageHeadingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * Filter, which PageHeading to fetch.
+     */
+    where: PageHeadingWhereUniqueInput
+  }
+
+  /**
+   * PageHeading findUniqueOrThrow
+   */
+  export type PageHeadingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * Filter, which PageHeading to fetch.
+     */
+    where: PageHeadingWhereUniqueInput
+  }
+
+  /**
+   * PageHeading findFirst
+   */
+  export type PageHeadingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * Filter, which PageHeading to fetch.
+     */
+    where?: PageHeadingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageHeadings to fetch.
+     */
+    orderBy?: PageHeadingOrderByWithRelationInput | PageHeadingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PageHeadings.
+     */
+    cursor?: PageHeadingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageHeadings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageHeadings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PageHeadings.
+     */
+    distinct?: PageHeadingScalarFieldEnum | PageHeadingScalarFieldEnum[]
+  }
+
+  /**
+   * PageHeading findFirstOrThrow
+   */
+  export type PageHeadingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * Filter, which PageHeading to fetch.
+     */
+    where?: PageHeadingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageHeadings to fetch.
+     */
+    orderBy?: PageHeadingOrderByWithRelationInput | PageHeadingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PageHeadings.
+     */
+    cursor?: PageHeadingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageHeadings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageHeadings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PageHeadings.
+     */
+    distinct?: PageHeadingScalarFieldEnum | PageHeadingScalarFieldEnum[]
+  }
+
+  /**
+   * PageHeading findMany
+   */
+  export type PageHeadingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * Filter, which PageHeadings to fetch.
+     */
+    where?: PageHeadingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PageHeadings to fetch.
+     */
+    orderBy?: PageHeadingOrderByWithRelationInput | PageHeadingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PageHeadings.
+     */
+    cursor?: PageHeadingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PageHeadings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PageHeadings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PageHeadings.
+     */
+    distinct?: PageHeadingScalarFieldEnum | PageHeadingScalarFieldEnum[]
+  }
+
+  /**
+   * PageHeading create
+   */
+  export type PageHeadingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PageHeading.
+     */
+    data: XOR<PageHeadingCreateInput, PageHeadingUncheckedCreateInput>
+  }
+
+  /**
+   * PageHeading createMany
+   */
+  export type PageHeadingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PageHeadings.
+     */
+    data: PageHeadingCreateManyInput | PageHeadingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PageHeading update
+   */
+  export type PageHeadingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PageHeading.
+     */
+    data: XOR<PageHeadingUpdateInput, PageHeadingUncheckedUpdateInput>
+    /**
+     * Choose, which PageHeading to update.
+     */
+    where: PageHeadingWhereUniqueInput
+  }
+
+  /**
+   * PageHeading updateMany
+   */
+  export type PageHeadingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PageHeadings.
+     */
+    data: XOR<PageHeadingUpdateManyMutationInput, PageHeadingUncheckedUpdateManyInput>
+    /**
+     * Filter which PageHeadings to update
+     */
+    where?: PageHeadingWhereInput
+    /**
+     * Limit how many PageHeadings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PageHeading upsert
+   */
+  export type PageHeadingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PageHeading to update in case it exists.
+     */
+    where: PageHeadingWhereUniqueInput
+    /**
+     * In case the PageHeading found by the `where` argument doesn't exist, create a new PageHeading with this data.
+     */
+    create: XOR<PageHeadingCreateInput, PageHeadingUncheckedCreateInput>
+    /**
+     * In case the PageHeading was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PageHeadingUpdateInput, PageHeadingUncheckedUpdateInput>
+  }
+
+  /**
+   * PageHeading delete
+   */
+  export type PageHeadingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+    /**
+     * Filter which PageHeading to delete.
+     */
+    where: PageHeadingWhereUniqueInput
+  }
+
+  /**
+   * PageHeading deleteMany
+   */
+  export type PageHeadingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PageHeadings to delete
+     */
+    where?: PageHeadingWhereInput
+    /**
+     * Limit how many PageHeadings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PageHeading without action
+   */
+  export type PageHeadingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PageHeading
+     */
+    select?: PageHeadingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PageHeading
+     */
+    omit?: PageHeadingOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model HomeContent
    */
 
@@ -24473,6 +25454,18 @@ export namespace Prisma {
   export type CollaboratorScalarFieldEnum = (typeof CollaboratorScalarFieldEnum)[keyof typeof CollaboratorScalarFieldEnum]
 
 
+  export const PageHeadingScalarFieldEnum: {
+    id: 'id',
+    page: 'page',
+    tag: 'tag',
+    title: 'title',
+    subtitle: 'subtitle',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PageHeadingScalarFieldEnum = (typeof PageHeadingScalarFieldEnum)[keyof typeof PageHeadingScalarFieldEnum]
+
+
   export const HomeContentScalarFieldEnum: {
     id: 'id',
     heroTitle1: 'heroTitle1',
@@ -24778,6 +25771,17 @@ export namespace Prisma {
   };
 
   export type CollaboratorOrderByRelevanceFieldEnum = (typeof CollaboratorOrderByRelevanceFieldEnum)[keyof typeof CollaboratorOrderByRelevanceFieldEnum]
+
+
+  export const PageHeadingOrderByRelevanceFieldEnum: {
+    id: 'id',
+    page: 'page',
+    tag: 'tag',
+    title: 'title',
+    subtitle: 'subtitle'
+  };
+
+  export type PageHeadingOrderByRelevanceFieldEnum = (typeof PageHeadingOrderByRelevanceFieldEnum)[keyof typeof PageHeadingOrderByRelevanceFieldEnum]
 
 
   export const HomeContentOrderByRelevanceFieldEnum: {
@@ -25991,6 +26995,64 @@ export namespace Prisma {
     order?: IntWithAggregatesFilter<"Collaborator"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Collaborator"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Collaborator"> | Date | string
+  }
+
+  export type PageHeadingWhereInput = {
+    AND?: PageHeadingWhereInput | PageHeadingWhereInput[]
+    OR?: PageHeadingWhereInput[]
+    NOT?: PageHeadingWhereInput | PageHeadingWhereInput[]
+    id?: StringFilter<"PageHeading"> | string
+    page?: StringFilter<"PageHeading"> | string
+    tag?: StringFilter<"PageHeading"> | string
+    title?: StringFilter<"PageHeading"> | string
+    subtitle?: StringFilter<"PageHeading"> | string
+    updatedAt?: DateTimeFilter<"PageHeading"> | Date | string
+  }
+
+  export type PageHeadingOrderByWithRelationInput = {
+    id?: SortOrder
+    page?: SortOrder
+    tag?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: PageHeadingOrderByRelevanceInput
+  }
+
+  export type PageHeadingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    page?: string
+    AND?: PageHeadingWhereInput | PageHeadingWhereInput[]
+    OR?: PageHeadingWhereInput[]
+    NOT?: PageHeadingWhereInput | PageHeadingWhereInput[]
+    tag?: StringFilter<"PageHeading"> | string
+    title?: StringFilter<"PageHeading"> | string
+    subtitle?: StringFilter<"PageHeading"> | string
+    updatedAt?: DateTimeFilter<"PageHeading"> | Date | string
+  }, "id" | "page">
+
+  export type PageHeadingOrderByWithAggregationInput = {
+    id?: SortOrder
+    page?: SortOrder
+    tag?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PageHeadingCountOrderByAggregateInput
+    _max?: PageHeadingMaxOrderByAggregateInput
+    _min?: PageHeadingMinOrderByAggregateInput
+  }
+
+  export type PageHeadingScalarWhereWithAggregatesInput = {
+    AND?: PageHeadingScalarWhereWithAggregatesInput | PageHeadingScalarWhereWithAggregatesInput[]
+    OR?: PageHeadingScalarWhereWithAggregatesInput[]
+    NOT?: PageHeadingScalarWhereWithAggregatesInput | PageHeadingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PageHeading"> | string
+    page?: StringWithAggregatesFilter<"PageHeading"> | string
+    tag?: StringWithAggregatesFilter<"PageHeading"> | string
+    title?: StringWithAggregatesFilter<"PageHeading"> | string
+    subtitle?: StringWithAggregatesFilter<"PageHeading"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PageHeading"> | Date | string
   }
 
   export type HomeContentWhereInput = {
@@ -27850,6 +28912,69 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PageHeadingCreateInput = {
+    id?: string
+    page: string
+    tag: string
+    title: string
+    subtitle: string
+    updatedAt?: Date | string
+  }
+
+  export type PageHeadingUncheckedCreateInput = {
+    id?: string
+    page: string
+    tag: string
+    title: string
+    subtitle: string
+    updatedAt?: Date | string
+  }
+
+  export type PageHeadingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PageHeadingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PageHeadingCreateManyInput = {
+    id?: string
+    page: string
+    tag: string
+    title: string
+    subtitle: string
+    updatedAt?: Date | string
+  }
+
+  export type PageHeadingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PageHeadingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    subtitle?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type HomeContentCreateInput = {
     id?: string
     heroTitle1?: string
@@ -29608,6 +30733,39 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
     _max?: NestedEnumCollaboratorCategoryFilter<$PrismaModel>
+  }
+
+  export type PageHeadingOrderByRelevanceInput = {
+    fields: PageHeadingOrderByRelevanceFieldEnum | PageHeadingOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type PageHeadingCountOrderByAggregateInput = {
+    id?: SortOrder
+    page?: SortOrder
+    tag?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PageHeadingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    page?: SortOrder
+    tag?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PageHeadingMinOrderByAggregateInput = {
+    id?: SortOrder
+    page?: SortOrder
+    tag?: SortOrder
+    title?: SortOrder
+    subtitle?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type HomeContentOrderByRelevanceInput = {

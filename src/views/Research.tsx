@@ -204,14 +204,18 @@ function PillarCard({ pillar, topics, pubLines, layman, emptyState }: PillarCard
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
+type HeadingProp = { tag: string; title: string; subtitle: string } | null;
+
 export default function Research({
   projects,
   publications,
   pillarContents,
+  heading,
 }: {
   projects?: ResearchProject[] | null;
   publications?: Publication[] | null;
   pillarContents?: any[] | null;
+  heading?: HeadingProp;
 }) {
   const { t } = useLanguage();
 
@@ -280,12 +284,12 @@ export default function Research({
         </div>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">{t.research.heroSub}</span>
+          <span className="tag-pill mb-4 inline-block">{heading?.tag ?? t.research.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            {t.research.heroTitle1} <span className="text-gradient-green">{t.research.heroTitle2}</span>
+            {heading ? heading.title : <>{t.research.heroTitle1} <span className="text-gradient-green">{t.research.heroTitle2}</span></>}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            {t.research.heroDesc}
+            {heading?.subtitle ?? t.research.heroDesc}
           </p>
           {/* Pillar nav anchors */}
           <div className="flex flex-wrap gap-3 mt-6">

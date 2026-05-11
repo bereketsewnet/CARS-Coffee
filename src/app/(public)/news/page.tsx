@@ -19,15 +19,19 @@ export default async function NewsPage() {
   }
 
   let items: Awaited<ReturnType<typeof prisma.newsEvent.findMany>> = [];
+  let heading = null;
 
   try {
-    items = await prisma.newsEvent.findMany({
-      where: { status: { not: "DRAFT" } },
-      orderBy: { date: "desc" },
-    });
+    [items, heading] = await Promise.all([
+      prisma.newsEvent.findMany({
+        where: { status: { not: "DRAFT" } },
+        orderBy: { date: "desc" },
+      }),
+      prisma.pageHeading.findUnique({ where: { page: "news" } }),
+    ]);
   } catch (error) {
     console.error("Failed to load news page data from database", error);
   }
 
-  return <NewsEvents items={items} />;
+  return <NewsEvents items={items} heading={heading} />;
 }

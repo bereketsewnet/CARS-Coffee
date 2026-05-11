@@ -60,12 +60,16 @@ const typeIcon = {
   Report: FileBarChart,
 };
 
+type HeadingProp = { tag: string; title: string; subtitle: string } | null;
+
 export default function Library({
   publications: dbPublications,
   pillarContents = [],
+  heading,
 }: {
   publications?: DbPub[];
   pillarContents?: Array<{ pillar: string; title: string }>;
+  heading?: HeadingProp;
 }) {
   const { t } = useLanguage();
 
@@ -141,12 +145,12 @@ export default function Library({
         </div>
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
-          <span className="tag-pill mb-4 inline-block">{t.library.heroSub}</span>
+          <span className="tag-pill mb-4 inline-block">{heading?.tag ?? t.library.heroSub}</span>
           <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4">
-            {t.library.heroTitle1} <span className="text-gradient-green">{t.library.heroTitle2}</span>
+            {heading ? heading.title : <>{t.library.heroTitle1} <span className="text-gradient-green">{t.library.heroTitle2}</span></>}
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            {t.library.heroDesc}
+            {heading?.subtitle ?? t.library.heroDesc}
           </p>
         </div>
       </section>

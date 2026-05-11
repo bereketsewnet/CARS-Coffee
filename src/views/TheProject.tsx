@@ -73,16 +73,20 @@ type WpRow      = { id: string; wpId: string; title: string; lead: string; order
 type BulletRow  = { id: string; text: string; order: number };
 type GroupRow   = { id: string; title: string; order: number; bullets: BulletRow[] };
 
+type HeadingProp = { tag: string; title: string; subtitle: string } | null;
+
 export default function TheProject({
   info,
   goals: dbGoals,
   workPackages: dbWps,
   problemGroups: dbGroups,
+  heading,
 }: {
   info?: InfoRow;
   goals?: GoalRow[];
   workPackages?: WpRow[];
   problemGroups?: GroupRow[];
+  heading?: HeadingProp;
 }) {
   const { t } = useLanguage();
 
@@ -111,11 +115,11 @@ export default function TheProject({
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,1) 38%, rgba(15,12,8,0.75) 52%, rgba(15,12,8,0.2) 70%, transparent 100%)" }} />
         <div className="container mx-auto relative z-10">
           <div className="max-w-3xl">
-            <span className="tag-pill mb-4 inline-block">{t.project.heroSub}</span>
+            <span className="tag-pill mb-4 inline-block">{heading?.tag ?? t.project.heroSub}</span>
             <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6">
-              {projectInfo.heroTitle}
+              {heading?.title ?? projectInfo.heroTitle}
             </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed">{projectInfo.heroSubtitle}</p>
+            <p className="text-muted-foreground text-lg leading-relaxed">{heading?.subtitle ?? projectInfo.heroSubtitle}</p>
           </div>
         </div>
       </section>
