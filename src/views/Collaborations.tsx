@@ -147,7 +147,7 @@ export default function Collaborations({ collaborators }: { collaborators: Colla
           <img
             src="/assets/page-bg/Coordinators.webp"
             alt=""
-            className="h-full w-full object-contain object-right"
+            className="h-full w-full object-cover"
           />
           {/* Medium brown overlay on entire image */}
           <div

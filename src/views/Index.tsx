@@ -977,12 +977,18 @@ const STATIC_NEWS = [
   },
 ];
 
+const NEWS_TYPE_LABEL: Record<string, string> = {
+  FIELD_NEWS:    "Field News",
+  ACADEMIC_NEWS: "Academic News",
+  EVENT:         "Event",
+};
+
 function toNewsRow(item: NewsSnippet) {
   const d = item.date instanceof Date ? item.date : new Date(item.date);
   const dateLabel = isNaN(d.getTime())
     ? String(item.date)
     : d.toLocaleDateString("en-GB", { month: "short", year: "numeric" });
-  const tag = item.type === "EVENT" ? "Event" : "News";
+  const tag = NEWS_TYPE_LABEL[item.type] ?? "News";
   return {
     id: item.id,
     date: dateLabel,
@@ -1207,30 +1213,13 @@ export default function Index({
           {/* Premium Inspired Card Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-grid">
             {news.map((item) => {
-              // Dynamically assign themes based on the tag (Event vs News vs Partnership)
-              const isEvent = item.tag === "Event";
-              const isPartnership = item.tag === "Partnership";
-
-              const themeColor = isEvent
-                ? "text-amber-500"
-                : isPartnership
-                  ? "text-blue-400"
-                  : "text-leaf-bright";
-
-              const themeBg = isEvent
-                ? "bg-amber-500/10"
-                : isPartnership
-                  ? "bg-blue-400/10"
-                  : "bg-leaf-bright/10";
-
-              const themeHoverGlow = isEvent
-                ? "group-hover:bg-amber-500/5"
-                : isPartnership
-                  ? "group-hover:bg-blue-400/5"
-                  : "group-hover:bg-leaf-bright/5";
-
-              // Icon logic
-              const Icon = isEvent ? Calendar : isPartnership ? Handshake : Microscope;
+              const isEvent        = item.tag === "Event";
+              const isAcademic     = item.tag === "Academic News";
+              // Field News → green, Academic News → blue, Event → amber
+              const themeColor     = isEvent ? "text-amber-500" : isAcademic ? "text-blue-400" : "text-leaf-bright";
+              const themeBg        = isEvent ? "bg-amber-500/10" : isAcademic ? "bg-blue-400/10" : "bg-leaf-bright/10";
+              const themeHoverGlow = isEvent ? "group-hover:bg-amber-500/5" : isAcademic ? "group-hover:bg-blue-400/5" : "group-hover:bg-leaf-bright/5";
+              const Icon           = isEvent ? Calendar : isAcademic ? BookOpen : Microscope;
 
               return (
                 <Link

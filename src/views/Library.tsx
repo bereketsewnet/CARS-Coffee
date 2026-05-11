@@ -135,7 +135,7 @@ export default function Library({
     <div className="min-h-screen pt-24">
       <section className="py-20 bg-charcoal-mid relative overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-3/5 xl:w-2/3 flex items-center justify-end">
-          <img src="/assets/page-bg/library.webp" alt="" className="h-full w-full object-contain object-right" />
+          <img src="/assets/page-bg/library.webp" alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(15,10,5,0.45)" }} />
           <div className="absolute inset-y-0 left-0 w-2/5 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(15,12,8,1) 0%, rgba(15,12,8,0.6) 50%, transparent 100%)" }} />
         </div>
