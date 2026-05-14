@@ -1,6 +1,26 @@
+import type { Metadata } from "next";
 import { unstable_noStore as noStore } from "next/cache";
 import Index from "@/views/Index";
 import prisma from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Home | CARES Circular Coffee Project – Ethiopia & Belgium",
+  description:
+    "CARES turns Ethiopia's coffee waste into green energy, bio-pesticides, and cosmetics. A 4-year VLIR-UOS north–south research programme empowering smallholder farmers and women's cooperatives.",
+  keywords: [
+    "circular coffee Ethiopia", "coffee waste valorization", "VLIR-UOS project",
+    "Sidama coffee", "Yirgacheffe", "biorefinery Ethiopia", "green energy coffee",
+    "smallholder farmers", "women cooperatives Ethiopia", "CARES project",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "CARES | Circular Coffee Project – Beyond the Bean",
+    description:
+      "Empowering Ethiopian coffee communities through circular economy research. VLIR-UOS funded partnership between University of Antwerp and Addis Ababa University.",
+    url: "/",
+    images: [{ url: "/assets/CARES LOGO.png", alt: "CARES Circular Coffee Project" }],
+  },
+};
 
 export const dynamic = "force-dynamic";
 const DB_DISABLED = process.env.DB_DISABLED === "true";

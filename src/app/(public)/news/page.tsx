@@ -7,9 +7,21 @@ const DB_DISABLED = process.env.DB_DISABLED === "true";
 import NewsEvents from "@/views/NewsEvents";
 
 export const metadata: Metadata = {
-  title: "News & Events | Circular Coffee",
+  title: "News & Events | CARES Circular Coffee",
   description:
-    "Project milestones, field stories, upcoming events, and policy updates.",
+    "Latest news, field stories, upcoming events, and policy updates from the CARES Circular Coffee research project in Ethiopia and Belgium.",
+  keywords: [
+    "CARES news", "circular coffee events", "coffee research news Ethiopia",
+    "VLIR-UOS events", "coffee sustainability news", "field news Ethiopia",
+    "academic news coffee", "open calls coffee research",
+  ],
+  alternates: { canonical: "/news" },
+  openGraph: {
+    title: "News & Events | CARES Circular Coffee",
+    description: "Project milestones, field stories, upcoming events, and policy updates from CARES.",
+    url: "/news",
+    images: [{ url: "/assets/page-bg/news.webp", alt: "CARES News and Events" }],
+  },
 };
 
 export default async function NewsPage() {

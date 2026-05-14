@@ -48,10 +48,10 @@ npm run build
 From your project root, run:
 
 ```powershell
-tar -a -c -f CARES_Prod_new.zip --exclude node_modules --exclude .next --exclude .vscode --exclude .git --exclude '*.log' --exclude '.env.local' .
+tar -a -c -f CARES_Prod.zip --exclude node_modules --exclude .next --exclude .vscode --exclude .git --exclude '*.log' --exclude '.env.local' .
 ```
 
-- This creates `CARES_Prod_new.zip` with only the necessary files for production.
+- This creates `CARES_Prod.zip` with only the necessary files for production.
 
 ---
 

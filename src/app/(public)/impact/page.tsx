@@ -7,9 +7,21 @@ const DB_DISABLED = process.env.DB_DISABLED === "true";
 import Impact from "@/views/Impact";
 
 export const metadata: Metadata = {
-  title: "Impact & Stakeholders | Circular Coffee",
+  title: "Impact & Stakeholders | CARES Circular Coffee",
   description:
-    "Measurable outcomes on soil, waste, and livelihoods — and the partners making it possible.",
+    "Measurable outcomes of the CARES project on soil fertility, coffee waste reduction, and smallholder farmer livelihoods — and the stakeholders making circular change possible.",
+  keywords: [
+    "CARES impact", "coffee waste reduction", "soil fertility Ethiopia",
+    "smallholder farmer livelihoods", "circular economy impact", "VLIR-UOS outcomes",
+    "coffee sustainability metrics", "women empowerment Ethiopia",
+  ],
+  alternates: { canonical: "/impact" },
+  openGraph: {
+    title: "Impact & Stakeholders | CARES",
+    description: "Measurable circular economy outcomes on soil, waste, and livelihoods in Ethiopian coffee communities.",
+    url: "/impact",
+    images: [{ url: "/assets/page-bg/impact.webp", alt: "CARES Impact and Stakeholders" }],
+  },
 };
 
 export default async function ImpactPage() {

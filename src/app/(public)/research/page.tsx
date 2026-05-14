@@ -9,9 +9,21 @@ const DB_DISABLED = process.env.DB_DISABLED === "true";
 import Research from "@/views/Research";
 
 export const metadata: Metadata = {
-  title: "Research & Pillars | Circular Coffee",
+  title: "Research & Pillars | CARES Circular Coffee",
   description:
-    "Three interconnected research areas forming the scientific backbone of the Circular Coffee project.",
+    "Three interconnected research pillars — soil health, waste valorization, and socio-economic impact — forming the scientific backbone of the CARES Circular Coffee project in Ethiopia.",
+  keywords: [
+    "coffee research pillars", "soil health biochar", "waste valorization coffee",
+    "socio-economic coffee Ethiopia", "circular agro-energy", "bio-extracted products",
+    "CARES research", "specialty coffee processing",
+  ],
+  alternates: { canonical: "/research" },
+  openGraph: {
+    title: "Research & Pillars | CARES Circular Coffee",
+    description: "Soil health, waste valorization, and socio-economic research pillars of the CARES project.",
+    url: "/research",
+    images: [{ url: "/assets/page-bg/research.webp", alt: "CARES Research Pillars" }],
+  },
 };
 
 export default async function ResearchPage() {

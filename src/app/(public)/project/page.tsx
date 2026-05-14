@@ -1,6 +1,25 @@
+import type { Metadata } from "next";
 import TheProject from "@/views/TheProject";
 import { unstable_noStore as noStore } from "next/cache";
 import prisma from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "The Circular Coffee Project | CARES – VLIR-UOS Research Programme",
+  description:
+    "A 4-year north–south cooperative research programme funded by VLIR-UOS, bringing together Belgium and Ethiopia to build a circular coffee economy through biorefinery, soil enrichment, and socio-economic empowerment.",
+  keywords: [
+    "circular coffee project", "VLIR-UOS", "biorefinery Ethiopia", "coffee waste",
+    "soil enrichment", "work packages", "CARES project goals", "north south cooperation",
+    "University of Antwerp", "Addis Ababa University", "CTBE-AAU",
+  ],
+  alternates: { canonical: "/project" },
+  openGraph: {
+    title: "The Circular Coffee Project | CARES",
+    description: "Transforming Ethiopia's coffee waste into green energy and bio-products through VLIR-UOS funded research.",
+    url: "/project",
+    images: [{ url: "/assets/page-bg/the-project.webp", alt: "The Circular Coffee Project" }],
+  },
+};
 
 export const dynamic = "force-dynamic";
 

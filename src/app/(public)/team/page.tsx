@@ -9,9 +9,21 @@ const DB_DISABLED = process.env.DB_DISABLED === "true";
 import Team from "@/views/Team";
 
 export const metadata: Metadata = {
-  title: "Our Team | Circular Coffee",
+  title: "Our Research Team | CARES Circular Coffee",
   description:
-    "A multidisciplinary research team spanning soil science, environmental engineering, economics, and gender studies.",
+    "A multidisciplinary team spanning soil science, environmental engineering, economics, and gender studies from Ethiopia and Belgium, united by the CARES circular coffee mission.",
+  keywords: [
+    "CARES research team", "Ethiopian researchers", "Belgian researchers",
+    "soil science team", "circular economy researchers", "VLIR-UOS team",
+    "Addis Ababa University researchers", "University of Antwerp researchers",
+  ],
+  alternates: { canonical: "/team" },
+  openGraph: {
+    title: "Our Research Team | CARES",
+    description: "Meet the multidisciplinary researchers behind the CARES Circular Coffee Project.",
+    url: "/team",
+    images: [{ url: "/assets/page-bg/team.webp", alt: "CARES Research Team" }],
+  },
 };
 
 export default async function TeamPage() {

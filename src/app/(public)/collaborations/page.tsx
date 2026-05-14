@@ -8,8 +8,21 @@ export const revalidate = 0;
 const DB_DISABLED = process.env.DB_DISABLED === "true";
 
 export const metadata: Metadata = {
-  title: "Coordinators | CARES",
-  description: "Government officials, sponsors, NGO partners and other coordinators supporting the CARES circular coffee project.",
+  title: "CTBE Coordinators & Partners | CARES Circular Coffee",
+  description:
+    "Government officials, academic institutions, NGOs, sponsors, and civil society partners coordinating the CARES circular coffee research programme in Ethiopia and Belgium.",
+  keywords: [
+    "CARES coordinators", "CTBE partners", "circular coffee partners",
+    "Ethiopian government coffee", "NGO coffee Ethiopia", "VLIR-UOS partners",
+    "academic collaboration coffee", "civil society Ethiopia",
+  ],
+  alternates: { canonical: "/collaborations" },
+  openGraph: {
+    title: "Coordinators & Partners | CARES",
+    description: "Meet the government, NGO, and academic partners coordinating the CARES circular coffee programme.",
+    url: "/collaborations",
+    images: [{ url: "/assets/page-bg/collaborations.webp", alt: "CARES Coordinators and Partners" }],
+  },
 };
 
 export default async function CollaborationsPage() {
