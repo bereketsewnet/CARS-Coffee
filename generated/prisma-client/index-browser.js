@@ -283,6 +283,16 @@ exports.Prisma.CollaboratorScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.GalleryImageScalarFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  url: 'url',
+  active: 'active',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.PageHeadingScalarFieldEnum = {
   id: 'id',
   page: 'page',
@@ -294,6 +304,7 @@ exports.Prisma.PageHeadingScalarFieldEnum = {
 
 exports.Prisma.HomeContentScalarFieldEnum = {
   id: 'id',
+  heroTag: 'heroTag',
   heroTitle1: 'heroTitle1',
   heroTitle2: 'heroTitle2',
   heroSubtitle: 'heroSubtitle',
@@ -527,6 +538,12 @@ exports.Prisma.CollaboratorOrderByRelevanceFieldEnum = {
   website: 'website'
 };
 
+exports.Prisma.GalleryImageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  filename: 'filename',
+  url: 'url'
+};
+
 exports.Prisma.PageHeadingOrderByRelevanceFieldEnum = {
   id: 'id',
   page: 'page',
@@ -537,6 +554,7 @@ exports.Prisma.PageHeadingOrderByRelevanceFieldEnum = {
 
 exports.Prisma.HomeContentOrderByRelevanceFieldEnum = {
   id: 'id',
+  heroTag: 'heroTag',
   heroTitle1: 'heroTitle1',
   heroTitle2: 'heroTitle2',
   heroSubtitle: 'heroSubtitle',
@@ -689,6 +707,7 @@ exports.Prisma.ModelName = {
   NewsletterSubscriber: 'NewsletterSubscriber',
   Partner: 'Partner',
   Collaborator: 'Collaborator',
+  GalleryImage: 'GalleryImage',
   PageHeading: 'PageHeading',
   HomeContent: 'HomeContent',
   ProjectInfo: 'ProjectInfo',

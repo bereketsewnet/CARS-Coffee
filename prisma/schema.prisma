@@ -250,6 +250,18 @@ enum CollaboratorCategory {
   OTHER
 }
 
+// ─── Gallery images ───────────────────────────────────────────────────────────
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  filename  String
+  url       String   @db.Text
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // ─── Page hero headings ───────────────────────────────────────────────────────
 
 model PageHeading {
@@ -265,6 +277,7 @@ model PageHeading {
 
 model HomeContent {
   id              String   @id @default(cuid())
+  heroTag         String   @default("A 5 Year Belgium-Ethiopia North-South Co-operative")
   heroTitle1      String   @default("Beyond the Bean: Empowering")
   heroTitle2      String   @default("Communities Through Coffee Innovation")
   heroSubtitle    String   @default("We turn coffee waste into wealth. Our project empowers local farmers and women's cooperatives in Sidama and Yirgacheffe by creating green energy, bio-pesticides, and premium cosmetics—proving that zero-waste agriculture leads to thriving communities.") @db.Text

@@ -8,6 +8,7 @@ const textareaCls = inputCls + " resize-y min-h-[80px]";
 const labelCls = "block text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-1.5";
 
 type HomeContent = {
+  heroTag: string;
   heroTitle1: string;
   heroTitle2: string;
   heroSubtitle: string;
@@ -44,15 +45,16 @@ function StatRow({ n, data }: { n: 1 | 2 | 3; data: HomeContent }) {
 }
 
 export default function HomeCrud({ homeContent }: { homeContent: HomeContent | null }) {
-  const defaults: HomeContent = homeContent ?? {
-    heroTitle1: "Beyond the Bean: Empowering",
-    heroTitle2: "Communities Through Coffee Innovation",
-    heroSubtitle: "We turn coffee waste into wealth. Our project empowers local farmers and women's cooperatives in Sidama and Yirgacheffe by creating green energy, bio-pesticides, and premium cosmetics—proving that zero-waste agriculture leads to thriving communities.",
-    impactTitle: "Delivering",
-    impactTitleBold: " Circular Impact",
-    stat1Value: 3, stat1Suffix: "", stat1Label: "Research Pillars",
-    stat2Value: 2, stat2Suffix: "", stat2Label: "Countries",
-    stat3Value: 5, stat3Suffix: "+", stat3Label: "Years Impact",
+  const defaults: HomeContent = {
+    heroTag:         homeContent?.heroTag         ?? "A 5 Year Belgium-Ethiopia North-South Co-operative",
+    heroTitle1:      homeContent?.heroTitle1      ?? "Beyond the Bean: Empowering",
+    heroTitle2:      homeContent?.heroTitle2      ?? "Communities Through Coffee Innovation",
+    heroSubtitle:    homeContent?.heroSubtitle    ?? "We turn coffee waste into wealth. Our project empowers local farmers and women's cooperatives in Sidama and Yirgacheffe by creating green energy, bio-pesticides, and premium cosmetics—proving that zero-waste agriculture leads to thriving communities.",
+    impactTitle:     homeContent?.impactTitle     ?? "Delivering",
+    impactTitleBold: homeContent?.impactTitleBold ?? " Circular Impact",
+    stat1Value:  homeContent?.stat1Value  ?? 3,  stat1Suffix: homeContent?.stat1Suffix ?? "",  stat1Label: homeContent?.stat1Label  ?? "Research Pillars",
+    stat2Value:  homeContent?.stat2Value  ?? 2,  stat2Suffix: homeContent?.stat2Suffix ?? "",  stat2Label: homeContent?.stat2Label  ?? "Countries",
+    stat3Value:  homeContent?.stat3Value  ?? 5,  stat3Suffix: homeContent?.stat3Suffix ?? "+", stat3Label: homeContent?.stat3Label  ?? "Years Impact",
   };
 
   const [saving, setSaving] = useState(false);
@@ -79,6 +81,9 @@ export default function HomeCrud({ homeContent }: { homeContent: HomeContent | n
         <h2 className="font-serif text-lg font-semibold">Hero Text (State 1)</h2>
         <p className="text-xs text-muted-foreground -mt-2">The first screen the visitor sees before scrolling.</p>
 
+        <Field label="Tag / Badge (red pill above title)">
+          <input name="heroTag" defaultValue={defaults.heroTag} className={inputCls} placeholder="e.g. A 5 Year Belgium-Ethiopia North-South Co-operative" />
+        </Field>
         <Field label="Title Line 1">
           <input name="heroTitle1" defaultValue={defaults.heroTitle1} className={inputCls} />
         </Field>

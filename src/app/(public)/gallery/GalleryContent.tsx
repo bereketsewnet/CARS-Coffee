@@ -16,6 +16,7 @@ interface GalleryImage {
 }
 
 type HeadingProp = { tag: string; title: string; subtitle: string } | null;
+type DbImage = { id: string; filename: string; url: string };
 
 const FilmstripGrid = memo(({
   images,
@@ -61,7 +62,13 @@ const FilmstripGrid = memo(({
 });
 FilmstripGrid.displayName = "FilmstripGrid";
 
-export default function GalleryContent({ heading }: { heading?: HeadingProp }) {
+export default function GalleryContent({
+  heading,
+  dbImages,
+}: {
+  heading?: HeadingProp;
+  dbImages?: DbImage[];
+}) {
   const { t, lang } = useLanguage();
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -90,6 +97,27 @@ export default function GalleryContent({ heading }: { heading?: HeadingProp }) {
   };
 
   useEffect(() => {
+    if (dbImages && dbImages.length > 0) {
+      setImages(
+        dbImages.map((img, i) => ({
+          id: i,
+          filename: img.filename,
+          url: img.url,
+          title:
+            t.gallery.fieldRecord +
+            " " +
+            img.filename
+              .replace(/\.(webp|jpg|png|jpeg|gif)$/i, "")
+              .replace(/[-_]/g, " ")
+              .toUpperCase(),
+          category: "SURVEY DATA",
+          date: "2026-ARCHIVE",
+          caption: t.gallery.caption,
+        }))
+      );
+      return;
+    }
+    // Fallback: load from static images.json
     fetch("/cares-gallery/images.json")
       .then((r) => r.json())
       .then((files: string[]) => {
@@ -100,12 +128,12 @@ export default function GalleryContent({ heading }: { heading?: HeadingProp }) {
           title: t.gallery.fieldRecord + " " + f.replace(/\.(webp|jpg|png|jpeg)$/i, "").replace(/[-_]/g, " ").toUpperCase(),
           category: "SURVEY DATA",
           date: "2026-ARCHIVE",
-          caption: t.gallery.caption
+          caption: t.gallery.caption,
         }));
         setImages(parsed);
       })
       .catch((err) => console.error("Failed to load gallery images", err));
-  }, [t.gallery]);
+  }, [t.gallery, dbImages]);
 
   useEffect(() => {
     if (!filmstripRef.current || images.length === 0) return;

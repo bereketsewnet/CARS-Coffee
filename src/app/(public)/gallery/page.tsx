@@ -25,10 +25,16 @@ export const metadata: Metadata = {
 export default async function GalleryPage() {
   noStore();
   let heading = null;
+  let dbImages: { id: string; filename: string; url: string }[] = [];
   try {
     heading = await prisma.pageHeading.findUnique({ where: { page: "gallery" } });
+    dbImages = await prisma.galleryImage.findMany({
+      where: { active: true },
+      orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+      select: { id: true, filename: true, url: true },
+    });
   } catch {
     // DB unavailable — client component will use i18n fallback
   }
-  return <GalleryContent heading={heading} />;
+  return <GalleryContent heading={heading} dbImages={dbImages.length > 0 ? dbImages : undefined} />;
 }

@@ -7,6 +7,7 @@ export async function upsertHomeContent(form: FormData) {
   const existing = await prisma.homeContent.findFirst();
 
   const data = {
+    heroTag:         (form.get("heroTag") as string)?.trim()         || "A 5 Year Belgium-Ethiopia North-South Co-operative",
     heroTitle1:      (form.get("heroTitle1") as string)?.trim()      || "Beyond the Bean: Empowering",
     heroTitle2:      (form.get("heroTitle2") as string)?.trim()      || "Communities Through Coffee Innovation",
     heroSubtitle:    (form.get("heroSubtitle") as string)?.trim()    || "",

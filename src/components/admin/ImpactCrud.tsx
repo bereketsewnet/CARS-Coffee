@@ -203,12 +203,6 @@ function ImpactAreaCrud({ areas: initial }: { areas: ImpactArea[] }) {
   );
 }
 
-const highlights = [
-  { year: "2022", event: "Project launched in Jimma and Sidama zones" },
-  { year: "2023", event: "First compost applied to 120 ha; 340 farmers trained" },
-  { year: "2024", event: "Biochar field trials show 18% yield improvement" },
-  { year: "2025", event: "Wastewater anaerobic digestion pilot operational" },
-];
 
 export default function ImpactCrud({
   items: initial,
@@ -259,13 +253,6 @@ export default function ImpactCrud({
     });
   }
 
-  // Quick fallback mock progress so it's not totally empty visually
-  // based on array index.
-  const getMockProgress = (i: number) => {
-    const list = [72, 58, 65, 80, 45, 90, 30];
-    return list[i % list.length];
-  };
-
   return (
     <>
       {/* Socioeconomic section header + cards */}
@@ -301,37 +288,6 @@ export default function ImpactCrud({
           <Plus className="w-6 h-6" />
           <span className="text-xs font-medium">Add Metric</span>
         </button>
-      </div>
-
-      <div className="glass-card rounded-xl border border-border p-5 space-y-5">
-        <h2 className="font-semibold text-foreground">Pillar-Level Progress</h2>
-        {pillarContents.length === 0 && <p className="text-sm text-muted-foreground">No custom Pillars have been created yet.</p>}
-        {pillarContents.map((p, i) => (
-          <div key={p.pillar} className="space-y-1.5">
-            <div className="flex justify-between text-sm">
-              <span className="font-medium text-foreground">{p.title}</span>
-              <span className="text-muted-foreground">{getMockProgress(i)}%</span>
-            </div>
-            <div className="h-2 rounded-full bg-muted overflow-hidden">
-              <div className="h-full rounded-full gradient-green transition-all" style={{ width: getMockProgress(i) + '%' }} />
-            </div>
-            <p className="text-xs text-muted-foreground">{p.tagline || p.laymanDesc || 'Ongoing milestones'}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="glass-card rounded-xl border border-border p-5">
-        <h2 className="font-semibold text-foreground mb-4">Project Milestones</h2>
-        <div className="relative pl-6 space-y-4">
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-border" />
-          {highlights.map((h, i) => (
-            <div key={i} className="relative">
-              <div className="absolute -left-[1.375rem] top-0.5 w-3 h-3 rounded-full bg-leaf-bright border-2 border-background" />
-              <p className="text-xs text-muted-foreground">{h.year}</p>
-              <p className="text-sm text-foreground">{h.event}</p>
-            </div>
-          ))}
-        </div>
       </div>
 
       <CrudModal open={mode !== null} onClose={close} title={editing ? "Edit Impact Metric" : "Add Impact Metric"}>

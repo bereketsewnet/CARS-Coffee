@@ -387,6 +387,7 @@ function SectionParticles({ particles }: { particles: Particle[] }) {
 }
 
 type HomeContent = {
+  heroTag?: string;
   heroTitle1: string; heroTitle2: string; heroSubtitle: string;
   impactTitle: string; impactTitleBold: string;
   stat1Value: number; stat1Suffix: string; stat1Label: string;
@@ -704,7 +705,7 @@ function HeroSection({ t, homeContent }: { t: Record<string, Record<string, stri
           style={{ top: "82px", zIndex: 4, opacity: 0, transform: "translateY(30px)" }}
         >
           <span className="text-xs md:text-sm font-bold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block" style={{ background: "#9B1B1B", color: "#fff" }}>
-            {t.home.tagline}
+            {homeContent?.heroTag ?? t.home.tagline}
           </span>
         </div>
 

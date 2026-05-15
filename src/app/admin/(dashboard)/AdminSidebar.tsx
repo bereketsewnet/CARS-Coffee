@@ -21,6 +21,7 @@ import {
   Target,
   Home,
   Heading,
+  Images,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
@@ -40,6 +41,7 @@ const navItems = [
   { label: "Messages",     href: "/admin/messages",     icon: Mail },
   { label: "Newsletter",   href: "/admin/newsletter",   icon: Bell },
   { label: "Partners",     href: "/admin/partners",     icon: Handshake },
+  { label: "Gallery",      href: "/admin/gallery",      icon: Images },
   { label: "Contact Info", href: "/admin/contact",      icon: Phone },
 ];
 
