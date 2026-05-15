@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://carescoffee.org";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://cares-center.org";
 const SITE_NAME = "CARES – Circular Coffee Project";
 const DEFAULT_TITLE = "CARES | Circular Economy Coffee Research – Ethiopia & Belgium";
 const DEFAULT_DESC =
   "CARES is a VLIR-UOS funded north–south research project transforming Ethiopia's coffee waste into green energy, bio-pesticides, and cosmetics, empowering smallholder farmers and women's cooperatives in Sidama and Yirgacheffe.";
-const OG_IMAGE = `${SITE_URL}/assets/CARES LOGO.png`;
+const OG_IMAGE = `${SITE_URL}/assets/CARES_LOGO.png`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -47,15 +47,12 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: DEFAULT_DESC,
     images: [OG_IMAGE],
-    creator: "@CARESCoffee",
+    creator: "@cares-center",
   },
   icons: {
-    icon: [
-      { url: "/assets/CARES LOGO.png", type: "image/png", sizes: "any" },
-      { url: "/favicon.ico", type: "image/x-icon" },
-    ],
-    apple: [{ url: "/assets/CARES LOGO.png", sizes: "180x180", type: "image/png" }],
-    shortcut: "/assets/CARES LOGO.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   manifest: undefined,
   category: "science",

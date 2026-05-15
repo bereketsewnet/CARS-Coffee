@@ -57,7 +57,7 @@ tar -a -c -f CARES_Prod.zip --exclude node_modules --exclude .next --exclude .vs
 
 ## 4. Upload & Extract on Server
 
-1. Upload `CARES_Prod_new.zip` to your server (via cPanel, SFTP, or SSH).
+1. Upload `CARES_Prod.zip` to your server (via cPanel, SFTP, or SSH).
 2. Extract the zip in your desired directory.
 3. On the server, run:
    - `npm install` (to install dependencies)

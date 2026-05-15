@@ -17,7 +17,7 @@ Please execute the following tasks systematically:
 2. Favicon Replacement
 - Remove all default/placeholder "Lovable UI" favicons.
 - Set up the standard `<link rel="icon">` tags pointing to the correct project logo/favicon assets (include standard .ico, .png sizes, and apple-touch-icon). 
-- i put the real logo on this dir = public\assets\CARES LOGO.png use thsi i alredy chage this but if any thing reamain related to lovable stil show the same fix that also
+- i put the real logo on this dir = public\assets\CARES_LOGO.png use thsi i alredy chage this but if any thing reamain related to lovable stil show the same fix that also
 
 3. Accessibility & Screen Reader Optimization (Disability Compliance)
 - Audit all `<img>` tags and add highly descriptive, keyword-rich `alt` attributes. Do not use generic terms like "image" or "picture".

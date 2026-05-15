@@ -35,7 +35,7 @@ export function ForgotPasswordForm() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <Image
-            src="/assets/CARES LOGO.png"
+            src="/assets/CARES_LOGO.png"
             alt="CARES Logo"
             width={72}
             height={72}

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description:
       "Empowering Ethiopian coffee communities through circular economy research. VLIR-UOS funded partnership between University of Antwerp and Addis Ababa University.",
     url: "/",
-    images: [{ url: "/assets/CARES LOGO.png", alt: "CARES Circular Coffee Project" }],
+    images: [{ url: "/assets/CARES_LOGO.png", alt: "CARES Circular Coffee Project" }],
   },
 };
 
