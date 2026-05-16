@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { requireAdmin } from "./guard";
+import { TESTIMONIAL_LIMIT } from "@/lib/galleryConstants";
 
 export type ImpactFormState = { error?: string; success?: boolean };
 
@@ -140,6 +141,61 @@ export async function updateImpactArea(id: string, form: FormData): Promise<Impa
 export async function deleteImpactArea(id: string): Promise<void> {
   await requireAdmin();
   await prisma.impactArea.delete({ where: { id } });
+  revalidatePath("/admin/impact");
+  revalidatePath("/impact");
+}
+
+// ── Testimonials ──────────────────────────────────────────────────────────────
+
+export async function createTestimonial(form: FormData): Promise<ImpactFormState> {
+  await requireAdmin();
+  try {
+    const count = await prisma.testimonial.count();
+    if (count >= TESTIMONIAL_LIMIT) return { error: `Maximum ${TESTIMONIAL_LIMIT} testimonials allowed.` };
+    if (!form.get("quote") || !form.get("name") || !form.get("role")) {
+      return { error: "Quote, name, and role are required." };
+    }
+    const max = await prisma.testimonial.aggregate({ _max: { order: true } });
+    await prisma.testimonial.create({
+      data: {
+        quote: form.get("quote") as string,
+        name:  form.get("name")  as string,
+        role:  form.get("role")  as string,
+        order: (max._max.order ?? 0) + 1,
+      },
+    });
+    revalidatePath("/admin/impact");
+    revalidatePath("/impact");
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { error: "Failed to create testimonial." };
+  }
+}
+
+export async function updateTestimonial(id: string, form: FormData): Promise<ImpactFormState> {
+  await requireAdmin();
+  try {
+    await prisma.testimonial.update({
+      where: { id },
+      data: {
+        quote: form.get("quote") as string,
+        name:  form.get("name")  as string,
+        role:  form.get("role")  as string,
+      },
+    });
+    revalidatePath("/admin/impact");
+    revalidatePath("/impact");
+    return { success: true };
+  } catch (e) {
+    console.error(e);
+    return { error: "Failed to update testimonial." };
+  }
+}
+
+export async function deleteTestimonial(id: string): Promise<void> {
+  await requireAdmin();
+  await prisma.testimonial.delete({ where: { id } });
   revalidatePath("/admin/impact");
   revalidatePath("/impact");
 }

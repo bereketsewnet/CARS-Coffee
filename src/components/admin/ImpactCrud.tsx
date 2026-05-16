@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import { Plus, Pencil, Trash2, BarChart3, TrendingUp, Users, Leaf, TreePine, Briefcase, Handshake, Target, Globe, Save, CheckCircle, Loader2 } from "lucide-react";
-import type { ImpactMetric, PillarContent, ImpactArea, ImpactSection } from "../../../generated/prisma-client";
+import type { ImpactMetric, PillarContent, ImpactArea, ImpactSection, Testimonial } from "../../../generated/prisma-client";
 import type { LucideIcon } from "lucide-react";
 import {
   createImpactMetric, updateImpactMetric, deleteImpactMetric,
   upsertImpactSection, createImpactArea, updateImpactArea, deleteImpactArea,
+  createTestimonial, updateTestimonial, deleteTestimonial,
 } from "@/lib/actions/impact";
+import { TESTIMONIAL_LIMIT } from "@/lib/galleryConstants";
 import {
   Field,
   inputCls,
@@ -204,16 +206,125 @@ function ImpactAreaCrud({ areas: initial }: { areas: ImpactArea[] }) {
 }
 
 
+// ── Testimonial CRUD ─────────────────────────────────────────────────────────
+
+function TestimonialCrud({ testimonials: initial }: { testimonials: Testimonial[] }) {
+  const [testimonials, setTestimonials] = React.useState(initial);
+  const [mode, setMode] = React.useState<"add" | "edit" | null>(null);
+  const [editing, setEditing] = React.useState<Testimonial | null>(null);
+  const [deleteTarget, setDeleteTarget] = React.useState<Testimonial | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+  const [deletePending, startDeleteTransition] = useTransition();
+
+  React.useEffect(() => { setTestimonials(initial); }, [initial]);
+
+  function close() { setMode(null); setEditing(null); setError(null); }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    setError(null);
+    startTransition(async () => {
+      const res = editing
+        ? await updateTestimonial(editing.id, fd)
+        : await createTestimonial(fd);
+      if (res?.error) { setError(res.error); return; }
+      window.location.reload();
+    });
+  }
+
+  function handleDelete() {
+    if (!deleteTarget) return;
+    startDeleteTransition(async () => {
+      await deleteTestimonial(deleteTarget.id);
+      setTestimonials((prev) => prev.filter((t) => t.id !== deleteTarget.id));
+      setDeleteTarget(null);
+    });
+  }
+
+  const atLimit = testimonials.length >= TESTIMONIAL_LIMIT;
+
+  return (
+    <div className="glass-card rounded-2xl border border-border p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-serif font-bold text-lg">Testimonials</h2>
+          <p className="text-xs text-muted-foreground mt-0.5">Max {TESTIMONIAL_LIMIT} — shown on the public Impact page.</p>
+        </div>
+        {!atLimit && (
+          <button
+            onClick={() => { setEditing(null); setMode("add"); }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary text-secondary-foreground hover:bg-leaf-bright transition-colors text-xs font-semibold"
+          >
+            <Plus className="w-3.5 h-3.5" /> Add
+          </button>
+        )}
+      </div>
+
+      <div className="space-y-3">
+        {testimonials.map((item) => (
+          <div key={item.id} className="p-4 rounded-xl bg-muted/40 border border-border/50 group relative">
+            <p className="text-sm text-foreground italic line-clamp-2 mb-2">"{item.quote}"</p>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full gradient-green flex items-center justify-center text-foreground font-bold text-xs shrink-0">
+                {item.name[0]}
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-foreground">{item.name}</p>
+                <p className="text-xs text-muted-foreground">{item.role}</p>
+              </div>
+            </div>
+            <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button onClick={() => { setEditing(item); setMode("edit"); }} className="text-muted-foreground hover:text-foreground p-1"><Pencil className="w-3.5 h-3.5" /></button>
+              <button onClick={() => setDeleteTarget(item)} className="text-muted-foreground hover:text-rose-400 p-1"><Trash2 className="w-3.5 h-3.5" /></button>
+            </div>
+          </div>
+        ))}
+        {testimonials.length === 0 && (
+          <p className="text-sm text-muted-foreground italic text-center py-4">No testimonials yet.</p>
+        )}
+      </div>
+
+      <CrudModal open={mode !== null} onClose={close} title={editing ? "Edit Testimonial" : "Add Testimonial"}>
+        <form key={editing?.id ?? "new-testimonial"} onSubmit={handleSubmit} className="space-y-4">
+          <Field label="Quote" required>
+            <textarea name="quote" defaultValue={editing?.quote ?? ""} required rows={4} className={textareaCls} placeholder="What the person said…" />
+          </Field>
+          <Field label="Name" required>
+            <input name="name" defaultValue={editing?.name ?? ""} required className={inputCls} placeholder="Birtukan Lemma" />
+          </Field>
+          <Field label="Role / Title" required>
+            <input name="role" defaultValue={editing?.role ?? ""} required className={inputCls} placeholder="Coffee Farmer, Kaffa Zone" />
+          </Field>
+          {error && <p className="text-xs text-rose-400">{error}</p>}
+          <SubmitBtn pending={pending} label={editing ? "Save Changes" : "Add Testimonial"} />
+        </form>
+      </CrudModal>
+
+      <ConfirmDeleteDialog
+        open={deleteTarget !== null}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={handleDelete}
+        label={`"${deleteTarget?.name ?? ""}"`}
+        pending={deletePending}
+      />
+    </div>
+  );
+}
+
 export default function ImpactCrud({
   items: initial,
   pillarContents = [],
   impactSection = null,
   impactAreas = [],
+  testimonials = [],
 }: {
   items: ImpactMetric[];
   pillarContents?: PillarContent[];
   impactSection?: ImpactSection | null;
   impactAreas?: ImpactArea[];
+  testimonials?: Testimonial[];
 }) {
   const [items, setItems] = useState(initial);
   const [mode, setMode] = useState<"add" | "edit" | null>(null);
@@ -258,6 +369,7 @@ export default function ImpactCrud({
       {/* Socioeconomic section header + cards */}
       <SectionHeaderForm section={impactSection} />
       <ImpactAreaCrud areas={impactAreas} />
+      <TestimonialCrud testimonials={testimonials} />
 
       {/* Impact metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

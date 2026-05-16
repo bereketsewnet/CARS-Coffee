@@ -5,7 +5,7 @@ import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon, Building2 } from
 import type { Collaborator } from "../../generated/prisma-client";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-const ROLE_ORDER = ["Executive Dean", "Vice Executive Dean", "CTBE-CARES-Support"];
+const ROLE_ORDER = ["President", "Vice President", "Director", "Executive Dean", "Vice Executive Dean", "CTBE-CARES-Support"];
 
 const COLORS = ["gradient-green", "gradient-coffee"];
 

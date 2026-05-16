@@ -33,7 +33,10 @@ const ROLES = [
   "Co-Investigator",
   "Senior Researcher",
   "PhD Researcher",
+  "Research Specialist",
   "MSc Researcher",
+  "BSc Researcher",
+  "Admin Secretary",
 ] as const;
 
 function deriveCategory(role: string): string {
@@ -42,16 +45,31 @@ function deriveCategory(role: string): string {
   if (r === "co-investigator" || r.includes("co-invest") || r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Investigator";
   if (r === "senior researcher" || r.includes("senior")) return "Senior Researcher";
   if (r === "phd researcher" || r.includes("phd") || r.includes("candidate")) return "PhD Researcher";
+  if (r === "research specialist" || r.includes("specialist")) return "Research Specialist";
+  if (r === "bsc researcher" || r.includes("bsc")) return "BSc Researcher";
+  if (r === "admin secretary" || r.includes("secretary") || r.includes("admin")) return "Admin Secretary";
   return "MSc Researcher";
 }
 
-const CATEGORY_ORDER = ["Principal Investigator", "Co-Investigator", "Senior Researcher", "PhD Researcher", "MSc Researcher"] as const;
+const CATEGORY_ORDER = [
+  "Principal Investigator",
+  "Co-Investigator",
+  "Senior Researcher",
+  "PhD Researcher",
+  "Research Specialist",
+  "MSc Researcher",
+  "BSc Researcher",
+  "Admin Secretary",
+] as const;
 const CATEGORY_LABELS: Record<string, string> = {
   "Principal Investigator": "Principal Investigators",
   "Co-Investigator":        "Co-Investigators",
   "Senior Researcher":      "Senior Researchers",
   "PhD Researcher":         "PhD Researchers",
+  "Research Specialist":    "Research Specialists",
   "MSc Researcher":         "MSc Researchers",
+  "BSc Researcher":         "BSc Researchers",
+  "Admin Secretary":        "Administrative & Secretarial",
 };
 
 function FeaturedControl({ item, featuredCount, onToggle, onOrder }: {

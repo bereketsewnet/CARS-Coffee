@@ -5,7 +5,7 @@ import { Linkedin, Globe, Twitter, Instagram, Link as LinkIcon } from "lucide-re
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import type { TeamMember as DbMember } from "../../generated/prisma-client";
 
-type RoleCategory = "Principal Investigator" | "Co-Investigator" | "Senior Researcher" | "PhD Researcher" | "MSc Researcher";
+type RoleCategory = "Principal Investigator" | "Co-Investigator" | "Senior Researcher" | "PhD Researcher" | "Research Specialist" | "MSc Researcher" | "BSc Researcher" | "Admin Secretary";
 
 interface TeamMember {
   name: string;
@@ -31,6 +31,9 @@ function deriveCategory(role: string): RoleCategory {
   if (r === "co-investigator" || r.includes("co-invest") || r.includes("co-supervisor") || r.includes("co supervisor")) return "Co-Investigator";
   if (r === "senior researcher" || r.includes("senior")) return "Senior Researcher";
   if (r === "phd researcher" || r.includes("phd") || r.includes("candidate")) return "PhD Researcher";
+  if (r === "research specialist" || r.includes("specialist")) return "Research Specialist";
+  if (r === "bsc researcher" || r.includes("bsc")) return "BSc Researcher";
+  if (r === "admin secretary" || r.includes("secretary") || r.includes("admin")) return "Admin Secretary";
   return "MSc Researcher";
 }
 
@@ -141,7 +144,16 @@ const staticTeam: TeamMember[] = [
   },
 ];
 
-const roleOrder: RoleCategory[] = ["Principal Investigator", "Co-Investigator", "Senior Researcher", "PhD Researcher", "MSc Researcher"];
+const roleOrder: RoleCategory[] = [
+  "Principal Investigator",
+  "Co-Investigator",
+  "Senior Researcher",
+  "PhD Researcher",
+  "Research Specialist",
+  "MSc Researcher",
+  "BSc Researcher",
+  "Admin Secretary",
+];
 
 function MemberCard({ member }: { member: TeamMember }) {
   const [expanded, setExpanded] = useState(false);
@@ -235,7 +247,10 @@ export default function Team({ members: dbMembers, heading }: { members?: DbMemb
     "Co-Investigator":        t.team.coSupervise,
     "Senior Researcher":      t.team.seniorResearcher,
     "PhD Researcher":         t.team.phd,
+    "Research Specialist":    "Research Specialists",
     "MSc Researcher":         t.team.ra,
+    "BSc Researcher":         "BSc Researchers",
+    "Admin Secretary":        "Administrative & Secretarial",
   };
 
   // null or undefined = DB unavailable → show static fallback

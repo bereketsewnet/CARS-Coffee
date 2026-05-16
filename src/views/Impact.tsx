@@ -2,7 +2,7 @@
 
 import { Quote, Users, Briefcase, TrendingUp, Handshake, Leaf, Target, Globe } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
-import type { ImpactMetric } from "../../generated/prisma-client";
+import type { ImpactMetric, Testimonial } from "../../generated/prisma-client";
 import type { LucideIcon } from "lucide-react";
 
 const AREA_ICON_MAP: Record<string, LucideIcon> = {
@@ -29,12 +29,14 @@ export default function Impact({
   impactSection = null,
   impactAreas = [],
   heading,
+  testimonials: dbTestimonials = [],
 }: {
   metrics?: ImpactMetric[];
   partners?: any[];
   impactSection?: { tag: string; title: string } | null;
   impactAreas?: any[];
   heading?: HeadingProp;
+  testimonials?: Testimonial[];
 }) {
   const { t } = useLanguage();
 
@@ -45,18 +47,13 @@ export default function Impact({
     { value: "22%", label: t.impact.m4l, sub: t.impact.m4s },
   ];
 
-  const testimonials = [
-    {
-      quote: t.impact.t1q,
-      name: t.impact.t1n,
-      role: t.impact.t1r,
-    },
-    {
-      quote: t.impact.t2q,
-      name: t.impact.t2n,
-      role: t.impact.t2r,
-    },
-  ];
+  const testimonials =
+    dbTestimonials.length > 0
+      ? dbTestimonials.map((t) => ({ quote: t.quote, name: t.name, role: t.role }))
+      : [
+          { quote: t.impact.t1q, name: t.impact.t1n, role: t.impact.t1r },
+          { quote: t.impact.t2q, name: t.impact.t2n, role: t.impact.t2r },
+        ];
 
   const metrics: MetricDisplay[] =
     dbMetrics && dbMetrics.length > 0
@@ -141,7 +138,7 @@ export default function Impact({
             <span className="tag-pill mb-4 inline-block">{t.impact.voicesSub}</span>
             <h2 className="font-serif text-4xl font-bold">{t.impact.voicesTitle}</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className={`grid gap-8 max-w-4xl mx-auto ${testimonials.length === 1 ? "md:grid-cols-1 max-w-xl" : testimonials.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
             {testimonials.map((t) => (
               <div key={t.name} className="glass-card rounded-2xl p-8 border border-border">
                 <Quote className="w-8 h-8 text-leaf-bright/40 mb-4" />

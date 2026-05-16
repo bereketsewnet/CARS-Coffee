@@ -28,6 +28,9 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 const ROLE_OPTIONS = [
+  "President",
+  "Vice President",
+  "Director",
   "Executive Dean",
   "Vice Executive Dean",
   "CTBE-CARES-Support",

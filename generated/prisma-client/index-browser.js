@@ -385,6 +385,16 @@ exports.Prisma.ImpactAreaScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TestimonialScalarFieldEnum = {
+  id: 'id',
+  quote: 'quote',
+  name: 'name',
+  role: 'role',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ImpactMetricScalarFieldEnum = {
   id: 'id',
   label: 'label',
@@ -614,6 +624,13 @@ exports.Prisma.ImpactAreaOrderByRelevanceFieldEnum = {
   icon: 'icon'
 };
 
+exports.Prisma.TestimonialOrderByRelevanceFieldEnum = {
+  id: 'id',
+  quote: 'quote',
+  name: 'name',
+  role: 'role'
+};
+
 exports.Prisma.ImpactMetricOrderByRelevanceFieldEnum = {
   id: 'id',
   label: 'label',
@@ -717,6 +734,7 @@ exports.Prisma.ModelName = {
   WorkPackage: 'WorkPackage',
   ImpactSection: 'ImpactSection',
   ImpactArea: 'ImpactArea',
+  Testimonial: 'Testimonial',
   ImpactMetric: 'ImpactMetric',
   SiteContactInfo: 'SiteContactInfo'
 };

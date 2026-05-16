@@ -35,18 +35,20 @@ export default async function ImpactPage() {
   let impactSection: any = null;
   let impactAreas: any[] = [];
   let heading = null;
+  let testimonials: Awaited<ReturnType<typeof prisma.testimonial.findMany>> = [];
 
   try {
-    [metrics, partners, impactSection, impactAreas, heading] = await Promise.all([
+    [metrics, partners, impactSection, impactAreas, heading, testimonials] = await Promise.all([
       prisma.impactMetric.findMany({ orderBy: { createdAt: "asc" } }),
       prisma.partner.findMany({ where: { active: true }, orderBy: { order: "asc" } }),
       prisma.impactSection.findFirst(),
       prisma.impactArea.findMany({ orderBy: { order: "asc" } }),
       prisma.pageHeading.findUnique({ where: { page: "impact" } }),
+      prisma.testimonial.findMany({ orderBy: { order: "asc" } }),
     ]);
   } catch (error) {
     console.error("Failed to load impact page data from database", error);
   }
 
-  return <Impact metrics={metrics} partners={partners} impactSection={impactSection} impactAreas={impactAreas} heading={heading} />;
+  return <Impact metrics={metrics} partners={partners} impactSection={impactSection} impactAreas={impactAreas} heading={heading} testimonials={testimonials} />;
 }

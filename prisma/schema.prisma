@@ -364,6 +364,16 @@ model ImpactArea {
   updatedAt   DateTime @updatedAt
 }
 
+model Testimonial {
+  id        String   @id @default(cuid())
+  quote     String   @db.Text
+  name      String
+  role      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model ImpactMetric {
   id        String   @id @default(cuid())
   label     String
