@@ -48,6 +48,12 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      {
+        source: "/:file(favicon-v2\\.ico|favicon-32\\.png|favicon-192\\.png|favicon-512\\.png|apple-touch-icon\\.png|site\\.webmanifest)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800, immutable" },
+        ],
+      },
     ];
   },
   async rewrites() {
